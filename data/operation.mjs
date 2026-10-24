@@ -9,7 +9,7 @@ export default {
   },
   "limits": {
     "routeProbesPerPass": 15,
-    "settlementsPerPass": 8
+    "settlementsPerPass": 6
   },
   "buckets": {
     "state": "561-group-working-state",

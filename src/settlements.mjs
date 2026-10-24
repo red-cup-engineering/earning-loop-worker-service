@@ -6,11 +6,12 @@
 import { register, read, put } from "./registers.mjs";
 
 export const BASE_USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+// Ordered by observed availability of receipts (2026-10-24); the pass reads until two answer.
 export const BASE_PROVIDERS = [
-  "https://mainnet.base.org",
   "https://base-rpc.publicnode.com",
-  "https://base.llamarpc.com",
-  "https://1rpc.io/base",
+  "https://base.drpc.org",
+  "https://base-mainnet.public.blastapi.io",
+  "https://mainnet.base.org",
 ];
 const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 const PREFIX = "settlements/eip155:8453/";
