@@ -3,6 +3,7 @@ import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { createOpenTaskClient, defaultCanonical } from '../src/opentask-client.mjs';
 import { signDpopProof } from '@red-cup-engineering/oauth-services-section/dpop';
+export { testNativeResearch } from './workerd-research-worker.mjs';
 
 export const testNativeAuthentication = {
   async test() {

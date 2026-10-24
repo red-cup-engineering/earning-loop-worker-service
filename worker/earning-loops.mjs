@@ -9,6 +9,8 @@
 import operation from "../data/operation.mjs";
 import groupPayerList from "../data/group-payers.mjs";
 import products from "../data/products.mjs";
+import researchProducts from '../data/research-products.mjs';
+import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
 import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
 import { receiveSettlements } from "../src/settlements.mjs";
 import { checkRoutes } from "../src/route-health.mjs";
@@ -67,7 +69,10 @@ export class EarningClock {
   async alarm() {
     return this.enqueue(async () => {
       const configuration = this.options.configuration ?? operation;
-      const at = Date.now(), commercial = configuration.commercial?.enabled === true;
+      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true;
+      const researchState = configuration.researchProcurement?.enabled ? await this.state.storage.get(RESEARCH_STATE) : null;
+      const researchPending = configuration.researchProcurement?.enabled === true && !researchState?.terminal;
+      const researchDue = researchPending && !researchState?.retryBlocked && !(researchState?.nextAttemptAt > at);
       const slot = commercial ? Math.round(at / 450000) * 450000 : Math.round(at / 60000) * 60000;
       const releaseId = commercial ? this.releaseId() : null;
       const bootstrap = releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId;
@@ -75,21 +80,38 @@ export class EarningClock {
       // Admission is durable before work: public clock arming cannot replay it.
       if (bootstrap) await this.state.storage.put('earning-clock/observed-release-id', releaseId);
       try {
-        if (bootstrap || commercial && slot % 900000 !== 0) {
-          const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
+        if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
+          if (researchDue || bootstrap && researchPending) {
+            await (this.options.researchPass ?? runResearchPass)({ storage: this.state.storage, instance: configuration.researchProcurement,
+              products: this.options.researchProducts ?? researchProducts, merchant: configuration.merchantPayTo, groupPayers });
+          } else if (configuration.commercial?.enabled) {
+            const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
             instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at) });
-          await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
+            await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
             newCashExpenseUsd: 0, at: new Date(at).toISOString() });
+          }
         } else await tick(this.env, new Date(slot), this.options);
       } finally {
         let alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
         if (bootstrap && armed?.id === releaseId && Number.isFinite(armed.previousAlarm))
           alarm = Math.min(alarm, armed.previousAlarm > Date.now() ? armed.previousAlarm : Date.now() + 1000);
+        if (configuration.researchProcurement?.enabled) {
+          const pending = await this.state.storage.get(RESEARCH_STATE);
+          if (!pending?.terminal && !pending?.retryBlocked && Number.isFinite(pending?.nextAttemptAt))
+            alarm = Math.min(alarm, Math.max(Date.now() + 1000,pending.nextAttemptAt));
+        }
         await this.state.storage.setAlarm(alarm);
       }
     });
   }
   async fetch(request) {
+    if (request && new URL(request.url).pathname === '/research.json') {
+      const summary = await this.state.storage.get(RESEARCH_SUMMARY);
+      if (!summary) return new Response('not yet observed\n',{status:404});
+      const fields = ['stage','requests','newCashExpenseUsd','at','taskId','productId','receiptAccepted','evaluationState','approvedAmountAtomic','providerPayoutState','payoutTx','independentlyVerifiedCashAtomic','recognizedOutsideRevenue'];
+      const alarm = await this.state.storage.getAlarm();
+      return Response.json({ ...Object.fromEntries(fields.filter(key => Object.hasOwn(summary,key)).map(key => [key,summary[key]])),nextTick:alarm ? new Date(alarm).toISOString() : null },{headers:{'cache-control':'no-store'}});
+    }
     if (request && new URL(request.url).pathname === '/commercial.json') {
       const summary = await this.state.storage.get('opentask/public-summary');
       if (!summary) return new Response('not yet observed\n', { status: 404 });
@@ -99,7 +121,8 @@ export class EarningClock {
     }
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
-      const at = Date.now(), commercial = (this.options.configuration ?? operation).commercial?.enabled;
+      const configuration = this.options.configuration ?? operation;
+      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled;
       const releaseId = commercial ? this.releaseId() : null;
       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
         const armed = await this.state.storage.get('earning-clock/armed-release');
@@ -120,6 +143,8 @@ export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
     if (path === "/products.json") return Response.json(products, { headers: { "cache-control": "public, max-age=300" } });
+    if (path === '/research-products.json') return Response.json(researchProducts,{headers:{'cache-control':'public, max-age=300'}});
+    if (path === '/research.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
     if (path === '/commercial.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
     if (READINGS[path]) {

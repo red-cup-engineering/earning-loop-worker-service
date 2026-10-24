@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EarningClock, CRONS } from '../worker/earning-loops.mjs';
 import { bucket } from './memory.mjs';
+import { RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
 
 test('commercial alarms serialize private effects and occupy their own invocation between maintenance ticks', async () => {
   const originalNow = Date.now;
@@ -25,6 +26,25 @@ test('commercial alarms serialize private effects and occupy their own invocatio
     const reading = values.get('opentask/public-summary');
     assert.deepEqual(reading, { stage: 'awaiting-hire', requests: 1, newCashExpenseUsd: 0, at: '2026-10-24T20:07:30.000Z' });
   } finally { Date.now = originalNow; }
+});
+
+test('pending paid research takes one isolated pulse, rearms its status deadline and preserves CSV custody',async()=>{
+  const realNow=Date.now;let time=Date.parse('2026-10-24T22:01:00Z');Date.now=()=>time;
+  const auth={privateKey:'held-not-used'},values=new Map([['opentask/auth',auth],['opentask/public-summary',{stage:'awaiting-hire'}]]);
+  let alarm=time+450000,research=0,csv=0;
+  const storage={async get(k){return values.get(k);},async put(k,v){values.set(k,v);},async getAlarm(){return alarm;},async setAlarm(v){alarm=v;}};
+  const clock=new EarningClock({storage},{STATE:{put(){assert.fail('no research R2');}}},{
+    configuration:{commercial:{enabled:true},researchProcurement:{enabled:true},crons:CRONS},
+    researchPass:async()=>{research++;await storage.put(RESEARCH_STATE,{terminal:research===2,nextAttemptAt:time+30000});await storage.put(RESEARCH_SUMMARY,{stage:'research-evaluation-pending',secret:'excluded'});},
+    commercialPass:async()=>{csv++;return {stage:'awaiting-hire',requests:1};}
+  });
+  try{
+    await clock.alarm();assert.equal(research,1);assert.equal(csv,0);assert.equal(alarm,time+30000);
+    assert.equal(values.get('opentask/auth'),auth);assert.deepEqual(values.get('opentask/public-summary'),{stage:'awaiting-hire'});
+    const summary=await(await clock.fetch(new Request('https://example.test/research.json'))).json();assert.equal(summary.secret,undefined);
+    time=alarm;await clock.alarm();assert.equal(research,2);
+    time=Date.parse('2026-10-24T22:07:30Z');await clock.alarm();assert.equal(csv,1);assert.equal(research,2);
+  }finally{Date.now=realNow;}
 });
 
 test('native release metadata arms one prompt private verification, retains the prior alarm and cannot replay via clock', async () => {
