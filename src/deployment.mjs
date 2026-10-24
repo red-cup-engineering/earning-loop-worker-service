@@ -1,12 +1,13 @@
 import { hashnInstanceProblem } from './hashn-acquisition.mjs';
 
-export function projectOperation(record) {
+export function projectOperation(record, { excludeIssuerResearch = false } = {}) {
+  if (typeof excludeIssuerResearch !== 'boolean') throw new TypeError('issuer release selection must be boolean');
   if (typeof record.merchantPayTo !== 'string' || !/^0x[\da-f]{40}$/i.test(record.merchantPayTo))
     throw new TypeError('operation.merchantPayTo must name the independently authorized merchant recipient');
   const operation = { worker: record.worker, crons: record.crons, limits: record.limits, buckets: record.buckets, catalogUrl: record.catalogUrl,
     economics: record.economics, merchantPayTo: record.merchantPayTo, clock: record.clock ?? 'cron-triggers',
     repair: { brokenStreakBeforeRepair: record.repair.brokenStreakBeforeRepair, repository: record.repair.repository }, onchainScanUrl: record.onchainScanUrl };
-  if (record.issuerResearch?.enabled === true && record.issuerResearch.resourceAdmission?.status === 'received') {
+  if (!excludeIssuerResearch && record.issuerResearch?.enabled === true && record.issuerResearch.resourceAdmission?.status === 'received') {
     if (operation.clock !== 'durable-object-alarm')
       throw new TypeError('issuer operation requires serialized private Durable Object custody');
     const n = record.issuerResearch.issuers?.length;

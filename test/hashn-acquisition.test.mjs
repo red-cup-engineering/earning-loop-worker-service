@@ -1,10 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY, hashnInstanceProblem } from '../src/hashn-acquisition.mjs';
+import { projectOperation } from '../src/deployment.mjs';
 const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
 const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
 const credential={agentId,apiToken:'aw_private_fixture_only'};
 const instance={enabled:true,workspaceId,buyerAgentId,offerId:'test-offer',note:'A bounded pilot, exact machine terms before work.',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
+test('acquisition-only release preserves concurrent issuer intent and other commercial inputs',()=>{
+  const record={merchantPayTo:'0x'+'a'.repeat(40),clock:'durable-object-alarm',repair:{repository:null},
+    limits:{routeProbesPerPass:3,settlementsPerPass:1},hashAcquisition:instance,commercial:{enabled:false},
+    issuerResearch:{enabled:true,resourceAdmission:{status:'received'},issuers:[{},{}]}};
+  const prior=structuredClone(record);
+  assert.equal(projectOperation(record).issuerResearch,record.issuerResearch);
+  const selected=projectOperation(record,{excludeIssuerResearch:true});
+  assert.equal(Object.hasOwn(selected,'issuerResearch'),false);
+  assert.equal(selected.hashAcquisition,instance);assert.equal(selected.commercial,record.commercial);
+  assert.deepEqual(record,prior);
+});
 function fixture() {
   let time=Date.parse('2026-10-24T22:00:00Z'),outgoing=[],postFailure=null;
   const map=new Map(),calls=[];
