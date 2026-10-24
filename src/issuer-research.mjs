@@ -12,10 +12,10 @@ export function retryDelayMs(value, now) {
   return Number.isFinite(delay) ? Math.max(0, delay) : 0;
 }
 
-export async function refreshIssuerResearch(env, configuration, { now = new Date(), prepare, clock = () => new Date() } = {}) {
+export async function refreshIssuerResearch(store, configuration, { now = new Date(), prepare, clock = () => new Date() } = {}) {
   if (!configuration) return { status: 'not-configured' };
   const key = register('issuer-research');
-  const previous = await read(env.STATE, key);
+  const previous = await read(store, key);
   if (previous?.retryBlocked) return { ...previous, status: 'deferred' };
   if (previous?.cacheKey === configuration.cacheKey && Date.parse(previous.nextAttemptAt) > now.getTime())
     return { ...previous, status: 'deferred' };
@@ -25,7 +25,7 @@ export async function refreshIssuerResearch(env, configuration, { now = new Date
     const complete = await producer(configuration);
     // The producer owns completeness and provenance. Publish only its completed
     // return value; failures before this point leave the last serving object intact.
-    await put(env.STATE, configuration.cacheKey, complete);
+    await put(store, configuration.cacheKey, complete);
     reading = { status: 'prepared', at: now.toISOString(), cacheKey: configuration.cacheKey,
       observedAt: complete.observedAt ?? null, nextAttemptAt: new Date(now.getTime() + 900_000).toISOString() };
   } catch (error) {
@@ -39,6 +39,6 @@ export async function refreshIssuerResearch(env, configuration, { now = new Date
       retryBlocked: !Number.isFinite(delay),
       nextAttemptAt: Number.isFinite(delay) ? new Date(refusedAt.getTime() + delay).toISOString() : null };
   }
-  await put(env.STATE, key, reading);
+  await put(store, key, reading);
   return reading;
 }
