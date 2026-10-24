@@ -39,11 +39,12 @@ export function corroborate(witness, receipts) {
   if (problem) return { ok: false, reason: problem };
   if (!Array.isArray(receipts) || receipts.length < 2) return { ok: false, reason: "two-provider-receipts-required", retry: true };
   const [a, b] = receipts;
-  if (!a || !b || a.status !== b.status) return { ok: false, reason: "provider-disagreement", retry: true };
-  if (a.status !== "0x1") return { ok: false, reason: "failed-transaction" };
+  if (!a || !b || !["0x0", "0x1"].includes(a.status) || a.status !== b.status
+    || !Array.isArray(a.logs) || !Array.isArray(b.logs)) return { ok: false, reason: "provider-disagreement", retry: true };
+  if (a.status === "0x0") return { ok: false, reason: "failed-transaction" };
   if (!TX.test(a.blockHash ?? "") || !TX.test(b.blockHash ?? "") || a.blockHash.toLowerCase() !== b.blockHash.toLowerCase() || a.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
     || b.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
-    || a.blockNumber !== b.blockNumber || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
+    || !/^0x[\da-f]+$/i.test(a.blockNumber ?? "") || a.blockNumber !== b.blockNumber || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
   const transfers = matchingTransfers(a, witness);
   if (transfers.length !== 1) return { ok: false, reason: "exactly-one-matching-usdc-transfer-required" };
   if (!/^0x[\da-f]+$/i.test(transfers[0].logIndex ?? "") || transfers[0].logIndex !== matchingTransfers(b, witness)[0].logIndex || transfers[0].removed === true || matchingTransfers(b, witness)[0].removed === true)

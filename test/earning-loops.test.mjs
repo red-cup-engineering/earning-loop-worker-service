@@ -28,6 +28,9 @@ test("a settlement corroborates only when two providers agree on one matching US
   const truncated = { ...receipt, logs: [{ ...receipt.logs[0], data: "0xc350" }] };
   assert.equal(corroborate(witness, [truncated, truncated]).ok, false);
   assert.equal(corroborate(witness, [null, receipt]).retry, true);
+  for (const malformed of [{}, { ...receipt, blockNumber: undefined }, { ...receipt, logs: {} }])
+    assert.equal(corroborate(witness, [malformed, malformed]).retry, true,
+      "two identical malformed responses are unknown evidence, not failed payment");
 });
 
 test("invalid witnesses spend no RPC calls and catalog outages preserve prior evidence", async () => {
