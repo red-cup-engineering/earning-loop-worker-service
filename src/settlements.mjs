@@ -23,7 +23,7 @@ export function matchingTransfers(receipt, witness) {
     && log.topics?.[0]?.toLowerCase() === TRANSFER
     && log.topics?.[1]?.toLowerCase() === topic(witness.payer)
     && log.topics?.[2]?.toLowerCase() === topic(witness.payTo)
-    && /^0x[\da-f]{1,64}$/i.test(log.data ?? "") && BigInt(log.data).toString() === witness.amount);
+    && /^0x[\da-f]{64}$/i.test(log.data ?? "") && BigInt(log.data).toString() === witness.amount);
 }
 
 export function witnessProblem(witness) {
@@ -37,15 +37,16 @@ export function witnessProblem(witness) {
 export function corroborate(witness, receipts) {
   const problem = witnessProblem(witness);
   if (problem) return { ok: false, reason: problem };
-  if (receipts.length < 2) return { ok: false, reason: "two-provider-receipts-required", retry: true };
+  if (!Array.isArray(receipts) || receipts.length < 2) return { ok: false, reason: "two-provider-receipts-required", retry: true };
   const [a, b] = receipts;
-  if (a.status !== "0x1" || b.status !== "0x1") return { ok: false, reason: "failed-transaction" };
+  if (!a || !b || a.status !== b.status) return { ok: false, reason: "provider-disagreement", retry: true };
+  if (a.status !== "0x1") return { ok: false, reason: "failed-transaction" };
   if (!TX.test(a.blockHash ?? "") || !TX.test(b.blockHash ?? "") || a.blockHash.toLowerCase() !== b.blockHash.toLowerCase() || a.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
     || b.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
     || a.blockNumber !== b.blockNumber || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
   const transfers = matchingTransfers(a, witness);
   if (transfers.length !== 1) return { ok: false, reason: "exactly-one-matching-usdc-transfer-required" };
-  if (transfers[0].logIndex !== matchingTransfers(b, witness)[0].logIndex || transfers[0].removed === true || matchingTransfers(b, witness)[0].removed === true)
+  if (!/^0x[\da-f]+$/i.test(transfers[0].logIndex ?? "") || transfers[0].logIndex !== matchingTransfers(b, witness)[0].logIndex || transfers[0].removed === true || matchingTransfers(b, witness)[0].removed === true)
     return { ok: false, reason: "provider-disagreement", retry: true };
   return { ok: true, receipt: a, transfer: transfers[0] };
 }
@@ -58,7 +59,7 @@ async function receiptsFor(hash, fetchImpl) {
       const response = await fetchImpl(url, { method: "POST", headers: { "content-type": "application/json" },
         body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getTransactionReceipt", params: [hash] }), signal: AbortSignal.timeout(10000) });
       const body = await response.json();
-      return response.ok && body.result ? body.result : null;
+      return response.ok && !body.error && body.result ? body.result : null;
     } catch { return null; }
   };
   const found = [];
@@ -85,7 +86,8 @@ export async function receiveSettlements(env, { now = new Date(), limit = 8, gro
   const received = [];
   for (const witnessKey of fresh.slice(0, limit)) {
     const witness = await (await env.MARKET_SETTLEMENTS.get(witnessKey))?.json();
-    const checked = witness ? corroborate(witness, await receiptsFor(witness.transaction, fetchImpl)) : { ok: false, reason: "witness-disappeared" };
+    const problem = witness ? witnessProblem(witness) : "witness-disappeared";
+    const checked = problem ? { ok: false, reason: problem } : corroborate(witness, await receiptsFor(witness.transaction, fetchImpl));
     if (!checked.ok) { state.refused[witnessKey] = { reason: checked.reason, retry: !!checked.retry, at: now.toISOString() }; continue; }
     delete state.refused[witnessKey];
     const payer = witness.payer.toLowerCase();
