@@ -85,7 +85,8 @@ export async function receiveSettlements(env, { now = new Date(), limit = 8, gro
   const received = [];
   for (const witnessKey of fresh.slice(0, limit)) {
     const witness = await (await env.MARKET_SETTLEMENTS.get(witnessKey))?.json();
-    const checked = witness ? corroborate(witness, await receiptsFor(witness.transaction, fetchImpl)) : { ok: false, reason: "witness-disappeared" };
+    const problem = witness ? witnessProblem(witness) : "witness-disappeared";
+    const checked = problem ? { ok: false, reason: problem } : corroborate(witness, await receiptsFor(witness.transaction, fetchImpl));
     if (!checked.ok) { state.refused[witnessKey] = { reason: checked.reason, retry: !!checked.retry, at: now.toISOString() }; continue; }
     delete state.refused[witnessKey];
     const payer = witness.payer.toLowerCase();

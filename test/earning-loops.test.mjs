@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { bucket } from "./memory.mjs";
-import { corroborate, BASE_USDC } from "../src/settlements.mjs";
-import { judge, probeRequest } from "../src/route-health.mjs";
+import { corroborate, receiveSettlements, BASE_USDC } from "../src/settlements.mjs";
+import { judge, probeRequest, checkRoutes } from "../src/route-health.mjs";
 import { scorecard, mode } from "../src/scorecard.mjs";
 import { proposeDirectives, stepUp, markApplied, FLOOR_ATOMIC } from "../src/price-directives.mjs";
 import { revealedBorder } from "../src/border-price.mjs";
@@ -146,4 +146,23 @@ test("cash from unknown wallets, prepared responses without acceptance, house pa
   assert.equal(card.outsideCashReceivedUSD.week, 1);
   const directives = proposeDirectives({ routes: {}, settlements: {} }, { now });
   assert.deepEqual(directives, []);
+});
+
+test("invalid witnesses never reach a provider and repaired broken routes are checked before old healthy routes", async () => {
+  const env = { STATE: bucket(), MARKET_SETTLEMENTS: bucket({ [`settlements/eip155:8453/${tx}.json`]: { ...witness, payer: "bad" } }) };
+  let calls = 0;
+  await receiveSettlements(env, { fetchImpl: () => { calls++; throw Error("invalid witness reached provider"); } });
+  assert.equal(calls, 0);
+  await env.STATE.put("registers/earning-loops/route-health.json", JSON.stringify({ routes: {
+    "GET /healthy": { held: true, observedAt: "2026-10-23T00:00:00Z" },
+    "GET /repaired": { held: false, observedAt: "2026-10-24T00:00:00Z", brokenStreak: 3 },
+  } }));
+  const requested = [];
+  const out = await checkRoutes(env, { limit: 1, payTo, fetchImpl: async (url) => {
+    if (url.endsWith("/v1/catalog")) return Response.json({ offers: ["healthy", "repaired"].map(name => ({ listed: true, method: "GET", route: "/" + name, url: "https://m/" + name, amountAtomic: "50000" })) });
+    requested.push(url);
+    return new Response("{}", { status: 402, headers: { "payment-required": challenge("50000", url) } });
+  } });
+  assert.deepEqual(requested, ["https://m/repaired"]);
+  assert.equal(out.broken, 0);
 });
