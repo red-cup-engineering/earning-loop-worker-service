@@ -19,7 +19,7 @@ const researchProductsPath = arg('research-products');
 if (!operationPath || !payersPath) { console.error("--operation and --group-payers are required"); process.exit(2); }
 
 const record = JSON.parse(readFileSync(operationPath, "utf8"));
-const operation = projectOperation(record);
+const operation = projectOperation(record, { excludeIssuerResearch: process.argv.includes('--exclude-issuer-research') });
 const payers = JSON.parse(readFileSync(payersPath, "utf8"));
 if (operation.commercial?.enabled && !productsPath) throw new TypeError('--products must select the Public product map for a commercial operation');
 const suppliedProducts = productsPath ? JSON.parse(readFileSync(productsPath, 'utf8')) : {};
