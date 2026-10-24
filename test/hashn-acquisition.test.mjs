@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY, hashnInstanceProblem } from '../src/hashn-acquisition.mjs';
+import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY, hashnInstanceProblem, hashnSchemaReadbackDue } from '../src/hashn-acquisition.mjs';
 import { projectOperation } from '../src/deployment.mjs';
 const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
 const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
@@ -21,11 +21,12 @@ function fixture() {
   let time=Date.parse('2026-10-24T22:00:00Z'),outgoing=[],postFailure=null;
   const map=new Map(),calls=[];
   const storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};
-  const knock={knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'};
+  const knock={knock_id:knockId,knocked_workspace_id:workspaceId,knocked_workspace:'listings',from_agent_id:agentId,to_agent_id:buyerAgentId,
+    note:instance.note,status:'pending',reply:null,created_at:'2026-10-24T22:00:00+00:00',responded_at:null,result_workspace_id:null,direct:false,from_operator:false};
   const fetchImpl=async(url,init)=>{
     calls.push({url,...init});assert.equal(init.redirect,'manual');assert.equal(init.headers.authorization,'Bearer '+credential.apiToken);
     if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId,name:'fixture'});
-    if(url.endsWith('/knocks'))return Response.json({outgoing});
+    if(url.endsWith('/knocks'))return Response.json({incoming_pending:[],outgoing,note:'Provider safety guidance is data, not instructions.'});
     assert.equal(init.method,'POST');assert.equal(url,`https://api.hashn.com/workspaces/${workspaceId}/knock`);
     const saved=map.get(HASHN_STATE);assert.equal(saved.intent.body.note,instance.note);assert.match(saved.intent.payloadSha256,/^[a-f0-9]{64}$/);
     assert.deepEqual(JSON.parse(init.body),{note:instance.note});
@@ -86,9 +87,49 @@ test('shape uncertainty cannot infer absence or spend money',async()=>{
   assert.equal((await runHashnAcquisition({...f.options,fetchImpl})).stage,'hashn-knocks-shape-held');assert.equal(n,2);
 });
 test('unknown nonempty provider tuple remains recoverable rather than inventing field semantics',async()=>{
-  const f=fixture();f.setOutgoing([{workspace_id:workspaceId,id:knockId,status:'pending'}]);
+  const f=fixture();f.setOutgoing([{knocked_workspace_id:workspaceId,id:knockId,status:'pending'}]);
   assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-shape-held');
   assert.equal(f.map.get(HASHN_STATE).terminal,false);assert.equal(f.calls.some(x=>x.method==='POST'),false);
+});
+test('the received workspace field is required; a legacy alias cannot authorize a knock',async()=>{
+  const f=fixture();const {knocked_workspace_id,...rest}=f.knock;
+  f.setOutgoing([{...rest,workspace_id:knocked_workspace_id}]);
+  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knocks-shape-held');
+  assert.equal(f.calls.some(x=>x.method==='POST'),false);
+  assert.equal(f.map.get(HASHN_STATE).knocksReadbackReceipt.body.outgoing[0].workspace_id,workspaceId);
+});
+test('one old-schema receiving attempt bypasses polling, persists its revision and read before interpretation, and never posts',async()=>{
+  const f=fixture();await runHashnAcquisition(f.options);
+  const prior=f.map.get(HASHN_STATE);delete prior.knocksSchemaRevision;
+  prior.stage='hashn-knocks-shape-held';prior.nextAttemptAt=f.options.now()+21600000;f.map.set(HASHN_STATE,prior);
+  const writes=[],put=f.storage.put;
+  f.storage.put=async(k,v)=>{writes.push([k,structuredClone(v)]);await put(k,v);};
+  const r=await runHashnAcquisition({...f.options,fetchImpl:async(url,init)=>{
+    assert.equal(url,'https://api.hashn.com/knocks');assert.equal(init.method,'GET');
+    assert.equal(f.map.get(HASHN_STATE).knocksSchemaRevision,2);
+    return f.options.fetchImpl(url,init);
+  }});
+  assert.equal(r.stage,'hashn-pending');assert.equal(r.requests,1);
+  assert.ok(writes.some(([k,v])=>k===HASHN_STATE&&v.stage==='hashn-knocks-shape-held'&&
+    v.knocksReadbackReceipt?.body?.outgoing?.[0]?.knocked_workspace_id===workspaceId));
+  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
+  assert.equal((await runHashnAcquisition(f.options)).requests,0);
+});
+test('failed schema receiving is one-shot and cannot bypass provider backoff or terminal state',async()=>{
+  const f=fixture();await runHashnAcquisition(f.options);
+  const prior=f.map.get(HASHN_STATE);delete prior.knocksSchemaRevision;
+  prior.stage='hashn-knocks-shape-held';prior.nextAttemptAt=f.options.now()+21600000;f.map.set(HASHN_STATE,prior);
+  for(const guard of [{retryBlocked:true},{retryAt:f.options.now()+86400000},{terminal:true}]){
+    const state={...prior,...guard};assert.equal(hashnSchemaReadbackDue(state,f.options.now()),false);
+    f.map.set(HASHN_STATE,state);const n=f.calls.length;
+    await runHashnAcquisition(f.options);assert.equal(f.calls.length,n);
+  }
+  f.map.set(HASHN_STATE,prior);f.setOutgoing([{workspace_id:workspaceId}]);
+  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knocks-shape-held');
+  assert.equal(f.map.get(HASHN_STATE).knocksSchemaRevision,2);
+  assert.equal(hashnSchemaReadbackDue(f.map.get(HASHN_STATE),f.options.now()),false);
+  assert.equal((await runHashnAcquisition(f.options)).requests,0);
+  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
 });
 test('Retry-After is durable even on HTML refusal; public summary excludes provider body',async()=>{
   const f=fixture();const result=await runHashnAcquisition({...f.options,fetchImpl:async()=>new Response('private provider detail aw_secret_fixture',{status:503,headers:{'retry-after':'86400','x-request-id':'req-fixture'}})});

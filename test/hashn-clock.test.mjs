@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EarningClock, CRONS } from '../worker/earning-loops.mjs';
-import { HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
+import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
 import { projectOperation } from '../src/deployment.mjs';
 import { bucket } from './memory.mjs';
 
@@ -33,6 +33,31 @@ test('a failed acquisition cannot create a tight alarm loop or overwrite commerc
   const clock=new EarningClock({storage},{},{configuration:{hashAcquisition:instance,crons:CRONS},acquisitionPass:async()=>{throw new Error('test failure');}});
   try{await assert.rejects(clock.alarm(),/test failure/);assert.equal(alarm,time+420000);assert.equal(values.get('hashn/next-pulse-at'),time+21600000);}
   finally{Date.now=realNow;}
+});
+test('release receiving schedules one schema read despite both six-hour timers, retaining the knock and core reservation',async()=>{
+  const realNow=Date.now,realFetch=globalThis.fetch;let time=Date.parse('2026-10-24T23:08:00Z');Date.now=()=>time;
+  const credential={agentId:'33333333-3333-4333-8333-333333333333',apiToken:'aw_private_fixture_only'};
+  const values=new Map();let alarm=time+420000,posts=0,reads=0,csv=0,outgoing=[];
+  const storage={async get(k){return structuredClone(values.get(k));},async put(k,v){values.set(k,structuredClone(v));},async getAlarm(){return alarm;},async setAlarm(v){alarm=v;}};
+  globalThis.fetch=async(url,init)=>{
+    if(url.endsWith('/agents/me'))return Response.json({agent_id:credential.agentId});
+    if(url.endsWith('/knocks')){reads++;if(posts)assert.equal(values.get(HASHN_STATE).knocksSchemaRevision,2);return Response.json({incoming_pending:[],outgoing});}
+    posts++;outgoing=[{knock_id:'77777777-7777-4777-8777-777777777777',knocked_workspace_id:instance.workspaceId,
+      from_agent_id:credential.agentId,to_agent_id:instance.buyerAgentId,note:instance.note,status:'pending',reply:null,result_workspace_id:null}];
+    return Response.json({knock_id:outgoing[0].knock_id},{status:201});
+  };
+  const clock=new EarningClock({storage},{HASHN_CREDENTIAL_JSON:JSON.stringify(credential),RELEASE_METADATA:{id:'schema-receiving-release'}},
+    {configuration:{commercial:{enabled:true},hashAcquisition:instance,crons:CRONS},commercialPass:async()=>{csv++;return{stage:'awaiting-hire',requests:0};}});
+  try{
+    await runHashnAcquisition({storage,instance,initialCredential:credential,now:()=>time});
+    const prior=values.get(HASHN_STATE);delete prior.knocksSchemaRevision;prior.stage='hashn-knocks-shape-held';prior.nextAttemptAt=time+21600000;
+    await storage.put(HASHN_STATE,prior);await storage.put('hashn/next-pulse-at',time+21600000);
+    reads=0;await clock.alarm();assert.equal(csv,1);assert.equal(reads,0);assert.equal(alarm,time+1000);
+    const core=values.get('earning-clock/core-next-at');time=alarm;await clock.alarm();
+    assert.equal(reads,1);assert.equal(posts,1);assert.equal(values.get(HASHN_STATE).stage,'hashn-pending');
+    assert.equal(values.get(HASHN_STATE).knocksSchemaRevision,2);assert.equal(alarm,core);
+    time+=1000;await clock.alarm();assert.equal(reads,1);assert.equal(posts,1);
+  }finally{Date.now=realNow;globalThis.fetch=realFetch;}
 });
 test('acquisition public reading is a strict projection and cannot trigger an effect',async()=>{
   const secret='aw_should_never_appear';let calls=0;

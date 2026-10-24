@@ -6,7 +6,15 @@ export const HASHN_SUMMARY = 'hashn/public-summary';
 const AUTH = 'hashn/auth';
 const SIX_HOURS = 6 * 60 * 60 * 1000;
 const WEEK = 7 * 24 * 60 * 60 * 1000;
+const KNOCKS_SCHEMA_REVISION = 2;
 const hash = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2,'0')).join('');
+
+/** One read-only receiving attempt for an existing knock held by the old
+ * workspace-field assumption. Provider backoff still owns the earliest read. */
+export function hashnSchemaReadbackDue(state, at = Date.now()) {
+  return !!state?.intent && !state.terminal && state.stage === 'hashn-knocks-shape-held' &&
+    state.knocksSchemaRevision !== KNOCKS_SCHEMA_REVISION && !state.retryBlocked && !(state.retryAt > at);
+}
 
 export function hashnInstanceProblem(instance) {
   if (!instance?.enabled) return 'hashn-disabled';
@@ -54,7 +62,9 @@ export async function runHashnAcquisition({ storage, instance, initialCredential
     const priorAuth = await storage.get(AUTH);
     if (priorAuth && (priorAuth.agentId !== credential.agentId || priorAuth.apiToken !== credential.apiToken)) return finish('hashn-credential-drift',true);
     if (state.terminal) return finish(state.stage,true);
-    if (state.retryBlocked || state.nextAttemptAt > now()) return { stage: state.stage, requests: 0, newCashExpenseUsd: 0 };
+    const schemaReadback = hashnSchemaReadbackDue(state, now());
+    if (state.retryBlocked || state.retryAt > now() || state.nextAttemptAt > now() && !schemaReadback)
+      return { stage: state.stage, requests: 0, newCashExpenseUsd: 0 };
     if (state.monitoringUntil && now() >= state.monitoringUntil) return finish('hashn-reconciliation-deadline-held',true);
     if (!priorAuth) {
       const { data } = await wire('/agents/me',{credential});
@@ -64,15 +74,17 @@ export async function runHashnAcquisition({ storage, instance, initialCredential
     state.binding ??= binding;
     state.scope ??= bound;
     if (state.intent && !state.reconciliationAttempted) state.reconciliationAttempted = true;
+    state.knocksSchemaRevision = KNOCKS_SCHEMA_REVISION;
     await storage.put(HASHN_STATE,state);
     const { data, providerReceipt } = await wire('/knocks',{credential});
     state.knocksReadbackReceipt = providerReceipt;
+    await storage.put(HASHN_STATE,state); // retain the successful private read before interpreting its shape
     // Provider OpenAPI deliberately leaves this response untyped. Admit only
     // its independently received outgoing shape; never infer absence otherwise.
     if (!Array.isArray(data.outgoing)) throw hashnError('hashn-knocks-shape-held');
     if (data.has_more === true || data.next_cursor || data.nextCursor) throw hashnError('hashn-knocks-truncated-held');
-    if (data.outgoing.some(k => !k || !UUID.test(k.workspace_id ?? ''))) throw hashnError('hashn-knocks-shape-held');
-    const related = data.outgoing.filter(k => k.workspace_id === instance.workspaceId);
+    if (data.outgoing.some(k => !k || !UUID.test(k.knocked_workspace_id ?? ''))) throw hashnError('hashn-knocks-shape-held');
+    const related = data.outgoing.filter(k => k.knocked_workspace_id === instance.workspaceId);
     if (related.length > 1) return finish('hashn-knock-conflict-held',true);
     const knock = related[0];
     if (knock) {

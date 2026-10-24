@@ -12,7 +12,7 @@ import products from "../data/products.mjs";
 import researchProducts from '../data/research-products.mjs';
 import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
 import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
-import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
+import { runHashnAcquisition, hashnSchemaReadbackDue, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
 import { receiveSettlements } from "../src/settlements.mjs";
 import { checkRoutes } from "../src/route-health.mjs";
 import { writeScorecard } from "../src/scorecard.mjs";
@@ -77,7 +77,8 @@ export class EarningClock {
       const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition;
       const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
       const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
-      const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.nextAttemptAt > at) && !(acquisitionPulseAt > at);
+      const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.retryAt > at) &&
+        (hashnSchemaReadbackDue(acquisitionState,at) || !(acquisitionState?.nextAttemptAt > at) && !(acquisitionPulseAt > at));
       const coreNextAt = acquisition ? await this.state.storage.get('earning-clock/core-next-at') : null;
       const researchState = configuration.researchProcurement?.enabled ? await this.state.storage.get(RESEARCH_STATE) : null;
       const researchPending = configuration.researchProcurement?.enabled === true && !researchState?.terminal;
@@ -126,7 +127,8 @@ export class EarningClock {
           const pending = await this.state.storage.get(HASHN_STATE);
           const pulseAt = await this.state.storage.get('hashn/next-pulse-at');
           if (!pending?.terminal && !pending?.retryBlocked)
-            alarm = Math.min(alarm,Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0));
+            alarm = Math.min(alarm,hashnSchemaReadbackDue(pending,Date.now()) ? Date.now()+1000 :
+              Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0,pending?.retryAt ?? 0));
         }
         await this.state.storage.setAlarm(alarm);
       }
