@@ -1,0 +1,17 @@
+{
+  "name": "@red-cup-engineering/earning-loop-worker-service",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Earning loops with no house machine in the loop: a dependency-free Cloudflare Worker cron that receives and corroborates an x402 seller's settlements against two public Base providers, keeps every listed offer buyable, proposes self-adjusting price directives from what buyers revealed, writes a weekly earnings scorecard, and drives an on-chain engine's scan hook. Parameterized by an Operations record.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check worker/earning-loops.mjs && node --check scripts/deploy.mjs && node --check scripts/apply-price-directives.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "apply:price-directives": "node scripts/apply-price-directives.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0"
+}
