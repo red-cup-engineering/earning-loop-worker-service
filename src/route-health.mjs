@@ -23,10 +23,10 @@ export function judge(offer, status, challengeHeader, { payTo, resourceUrl } = {
   if (!challengeHeader) return { held: false, finding: "402 without a payment-required challenge" };
   let challenge;
   try { challenge = decode(challengeHeader); } catch { return { held: false, finding: "payment-required challenge does not decode" }; }
-  if (challenge.x402Version !== 2) return { held: false, finding: "challenge is not x402 v2" };
+  if (challenge?.x402Version !== 2 || !Array.isArray(challenge.accepts)) return { held: false, finding: "challenge is not x402 v2" };
   if (resourceUrl && challenge.resource?.url !== resourceUrl) return { held: false, finding: "challenge resource differs from the probed public URL" };
   if (!/^0x[0-9a-f]{40}$/i.test(payTo ?? "")) return { held: false, finding: "merchant receiver has not been configured" };
-  const accept = (challenge.accepts ?? []).find((a) => a.scheme === "exact" && a.payTo?.toLowerCase() === payTo.toLowerCase() && a.network === "eip155:8453" && a.asset?.toLowerCase() === BASE_USDC);
+  const accept = challenge.accepts.find((a) => a?.scheme === "exact" && typeof a.payTo === "string" && a.payTo.toLowerCase() === payTo.toLowerCase() && a.network === "eip155:8453" && typeof a.asset === "string" && a.asset.toLowerCase() === BASE_USDC);
   if (!accept) return { held: false, finding: "challenge offers no exact Base USDC payment to the configured merchant" };
   if (offer.amountAtomic != null && String(accept.amount) !== String(offer.amountAtomic))
     return { held: false, finding: `challenge asks ${accept.amount}, catalog lists ${offer.amountAtomic}` };
@@ -37,7 +37,9 @@ export function judge(offer, status, challengeHeader, { payTo, resourceUrl } = {
 export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUrl = CATALOG_URL, brokenStreak = BROKEN_STREAK_FOR_REPAIR, repository = env.REPAIR_REPOSITORY, payTo, fetchImpl = fetch } = {}) {
   const key = register("route-health");
   const state = (await read(env.STATE, key)) ?? { routes: {} };
-  const catalog = await (await fetchImpl(catalogUrl, { headers: { accept: "application/json" }, signal: AbortSignal.timeout(15000) })).json();
+  const response = await fetchImpl(catalogUrl, { headers: { accept: "application/json" }, signal: AbortSignal.timeout(15000), redirect: "manual" });
+  if (!response.ok) throw new Error(`catalog answered ${response.status}`);
+  const catalog = await response.json();
   const offers = catalog.offers.filter((offer) => offer.listed);
   const at = now.toISOString();
   for (const offer of offers) state.routes[id(offer)] ??= { firstListedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, heldSince: null, brokenStreak: 0 };

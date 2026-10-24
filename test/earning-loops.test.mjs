@@ -23,7 +23,24 @@ test("a settlement corroborates only when two providers agree on one matching US
   assert.equal(corroborate(witness, [receipt]).reason, "two-provider-receipts-required");
   assert.equal(corroborate(witness, [receipt, { ...receipt, blockHash: "0x" + "e".repeat(64) }]).reason, "provider-disagreement");
   assert.equal(corroborate({ ...witness, amount: "1" }, [receipt, receipt]).reason, "exactly-one-matching-usdc-transfer-required");
-  assert.equal(corroborate(witness, [{ ...receipt, status: "0x0" }, receipt]).reason, "failed-transaction");
+  assert.deepEqual(corroborate(witness, [{ ...receipt, status: "0x0" }, receipt]), { ok: false, reason: "provider-disagreement", retry: true });
+  assert.equal(corroborate(witness, [{ ...receipt, status: "0x0" }, { ...receipt, status: "0x0" }]).reason, "failed-transaction");
+  const truncated = { ...receipt, logs: [{ ...receipt.logs[0], data: "0xc350" }] };
+  assert.equal(corroborate(witness, [truncated, truncated]).ok, false);
+  assert.equal(corroborate(witness, [null, receipt]).retry, true);
+  for (const malformed of [{}, { ...receipt, blockNumber: undefined }, { ...receipt, logs: {} }])
+    assert.equal(corroborate(witness, [malformed, malformed]).retry, true,
+      "two identical malformed responses are unknown evidence, not failed payment");
+});
+
+test("invalid witnesses spend no RPC calls and catalog outages preserve prior evidence", async () => {
+  const env = { STATE: bucket(), MARKET_SETTLEMENTS: bucket({ [`settlements/eip155:8453/${tx}.json`]: { ...witness, amount: "-1" } }) };
+  let calls = 0;
+  const result = await receiveSettlements(env, { fetchImpl: async () => { calls++; throw new Error("must not read a provider"); } });
+  assert.equal(calls, 0);
+  assert.equal(result.refused, 1);
+  await assert.rejects(checkRoutes(env, { fetchImpl: async () => Response.json({ offers: [] }, { status: 503 }) }), /catalog answered 503/);
+  assert.equal(judge({}, 402, btoa(JSON.stringify({ x402Version: 2, accepts: {} })), { payTo }).held, false);
 });
 
 test("an offer is buyable only when its documented example meets a 402 for the catalog's exact price", () => {

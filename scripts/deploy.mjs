@@ -14,6 +14,9 @@ const operationPath = arg("operation"), payersPath = arg("group-payers");
 if (!operationPath || !payersPath) { console.error("--operation and --group-payers are required"); process.exit(2); }
 
 const record = JSON.parse(readFileSync(operationPath, "utf8"));
+if (typeof record.merchantPayTo !== "string" || !/^0x[\da-f]{40}$/i.test(record.merchantPayTo)) {
+  throw new TypeError("operation.merchantPayTo must name the independently authorized merchant recipient");
+}
 const operation = { worker: record.worker, crons: record.crons, limits: record.limits, buckets: record.buckets, catalogUrl: record.catalogUrl,
   economics: record.economics, merchantPayTo: record.merchantPayTo, clock: record.clock ?? "cron-triggers", repair: { brokenStreakBeforeRepair: record.repair.brokenStreakBeforeRepair, repository: record.repair.repository }, onchainScanUrl: record.onchainScanUrl };
 if (!/^0x[0-9a-f]{40}$/i.test(operation.merchantPayTo ?? "")) throw new Error("operation requires independently configured merchantPayTo");
