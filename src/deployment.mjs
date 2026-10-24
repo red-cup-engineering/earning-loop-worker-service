@@ -1,4 +1,5 @@
 import { hashnInstanceProblem } from './hashn-acquisition.mjs';
+import { issuerSettlementCustodyPlan } from './issuer-settlement-custody.mjs';
 
 export function projectOperation(record, { excludeIssuerResearch = false } = {}) {
   if (typeof excludeIssuerResearch !== 'boolean') throw new TypeError('issuer release selection must be boolean');
@@ -16,6 +17,12 @@ export function projectOperation(record, { excludeIssuerResearch = false } = {})
       || !Number.isInteger(witnesses) || witnesses < 0 || witnesses > 4 || record.repair.repository || record.onchainScanUrl)
       throw new TypeError('issuer operation exceeds its qualified subrequest allocation (47 per coincident tick, plus clock)');
     operation.issuerResearch = record.issuerResearch;
+  }
+  if (record.issuerSettlements?.enabled === true && record.issuerSettlements.resourceAdmission?.status === 'received') {
+    const custody = issuerSettlementCustodyPlan(record.issuerSettlements);
+    if (operation.clock !== 'durable-object-alarm' || custody.payTo !== record.merchantPayTo.toLowerCase())
+      throw new TypeError('issuer financial custody requires the original private clock and merchant recipient');
+    operation.issuerSettlements = record.issuerSettlements;
   }
   if (record.commercial) {
     if (record.commercial.enabled && operation.clock !== 'durable-object-alarm')

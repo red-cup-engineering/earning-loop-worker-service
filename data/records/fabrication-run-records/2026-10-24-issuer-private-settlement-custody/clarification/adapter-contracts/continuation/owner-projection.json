@@ -1,0 +1,55 @@
+{
+  "type": "NativeIssuerSettlementOwnerProjection",
+  "version": 1,
+  "at": "2026-10-24T23:37:14.866Z",
+  "rows": [
+    {
+      "owner": "loop",
+      "path": "data/records/schema/issuer-settlement-custody-plan.input.schema.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "owner": "loop",
+      "path": "data/records/schema/issuer-settlement-custody-plan.output.schema.json",
+      "bytes": 90,
+      "sha256": "02b4f6543e12fa7aca4a352d3c89d0ddf11db32cd90015217c497bff66ab4eae"
+    },
+    {
+      "owner": "market",
+      "path": "data/records/schema/issuer-settlement-store-plan.input.schema.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "owner": "market",
+      "path": "data/records/schema/issuer-settlement-store-plan.output.schema.json",
+      "bytes": 90,
+      "sha256": "02b4f6543e12fa7aca4a352d3c89d0ddf11db32cd90015217c497bff66ab4eae"
+    },
+    {
+      "owner": "loop",
+      "path": "src/issuer-settlement-custody.mjs",
+      "bytes": 17528,
+      "sha256": "e4c96c7714f07a0884c4dd2b745d13cdae1406cca25f2bd3d038cb868c4fa1d3"
+    },
+    {
+      "owner": "market",
+      "path": "src/issuer-settlement-store.mjs",
+      "bytes": 11485,
+      "sha256": "f9074a290d374d25dfba08bc357dfa8a83ef171f706acd98b4691f0e6fe496c8"
+    },
+    {
+      "owner": "loop",
+      "path": "test/issuer-settlement-custody-plan-examples.test.mjs",
+      "bytes": 7232,
+      "sha256": "643eccf812366dce6dbe3cd71b711827689ea857230d68d893c158bd11ec994b"
+    },
+    {
+      "owner": "market",
+      "path": "test/issuer-settlement-store-plan-examples.test.mjs",
+      "bytes": 7515,
+      "sha256": "80a4045cc91825691b19d3c6f7fe2232c7adde7c7d631459f52ff0bdc9ba3868"
+    }
+  ]
+}

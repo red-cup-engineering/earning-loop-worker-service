@@ -1,0 +1,58 @@
+{
+  "status": "source-and-local-runtime-received",
+  "specification": "ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE",
+  "server": {
+    "sha256": "e4c96c7714f07a0884c4dd2b745d13cdae1406cca25f2bd3d038cb868c4fa1d3",
+    "bytes": 17528
+  },
+  "client": {
+    "sha256": "f9074a290d374d25dfba08bc357dfa8a83ef171f706acd98b4691f0e6fe496c8",
+    "bytes": 11485
+  },
+  "nativePure": {
+    "passed": 22,
+    "failed": 0
+  },
+  "independentIO": {
+    "passed": 20,
+    "failed": 0,
+    "firstReceiverAttempt": {
+      "passed": 19,
+      "failed": 1,
+      "reason": "test overconstrained unspecified rejection class and standard Fetcher overload; source unchanged"
+    }
+  },
+  "ordinary": {
+    "passed": 59,
+    "failed": 0,
+    "externalWorkerHttp": 28,
+    "providerRpc": 16,
+    "allocatedCommercialHttp": 12,
+    "commercialScope": "original independently qualified twelve-request allocation consumed via existing caller seam; not a new live OpenTask transaction",
+    "sqliteAndClock": {
+      "get": 25,
+      "list": 1,
+      "put": 9,
+      "transaction": 4,
+      "delete": 4,
+      "getAlarm": 0,
+      "setAlarm": 1
+    }
+  },
+  "workerd": {
+    "passed": true,
+    "actualOrdinaryPrivateHandler": true,
+    "artifact": "data/records/worker-runtime-test-records/41d93c16f59b22da826900f49789e71454844cd44e56825bfd0313f08ade10d9/74dac12e-b865-42ac-a52c-c57b0e38b584",
+    "seconds": 3.54,
+    "rssKiB": 60820
+  },
+  "callerCondition": "trusted original functions and separately frozen provider ARRAY; preserve root-provider-mutation-diagnostic.json, no universal mutable-adapter safety claim",
+  "newLiveWrites": 0,
+  "newCashExpense": 0,
+  "remaining": [
+    "final canonical compiled SKU and Group/Public activation match",
+    "whole installed merchant/loop composition build and source integration",
+    "deployment/live acquisition/settlement/customer receiving",
+    "daily income and200USD/daycapacity unmet"
+  ]
+}
