@@ -12,7 +12,7 @@ export function retryDelayMs(value, now) {
   return Number.isFinite(delay) ? Math.max(0, delay) : 0;
 }
 
-export async function refreshIssuerResearch(env, configuration, { now = new Date(), prepare } = {}) {
+export async function refreshIssuerResearch(env, configuration, { now = new Date(), prepare, clock = () => new Date() } = {}) {
   if (!configuration) return { status: 'not-configured' };
   const key = register('issuer-research');
   const previous = await read(env.STATE, key);
@@ -29,12 +29,15 @@ export async function refreshIssuerResearch(env, configuration, { now = new Date
     reading = { status: 'prepared', at: now.toISOString(), cacheKey: configuration.cacheKey,
       observedAt: complete.observedAt ?? null, nextAttemptAt: new Date(now.getTime() + 900_000).toISOString() };
   } catch (error) {
-    const delay = Math.max(900_000, retryDelayMs(error.retryAfter, now));
-    reading = { status: 'unavailable', at: now.toISOString(), cacheKey: configuration.cacheKey,
+    // Delta-seconds starts when the refusal was observed, after acquisition,
+    // rather than at the beginning of this possibly slow pass.
+    const refusedAt = new Date(Math.max(now.getTime(), clock().getTime()));
+    const delay = Math.max(900_000, retryDelayMs(error.retryAfter, refusedAt));
+    reading = { status: 'unavailable', at: refusedAt.toISOString(), cacheKey: configuration.cacheKey,
       error: error.message, code: error.code ?? null, reason: error.reason ?? null,
       retryable: error.retryable ?? true, retryAfter: typeof error.retryAfter === 'string' ? error.retryAfter : null,
       retryBlocked: !Number.isFinite(delay),
-      nextAttemptAt: Number.isFinite(delay) ? new Date(now.getTime() + delay).toISOString() : null };
+      nextAttemptAt: Number.isFinite(delay) ? new Date(refusedAt.getTime() + delay).toISOString() : null };
   }
   await put(env.STATE, key, reading);
   return reading;

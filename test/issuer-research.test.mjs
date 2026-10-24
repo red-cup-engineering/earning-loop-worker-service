@@ -23,7 +23,7 @@ test('complete producer result replaces the old cohort once, only after resoluti
 test('a failed source preserves the prior cohort and durable Retry-After suppresses the next tick', async () => {
   const state = bucket({ [config.cacheKey]: { old: true } }); let calls = 0;
   const prepare = async () => { calls++; throw Object.assign(new Error('SEC busy'), { code: 'issuer-revenue-source-unavailable', reason: 'http-429', retryable: true, retryAfter: '3600' }); };
-  const failed = await refreshIssuerResearch({ STATE: state }, config, { now: at, prepare });
+  const failed = await refreshIssuerResearch({ STATE: state }, config, { now: at, prepare, clock: () => at });
   assert.equal(failed.retryAfter, '3600'); assert.equal(failed.nextAttemptAt, '2026-10-24T21:00:00.000Z');
   assert.deepEqual(await (await state.get(config.cacheKey)).json(), { old: true });
   const deferred = await refreshIssuerResearch({ STATE: state }, config, { now: new Date(at.getTime() + 900000), prepare });
@@ -41,16 +41,26 @@ test('long Retry-After is never shortened; unrepresentable delay remains durably
   for (const retryAfter of ['172800','Mon, 26 Oct 2026 20:00:00 GMT','999999999999999999999999']) {
     const state=bucket({[config.cacheKey]:{old:true}});let calls=0;
     const prepare=async()=>{calls++;throw Object.assign(new Error('SEC busy'),{retryAfter});};
-    const failed=await refreshIssuerResearch({STATE:state},config,{now:at,prepare});
+    const failed=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>at});
     const deferred=await refreshIssuerResearch({STATE:state},config,{now:new Date(at.getTime()+86400000),prepare});
     assert.equal(deferred.status,'deferred');assert.equal(calls,1);
     if(retryAfter.startsWith('999'))assert.equal(failed.retryBlocked,true);
     else assert.equal(failed.nextAttemptAt,'2026-10-26T20:00:00.000Z');
   }
 });
-test('deployment projection preserves trusted issuer configuration and refuses over-budget acquisition', () => {
-  const record = { worker: 'test', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: config };
-  assert.deepEqual(projectOperation(record).issuerResearch, config);
+test('Retry-After seconds starts at the observed refusal, after a slow source attempt', async()=>{
+  const state=bucket();
+  const refusedAt=new Date(at.getTime()+60000);
+  const prepare=async()=>{throw Object.assign(new Error('SEC busy'),{retryAfter:'172800'});};
+  const result=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>refusedAt});
+  assert.equal(result.nextAttemptAt,'2026-10-26T20:01:00.000Z');
+});
+test('deployment projection activates only explicitly admitted issuer configuration and refuses over-budget acquisition', () => {
+  const admitted = { ...config, enabled: true, resourceAdmission: { status: 'received' } };
+  const record = { worker: 'test', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: admitted };
+  assert.equal(projectOperation({ ...record, issuerResearch: config }).issuerResearch, undefined);
+  assert.equal(projectOperation({ ...record, issuerResearch: { ...admitted, resourceAdmission: { status: 'unreceived' } } }).issuerResearch, undefined);
+  assert.deepEqual(projectOperation(record).issuerResearch, admitted);
   assert.throws(() => projectOperation({ ...record, limits: { ...record.limits, routeProbesPerPass: 4 } }), /subrequest/);
   assert.throws(() => projectOperation({ ...record, onchainScanUrl: 'https://example.test' }), /subrequest/);
   const existing = { compatibility_date: '2026-10-01', compatibility_flags: ['some_existing_flag'], bindings: [{ type: 'plain_text', name: 'UNKNOWN', text: 'retained' }, { type: 'r2_bucket', name: 'OTHER', bucket_name: 'other' }, { type: 'secret_text', name: 'TOKEN' }] };
