@@ -70,8 +70,8 @@ test('one bounded settlement page continues past already-seen witnesses without 
   assert.equal(reading.scanCursor, null);
 });
 
-test('actual existing pass stays within47 subrequests for four witnesses/four provider attempts, nine routes and two SEC reads', async () => {
-  const { run, CRONS } = await import('../worker/earning-loops.mjs');
+async function measuredPass({ routeProbes = 3, alarm = false, date = at } = {}) {
+  const { run, CRONS, EarningClock } = await import('../worker/earning-loops.mjs');
   const { BASE_USDC } = await import('../src/settlements.mjs');
   let calls=0;
   const measured = initial => { const b=bucket(initial); for(const name of ['get','put','list']) { const f=b[name]; b[name]=async(...args)=>{calls++;return f(...args);}; } return b; };
@@ -82,7 +82,7 @@ test('actual existing pass stays within47 subrequests for four witnesses/four pr
     return ['settlements/eip155:8453/'+i,{network:'eip155:8453',transaction,payer,payTo,asset:BASE_USDC,amount:'50000'}];
   }));
   const env={STATE:measured(),MARKET_SETTLEMENTS:measured(witnesses)};
-  const configuration={crons:CRONS,merchantPayTo:payTo,limits:{settlementsPerPass:4,routeProbesPerPass:9},repair:{repository:null},catalogUrl:'https://market.test/v1/catalog',economics:{burnUsdPerMonth:600,floorUsdPerDay:20,goalUsdPerDay:200},issuerResearch:config};
+  const configuration={crons:CRONS,merchantPayTo:payTo,limits:{settlementsPerPass:4,routeProbesPerPass:routeProbes},repair:{repository:null},catalogUrl:'https://market.test/v1/catalog',economics:{burnUsdPerMonth:600,floorUsdPerDay:20,goalUsdPerDay:200},issuerResearch:config};
   let rpc=0;
   const original=globalThis.fetch;
   globalThis.fetch=async(url,init={})=>{
@@ -93,12 +93,21 @@ test('actual existing pass stays within47 subrequests for four witnesses/four pr
       const transaction=JSON.parse(init.body).params[0];
       return Response.json({result:{status:'0x1',transactionHash:transaction,blockHash:block,blockNumber:'0x10',logs:[{address:BASE_USDC,topics:['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',topic(payer),topic(payTo)],data:'0x'+(50000).toString(16).padStart(64,'0'),logIndex:'0x2'}]}});
     }
-    if(url===configuration.catalogUrl)return Response.json({offers:Array.from({length:9},(_,i)=>({listed:true,method:'GET',route:'/offer'+i,url:'https://market.test/offer'+i,amountAtomic:'50000'}))});
+    if(url===configuration.catalogUrl)return Response.json({offers:Array.from({length:routeProbes},(_,i)=>({listed:true,method:'GET',route:'/offer'+i,url:'https://market.test/offer'+i,amountAtomic:'50000'}))});
     return new Response('{}',{status:402});
   };
   try {
-    const result=await run(env,CRONS.pass,at,{configuration,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:at.toISOString()};}});
-    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,9);assert.equal(result.issuerResearch.status,'prepared');
-    assert.equal(rpc,16);assert.equal(calls,47);
+    const options={configuration,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:date.toISOString()};}};
+    if(alarm){
+      const originalNow=Date.now;Date.now=()=>date.getTime();
+      try{await new EarningClock({storage:{async setAlarm(){calls++;}}},env,options).alarm();}
+      finally{Date.now=originalNow;}
+    }else await run(env,CRONS.pass,date,options);
+    const result=JSON.parse(env.STATE.store.get('registers/earning-loops/last-run.json'));
+    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,routeProbes);assert.equal(result.issuerResearch.status,'prepared');
+    assert.equal(rpc,16);return calls;
   } finally {globalThis.fetch=original;}
-});
+}
+test('actual qualified pass uses41 subrequests for four witnesses/four provider attempts, three routes and two SEC reads',async()=>{assert.equal(await measuredPass(),41);});
+test('the coincident weekly alarm includes the scorecard branch and clock rearm within48 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-26T14:00:00Z')}),48);});
+test('the coincident daily alarm includes price directives and clock rearm within47 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-27T13:30:00Z')}),47);});
