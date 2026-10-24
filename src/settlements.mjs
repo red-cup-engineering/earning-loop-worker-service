@@ -39,11 +39,14 @@ export function corroborate(witness, receipts) {
   if (problem) return { ok: false, reason: problem };
   if (receipts.length < 2) return { ok: false, reason: "two-provider-receipts-required", retry: true };
   const [a, b] = receipts;
-  if (a.status !== "0x1") return { ok: false, reason: "failed-transaction" };
-  if (a.blockHash?.toLowerCase() !== b.blockHash?.toLowerCase() || a.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
-    || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
+  if (a.status !== "0x1" || b.status !== "0x1") return { ok: false, reason: "failed-transaction" };
+  if (!TX.test(a.blockHash ?? "") || !TX.test(b.blockHash ?? "") || a.blockHash.toLowerCase() !== b.blockHash.toLowerCase() || a.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
+    || b.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
+    || a.blockNumber !== b.blockNumber || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
   const transfers = matchingTransfers(a, witness);
   if (transfers.length !== 1) return { ok: false, reason: "exactly-one-matching-usdc-transfer-required" };
+  if (transfers[0].logIndex !== matchingTransfers(b, witness)[0].logIndex || transfers[0].removed === true || matchingTransfers(b, witness)[0].removed === true)
+    return { ok: false, reason: "provider-disagreement", retry: true };
   return { ok: true, receipt: a, transfer: transfers[0] };
 }
 
@@ -53,7 +56,7 @@ async function receiptsFor(hash, fetchImpl) {
   const read = async (url) => {
     try {
       const response = await fetchImpl(url, { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getTransactionReceipt", params: [hash] }) });
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getTransactionReceipt", params: [hash] }), signal: AbortSignal.timeout(10000) });
       const body = await response.json();
       return response.ok && body.result ? body.result : null;
     } catch { return null; }
@@ -71,7 +74,7 @@ async function receiptsFor(hash, fetchImpl) {
 export async function receiveSettlements(env, { now = new Date(), limit = 8, groupPayers = new Set(), fetchImpl = fetch } = {}) {
   const key = register("settlements");
   const state = (await read(env.STATE, key)) ?? { settlements: {}, refused: {} };
-  const seen = new Set([...Object.values(state.settlements).map((s) => s.witnessKey), ...Object.keys(state.refused).filter((k) => !state.refused[k].retry)]);
+  const seen = new Set([...Object.values(state.settlements).filter((s) => s.evidenceVersion === 2).map((s) => s.witnessKey), ...Object.keys(state.refused).filter((k) => !state.refused[k].retry)]);
   const fresh = [];
   let cursor;
   do {
@@ -88,8 +91,11 @@ export async function receiveSettlements(env, { now = new Date(), limit = 8, gro
     const payer = witness.payer.toLowerCase();
     const sourceId = `evm:eip155:8453:${BASE_USDC}:${witness.payTo.toLowerCase()}:${witness.transaction.toLowerCase()}:${BigInt(checked.transfer.logIndex)}`;
     const settlement = {
-      sourceId, witnessKey, transactionHash: witness.transaction.toLowerCase(), payer, receiver: witness.payTo.toLowerCase(),
-      amount: witness.amount, usd: usdc(witness.amount), payerClass: groupPayers.has(payer) ? "group" : "outside",
+      evidenceVersion: 2, sourceId, witnessKey, transactionHash: witness.transaction.toLowerCase(), payer, receiver: witness.payTo.toLowerCase(),
+      amount: witness.amount, usd: usdc(witness.amount), payerClass: groupPayers.has(payer) ? "group" : "unclassified",
+      paymentObservation: witness.paymentObservation ?? null, deliveryObservation: witness.deliveryObservation ?? null,
+      responsePreparation: witness.responsePreparation ?? null, witnessId: witness.witnessId ?? null,
+      classificationBasis: groupPayers.has(payer) ? "current Group payer register" : "absence from Group register does not establish outside ownership",
       route: witness.route ?? null, method: witness.method ?? null, gateway: witness.gateway ?? null, sku: witness.sku ?? null,
       ledgerAccount: witness.ledgerAccount ?? null, blockNumber: Number(BigInt(checked.receipt.blockNumber)),
       recordedAt: witness.recordedAt ?? null, corroboratedAt: now.toISOString(),

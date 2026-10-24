@@ -14,7 +14,9 @@ const topic = (a) => "0x" + "0".repeat(24) + a.slice(2);
 const witness = { network: "eip155:8453", transaction: tx, payer, payTo, asset: BASE_USDC, amount: "50000", route: "/v1/pacing/analysis", method: "POST", recordedAt: "2026-10-20T00:00:00Z" };
 const receipt = { status: "0x1", transactionHash: tx, blockHash: block, blockNumber: "0x10",
   logs: [{ address: BASE_USDC, topics: ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef", topic(payer), topic(payTo)], data: "0x" + (50000).toString(16).padStart(64, "0"), logIndex: "0x2" }] };
-const challenge = (amount) => btoa(JSON.stringify({ x402Version: 2, accepts: [{ network: "eip155:8453", asset: BASE_USDC, amount, payTo }] }));
+const delivery = { basis: "server-response-prepared", status: 200, bodyBytes: 100, requesterAccepted: true };
+const outside = { payerClass: "outside-confirmed", deliveryObservation: delivery };
+const challenge = (amount, url = "https://m/x", override = {}) => btoa(JSON.stringify({ x402Version: 2, resource: { url }, accepts: [{ scheme: "exact", network: "eip155:8453", asset: BASE_USDC, amount, payTo, ...override }] }));
 
 test("a settlement corroborates only when two providers agree on one matching USDC transfer", () => {
   assert.equal(corroborate(witness, [receipt, receipt]).ok, true);
@@ -27,9 +29,9 @@ test("a settlement corroborates only when two providers agree on one matching US
 test("an offer is buyable only when its documented example meets a 402 for the catalog's exact price", () => {
   const offer = { method: "POST", url: "https://m/x", price: "$0.05", amountAtomic: "50000", request: { example: { body: { a: 1 } } } };
   assert.equal(JSON.parse(probeRequest(offer)[1].body).a, 1);
-  assert.equal(judge(offer, 402, challenge("50000")).held, true);
+  assert.equal(judge(offer, 402, challenge("50000"), { payTo, resourceUrl: offer.url }).held, true);
   assert.match(judge(offer, 400, null).finding, /400/);
-  assert.match(judge(offer, 402, challenge("1200")).finding, /asks 1200/);
+  assert.match(judge(offer, 402, challenge("1200"), { payTo }).finding, /asks 1200/);
   assert.match(judge(offer, 402, "not-base64!").finding, /decode/);
 });
 
@@ -45,7 +47,7 @@ test("price directives raise on crossed range, lift sub-cent toys to a cent, and
     "POST /toy": { firstListedAt: old, heldSince: old, held: true, amountAtomic: "1200" },
     "POST /quiet": { firstListedAt: old, heldSince: old, held: true, amountAtomic: "250000" },
     "POST /broken": { firstListedAt: old, heldSince: null, held: false, amountAtomic: "1000" } };
-  const settlements = Object.fromEntries(Array.from({ length: 21 }, (_, i) => [i, { route: "/hot", payer, usd: 0.05, recordedAt: "2026-11-25T00:00:00Z" }]));
+  const settlements = Object.fromEntries(Array.from({ length: 21 }, (_, i) => [i, { ...outside, route: "/hot", payer, usd: 0.05, recordedAt: "2026-11-25T00:00:00Z" }]));
   const out = proposeDirectives({ routes, settlements }, { now });
   const by = Object.fromEntries(out.map((d) => [d.route, d]));
   assert.equal(by["POST /hot"].to, String(stepUp(50000n)));
@@ -53,7 +55,7 @@ test("price directives raise on crossed range, lift sub-cent toys to a cent, and
   assert.equal(by["POST /quiet"].kind, "change-one-thing");
   assert.equal(by["POST /broken"], undefined);
   const raised = { id: "r", route: "POST /hot", kind: "raise", from: "50000", to: "80000", status: "applied", appliedAt: "2026-11-01T00:00:00Z" };
-  const lost = Object.fromEntries(Array.from({ length: 10 }, (_, i) => [i, { route: "/hot", payer, usd: 0.05, recordedAt: "2026-10-25T00:00:00Z" }]));
+  const lost = Object.fromEntries(Array.from({ length: 10 }, (_, i) => [i, { ...outside, route: "/hot", payer, usd: 0.05, recordedAt: "2026-10-25T00:00:00Z" }]));
   const revert = proposeDirectives({ routes: { "POST /hot": { ...routes["POST /hot"], amountAtomic: "80000" } }, settlements: lost, previous: [raised] }, { now });
   assert.equal(revert[0].kind, "revert");
   assert.equal(revert[0].to, "50000");
@@ -75,9 +77,9 @@ test("applying directives rewrites only the matching catalog prices it still fin
 test("the scorecard counts only outside payers and reads the mode from the burn", () => {
   const now = new Date("2026-10-26T14:00:00Z");
   const group = "0x" + "f".repeat(40);
-  const card = scorecard({ settlements: { a: { payer, usd: 3, route: "/x", recordedAt: "2026-10-25T00:00:00Z" }, b: { payer: group, usd: 9, route: "/x", recordedAt: "2026-10-25T00:00:00Z" } } }, { now, groupPayers: new Set([group]) });
+  const card = scorecard({ settlements: { a: { ...outside, payer, usd: 3, route: "/x", recordedAt: "2026-10-25T00:00:00Z" }, b: { payer: group, usd: 9, route: "/x", recordedAt: "2026-10-25T00:00:00Z" } } }, { now, groupPayers: new Set([group]) });
   assert.equal(card.outsideRevenueUSD.week, 3);
-  assert.equal(card.groupPayerRevenueUSD.week, 9);
+  assert.equal(card.groupPayerCashReceivedUSD.week, 9);
   assert.equal(card.mode, "starving");
   assert.equal(card.targetsUSDPerDay.goal, 200);
   assert.equal(mode(1.2), "self-funding");
@@ -88,19 +90,19 @@ test("one pass receives a settlement, checks a route and records the absent engi
   const fetchImpl = async (url, init = {}) => {
     if (url.endsWith("/v1/catalog")) return Response.json({ offers: [{ listed: true, method: "POST", route: "/v1/pacing/analysis", url: "https://m/v1/pacing/analysis", price: "$0.05", amountAtomic: "50000", request: { example: { body: {} } } }] });
     if (init.body?.includes("eth_getTransactionReceipt")) return Response.json({ result: receipt });
-    return new Response("{}", { status: 402, headers: { "payment-required": challenge("50000") } });
+    return new Response("{}", { status: 402, headers: { "payment-required": challenge("50000", "https://m/v1/pacing/analysis", { payTo: "0x32886F6F361C1d570255c2762967A2e41D0E9B1a" }) } });
   };
   const original = globalThis.fetch; globalThis.fetch = fetchImpl;
   try {
     const outcome = await run(env, CRONS.pass, new Date("2026-10-24T20:00:00Z"));
     assert.equal(outcome.settlements.received.length, 1);
-    assert.equal(outcome.settlements.received[0].payerClass, "outside");
+    assert.equal(outcome.settlements.received[0].payerClass, "unclassified");
     assert.equal(outcome.routes.held, 1);
     assert.equal(outcome.onchain.status, "no-engine-attached");
     const again = await run(env, CRONS.pass, new Date("2026-10-24T20:15:00Z"));
     assert.equal(again.settlements.received.length, 0);
     const card = await run(env, CRONS.scorecard, new Date("2026-10-26T14:00:00Z"));
-    assert.equal(card.scorecard.week, 0.05);
+    assert.equal(card.scorecard.week, 0);
   } finally { globalThis.fetch = original; }
 });
 
@@ -111,4 +113,37 @@ test("the clock runs the pass every quarter hour, directives daily at 13:30 and 
   assert.ok(dueCrons(CRONS, new Date("2026-10-26T14:00:00Z")).includes(CRONS.scorecard));
   assert.ok(!matches(CRONS.scorecard, new Date("2026-10-27T14:00:00Z")));
   assert.equal(new Date(nextTick(Date.parse("2026-10-24T20:07:00Z"))).toISOString(), "2026-10-24T20:15:00.000Z");
+});
+
+test("buyability refuses wrong merchant, wrong scheme, missing merchant authority and resource substitution", () => {
+  const offer = { amountAtomic: "50000" };
+  assert.equal(judge(offer, 402, challenge("50000"), {}).held, false);
+  assert.equal(judge(offer, 402, challenge("50000", "https://m/x", { payTo: payer }), { payTo }).held, false);
+  assert.equal(judge(offer, 402, challenge("50000", "https://m/x", { scheme: "upto" }), { payTo }).held, false);
+  assert.equal(judge(offer, 402, challenge("50000", "https://m/other"), { payTo, resourceUrl: "https://m/x" }).held, false);
+});
+
+test("corroboration refuses a failed second receipt, substituted transaction, different log index or removed log", () => {
+  for (const other of [
+    { ...receipt, status: "0x0" },
+    { ...receipt, transactionHash: "0x" + "e".repeat(64) },
+    { ...receipt, logs: [{ ...receipt.logs[0], logIndex: "0x3" }] },
+    { ...receipt, logs: [{ ...receipt.logs[0], removed: true }] },
+  ]) assert.equal(corroborate(witness, [receipt, other]).ok, false);
+});
+
+test("cash from unknown wallets, prepared responses without acceptance, house payments and future dates cannot inflate revenue", () => {
+  const now = new Date("2026-10-26T14:00:00Z");
+  const sample = { payer, usd: 1, route: "/x", recordedAt: "2026-10-25T00:00:00Z" };
+  const card = scorecard({ settlements: {
+    unknown: { ...sample, ...outside, payerClass: "outside" }, // legacy absence-based label
+    prepared: { ...sample, ...outside, deliveryObservation: { ...delivery, requesterAccepted: null } },
+    future: { ...sample, ...outside, recordedAt: "2026-10-27T00:00:00Z" },
+  } }, { now });
+  assert.equal(card.outsideRevenueUSD.week, 0);
+  assert.equal(card.unclassifiedCashReceivedUSD.week, 1);
+  assert.equal(card.outsidePaidDeliveriesUSD.week, 1);
+  assert.equal(card.outsideCashReceivedUSD.week, 1);
+  const directives = proposeDirectives({ routes: {}, settlements: {} }, { now });
+  assert.deepEqual(directives, []);
 });

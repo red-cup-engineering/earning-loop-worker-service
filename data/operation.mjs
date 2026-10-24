@@ -8,8 +8,8 @@ export default {
     "scorecard": "0 14 * * 1"
   },
   "limits": {
-    "routeProbesPerPass": 15,
-    "settlementsPerPass": 6
+    "routeProbesPerPass": 12,
+    "settlementsPerPass": 4
   },
   "buckets": {
     "state": "561-group-working-state",
@@ -22,6 +22,7 @@ export default {
     "floorUsdPerDay": 20,
     "goalUsdPerDay": 200
   },
+  "merchantPayTo": "0x32886F6F361C1d570255c2762967A2e41D0E9B1a",
   "clock": "durable-object-alarm",
   "repair": {
     "brokenStreakBeforeRepair": 3,

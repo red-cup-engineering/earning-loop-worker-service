@@ -18,23 +18,26 @@ export function probeRequest(offer) {
 
 const decode = (header) => JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(header), (c) => c.charCodeAt(0))));
 
-export function judge(offer, status, challengeHeader) {
+export function judge(offer, status, challengeHeader, { payTo, resourceUrl } = {}) {
   if (status !== 402) return { held: false, finding: `answered ${status}, not 402, to the catalog's example request` };
   if (!challengeHeader) return { held: false, finding: "402 without a payment-required challenge" };
   let challenge;
   try { challenge = decode(challengeHeader); } catch { return { held: false, finding: "payment-required challenge does not decode" }; }
-  const accept = (challenge.accepts ?? []).find((a) => a.network === "eip155:8453" && a.asset?.toLowerCase() === BASE_USDC);
-  if (!accept) return { held: false, finding: "challenge offers no Base USDC payment" };
+  if (challenge.x402Version !== 2) return { held: false, finding: "challenge is not x402 v2" };
+  if (resourceUrl && challenge.resource?.url !== resourceUrl) return { held: false, finding: "challenge resource differs from the probed public URL" };
+  if (!/^0x[0-9a-f]{40}$/i.test(payTo ?? "")) return { held: false, finding: "merchant receiver has not been configured" };
+  const accept = (challenge.accepts ?? []).find((a) => a.scheme === "exact" && a.payTo?.toLowerCase() === payTo.toLowerCase() && a.network === "eip155:8453" && a.asset?.toLowerCase() === BASE_USDC);
+  if (!accept) return { held: false, finding: "challenge offers no exact Base USDC payment to the configured merchant" };
   if (offer.amountAtomic != null && String(accept.amount) !== String(offer.amountAtomic))
     return { held: false, finding: `challenge asks ${accept.amount}, catalog lists ${offer.amountAtomic}` };
   return { held: true, finding: `buyable at ${offer.price}`, amount: String(accept.amount), payTo: accept.payTo?.toLowerCase() ?? null };
 }
 
 /** Probe the `limit` stalest listed offers; keep first-listed dates, streaks and repair candidates. */
-export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUrl = CATALOG_URL, brokenStreak = BROKEN_STREAK_FOR_REPAIR, repository = env.REPAIR_REPOSITORY, fetchImpl = fetch } = {}) {
+export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUrl = CATALOG_URL, brokenStreak = BROKEN_STREAK_FOR_REPAIR, repository = env.REPAIR_REPOSITORY, payTo, fetchImpl = fetch } = {}) {
   const key = register("route-health");
   const state = (await read(env.STATE, key)) ?? { routes: {} };
-  const catalog = await (await fetchImpl(catalogUrl, { headers: { accept: "application/json" } })).json();
+  const catalog = await (await fetchImpl(catalogUrl, { headers: { accept: "application/json" }, signal: AbortSignal.timeout(15000) })).json();
   const offers = catalog.offers.filter((offer) => offer.listed);
   const at = now.toISOString();
   for (const offer of offers) state.routes[id(offer)] ??= { firstListedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, heldSince: null, brokenStreak: 0 };
@@ -45,8 +48,9 @@ export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUr
     const [url, init] = probeRequest(offer);
     let verdict;
     try {
-      const response = await fetchImpl(url, { ...init, redirect: "manual" });
-      verdict = judge(offer, response.status, response.headers.get("payment-required"));
+      const response = await fetchImpl(url, { ...init, redirect: "manual", signal: AbortSignal.timeout(15000) });
+      verdict = judge(offer, response.status, response.headers.get("payment-required"), { payTo, resourceUrl: url });
+      await response.body?.cancel();
     } catch (error) { verdict = { held: false, finding: `request failed: ${error.message}` }; }
     const entry = state.routes[id(offer)];
     Object.assign(entry, verdict, { observedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, delistedAt: undefined });
