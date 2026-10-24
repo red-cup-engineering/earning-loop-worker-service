@@ -45,7 +45,8 @@ export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUr
   for (const offer of offers) state.routes[id(offer)] ??= { firstListedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, heldSince: null, brokenStreak: 0 };
   const listed = new Set(offers.map(id));
   for (const route of Object.keys(state.routes)) if (!listed.has(route)) state.routes[route].delistedAt ??= at;
-  const due = offers.sort((a, b) => (state.routes[id(a)].observedAt ?? "").localeCompare(state.routes[id(b)].observedAt ?? "")).slice(0, limit);
+  const due = offers.sort((a, b) => Number(state.routes[id(a)].held !== false) - Number(state.routes[id(b)].held !== false)
+    || (state.routes[id(a)].observedAt ?? "").localeCompare(state.routes[id(b)].observedAt ?? "")).slice(0, limit);
   for (const offer of due) {
     const [url, init] = probeRequest(offer);
     let verdict;
