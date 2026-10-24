@@ -4,7 +4,7 @@ export function projectOperation(record) {
   const operation = { worker: record.worker, crons: record.crons, limits: record.limits, buckets: record.buckets, catalogUrl: record.catalogUrl,
     economics: record.economics, merchantPayTo: record.merchantPayTo, clock: record.clock ?? 'cron-triggers',
     repair: { brokenStreakBeforeRepair: record.repair.brokenStreakBeforeRepair, repository: record.repair.repository }, onchainScanUrl: record.onchainScanUrl };
-  if (record.issuerResearch) {
+  if (record.issuerResearch?.enabled === true && record.issuerResearch.resourceAdmission?.status === 'received') {
     const n = record.issuerResearch.issuers?.length;
     const routes = record.limits?.routeProbesPerPass, witnesses = record.limits?.settlementsPerPass;
     if (!Number.isInteger(n) || n < 2 || n > 5 || !Number.isInteger(routes) || routes < 0 || routes + n > 5
