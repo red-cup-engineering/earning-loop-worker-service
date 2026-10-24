@@ -8,6 +8,8 @@
 // GET / answers 503 while any listed offer is unbuyable, so an uptime checker alerts on a lost sale.
 import operation from "../data/operation.mjs";
 import groupPayerList from "../data/group-payers.mjs";
+import products from "../data/products.mjs";
+import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
 import { receiveSettlements } from "../src/settlements.mjs";
 import { checkRoutes } from "../src/route-health.mjs";
 import { writeScorecard } from "../src/scorecard.mjs";
@@ -15,49 +17,76 @@ import { writeDirectives } from "../src/price-directives.mjs";
 import { runOnchainHook } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
+import { refreshIssuerResearch } from "../src/issuer-research.mjs";
 
 const groupPayers = new Set(groupPayerList);
 export const CRONS = operation.crons;
 
-export async function run(env, cron, now = new Date()) {
+export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort } = {}) {
+  if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
+    throw new TypeError('issuer operation has no subrequest allocation for an onchain hook');
   const outcome = { cron, at: now.toISOString() };
   const step = async (name, work) => {
     try { outcome[name] = await work(); } catch (error) { outcome[name] = { error: error.message }; }
   };
-  if (cron === CRONS.directives) await step("directives", () => writeDirectives(env, { now, groupPayers }));
-  else if (cron === CRONS.scorecard) await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: operation.economics })).outsideRevenueUSD);
+  if (cron === configuration.crons.directives) await step("directives", () => writeDirectives(env, { now, groupPayers }));
+  else if (cron === configuration.crons.scorecard) await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
   else {
-    await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: operation.limits.settlementsPerPass }));
-    await step("routes", () => checkRoutes(env, { now, catalogUrl: operation.catalogUrl, limit: operation.limits.routeProbesPerPass,
-      brokenStreak: operation.repair.brokenStreakBeforeRepair, repository: operation.repair.repository, payTo: operation.merchantPayTo }));
-    await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: operation.economics })).outsideRevenueUSD);
-    await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? operation.onchainScanUrl }));
+    await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: configuration.limits.settlementsPerPass }));
+    await step("routes", () => checkRoutes(env, { now, catalogUrl: configuration.catalogUrl, limit: configuration.limits.routeProbesPerPass,
+      brokenStreak: configuration.repair.brokenStreakBeforeRepair, repository: configuration.repair.repository, payTo: configuration.merchantPayTo }));
+    await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
+    await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl }));
+    if (configuration.issuerResearch) await step("issuerResearch", () => refreshIssuerResearch(env, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort }));
   }
   await put(env.STATE, register("last-run"), outcome);
   return outcome;
 }
 
 const READINGS = { "/settlements.json": "settlements", "/route-health.json": "route-health", "/scorecard.json": "scorecard",
-  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run" };
+  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run", "/issuer-research.json": "issuer-research" };
 
 // Run every loop whose operation cron matches this quarter-hour tick, the most frequent last so the daily and
 // weekly readings come from the previous pass's settled state.
-export async function tick(env, date) {
-  const due = dueCrons(CRONS, date).sort((a, b) => (a === CRONS.pass) - (b === CRONS.pass));
+export async function tick(env, date, options = {}) {
+  const crons = (options.configuration ?? operation).crons;
+  const due = dueCrons(crons, date).sort((a, b) => (a === crons.pass) - (b === crons.pass));
   const outcomes = [];
-  for (const cron of due) outcomes.push(await run(env, cron, date));
+  for (const cron of due) outcomes.push(await run(env, cron, date, options));
   return outcomes;
 }
 
 export class EarningClock {
-  constructor(state, env) { this.state = state; this.env = env; }
+  constructor(state, env, options = {}) { this.state = state; this.env = env; this.options = options; this.queue = Promise.resolve(); }
   async alarm() {
-    const at = Date.now(), slot = new Date(Math.round(at / 60_000) * 60_000);
-    try { await tick(this.env, slot); } finally { await this.state.storage.setAlarm(nextTick(at)); }
+    const task = this.queue.then(async () => {
+      const configuration = this.options.configuration ?? operation;
+      const at = Date.now(), commercial = configuration.commercial?.enabled === true;
+      const slot = commercial ? Math.round(at / 450000) * 450000 : Math.round(at / 60000) * 60000;
+      try {
+        if (commercial && slot % 900000 !== 0) {
+          const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
+            instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at) });
+          await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
+            newCashExpenseUsd: 0, at: new Date(at).toISOString() });
+        } else await tick(this.env, new Date(slot), this.options);
+      } finally {
+        await this.state.storage.setAlarm(commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at));
+      }
+    });
+    this.queue = task.catch(() => {});
+    return task;
   }
-  async fetch() {
+  async fetch(request) {
+    if (request && new URL(request.url).pathname === '/commercial.json') {
+      const summary = await this.state.storage.get('opentask/public-summary');
+      if (!summary) return new Response('not yet observed\n', { status: 404 });
+      const alarm = await this.state.storage.getAlarm();
+      return Response.json({ stage: summary.stage, requests: summary.requests, newCashExpenseUsd: 0,
+        at: summary.at, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
+    }
     let alarm = await this.state.storage.getAlarm();
-    if (!alarm) { alarm = nextTick(Date.now()); await this.state.storage.setAlarm(alarm); }
+    if (!alarm) { const at = Date.now(); alarm = (this.options.configuration ?? operation).commercial?.enabled ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at); await this.state.storage.setAlarm(alarm); }
     return Response.json({ nextTick: new Date(alarm).toISOString() });
   }
 }
@@ -66,6 +95,8 @@ export default {
   async scheduled(event, env, context) { context.waitUntil(run(env, event.cron)); },
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
+    if (path === "/products.json") return Response.json(products, { headers: { "cache-control": "public, max-age=300" } });
+    if (path === '/commercial.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
     if (READINGS[path]) {
       const value = await read(env.STATE, register(READINGS[path]));

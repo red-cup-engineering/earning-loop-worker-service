@@ -78,12 +78,10 @@ export async function receiveSettlements(env, { now = new Date(), limit = 8, gro
   const state = (await read(env.STATE, key)) ?? { settlements: {}, refused: {} };
   const seen = new Set([...Object.values(state.settlements).filter((s) => s.evidenceVersion === 2).map((s) => s.witnessKey), ...Object.keys(state.refused).filter((k) => !state.refused[k].retry)]);
   const fresh = [];
-  let cursor;
-  do {
-    const page = await env.MARKET_SETTLEMENTS.list({ prefix: PREFIX, cursor });
-    for (const object of page.objects) if (!seen.has(object.key)) fresh.push(object.key);
-    cursor = page.truncated ? page.cursor : undefined;
-  } while (cursor && fresh.length < limit);
+  // One bounded page per pass. Persist the opaque continuation after processing
+  // the entire page; restart after the end to revisit retriable or new witnesses.
+  const page = await env.MARKET_SETTLEMENTS.list({ prefix: PREFIX, cursor: state.scanCursor ?? undefined, limit });
+  for (const object of page.objects) if (!seen.has(object.key)) fresh.push(object.key);
   const received = [];
   for (const witnessKey of fresh.slice(0, limit)) {
     const witness = await (await env.MARKET_SETTLEMENTS.get(witnessKey))?.json();
@@ -107,6 +105,7 @@ export async function receiveSettlements(env, { now = new Date(), limit = 8, gro
     received.push(settlement);
   }
   state.at = now.toISOString();
+  state.scanCursor = page.truncated ? page.cursor : null;
   await put(env.STATE, key, state);
   return { received, refused: Object.keys(state.refused).length, total: Object.keys(state.settlements).length };
 }
