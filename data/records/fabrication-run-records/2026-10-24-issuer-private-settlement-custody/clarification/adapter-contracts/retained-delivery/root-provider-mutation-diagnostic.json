@@ -1,0 +1,22 @@
+{
+  "kind": "IssuerSettlementProviderMutationDiagnostic",
+  "sourceSHA256": "e4c96c7714f07a0884c4dd2b745d13cdae1406cca25f2bd3d038cb868c4fa1d3",
+  "receivedInitialProviderSet": true,
+  "mutatedAfterAsyncEntry": true,
+  "calls": [
+    "https://unadmitted.invalid/",
+    "https://base.drpc.org",
+    "https://base-mainnet.public.blastapi.io",
+    "https://mainnet.base.org"
+  ],
+  "result": {
+    "status": "observed",
+    "considered": 1,
+    "providerRequests": 4,
+    "corroborated": 0,
+    "refused": 0,
+    "retryPending": 1
+  },
+  "arbitraryProviderReached": true,
+  "liveNetwork": false
+}

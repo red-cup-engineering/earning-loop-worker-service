@@ -1,0 +1,11 @@
+{
+  "type": "ParentReceivedOperationDirection",
+  "actor": "/root",
+  "constraint": "Maximum measured whole pilot financial pulse including commercial/provider requests and actual clock calls",
+  "maximumWorkerCalls": 50,
+  "maximumCommercialRequests": 12,
+  "maximumWitnesses": 4,
+  "maximumProviderAttempts": 4,
+  "meaning": "Business receiving ceiling only; no independently observed quota reservation or capacity claim",
+  "basis": "Root message: measure actual composed50budget <=4witness x4provider +12commercial+clock/localstorage"
+}

@@ -1,0 +1,5 @@
+{
+  "workLot": "urn:work-lot:inference:-9aqZE3gTHkKAEbA9JZKHqjjkQR3OAUVbosbVy2aqGI",
+  "taskClass": "code-fabrication",
+  "module": "src/issuer-settlement-custody.mjs"
+}

@@ -13,7 +13,7 @@ import researchProducts from '../data/research-products.mjs';
 import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
 import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
 import { runHashnAcquisition, hashnSchemaReadbackDue, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
-import { receiveSettlements } from "../src/settlements.mjs";
+import { receiveSettlements, witnessProblem, corroborate, usdc, BASE_PROVIDERS } from "../src/settlements.mjs";
 import { checkRoutes } from "../src/route-health.mjs";
 import { writeScorecard } from "../src/scorecard.mjs";
 import { writeDirectives } from "../src/price-directives.mjs";
@@ -22,8 +22,11 @@ import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
 import { refreshIssuerResearch } from "../src/issuer-research.mjs";
 import { withIssuerSqliteStore, issuerSqliteResponse } from "../src/issuer-sqlite-cache.mjs";
+import { receiveIssuerSettlements, issuerSettlementResponse } from '../src/issuer-settlement-custody.mjs';
 
 const groupPayers = new Set(groupPayerList);
+const issuerSettlementAdapters = Object.freeze({ witnessProblem, corroborate, usdc,
+  BASE_PROVIDERS: Object.freeze([...BASE_PROVIDERS]), groupPayers });
 export const CRONS = operation.crons;
 
 export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage } = {}) {
@@ -74,7 +77,8 @@ export class EarningClock {
     return this.enqueue(async () => {
       const configuration = this.options.configuration ?? operation;
       const acquisition = configuration.hashAcquisition?.enabled === true;
-      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition;
+      const financial = configuration.issuerSettlements?.enabled === true && configuration.issuerSettlements.resourceAdmission?.status === 'received';
+      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition || financial;
       const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
       const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
       const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.retryAt > at) &&
@@ -112,6 +116,9 @@ export class EarningClock {
             await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
             newCashExpenseUsd: 0, at: new Date(at).toISOString() });
           }
+          if (financial && !bootstrap && !researchDue && slot % 900000 !== 0)
+            await (this.options.issuerSettlementPass ?? receiveIssuerSettlements)(this.state.storage,
+              configuration.issuerSettlements, issuerSettlementAdapters);
         } else await tick(this.env, new Date(slot), { ...this.options, issuerStorage: this.state.storage });
       } finally {
         let alarm = acquisitionOnly ? coreNextAt : commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
@@ -135,6 +142,9 @@ export class EarningClock {
     });
   }
   async fetch(request) {
+    if (request && new URL(request.url).pathname === '/issuer-settlement-witness')
+      return this.enqueue(() => issuerSettlementResponse(request, this.state.storage,
+        (this.options.configuration ?? operation).issuerSettlements));
     if (request && new URL(request.url).pathname === '/acquisition.json') {
       const summary = await this.state.storage.get(HASHN_SUMMARY);
       if (!summary) return new Response('not yet observed\n',{status:404});
@@ -162,7 +172,8 @@ export class EarningClock {
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
       const configuration = this.options.configuration ?? operation;
-      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled;
+      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled
+        || configuration.issuerSettlements?.enabled === true && configuration.issuerSettlements.resourceAdmission?.status === 'received';
       const releaseId = commercial ? this.releaseId() : null;
       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
         const armed = await this.state.storage.get('earning-clock/armed-release');

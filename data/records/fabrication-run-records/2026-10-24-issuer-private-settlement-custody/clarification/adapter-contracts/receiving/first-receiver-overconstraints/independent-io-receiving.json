@@ -1,0 +1,5 @@
+{
+  "passed": false,
+  "code": "ASSAY_TEST_FAILED",
+  "failure": "not ok 18 - client exposes only original conditional journal shape and fixed singleton transport\n  ---\n  duration_ms: 1.627043\n  type: 'test'\n  location: '/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/561-group-services-section/services/561-group-operations-services-section/services/bare-cedar-fog-services-section/data/state/fabrication-host/bare-cedar-fog/isolated-module-assay-H13TBp/workspace/test/issuer-settlement-independent.test.mjs:110:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The error is expected to be an instance of \"TypeError\". Received \"Error\"\n  "
+}
