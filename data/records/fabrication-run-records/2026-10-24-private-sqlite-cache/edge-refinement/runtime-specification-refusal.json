@@ -1,0 +1,12 @@
+{
+  "type": "RuntimeSpecificationRefusal",
+  "status": "refused",
+  "sourceModuleSha256": "9b55411f0609b49e814fd10aaced32462ab9848fbe34df39543d82d32ef73e39",
+  "runtime": "workerd1.20261024.1",
+  "originalClause": "async-client methodGET redirect:error",
+  "reason": "Invalid redirect value, must be one of \"follow\" or \"manual\" (\"error\" won't be implemented since it does not make sense at the edge; use \"manual\" and check the response status code).",
+  "specificationCorrection": "redirect:manual; reject non200 except404; never follow",
+  "sourceHandEdits": 0,
+  "newInference": 0,
+  "recordedAt": "2026-10-24 22:28:17 UTC"
+}

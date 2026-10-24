@@ -1,0 +1,564 @@
+{
+  "type": "MarkdownJsnodeModuleSpecificationTranslation",
+  "version": 1,
+  "artifactSpecificationCandidate": {
+    "type": "ArtifactFabricationSpecificationCandidate",
+    "version": 2,
+    "source": {
+      "type": "ArtifactFabricationSource",
+      "version": 1,
+      "identity": {
+        "type": "ArtifactFabricationSourceIdentity",
+        "id": "issuer-private-sqlite-cache"
+      },
+      "provenance": {
+        "type": "ArtifactFabricationSourceProvenance",
+        "locator": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/specifications/issuer-private-sqlite-cache.work-order.md",
+        "digest": "sha256:cd22c3850fe531977e567aba633bee94d08b07330001bc2025e82b1ab640070e",
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 1,
+          "endLine": 36
+        }
+      }
+    },
+    "artifact": {
+      "type": "FabricatedArtifactIdentity",
+      "version": 1,
+      "id": "issuer-private-sqlite-cache",
+      "kind": "jsnode-modules"
+    },
+    "claims": [
+      {
+        "type": "ArtifactFabricationClaim",
+        "version": 1,
+        "id": "bounded-cache",
+        "kind": "world",
+        "statement": "The selected paid operation needs compact private cache consumption with existing singleton state, not another platform or provider",
+        "status": "derived",
+        "quantity": null,
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 24,
+          "endLine": 24
+        },
+        "basis": {
+          "type": "ArtifactFabricationDerivedBasis",
+          "premises": [
+            {
+              "type": "ArtifactFabricationPremise",
+              "kind": "constraint",
+              "ref": "house-operation"
+            },
+            {
+              "type": "ArtifactFabricationPremise",
+              "kind": "constraint",
+              "ref": "sqlite-platform"
+            },
+            {
+              "type": "ArtifactFabricationPremise",
+              "kind": "constraint",
+              "ref": "async-contract"
+            },
+            {
+              "type": "ArtifactFabricationPremise",
+              "kind": "constraint",
+              "ref": "source-free"
+            }
+          ],
+          "derivation": "Preserve original supplier semantics, private OpenTask custody and zero cash conditions; local qualification is not live income."
+        }
+      }
+    ],
+    "requirements": [
+      {
+        "type": "ArtifactFabricationRequirement",
+        "version": 2,
+        "id": "admission",
+        "statement": "Both pure plans and all additional interfaces accept host configuration only. If configuration is absent or enabled is not exactly true or resourceAdmission.status is not exactly 'received', return null from plans; withIssuerSqliteStore returns {status:'not-configured'} without calling work or touching storage; private handler returns HTTP404 without storage. Once admitted require cacheKey a nonempty string whose UTF8 length is at most256 bytes, and maximumCohortBytes a positive safe integer no greater than524288; cacheKey must differ from 'registers/earning-loops/issuer-research.json', otherwise throw TypeError before effects. Ignore additional trusted metadata. These guards grant no resource or source authority.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 3,
+          "endLine": 3
+        }
+      },
+      {
+        "type": "ArtifactFabricationRequirement",
+        "version": 2,
+        "id": "coordinates",
+        "statement": "issuerSqliteStoragePlan(configuration) is pure and returns exactly {cohortKey:'issuer-evidence/cohort',statusKey:'issuer-evidence/status',logicalStatusKey:'registers/earning-loops/issuer-research.json',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes,maximumStatusBytes:524288,maximumTransactionBytes:1900000}. issuerEvidenceReadPlan(configuration) is pure and returns exactly {objectName:'earning-loops',path:'/issuer-evidence',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes}. These are real transport/storage plans used by additional interfaces; no fixture-mode APIs.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 4,
+          "endLine": 4
+        }
+      }
+    ],
+    "prohibitions": [
+      {
+        "type": "ArtifactFabricationProhibition",
+        "version": 2,
+        "id": "no-authority-expansion",
+        "statement": "No public cache or refresh route, source acquisition, OpenTask/credential read, arbitrary key, alarm mutation, new namespace, schedule, external dependency, private worker package import or deployment.",
+        "parameters": [],
+        "claimIds": [
+          "bounded-cache"
+        ],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 6,
+          "endLine": 6
+        }
+      }
+    ],
+    "openQuestions": [],
+    "constraints": [
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "byte-custody",
+        "kind": "law",
+        "authority": "IETF",
+        "revision": "RFC9110",
+        "locator": "https://www.rfc-editor.org/rfc/rfc9110",
+        "applicability": "Private GET and response representation preserve actual body bytes and length; retrieval does not authorize refresh.",
+        "statement": "Correct status and media semantics, no hidden mutations on GET.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 8,
+          "endLine": 8
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "house-operation",
+        "kind": "standard",
+        "authority": "561 Group",
+        "revision": "original paid issuer operation 2026-10-24",
+        "locator": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-issuer-period-reconciliation.json",
+        "applicability": "Actual annual AAPL/MSFT paid comparison requires one trusted completed cache and no request-driven SEC acquisition or unadmitted incremental cash.",
+        "statement": "Root independently approved fixed singleton/two bounded keys; supplier owns all reconciliation/provenance/selector semantics.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 10,
+          "endLine": 10
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "sqlite-platform",
+        "kind": "standard",
+        "authority": "Cloudflare",
+        "revision": "docs observed 2026-10-24",
+        "locator": "https://developers.cloudflare.com/durable-objects/platform/limits/",
+        "applicability": "SQLite key+value/row limit2MB and existing cross-script bindings; no billable headroom inference.",
+        "statement": "Conservative serialized transaction ceiling1900000 bytes; existing EarningClock namespace and object name only.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 11,
+          "endLine": 11
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-contract",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "accepted issuer caller contract at c425608745ace8e864ba8e1df2fcd12058240f72",
+        "locator": "./issuer-research-integration.md",
+        "applicability": "Keep existing Retry-After and full-only publication; no data writes through R2.",
+        "statement": "All additional interfaces in the Requirements are complete mandatory contracts; deterministic plans are real adapter metadata and assay is scoped to plans only.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 12,
+          "endLine": 12
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "source-free",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "native deriveJsnodeModules",
+        "locator": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs",
+        "applicability": "Whole-unit source-free construction and independent receiving.",
+        "statement": "No handwritten behavioral source or fake fixture adapter; unchanged source proposal from native derivation is received at its specified consumer owners before ordinary wiring.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 13,
+          "endLine": 13
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-custody",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "The server module exports withIssuerSqliteStore(storage,configuration,work). It accepts only existing DurableObjectStorage get and transaction capabilities and a function work. It creates one scoped bucket-compatible store with async get(key) and put(key,text), passes it to work once, and returns that work's resolved result only after publication. Only configured cacheKey and the exact logicalStatusKey are admitted; all other keys throw TypeError before any underlying storage access. No getAlarm/setAlarm/delete/list, no env, network, credentials or OpenTask keys. The two physical keys above are the only keys this module ever reads or writes. Each physical value is exactly {cacheKey:configuration.cacheKey,body:theUnchangedJSONText}; get hides mismatched logicalKey as missing, returns null for missing, otherwise returns {json:async()=>JSON.parse(body)}. Wrong/corrupt physical record shape, invalid JSON or oversized stored record throws before work can acquire new sources. The wrapper must not accept a corrupt retry status as permission to refresh.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 14,
+          "endLine": 14
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-atomic",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "put only stages validated valid JSON text, never writes immediately. Bound actual UTF8 text length separately: cohort by maximumCohortBytes, status by524288. Stage the most recent value per admitted key. work executes and finishes outside storage.transaction. If work rejects, commit nothing and rethrow unchanged. On resolved work, invoke storage.transaction once only when staged writes exist; inside its callback put all staged physical values, no work/producer/network. A transaction failure propagates and leaves all prior physical values unchanged. Successful complete-cohort and status publication is one atomic transaction; failure-only status can replace status alone. JSON.stringify physical values plus UTF8 physical keys for all staged writes must total at most1900000 bytes; each key+serialized value must also fit1900000. This is an explicit conservative bound below SQLite's2MB row limit, not a billable-capacity claim. Invalid/oversized cohort put throws before staging it so existing coordinator's catch can stage an unavailable status without overwriting prior cohort.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 15,
+          "endLine": 15
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-overflow",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "If status JSON cannot serialize/parse or its actual UTF8 bytes exceed524288, or the staged transaction would exceed1900000, discard every staged cohort update and replace staged status with JSON text of exactly {status:'unavailable',cacheKey:configuration.cacheKey,retryBlocked:true,reason:'status-overflow',nextAttemptAt:null}. Persist that minimal sentinel atomically; return the sentinel as withIssuerSqliteStore's result after commit rather than returning a false prepared result. Do not retain an earlier staged retry deadline or truncate Retry-After/error text. This deliberate durable fail-closed hold preserves prior cohort and is read back on later work; the existing coordinator sees retryBlocked and performs no acquisition. Stored corrupt state still throws closed instead of being treated as missing. In absence of this overflow no status/body content is rewritten.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 16,
+          "endLine": 16
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-server",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "The server module exports async issuerSqliteResponse(request,storage,configuration). It is called only from existing EarningClock.fetch before the alarm-arming catch-all. For a pathname other than /issuer-evidence return null, no effects. For this pathname, require admitted configuration as above; only GET is accepted, other methods return405 with Allow:GET, no effects. Require URL query to contain exactly one key entry equal to configured cacheKey; reject missing/extra/duplicate/mismatched query with404 and no effects. Read physical cohortKey once, validate wrapper cacheKey/JSON/actual byte bounds; missing/mismatched yields404, corrupt/oversized/storage failure yields503. Return cached original JSON text as HTTP200 application/json with exact UTF8 Content-Length and Cache-Control:no-store. Do not disclose error/status/credentials. No refresh, producer call, alarm call, status read, public routing or mutation. A prior complete cohort may be read after a failed refresh; the unchanged supplier selector independently decides freshness and returns503 when stale.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 17,
+          "endLine": 17
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-client",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "The market module exports createIssuerEvidenceReadStore(namespace,configuration). If admission plan is null, return undefined. Otherwise require namespace.idFromName/get functions or throw TypeError. Return an object with async get(key). Reject any key not exactly configured cacheKey with TypeError before namespace or stub calls. For allowed get, resolve namespace.idFromName('earning-loops'), namespace.get(id), then stub.fetch one new Request using https://issuer-cache.invalid/issuer-evidence with exactly URLSearchParams key=cacheKey; methodGET, redirect:error. No public origin fetch. HTTP404 returns null; any other non200 result or thrown failure throws an Error with code issuer-revenue-unavailable,status503,retryable:true and no responsebody/error disclosure. A successful response must have body a ReadableStream and Content-Length a canonical nonnegative safe integer no greater than maximumCohortBytes; invalid/missing/overflow length refuses and cancels body when possible. Return exactly {body:response.body,size:length}. Never consume, parse, modify or cache the stream, never acquire sources or mutate storage/alarms.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 18,
+          "endLine": 18
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-integration",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "approved private cache contract 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay.",
+        "statement": "Source-free unit produces src/issuer-sqlite-cache.mjs and src/issuer-evidence-store.mjs only plus native schema/test projections. Their final actual owners are earning-loop-worker-service/src/issuer-sqlite-cache.mjs and market.561.group/src/issuer-evidence-store.mjs respectively; the second exact proposal is received at that owning consumer without a new package or private worker dependency. No cross-module import is needed. Additional async exports above are mandatory full implementations. Source imports no external package, filesystem, process or env. Pure default operation examples qualify only pureplans; additional I/O requires independent realworkerd receiving. Ordinary integration changes existing refreshIssuerResearch to consume the supplied issuerStore and removes every issuer STATE fallback; EarningClock wraps existing refresh in withIssuerSqliteStore on same serialized queue and calls private handler before alarm arming. Existing run/tick, OpenTask state/custody/alarms, public routes and other maintenance remain intact. Market binds existing external namespace/class/script and same singleton; it injects readStore only, never refresh. No new namespace/migration/schedule/public cache route.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 19,
+          "endLine": 19
+        }
+      },
+      {
+        "type": "ArtifactFabricationConstraint",
+        "version": 2,
+        "id": "async-status",
+        "kind": "standard",
+        "authority": "Red Cup Engineering",
+        "revision": "independent receiving correction 2026-10-24",
+        "locator": "./issuer-private-sqlite-cache.work-order.md",
+        "applicability": "Minimal actual existing coordinator record validation; no new retry policy or authority.",
+        "statement": "Both physical wrappers have cacheKey exactly configuration.cacheKey, including the status wrapper; get(logicalStatusKey) maps to physical statusKey and compares that configured cohort identity. Stored status JSON must be a nonnull nonarray object with cacheKey exactly configuration.cacheKey and status exactly prepared or unavailable. For normal records at must be a canonical UTC ISO millisecond instant; prepared observedAt is canonical instant or null, nextAttemptAt a canonical instant no earlier than at, retryBlocked absent or false. Normal unavailable has error string, code/reason each string or null, retryable boolean, retryAfter string or null and retryBlocked boolean; if blocked, nextAttemptAt must be null; otherwise nextAttemptAt is canonical instant no earlier than at. Additional normal status fields may be retained unchanged. The only special record is the exact minimal status-overflow sentinel already specified, accepted with retryBlocked true and nextAttemptAt null without at/error fields. Reject corrupt stored null/array/number, nonboolean retryBlocked, missing/malformed/contradictory deadlines and wrong cache identity before calling work or producer. Invalid staged status shape throws so the complete transaction rolls back; syntactically unrepresentable or oversized status uses the specified minimal overflow sentinel. Do not reinterpret retryable or recalculate Retry-After: the original coordinator owns policy.",
+        "parameters": [],
+        "claimIds": [],
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 20,
+          "endLine": 20
+        }
+      }
+    ],
+    "projections": [
+      {
+        "type": "ArtifactFabricationProjection",
+        "version": 1,
+        "id": "jsnode-modules",
+        "target": "@red-cup-engineering/jsnode-package-services-section/derive-jsnode-package-from-closure",
+        "configuration": {
+          "operations": [
+            {
+              "name": "issuer-sqlite-storage-plan",
+              "module": "src/issuer-sqlite-cache.mjs",
+              "exportName": "issuerSqliteStoragePlan",
+              "description": "Admit the actual private issuer-only SQLite cache coordinates; complete async transaction/private-read interfaces are mandatory source clauses.",
+              "inputSchema": {},
+              "outputSchema": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "issuer-evidence-read-plan",
+              "module": "src/issuer-evidence-store.mjs",
+              "exportName": "issuerEvidenceReadPlan",
+              "description": "Admit the market's private existing-singleton read coordinates; complete streaming async client interface is mandatory source clauses.",
+              "inputSchema": {},
+              "outputSchema": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          ],
+          "examples": [
+            {
+              "name": "admitted",
+              "operation": "issuer-sqlite-storage-plan",
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288
+              },
+              "output": {
+                "cohortKey": "issuer-evidence/cohort",
+                "statusKey": "issuer-evidence/status",
+                "logicalStatusKey": "registers/earning-loops/issuer-research.json",
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288,
+                "maximumStatusBytes": 524288,
+                "maximumTransactionBytes": 1900000
+              }
+            },
+            {
+              "name": "disabled",
+              "operation": "issuer-sqlite-storage-plan",
+              "input": {
+                "enabled": false,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288
+              },
+              "output": null
+            },
+            {
+              "name": "admitted",
+              "operation": "issuer-evidence-read-plan",
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288
+              },
+              "output": {
+                "objectName": "earning-loops",
+                "path": "/issuer-evidence",
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288
+              }
+            },
+            {
+              "name": "unreceived",
+              "operation": "issuer-evidence-read-plan",
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "unreceived"
+                },
+                "cacheKey": "issuer-research/current.json",
+                "maximumCohortBytes": 524288
+              },
+              "output": null
+            }
+          ],
+          "dependencies": {}
+        },
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 26,
+          "endLine": 28
+        }
+      }
+    ],
+    "acceptanceObligations": [
+      {
+        "type": "ArtifactFabricationAcceptanceObligation",
+        "version": 2,
+        "parameters": [],
+        "claimIds": [],
+        "id": "pure-receiving",
+        "kind": "assay",
+        "statement": "Admitted, disabled, unreceived and invalid configuration plans; no effects. Pure examples do not qualify async interfaces.",
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 30,
+          "endLine": 32
+        }
+      },
+      {
+        "type": "ArtifactFabricationAcceptanceObligation",
+        "version": 2,
+        "parameters": [],
+        "claimIds": [],
+        "id": "io-receiving",
+        "kind": "assay",
+        "statement": "Independent memory and actual workerd receiving across two Worker services/private binding on original singleton: deferred producer leaves prior value; atomic cohort+status; transaction rollback; failed source/serialization preserves cohort; literal long RetryAfter durable reentry; oversized status sentinel durable reentry/no acquisition; only two physical keys, no OpenTask/alarm mutation; exact configured logical key/no arbitrary read; GET405/wrongquery/public404/disabled404; original body and exact byte size; Unicode+limit+overflow/malformed transport; missing/stale consumer503; native prepared producer/read supplier full path separately required; old OpenTask commercial tests and current alarm retained; no deployment/paid success/cost claim.",
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 30,
+          "endLine": 32
+        }
+      }
+    ],
+    "traceability": [
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "admission",
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ],
+        "constraintIds": [
+          "byte-custody",
+          "house-operation",
+          "sqlite-platform",
+          "async-contract",
+          "source-free",
+          "async-custody",
+          "async-atomic",
+          "async-overflow",
+          "async-server",
+          "async-client",
+          "async-integration",
+          "async-status"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "coordinates",
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "pure-receiving"
+        ],
+        "constraintIds": [
+          "byte-custody",
+          "house-operation",
+          "sqlite-platform",
+          "async-contract",
+          "source-free",
+          "async-custody",
+          "async-atomic",
+          "async-overflow",
+          "async-server",
+          "async-client",
+          "async-integration",
+          "async-status"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "no-authority-expansion",
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ],
+        "constraintIds": [
+          "byte-custody",
+          "house-operation",
+          "sqlite-platform",
+          "async-contract",
+          "source-free",
+          "async-custody",
+          "async-atomic",
+          "async-overflow",
+          "async-server",
+          "async-client",
+          "async-integration",
+          "async-status"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "type": "JsnodeModuleFabricationPlan",
+  "version": 1,
+  "workOrderSpecificationDigest": "ni:///sha-256;xqZBnu3XnJj6OIUarAaerOfphyiKDpBCJ8pFBehZEc4",
+  "realizationPlan": {
+    "type": "ArtifactFabricationRealizationPlan",
+    "version": 1,
+    "artifactId": "issuer-private-sqlite-cache",
+    "specificationDigest": "ni:///sha-256;xqZBnu3XnJj6OIUarAaerOfphyiKDpBCJ8pFBehZEc4",
+    "projectionIds": [
+      "jsnode-modules"
+    ],
+    "acceptanceObligationIds": [
+      "io-receiving",
+      "pure-receiving"
+    ],
+    "traceability": [
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "admission",
+        "constraintIds": [
+          "async-atomic",
+          "async-client",
+          "async-contract",
+          "async-custody",
+          "async-integration",
+          "async-overflow",
+          "async-server",
+          "async-status",
+          "byte-custody",
+          "house-operation",
+          "source-free",
+          "sqlite-platform"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "coordinates",
+        "constraintIds": [
+          "async-atomic",
+          "async-client",
+          "async-contract",
+          "async-custody",
+          "async-integration",
+          "async-overflow",
+          "async-server",
+          "async-status",
+          "byte-custody",
+          "house-operation",
+          "source-free",
+          "sqlite-platform"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "pure-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "no-authority-expansion",
+        "constraintIds": [
+          "async-atomic",
+          "async-client",
+          "async-contract",
+          "async-custody",
+          "async-integration",
+          "async-overflow",
+          "async-server",
+          "async-status",
+          "byte-custody",
+          "house-operation",
+          "source-free",
+          "sqlite-platform"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      }
+    ]
+  },
+  "paths": [
+    "data/records/schema/issuer-evidence-read-plan.input.schema.json",
+    "data/records/schema/issuer-evidence-read-plan.output.schema.json",
+    "data/records/schema/issuer-sqlite-storage-plan.input.schema.json",
+    "data/records/schema/issuer-sqlite-storage-plan.output.schema.json",
+    "src/issuer-evidence-store.mjs",
+    "src/issuer-sqlite-cache.mjs",
+    "test/issuer-evidence-read-plan-examples.test.mjs",
+    "test/issuer-sqlite-storage-plan-examples.test.mjs"
+  ]
+}

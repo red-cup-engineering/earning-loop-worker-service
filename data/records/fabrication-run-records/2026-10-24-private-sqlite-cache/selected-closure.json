@@ -1,0 +1,7 @@
+{
+  "scope": "canonical Code runtime source modules required by existing isolated host; no caller dependencies",
+  "entry": "/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/node_modules/.pnpm/@red-cup-engineering+javascript-module-closure-service@0.1.1-dev.615/node_modules/@red-cup-engineering/javascript-module-closure-service/src/module-closure.mjs",
+  "sourceModules": 47,
+  "sourceBytes": 211154,
+  "callerDependencies": []
+}
