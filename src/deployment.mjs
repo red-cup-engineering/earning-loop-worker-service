@@ -17,6 +17,11 @@ export function projectOperation(record) {
       throw new TypeError('commercial operation requires serialized private Durable Object custody');
     operation.commercial = record.commercial;
   }
+  if (record.researchProcurement) {
+    if (record.researchProcurement.enabled && operation.clock !== 'durable-object-alarm')
+      throw new TypeError('research procurement requires serialized private Durable Object custody');
+    operation.researchProcurement = record.researchProcurement;
+  }
   return operation;
 }
 
