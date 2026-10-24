@@ -1,0 +1,9 @@
+{
+  "type": "BoundedConsumerFixtureCapture",
+  "status": "unexecuted",
+  "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/native-consumer-assay-logs/2026-10-24-private-sqlite-cache/core-consumer-request.json",
+  "sha256": "858f8869dbd2f4c0b04580b73e937348bfe4f898dff84f2a02a7f6cd2cbc8d5a",
+  "bytes": 158329,
+  "publication": "Local raw fixture only; contains concurrent generated Group parameters and is not a source publication",
+  "subsequentReceiving": "Original ordinary serial suite71/71 passed; no fixture rewrite or replay needed"
+}

@@ -1,0 +1,9 @@
+{
+  "isolated": true,
+  "status": null,
+  "signal": "SIGKILL",
+  "stdout": "",
+  "stderr": "",
+  "truncated": false,
+  "timedOut": true
+}

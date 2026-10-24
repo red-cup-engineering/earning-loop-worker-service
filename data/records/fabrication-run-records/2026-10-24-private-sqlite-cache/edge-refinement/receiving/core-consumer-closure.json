@@ -1,0 +1,40 @@
+{
+  "selectedSourceFiles": 52,
+  "selectedSourceBytes": 229755,
+  "reports": [
+    {
+      "name": "@red-cup-engineering/json-services-section/canonical-json",
+      "modules": 1,
+      "bytes": 19693,
+      "builtins": []
+    },
+    {
+      "name": "@red-cup-engineering/http-services-section/retry-after",
+      "modules": 1,
+      "bytes": 2158,
+      "builtins": []
+    },
+    {
+      "name": "@red-cup-engineering/oauth-services-section/dpop",
+      "modules": 4,
+      "bytes": 16443,
+      "builtins": [
+        "node:crypto",
+        "node:buffer"
+      ]
+    },
+    {
+      "name": "trusted-native-code-runtime",
+      "modules": 47,
+      "bytes": 211154,
+      "builtins": [
+        "node:crypto",
+        "node:fs",
+        "node:module",
+        "node:path",
+        "node:url"
+      ]
+    }
+  ],
+  "qualification": "Source bytes only; native owner independently validates/stages manifests and exact links under unchanged content caps"
+}

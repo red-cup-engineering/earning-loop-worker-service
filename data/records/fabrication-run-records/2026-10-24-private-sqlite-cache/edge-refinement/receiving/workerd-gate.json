@@ -1,0 +1,6 @@
+{
+  "classification": {
+    "action": "allow"
+  },
+  "command": "/usr/bin/time -f 'rssKiB=%M elapsedSeconds=%e' timeout --kill-after=10s 20s '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/node_modules/@cloudflare/workerd-linux-64/bin/workerd' test '/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/worker-runtime-test-records/15d7459785a3d6ea6613e57f7d8878aa9afcce86ec1711f77cf8ef62d1cb74a2/config.capnp'"
+}

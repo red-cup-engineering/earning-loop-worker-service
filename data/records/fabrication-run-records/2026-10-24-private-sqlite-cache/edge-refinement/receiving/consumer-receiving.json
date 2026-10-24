@@ -1,0 +1,56 @@
+{
+  "type": "IssuerPrivateSqliteCacheReceiving",
+  "status": "source-and-local-runtime-received",
+  "specificationDigest": "ni:///sha-256;QqZcGyMOQUowWQ9OPhouLllz12w33a4Vg8t_Hmo1Jr8",
+  "serverSha256": "127f7a13f996f128b49473686790798c9edd2e4ca9ef055c718a1adfee7fb787",
+  "clientSha256": "7e43e37b1a927b15704f22904207581d735b1098f98321f995d9a0ee03e24630",
+  "nativeFactory": {
+    "exitCode": 0,
+    "elapsedSeconds": 301.7,
+    "maxFamilyRssKiB": 806532,
+    "incrementalCashAuthorized": 0
+  },
+  "independentIO": {
+    "passed": 35,
+    "failed": 0,
+    "outcome": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-outcome.json",
+    "receiver": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-receiving.json"
+  },
+  "workerd": {
+    "composition": "/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/worker-runtime-test-records/c45e54795864340a516fe8a6e0629c4636826a7ec4fba9736b160c4c6b6b5c41",
+    "fixtureState": "/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/worker-runtime-test-logs/c45e54795864340a516fe8a6e0629c4636826a7ec4fba9736b160c4c6b6b5c41/a3e6ff90-63d2-4620-b915-9ae16a4c62b7",
+    "result": {
+      "chunk_id": "92fa64",
+      "wall_time_seconds": 0.000258257,
+      "exit_code": 0,
+      "original_token_count": 32,
+      "output": "workerd/server/server/run.rs:488: debug: [ PASS ] main:testPrivateSqliteCache (272.389856ms)\nrssKiB=58708 elapsedSeconds=0.64\n"
+    },
+    "completeOutput": false,
+    "explanation": "Last gateway output chunk contains actual PASS and outer exitCode0; startup compatibility warnings appeared in prior chunk.",
+    "elapsedSeconds": 0.64,
+    "maxRssKiB": 58708,
+    "testMilliseconds": 272.389856,
+    "storage": "native SQLite localDisk",
+    "privateCrossScript": true,
+    "existingSingleton": "earning-loops"
+  },
+  "sourceProjection": {
+    "loop": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/src/issuer-sqlite-cache.mjs",
+    "market": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/src/issuer-evidence-store.mjs",
+    "semanticHandEdits": 0
+  },
+  "conditionsOpen": [
+    "Native prepared supplier edge manual transport correction and full path receiving",
+    "Canonical Public declaration compilation and authoritative configuration",
+    "Issuer settlement+receiving custody and zero-incremental-cash admission",
+    "Full source-owned composed worker build",
+    "No merge/deploy/live writes performed"
+  ],
+  "ordinarySuite": {
+    "receipt": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/ordinary-suite-receiving.json",
+    "tests": 71,
+    "pass": 71,
+    "fail": 0
+  }
+}

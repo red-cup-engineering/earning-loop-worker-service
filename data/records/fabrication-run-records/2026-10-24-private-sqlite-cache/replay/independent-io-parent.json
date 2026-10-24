@@ -1,0 +1,11 @@
+{
+  "pid": 476419,
+  "at": "2026-10-24T22:20:01.909Z",
+  "profileSha256": "60372c8d77e5a64ced331c7058286fddfa91e6ef1d7eb5197f1863065663f22f",
+  "slice": "agent.slice",
+  "memoryBytes": 536870912,
+  "heapMiB": 128,
+  "maximumWallMs": 30000,
+  "cpuSeconds": 10,
+  "addressSpaceBytes": 1073741824
+}
