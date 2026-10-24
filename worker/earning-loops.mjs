@@ -58,24 +58,36 @@ export async function tick(env, date, options = {}) {
 
 export class EarningClock {
   constructor(state, env, options = {}) { this.state = state; this.env = env; this.options = options; this.queue = Promise.resolve(); }
+  enqueue(work) {
+    const task = this.queue.then(work);
+    this.queue = task.catch(() => {});
+    return task;
+  }
+  releaseId() { const id = this.env.RELEASE_METADATA?.id; return typeof id === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(id) ? id : null; }
   async alarm() {
-    const task = this.queue.then(async () => {
+    return this.enqueue(async () => {
       const configuration = this.options.configuration ?? operation;
       const at = Date.now(), commercial = configuration.commercial?.enabled === true;
       const slot = commercial ? Math.round(at / 450000) * 450000 : Math.round(at / 60000) * 60000;
+      const releaseId = commercial ? this.releaseId() : null;
+      const bootstrap = releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId;
+      const armed = bootstrap ? await this.state.storage.get('earning-clock/armed-release') : null;
+      // Admission is durable before work: public clock arming cannot replay it.
+      if (bootstrap) await this.state.storage.put('earning-clock/observed-release-id', releaseId);
       try {
-        if (commercial && slot % 900000 !== 0) {
+        if (bootstrap || commercial && slot % 900000 !== 0) {
           const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
             instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at) });
           await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
             newCashExpenseUsd: 0, at: new Date(at).toISOString() });
         } else await tick(this.env, new Date(slot), this.options);
       } finally {
-        await this.state.storage.setAlarm(commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at));
+        let alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
+        if (bootstrap && armed?.id === releaseId && Number.isFinite(armed.previousAlarm))
+          alarm = Math.min(alarm, armed.previousAlarm > Date.now() ? armed.previousAlarm : Date.now() + 1000);
+        await this.state.storage.setAlarm(alarm);
       }
     });
-    this.queue = task.catch(() => {});
-    return task;
   }
   async fetch(request) {
     if (request && new URL(request.url).pathname === '/commercial.json') {
@@ -85,9 +97,21 @@ export class EarningClock {
       return Response.json({ stage: summary.stage, requests: summary.requests, newCashExpenseUsd: 0,
         at: summary.at, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
     }
-    let alarm = await this.state.storage.getAlarm();
-    if (!alarm) { const at = Date.now(); alarm = (this.options.configuration ?? operation).commercial?.enabled ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at); await this.state.storage.setAlarm(alarm); }
-    return Response.json({ nextTick: new Date(alarm).toISOString() });
+    return this.enqueue(async () => {
+      let alarm = await this.state.storage.getAlarm();
+      const at = Date.now(), commercial = (this.options.configuration ?? operation).commercial?.enabled;
+      const releaseId = commercial ? this.releaseId() : null;
+      if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
+        const armed = await this.state.storage.get('earning-clock/armed-release');
+        if (armed?.id !== releaseId) {
+          await this.state.storage.put('earning-clock/armed-release', { id: releaseId, previousAlarm: alarm ?? null });
+          alarm = at + 1000;
+          await this.state.storage.setAlarm(alarm);
+        }
+      }
+      if (!alarm) { alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at); await this.state.storage.setAlarm(alarm); }
+      return Response.json({ nextTick: new Date(alarm).toISOString() });
+    });
   }
 }
 

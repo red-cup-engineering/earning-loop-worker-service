@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { generateKeyPairSync, createPublicKey, verify } from 'node:crypto';
+import { generateKeyPairSync, createPublicKey, createHash, verify } from 'node:crypto';
+import { Buffer as NativeBuffer } from 'node:buffer';
 import { allowedRequest, createOpenTaskClient } from '../src/opentask-client.mjs';
 
 const seed = { accessToken: 'initial-access', refreshToken: 'initial-refresh', credentialId: 'credential-1',
@@ -191,4 +192,45 @@ test('gateway HTML and oversized responses retain Retry-After before body parsin
     assert.equal(calls, 1);
     assert.equal((await state.get('opentask/provider-backoff')).retryAfter, '86400');
   }
+});
+
+test('actual registry assertion and DPoP access-token proof work without global Buffer', async () => {
+  const { privateKey, publicKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' });
+  const state = storage(), original = globalThis.Buffer;
+  const challenge = Response.json({ assertion_id: 'local-only', canonical_payload: 'ephemeral fake challenge' });
+  const replacement = Response.json(tokens), contracts = Response.json({ contracts: [] });
+  const client = createOpenTaskClient({ storage: state, initialCredential: { ...seed, privateJwk: privateKey.export({ format: 'jwk' }) },
+    now: () => 1000000, fetchImpl: async (url, init) => {
+      if (url.endsWith('/assert/challenge')) return challenge;
+      if (url.endsWith('/assert/complete')) {
+        assert.equal((await state.get('opentask/auth')).pendingRefresh, true);
+        assert.equal(verify('sha256', NativeBuffer.from('ephemeral fake challenge'), { key: publicKey, dsaEncoding: 'ieee-p1363' },
+          NativeBuffer.from(JSON.parse(init.body).signature, 'base64url')), true);
+        return replacement;
+      }
+      const parts = init.headers.dpop.split('.');
+      const header = JSON.parse(NativeBuffer.from(parts[0], 'base64url'));
+      const payload = JSON.parse(NativeBuffer.from(parts[1], 'base64url'));
+      assert.equal(header.typ, 'dpop+jwt'); assert.equal(header.jwk.d, undefined);
+      assert.equal(payload.htm, 'GET'); assert.equal(payload.htu, 'https://opentask.ai/api/agent/contracts');
+      assert.equal(payload.ath, createHash('sha256').update(tokens.access_token).digest('base64url'));
+      assert.equal(verify('sha256', NativeBuffer.from(parts.slice(0, 2).join('.')), { key: publicKey, dsaEncoding: 'ieee-p1363' }, NativeBuffer.from(parts[2], 'base64url')), true);
+      return contracts;
+    } });
+  try { delete globalThis.Buffer; await client.request('/api/agent/contracts'); }
+  finally { globalThis.Buffer = original; }
+  assert.equal(client.calls, 3); assert.equal((await state.get('opentask/auth')).accessToken, tokens.access_token);
+});
+
+test('signing, proof and stream failures expose static phases without private error text', async () => {
+  const secret = 'private fake challenge/key/body';
+  const seeded = storage({ 'opentask/auth': seed });
+  const proof = createOpenTaskClient({ storage: seeded, now: () => 1000000, proof: async () => { throw Error(secret); }, fetchImpl: () => assert.fail() });
+  await assert.rejects(proof.request('/api/agent/contracts'), { code: 'proof-generation-failed', message: 'proof-generation-failed' });
+  const assertion = createOpenTaskClient({ storage: storage(), initialCredential: seed, now: () => 1000000,
+    signCanonical: async () => { throw Error(secret); }, fetchImpl: async () => Response.json({ assertion_id: 'a1', canonical_payload: secret }) });
+  await assert.rejects(assertion.request('/api/agent/contracts'), { code: 'challenge-sign-failed', message: 'challenge-sign-failed' });
+  const stream = createOpenTaskClient({ storage: seeded, now: () => 1000000, proof: async () => 'p',
+    fetchImpl: async () => new Response(new ReadableStream({ start(controller) { controller.error(Error(secret)); } })) });
+  await assert.rejects(stream.request('/api/agent/contracts'), { code: 'response-read-failed', message: 'response-read-failed' });
 });

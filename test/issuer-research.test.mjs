@@ -65,6 +65,7 @@ test('deployment projection activates only explicitly admitted issuer configurat
   assert.throws(() => projectOperation({ ...record, onchainScanUrl: 'https://example.test' }), /subrequest/);
   const existing = { compatibility_date: '2026-10-01', compatibility_flags: ['some_existing_flag'], bindings: [{ type: 'plain_text', name: 'UNKNOWN', text: 'retained' }, { type: 'r2_bucket', name: 'OTHER', bucket_name: 'other' }, { type: 'secret_text', name: 'TOKEN' }] };
   const metadata = deploymentMetadata({ ...record, buckets: { state: 'state', settlementWitnesses: 'witnesses' } }, existing);
+  assert.deepEqual(metadata.bindings.find(b => b.name === 'RELEASE_METADATA'), { type: 'version_metadata', name: 'RELEASE_METADATA' });
   assert.equal(metadata.bindings.find(b => b.name === 'UNKNOWN').text, 'retained');
   assert.equal(metadata.bindings.find(b => b.name === 'OTHER').bucket_name, 'other');
   assert.ok(metadata.keep_bindings.includes('secret_text'));
