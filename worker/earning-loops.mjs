@@ -29,7 +29,8 @@ export async function run(env, cron, now = new Date()) {
   else {
     await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: operation.limits.settlementsPerPass }));
     await step("routes", () => checkRoutes(env, { now, catalogUrl: operation.catalogUrl, limit: operation.limits.routeProbesPerPass,
-      brokenStreak: operation.repair.brokenStreakBeforeRepair, repository: operation.repair.repository }));
+      brokenStreak: operation.repair.brokenStreakBeforeRepair, repository: operation.repair.repository, payTo: operation.merchantPayTo }));
+    await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: operation.economics })).outsideRevenueUSD);
     await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? operation.onchainScanUrl }));
   }
   await put(env.STATE, register("last-run"), outcome);

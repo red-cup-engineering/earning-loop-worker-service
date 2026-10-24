@@ -9,6 +9,7 @@
 //   - open-gap at a sub-cent per-call price: raise to USD 0.01, since sub-cent prices signal a toy;
 //   - open-gap otherwise: advise changing one thing (name, example, bundle) and never cut by reflex;
 //   - exact-match or unobserved: hold.
+import { isOutside, preparedDelivery } from "./scorecard.mjs";
 import { revealedBorder } from "./border-price.mjs";
 import { register, read, put } from "./registers.mjs";
 
@@ -28,7 +29,7 @@ export function proposeDirectives({ routes, settlements, previous = [] }, { now 
   // Route-health keys are "METHOD /path"; a witness always carries the path, not always the method.
   const between = (route, start, end) => Object.values(settlements ?? {}).filter((s) => {
     const t = Date.parse(s.recordedAt ?? s.corroboratedAt);
-    return s.route === route.slice(route.indexOf(" ") + 1) && !groupPayers.has(s.payer) && t > start && t <= end;
+    return s.route === route.slice(route.indexOf(" ") + 1) && isOutside(s, groupPayers) && preparedDelivery(s) && t > start && t <= end;
   }).length;
   const sales = (route, days) => between(route, at - days * DAY, at);
   const lastFor = (route) => previous.filter((d) => d.route === route).at(-1);
