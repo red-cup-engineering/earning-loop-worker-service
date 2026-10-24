@@ -1,6 +1,6 @@
 // Provider protocol: https://opentask.ai/docs/agent-auth-integration
 // This client owns HTTP/custody; RFC 9449 proof construction belongs to OAuth.
-import { createPrivateKey, sign } from "node:crypto";
+import { sign } from "node:crypto";
 import { Buffer } from 'node:buffer';
 import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/retry-after';
 
@@ -40,8 +40,8 @@ export function allowedRequest(method, path) {
 }
 
 const defaultProof = async (options) => (await import("@red-cup-engineering/oauth-services-section/dpop")).signDpopProof(options);
-const defaultCanonical = (privateJwk, canonical) => sign("sha256", Buffer.from(canonical), {
-  key: createPrivateKey({ key: privateJwk, format: "jwk" }), dsaEncoding: "ieee-p1363",
+export const defaultCanonical = (privateJwk, canonical) => sign("sha256", Buffer.from(canonical), {
+  key: privateJwk, format: "jwk", dsaEncoding: "ieee-p1363",
 }).toString("base64url");
 
 /** Must be called only under the owning Durable Object's single-writer queue.
