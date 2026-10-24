@@ -12,11 +12,6 @@ export function projectOperation(record) {
       throw new TypeError('issuer operation exceeds its qualified subrequest allocation (47 per coincident tick, plus clock)');
     operation.issuerResearch = record.issuerResearch;
   }
-  if (record.commercial) {
-    if (record.commercial.enabled && operation.clock !== 'durable-object-alarm')
-      throw new TypeError('commercial operation requires serialized private Durable Object custody');
-    operation.commercial = record.commercial;
-  }
   return operation;
 }
 
