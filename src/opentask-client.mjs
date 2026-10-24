@@ -74,10 +74,21 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
     try { response = await fetchImpl(ORIGIN + path, { method, headers, redirect: "manual",
       signal: AbortSignal.timeout(15000), ...(body === undefined ? {} : { body: body instanceof URLSearchParams ? body.toString() : JSON.stringify(body) }) }); }
     catch { throw new OpenTaskError("response-unknown"); }
-    if (response.status >= 300 && response.status < 400) throw new OpenTaskError("redirect-refused", response.status);
+    // Header authority survives gateway HTML, truncated bodies and size refusals.
+    const retryFacts = {}, receivedAt = now(), retry = response.headers.get('retry-after');
+    if (retry) {
+      const delay = retry.length <= 256 ? retryAfterDelayMs(retry, receivedAt) : null;
+      const blocked = retry.length > 256 || delay === null && /^\d+$/.test(retry.trim()) || delay !== null && !Number.isFinite(new Date(receivedAt + delay).getTime());
+      if (blocked || delay !== null) {
+        Object.assign(retryFacts, { retryBlocked: blocked, retryAt: blocked ? null : receivedAt + delay, retryAfter: retry.slice(0, 256) });
+        await storage.put(BACKOFF, { ...retryFacts, receivedAt });
+      }
+    }
+    const responseError = (code) => Object.assign(new OpenTaskError(code, response.status), retryFacts);
+    if (response.status >= 300 && response.status < 400) throw responseError("redirect-refused");
     const receivedNonce = response.headers.get("dpop-nonce");
     if (receivedNonce && receivedNonce.length <= 512) nonce = receivedNonce;
-    if (Number(response.headers.get("content-length")) > 262144) throw new OpenTaskError("response-too-large");
+    if (Number(response.headers.get("content-length")) > 262144) throw responseError("response-too-large");
     let bytes = 0, text = "";
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
@@ -85,29 +96,18 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
       const part = await reader.read();
       if (part.done) break;
       bytes += part.value.byteLength;
-      if (bytes > 262144) { await reader.cancel(); throw new OpenTaskError("response-too-large"); }
+      if (bytes > 262144) { await reader.cancel(); throw responseError("response-too-large"); }
       text += decoder.decode(part.value, { stream: true });
     }
     text += decoder.decode();
     let data;
-    try { data = JSON.parse(text); } catch { throw new OpenTaskError("invalid-response", response.status); }
+    try { data = JSON.parse(text); } catch { throw responseError("invalid-response"); }
     if (!response.ok) {
       const identifiers = [data.code, data.error?.code, typeof data.error === 'string' ? data.error : undefined,
         data.reason, data.revocation_reason, data.recovery?.code, data.error?.recovery?.code];
       const code = identifiers.find(value => REPLAY.has(value)) ?? identifiers.find(value => typeof value === 'string') ?? "provider-error";
       // Retain only a bounded protocol identifier, never an arbitrary error body.
-      const error = new OpenTaskError(/^[a-z0-9_]{1,100}$/.test(code) ? code : "provider-error", response.status);
-      const receivedAt = now(), retry = response.headers.get('retry-after');
-      if (retry) {
-        const delay = retry.length <= 256 ? retryAfterDelayMs(retry, receivedAt) : null;
-        const blocked = retry.length > 256 || delay === null && /^\d+$/.test(retry.trim()) || delay !== null && !Number.isFinite(new Date(receivedAt + delay).getTime());
-        if (blocked || delay !== null) {
-          error.retryBlocked = blocked;
-          error.retryAt = blocked ? null : receivedAt + delay;
-          error.retryAfter = retry.slice(0, 256);
-          await storage.put(BACKOFF, { retryAfter: error.retryAfter, receivedAt, retryBlocked: blocked, retryAt: error.retryAt });
-        }
-      }
+      const error = responseError(/^[a-z0-9_]{1,100}$/.test(code) ? code : "provider-error");
       if (TERMINAL.has(error.code) && credential) await storage.put(AUTH_KEY, { ...credential, pendingRefresh: false, authFailure: error.code });
       throw error;
     }

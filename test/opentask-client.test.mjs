@@ -175,3 +175,20 @@ test('ordinary authorization refusals become private terminal custody with no re
     await assert.rejects(client.request('/api/agent/contracts'), { code: 'credential-terminal' }); assert.equal(calls, 1);
   }
 });
+
+test('gateway HTML and oversized responses retain Retry-After before body parsing or size refusal', async () => {
+  for (const status of [429, 503]) for (const oversized of [false, true]) {
+    let calls = 0, time = 1000000;
+    const state = storage({ 'opentask/auth': { ...seed, expiresAt: 1e12 } });
+    const client = createOpenTaskClient({ storage: state, now: () => time, proof: async () => 'p', fetchImpl: async () => {
+      calls++; return new Response('<html>gateway unavailable</html>', { status, headers: {
+        'content-type': 'text/html', 'retry-after': '86400', ...(oversized ? { 'content-length': '300000' } : {}),
+      } });
+    } });
+    await assert.rejects(client.request('/api/agent/contracts'), { code: oversized ? 'response-too-large' : 'invalid-response', retryAt: 87400000 });
+    time += 900000;
+    await assert.rejects(client.request('/api/agent/contracts'), { code: 'provider-retry-deferred' });
+    assert.equal(calls, 1);
+    assert.equal((await state.get('opentask/provider-backoff')).retryAfter, '86400');
+  }
+});
