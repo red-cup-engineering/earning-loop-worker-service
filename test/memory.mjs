@@ -5,6 +5,10 @@ export function bucket(initial = {}) {
     store,
     async get(key) { return store.has(key) ? { json: async () => JSON.parse(store.get(key)) } : null; },
     async put(key, value) { store.set(key, value); },
-    async list({ prefix = "" } = {}) { return { objects: [...store.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })), truncated: false }; },
+    async list({ prefix = "", cursor, limit = 1000 } = {}) {
+      const keys = [...store.keys()].filter(k => k.startsWith(prefix)).sort();
+      const offset = cursor ? Number(cursor) : 0, end = Math.min(keys.length, offset + limit);
+      return { objects: keys.slice(offset, end).map(key => ({ key })), truncated: end < keys.length, cursor: end < keys.length ? String(end) : undefined };
+    },
   };
 }

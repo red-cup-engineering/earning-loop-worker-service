@@ -15,45 +15,50 @@ import { writeDirectives } from "../src/price-directives.mjs";
 import { runOnchainHook } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
+import { refreshIssuerResearch } from "../src/issuer-research.mjs";
 
 const groupPayers = new Set(groupPayerList);
 export const CRONS = operation.crons;
 
-export async function run(env, cron, now = new Date()) {
+export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort } = {}) {
+  if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
+    throw new TypeError("issuer operation has no subrequest allocation for an onchain hook");
   const outcome = { cron, at: now.toISOString() };
   const step = async (name, work) => {
     try { outcome[name] = await work(); } catch (error) { outcome[name] = { error: error.message }; }
   };
-  if (cron === CRONS.directives) await step("directives", () => writeDirectives(env, { now, groupPayers }));
-  else if (cron === CRONS.scorecard) await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: operation.economics })).outsideRevenueUSD);
+  if (cron === configuration.crons.directives) await step("directives", () => writeDirectives(env, { now, groupPayers }));
+  else if (cron === configuration.crons.scorecard) await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
   else {
-    await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: operation.limits.settlementsPerPass }));
-    await step("routes", () => checkRoutes(env, { now, catalogUrl: operation.catalogUrl, limit: operation.limits.routeProbesPerPass,
-      brokenStreak: operation.repair.brokenStreakBeforeRepair, repository: operation.repair.repository, payTo: operation.merchantPayTo }));
-    await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: operation.economics })).outsideRevenueUSD);
-    await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? operation.onchainScanUrl }));
+    await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: configuration.limits.settlementsPerPass }));
+    await step("routes", () => checkRoutes(env, { now, catalogUrl: configuration.catalogUrl, limit: configuration.limits.routeProbesPerPass,
+      brokenStreak: configuration.repair.brokenStreakBeforeRepair, repository: configuration.repair.repository, payTo: configuration.merchantPayTo }));
+    await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
+    await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl }));
+    if (configuration.issuerResearch) await step("issuerResearch", () => refreshIssuerResearch(env, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort }));
   }
   await put(env.STATE, register("last-run"), outcome);
   return outcome;
 }
 
 const READINGS = { "/settlements.json": "settlements", "/route-health.json": "route-health", "/scorecard.json": "scorecard",
-  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run" };
+  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run", "/issuer-research.json": "issuer-research" };
 
 // Run every loop whose operation cron matches this quarter-hour tick, the most frequent last so the daily and
 // weekly readings come from the previous pass's settled state.
-export async function tick(env, date) {
-  const due = dueCrons(CRONS, date).sort((a, b) => (a === CRONS.pass) - (b === CRONS.pass));
+export async function tick(env, date, options = {}) {
+  const crons = (options.configuration ?? operation).crons;
+  const due = dueCrons(crons, date).sort((a, b) => (a === crons.pass) - (b === crons.pass));
   const outcomes = [];
-  for (const cron of due) outcomes.push(await run(env, cron, date));
+  for (const cron of due) outcomes.push(await run(env, cron, date, options));
   return outcomes;
 }
 
 export class EarningClock {
-  constructor(state, env) { this.state = state; this.env = env; }
+  constructor(state, env, options = {}) { this.state = state; this.env = env; this.options = options; }
   async alarm() {
     const at = Date.now(), slot = new Date(Math.round(at / 60_000) * 60_000);
-    try { await tick(this.env, slot); } finally { await this.state.storage.setAlarm(nextTick(at)); }
+    try { await tick(this.env, slot, this.options); } finally { await this.state.storage.setAlarm(nextTick(at)); }
   }
   async fetch() {
     let alarm = await this.state.storage.getAlarm();
