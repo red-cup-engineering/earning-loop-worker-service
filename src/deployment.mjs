@@ -1,3 +1,5 @@
+import { hashnInstanceProblem } from './hashn-acquisition.mjs';
+
 export function projectOperation(record) {
   if (typeof record.merchantPayTo !== 'string' || !/^0x[\da-f]{40}$/i.test(record.merchantPayTo))
     throw new TypeError('operation.merchantPayTo must name the independently authorized merchant recipient');
@@ -5,6 +7,8 @@ export function projectOperation(record) {
     economics: record.economics, merchantPayTo: record.merchantPayTo, clock: record.clock ?? 'cron-triggers',
     repair: { brokenStreakBeforeRepair: record.repair.brokenStreakBeforeRepair, repository: record.repair.repository }, onchainScanUrl: record.onchainScanUrl };
   if (record.issuerResearch?.enabled === true && record.issuerResearch.resourceAdmission?.status === 'received') {
+    if (operation.clock !== 'durable-object-alarm')
+      throw new TypeError('issuer operation requires serialized private Durable Object custody');
     const n = record.issuerResearch.issuers?.length;
     const routes = record.limits?.routeProbesPerPass, witnesses = record.limits?.settlementsPerPass;
     if (!Number.isInteger(n) || n < 2 || n > 5 || !Number.isInteger(routes) || routes < 0 || routes + n > 5
@@ -21,6 +25,11 @@ export function projectOperation(record) {
     if (record.researchProcurement.enabled && operation.clock !== 'durable-object-alarm')
       throw new TypeError('research procurement requires serialized private Durable Object custody');
     operation.researchProcurement = record.researchProcurement;
+  }
+  if (record.hashAcquisition) {
+    if (record.hashAcquisition.enabled && (operation.clock !== 'durable-object-alarm' || hashnInstanceProblem(record.hashAcquisition)))
+      throw new TypeError('Hashn acquisition requires private singleton custody and a qualified zero-cash bounded instance');
+    operation.hashAcquisition = record.hashAcquisition;
   }
   return operation;
 }

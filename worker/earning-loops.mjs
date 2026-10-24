@@ -12,6 +12,7 @@ import products from "../data/products.mjs";
 import researchProducts from '../data/research-products.mjs';
 import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
 import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
+import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
 import { receiveSettlements } from "../src/settlements.mjs";
 import { checkRoutes } from "../src/route-health.mjs";
 import { writeScorecard } from "../src/scorecard.mjs";
@@ -20,11 +21,12 @@ import { runOnchainHook } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
 import { refreshIssuerResearch } from "../src/issuer-research.mjs";
+import { withIssuerSqliteStore, issuerSqliteResponse } from "../src/issuer-sqlite-cache.mjs";
 
 const groupPayers = new Set(groupPayerList);
 export const CRONS = operation.crons;
 
-export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort } = {}) {
+export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage } = {}) {
   if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
     throw new TypeError('issuer operation has no subrequest allocation for an onchain hook');
   const outcome = { cron, at: now.toISOString() };
@@ -39,14 +41,16 @@ export async function run(env, cron, now = new Date(), { configuration = operati
       brokenStreak: configuration.repair.brokenStreakBeforeRepair, repository: configuration.repair.repository, payTo: configuration.merchantPayTo }));
     await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
     await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl }));
-    if (configuration.issuerResearch) await step("issuerResearch", () => refreshIssuerResearch(env, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort }));
+    if (configuration.issuerResearch) await step("issuerResearch", () => withIssuerSqliteStore(issuerStorage, configuration.issuerResearch,
+      store => refreshIssuerResearch(store, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort })));
   }
-  await put(env.STATE, register("last-run"), outcome);
+  const { issuerResearch, ...publicOutcome } = outcome;
+  await put(env.STATE, register("last-run"), publicOutcome);
   return outcome;
 }
 
 const READINGS = { "/settlements.json": "settlements", "/route-health.json": "route-health", "/scorecard.json": "scorecard",
-  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run", "/issuer-research.json": "issuer-research" };
+  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run" };
 
 // Run every loop whose operation cron matches this quarter-hour tick, the most frequent last so the daily and
 // weekly readings come from the previous pass's settled state.
@@ -69,7 +73,12 @@ export class EarningClock {
   async alarm() {
     return this.enqueue(async () => {
       const configuration = this.options.configuration ?? operation;
-      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true;
+      const acquisition = configuration.hashAcquisition?.enabled === true;
+      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition;
+      const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
+      const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
+      const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.nextAttemptAt > at) && !(acquisitionPulseAt > at);
+      const coreNextAt = acquisition ? await this.state.storage.get('earning-clock/core-next-at') : null;
       const researchState = configuration.researchProcurement?.enabled ? await this.state.storage.get(RESEARCH_STATE) : null;
       const researchPending = configuration.researchProcurement?.enabled === true && !researchState?.terminal;
       const researchDue = researchPending && !researchState?.retryBlocked && !(researchState?.nextAttemptAt > at);
@@ -77,10 +86,22 @@ export class EarningClock {
       const releaseId = commercial ? this.releaseId() : null;
       const bootstrap = releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId;
       const armed = bootstrap ? await this.state.storage.get('earning-clock/armed-release') : null;
+      // Acquisition gets a separate invocation only AFTER a core invocation has
+      // reserved its next alarm. A due knock can never displace CSV/maintenance.
+      const acquisitionOnly = acquisitionDue && !bootstrap && !researchDue && Number.isFinite(coreNextAt) && at < coreNextAt;
       // Admission is durable before work: public clock arming cannot replay it.
       if (bootstrap) await this.state.storage.put('earning-clock/observed-release-id', releaseId);
       try {
-        if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
+        if (acquisitionOnly) {
+          // A storage/transport failure must not turn a one-off acquisition
+          // into a one-second retry loop. Reserve the six-hour pulse first.
+          await this.state.storage.put('hashn/next-pulse-at',at+21600000);
+          await (this.options.acquisitionPass ?? runHashnAcquisition)({ storage: this.state.storage,
+            instance: configuration.hashAcquisition, initialCredential: this.env.HASHN_CREDENTIAL_JSON, now: () => at });
+          const received = await this.state.storage.get(HASHN_STATE);
+          if (Number.isFinite(received?.nextAttemptAt) && received.nextAttemptAt > at)
+            await this.state.storage.put('hashn/next-pulse-at',received.nextAttemptAt);
+        } else if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
           if (researchDue || bootstrap && researchPending) {
             await (this.options.researchPass ?? runResearchPass)({ storage: this.state.storage, instance: configuration.researchProcurement,
               products: this.options.researchProducts ?? researchProducts, merchant: configuration.merchantPayTo, groupPayers });
@@ -90,21 +111,38 @@ export class EarningClock {
             await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
             newCashExpenseUsd: 0, at: new Date(at).toISOString() });
           }
-        } else await tick(this.env, new Date(slot), this.options);
+        } else await tick(this.env, new Date(slot), { ...this.options, issuerStorage: this.state.storage });
       } finally {
-        let alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
+        let alarm = acquisitionOnly ? coreNextAt : commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
         if (bootstrap && armed?.id === releaseId && Number.isFinite(armed.previousAlarm))
           alarm = Math.min(alarm, armed.previousAlarm > Date.now() ? armed.previousAlarm : Date.now() + 1000);
+        if (acquisition && !acquisitionOnly) await this.state.storage.put('earning-clock/core-next-at',alarm);
         if (configuration.researchProcurement?.enabled) {
           const pending = await this.state.storage.get(RESEARCH_STATE);
           if (!pending?.terminal && !pending?.retryBlocked && Number.isFinite(pending?.nextAttemptAt))
             alarm = Math.min(alarm, Math.max(Date.now() + 1000,pending.nextAttemptAt));
+        }
+        if (acquisition) {
+          const pending = await this.state.storage.get(HASHN_STATE);
+          const pulseAt = await this.state.storage.get('hashn/next-pulse-at');
+          if (!pending?.terminal && !pending?.retryBlocked)
+            alarm = Math.min(alarm,Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0));
         }
         await this.state.storage.setAlarm(alarm);
       }
     });
   }
   async fetch(request) {
+    if (request && new URL(request.url).pathname === '/acquisition.json') {
+      const summary = await this.state.storage.get(HASHN_SUMMARY);
+      if (!summary) return new Response('not yet observed\n',{status:404});
+      const fields = ['stage','requests','newCashExpenseUsd','at','offerId','knockStatus','agreementReceived','deliverySubmitted','recognizedOutsideRevenue'];
+      return Response.json(Object.fromEntries(fields.filter(key => Object.hasOwn(summary,key)).map(key => [key,summary[key]])),{headers:{'cache-control':'no-store'}});
+    }
+    if (request) {
+      const response = await issuerSqliteResponse(request, this.state.storage, (this.options.configuration ?? operation).issuerResearch);
+      if (response) return response;
+    }
     if (request && new URL(request.url).pathname === '/research.json') {
       const summary = await this.state.storage.get(RESEARCH_SUMMARY);
       if (!summary) return new Response('not yet observed\n',{status:404});
@@ -122,7 +160,7 @@ export class EarningClock {
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
       const configuration = this.options.configuration ?? operation;
-      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled;
+      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled;
       const releaseId = commercial ? this.releaseId() : null;
       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
         const armed = await this.state.storage.get('earning-clock/armed-release');
@@ -146,6 +184,7 @@ export default {
     if (path === '/research-products.json') return Response.json(researchProducts,{headers:{'cache-control':'public, max-age=300'}});
     if (path === '/research.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
     if (path === '/commercial.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
+    if (path === '/acquisition.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
     if (READINGS[path]) {
       const value = await read(env.STATE, register(READINGS[path]));

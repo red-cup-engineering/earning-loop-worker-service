@@ -13,7 +13,7 @@ test('optional issuer configuration causes no reads, writes or producer calls', 
 test('complete producer result replaces the old cohort once, only after resolution', async () => {
   const state = bucket({ [config.cacheKey]: { old: true } });
   let complete; const waiting = new Promise(resolve => { complete = resolve; });
-  const work = refreshIssuerResearch({ STATE: state }, config, { now: at, prepare: async supplied => { assert.equal(supplied, config); return waiting; } });
+  const work = refreshIssuerResearch(state, config, { now: at, prepare: async supplied => { assert.equal(supplied, config); return waiting; } });
   await new Promise(resolve => setImmediate(resolve));
   assert.deepEqual(await (await state.get(config.cacheKey)).json(), { old: true });
   const full = { type: 'IssuerRevenuePreparedCohort', results: { annual: { complete: true }, quarter: { complete: true } } };
@@ -23,10 +23,10 @@ test('complete producer result replaces the old cohort once, only after resoluti
 test('a failed source preserves the prior cohort and durable Retry-After suppresses the next tick', async () => {
   const state = bucket({ [config.cacheKey]: { old: true } }); let calls = 0;
   const prepare = async () => { calls++; throw Object.assign(new Error('SEC busy'), { code: 'issuer-revenue-source-unavailable', reason: 'http-429', retryable: true, retryAfter: '3600' }); };
-  const failed = await refreshIssuerResearch({ STATE: state }, config, { now: at, prepare, clock: () => at });
+  const failed = await refreshIssuerResearch(state, config, { now: at, prepare, clock: () => at });
   assert.equal(failed.retryAfter, '3600'); assert.equal(failed.nextAttemptAt, '2026-10-24T21:00:00.000Z');
   assert.deepEqual(await (await state.get(config.cacheKey)).json(), { old: true });
-  const deferred = await refreshIssuerResearch({ STATE: state }, config, { now: new Date(at.getTime() + 900000), prepare });
+  const deferred = await refreshIssuerResearch(state, config, { now: new Date(at.getTime() + 900000), prepare });
   assert.equal(deferred.status, 'deferred'); assert.equal(calls, 1);
 });
 test('Retry-After honors delays beyond24hours and blocks unrepresentable positive instructions', () => {
@@ -41,8 +41,8 @@ test('long Retry-After is never shortened; unrepresentable delay remains durably
   for (const retryAfter of ['172800','Mon, 26 Oct 2026 20:00:00 GMT','999999999999999999999999']) {
     const state=bucket({[config.cacheKey]:{old:true}});let calls=0;
     const prepare=async()=>{calls++;throw Object.assign(new Error('SEC busy'),{retryAfter});};
-    const failed=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>at});
-    const deferred=await refreshIssuerResearch({STATE:state},config,{now:new Date(at.getTime()+86400000),prepare});
+    const failed=await refreshIssuerResearch(state,config,{now:at,prepare,clock:()=>at});
+    const deferred=await refreshIssuerResearch(state,config,{now:new Date(at.getTime()+86400000),prepare});
     assert.equal(deferred.status,'deferred');assert.equal(calls,1);
     if(retryAfter.startsWith('999'))assert.equal(failed.retryBlocked,true);
     else assert.equal(failed.nextAttemptAt,'2026-10-26T20:00:00.000Z');
@@ -52,12 +52,12 @@ test('Retry-After seconds starts at the observed refusal, after a slow source at
   const state=bucket();
   const refusedAt=new Date(at.getTime()+60000);
   const prepare=async()=>{throw Object.assign(new Error('SEC busy'),{retryAfter:'172800'});};
-  const result=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>refusedAt});
+  const result=await refreshIssuerResearch(state,config,{now:at,prepare,clock:()=>refusedAt});
   assert.equal(result.nextAttemptAt,'2026-10-26T20:01:00.000Z');
 });
 test('deployment projection activates only explicitly admitted issuer configuration and refuses over-budget acquisition', () => {
   const admitted = { ...config, enabled: true, resourceAdmission: { status: 'received' } };
-  const record = { worker: 'test', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: admitted };
+  const record = { worker: 'test', clock:'durable-object-alarm', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: admitted };
   assert.equal(projectOperation({ ...record, issuerResearch: config }).issuerResearch, undefined);
   assert.equal(projectOperation({ ...record, issuerResearch: { ...admitted, resourceAdmission: { status: 'unreceived' } } }).issuerResearch, undefined);
   assert.deepEqual(projectOperation(record).issuerResearch, admitted);
@@ -108,17 +108,19 @@ async function measuredPass({ routeProbes = 3, alarm = false, date = at } = {}) 
     return new Response('{}',{status:402});
   };
   try {
-    const options={configuration,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:date.toISOString()};}};
+    const values=new Map();const issuerStorage={async get(key){return values.get(key);},async transaction(work){const next=new Map(values);await work({async put(key,value){next.set(key,value);}});values.clear();for(const [key,value]of next)values.set(key,value);}};
+    configuration.issuerResearch={...config,enabled:true,resourceAdmission:{status:'received'},maximumCohortBytes:524288};
+    const options={configuration,issuerStorage,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:date.toISOString()};}};
     if(alarm){
       const originalNow=Date.now;Date.now=()=>date.getTime();
-      try{await new EarningClock({storage:{async setAlarm(){calls++;}}},env,options).alarm();}
+      try{await new EarningClock({storage:{...issuerStorage,async setAlarm(){calls++;}}},env,options).alarm();}
       finally{Date.now=originalNow;}
     }else await run(env,CRONS.pass,date,options);
     const result=JSON.parse(env.STATE.store.get('registers/earning-loops/last-run.json'));
-    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,routeProbes);assert.equal(result.issuerResearch.status,'prepared');
+    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,routeProbes);assert.equal(Object.hasOwn(result,'issuerResearch'),false);assert.equal(JSON.parse(values.get('issuer-evidence/status').body).status,'prepared');
     assert.equal(rpc,16);return calls;
   } finally {globalThis.fetch=original;}
 }
-test('actual qualified pass uses41 subrequests for four witnesses/four provider attempts, three routes and two SEC reads',async()=>{assert.equal(await measuredPass(),41);});
-test('the coincident weekly alarm includes the scorecard branch and clock rearm within48 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-26T14:00:00Z')}),48);});
-test('the coincident daily alarm includes price directives and clock rearm within47 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-27T13:30:00Z')}),47);});
+test('actual qualified pass uses38 external calls for four witnesses/four provider attempts, three routes and two SEC reads',async()=>{assert.equal(await measuredPass(),38);});
+test('the coincident weekly alarm includes the scorecard branch and clock rearm within45 measured external calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-26T14:00:00Z')}),45);});
+test('the coincident daily alarm includes price directives and clock rearm within44 measured external calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-27T13:30:00Z')}),44);});
