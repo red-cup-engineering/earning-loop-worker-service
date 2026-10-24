@@ -1,6 +1,7 @@
 // Provider protocol: https://opentask.ai/docs/agent-auth-integration
 // This client owns HTTP/custody; RFC 9449 proof construction belongs to OAuth.
 import { createPrivateKey, sign } from "node:crypto";
+import { Buffer } from 'node:buffer';
 import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/retry-after';
 
 const ORIGIN = "https://opentask.ai";
@@ -66,8 +67,10 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
     if (body !== undefined) headers["content-type"] = body instanceof URLSearchParams ? "application/x-www-form-urlencoded" : "application/json";
     if (key) headers["idempotency-key"] = key;
     if (credential) {
-      headers.dpop = await proof({ privateKey: credential.privateJwk, method, url: ORIGIN + path,
-        ...(token ? { accessToken: credential.accessToken } : {}), ...(nonce ? { nonce } : {}) });
+      try {
+        headers.dpop = await proof({ privateKey: credential.privateJwk, method, url: ORIGIN + path,
+          ...(token ? { accessToken: credential.accessToken } : {}), ...(nonce ? { nonce } : {}) });
+      } catch { throw new OpenTaskError('proof-generation-failed'); }
       if (token) headers.authorization = `DPoP ${credential.accessToken}`;
     }
     let response;
@@ -90,16 +93,18 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
     if (receivedNonce && receivedNonce.length <= 512) nonce = receivedNonce;
     if (Number(response.headers.get("content-length")) > 262144) throw responseError("response-too-large");
     let bytes = 0, text = "";
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
-    if (reader) for (;;) {
-      const part = await reader.read();
-      if (part.done) break;
-      bytes += part.value.byteLength;
-      if (bytes > 262144) { await reader.cancel(); throw responseError("response-too-large"); }
-      text += decoder.decode(part.value, { stream: true });
-    }
-    text += decoder.decode();
+    try {
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      if (reader) for (;;) {
+        const part = await reader.read();
+        if (part.done) break;
+        bytes += part.value.byteLength;
+        if (bytes > 262144) { await reader.cancel(); throw responseError("response-too-large"); }
+        text += decoder.decode(part.value, { stream: true });
+      }
+      text += decoder.decode();
+    } catch (error) { throw error instanceof OpenTaskError ? error : responseError('response-read-failed'); }
     let data;
     try { data = JSON.parse(text); } catch { throw responseError("invalid-response"); }
     if (!response.ok) {
@@ -132,9 +137,10 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
   async function assertion(c) {
     const challenge = await wire("/api/agent/auth/assert/challenge", { method: "POST", body: { credential_id: c.credentialId } });
     if (typeof challenge.assertion_id !== "string" || typeof challenge.canonical_payload !== "string" || challenge.canonical_payload.length > 20000) throw new OpenTaskError("assertion-invalid");
-    return wire("/api/agent/auth/assert/complete", { method: "POST", body: {
-      assertion_id: challenge.assertion_id, signature: await signCanonical(c.privateJwk, challenge.canonical_payload),
-    } });
+    let signature;
+    try { signature = await signCanonical(c.privateJwk, challenge.canonical_payload); }
+    catch { throw new OpenTaskError('challenge-sign-failed'); }
+    return wire("/api/agent/auth/assert/complete", { method: "POST", body: { assertion_id: challenge.assertion_id, signature } });
   }
   async function refresh(c) {
     const resume = !!c.pendingRefresh;

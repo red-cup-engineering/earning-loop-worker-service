@@ -24,6 +24,7 @@ export function deploymentMetadata(operation, existing = {}) {
   const bindings = new Map((existing.bindings ?? []).filter(b => b.type !== 'secret_text').map(b => [b.name, b]));
   bindings.set('STATE', { type: 'r2_bucket', name: 'STATE', bucket_name: operation.buckets.state });
   bindings.set('MARKET_SETTLEMENTS', { type: 'r2_bucket', name: 'MARKET_SETTLEMENTS', bucket_name: operation.buckets.settlementWitnesses });
+  bindings.set('RELEASE_METADATA', { type: 'version_metadata', name: 'RELEASE_METADATA' });
   const metadata = { main_module: 'worker.mjs', compatibility_date: existing.compatibility_date ?? '2026-09-01',
     compatibility_flags: [...new Set([...(existing.compatibility_flags ?? []), 'nodejs_compat'])],
     bindings: [...bindings.values()], keep_bindings: ['secret_text'] };
