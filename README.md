@@ -8,7 +8,7 @@ which also holds the runbook.
 - **Settlement receiving** (`src/settlements.mjs`): lists the seller's settlement witnesses in R2 and
   corroborates each against two public Base providers. A witness counts only when both providers return the same
   successful receipt holding exactly one USDC transfer from payer to seller for the amount. This is the rule of
-  `@red-cup-engineering/x402-engineering-services-section`'s `confirmSellerWitness`, without its Node-only R2 REST and
+  `@red-cup-engineering/x402-services-section`'s `confirmSellerWitness`, without its Node-only R2 REST and
   multi-package dependencies. The loop then classifies the payer against the Group payer list.
 - **Buyability** (`src/route-health.mjs`): sends each listed offer the catalog's own example request and requires
   a 402 whose x402 challenge asks the catalog's exact amount in Base USDC. It tracks first-listed dates, held
