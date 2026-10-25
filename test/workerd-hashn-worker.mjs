@@ -10,7 +10,7 @@ export const testNativeHashn = { async test() {
     if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId});
     if(url.endsWith('/knocks'))return Response.json({outgoing});
     assert.equal(values.get(HASHN_STATE).intent.body.note,instance.note);assert.equal(init.method,'POST');posts++;
-    outgoing=[{knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'}];
+    outgoing=[{knock_id:knockId,knocked_workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'}];
     return Response.json({knock_id:knockId},{status:201});
   }};
   const first=await runHashnAcquisition(options);assert.equal(first.requests,3);assert.equal(first.stage,'hashn-knock-sent-readback-pending');
