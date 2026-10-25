@@ -39,6 +39,30 @@ export function projectOperation(record, { excludeIssuerResearch = false } = {})
       throw new TypeError('Hashn acquisition requires private singleton custody and a qualified zero-cash bounded instance');
     operation.hashAcquisition = record.hashAcquisition;
   }
+  // An Operations-defined, source-limited public market observation rides
+  // this SAME self-arming clock. No fresh timer, merchant, signer or provider
+  // credentials; the directory reader only performs bounded public GETs.
+  if (record.agentMarketIntelligence !== undefined) {
+    const plan = record.agentMarketIntelligence;
+    if (plan === null || typeof plan !== "object" || Array.isArray(plan) ||
+        typeof plan.enabled !== "boolean")
+      throw new TypeError("agent market intelligence requires a typed enablement choice");
+    if (plan.enabled === true) {
+      const queries = plan.queries;
+      if (operation.clock !== "durable-object-alarm" ||
+          typeof record.crons?.directives !== "string" || !record.crons.directives.trim() ||
+          plan.ownHost !== "market.561.group" ||
+          !Array.isArray(queries) || queries.length < 1 || queries.length > 6 ||
+          queries.some(q => typeof q !== "string" || q.length < 5 || q.length > 160 ||
+            q.trim() !== q || /[\\r\\n\\0]/u.test(q)) ||
+          new Set(queries).size !== queries.length ||
+          !Number.isSafeInteger(plan.limit) || plan.limit < 1 || plan.limit > 30)
+        throw new TypeError("agent market scan requires original alarm, bounded buyer tasks and this seller");
+      operation.agentMarketIntelligence = {
+        enabled: true, ownHost: plan.ownHost, queries: [...queries], limit: plan.limit
+      };
+    }
+  }
   return operation;
 }
 
