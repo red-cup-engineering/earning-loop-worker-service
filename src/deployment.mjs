@@ -54,7 +54,7 @@ export function projectOperation(record, { excludeIssuerResearch = false } = {})
           plan.ownHost !== "market.561.group" ||
           !Array.isArray(queries) || queries.length < 1 || queries.length > 6 ||
           queries.some(q => typeof q !== "string" || q.length < 5 || q.length > 160 ||
-            q.trim() !== q || /[\\r\\n\\0]/u.test(q)) ||
+            q.trim() !== q || /[\r\n\0]/u.test(q)) ||
           new Set(queries).size !== queries.length ||
           !Number.isSafeInteger(plan.limit) || plan.limit < 1 || plan.limit > 30)
         throw new TypeError("agent market scan requires original alarm, bounded buyer tasks and this seller");
