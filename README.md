@@ -20,6 +20,7 @@ which also holds the runbook.
 - **Scorecard** (`src/scorecard.mjs`): outside revenue, Group-payer revenue, buyers, revenue by route, buyable
   offers, and the mode against the operation's burn and goal.
 - **On-chain hook** (`src/onchain-hook.mjs`): POSTs to an engine's scan endpoint each pass and keeps its answer.
+- **Agent-market intelligence** (`src/agent-market-observation.mjs`): free, bounded, task-specific public x402 listings from 402 Index. The **existing** daily price-directives tick in `worker/earning-loops.mjs` reads only the exact Group Economic instance's `agentMarketIntelligence` selection and retains the previous R2 observation if the directory has no qualified page. Its `GET /agent-market-observation.json` is a read-only source observation, not a seller-advertised offer, buyer payment, guaranteed discovery, merchant authorization, customer lead or earnings. Buyer-market interpretation remains with the original 561 Group Opportunity provider; no ChatGPT subscription, app task, separate agent scheduler, self-purchase or outgoing payment is involved.
 - **Clock** (`src/clock.mjs`): Workers cron triggers, or a self-re-arming Durable Object alarm when the account's
   cron allowance is spent.
 
