@@ -1,0 +1,193 @@
+{
+  "type": "SourceConformanceObservation",
+  "version": 1,
+  "at": "2026-10-25T01:41:10.826909+00:00",
+  "subject": "Complete original-worker observation of the two preexisting Group OpenTask bids",
+  "standing": "Source-projected Senior Engineer; explicit human source authority. No native appointment or Work admission claimed.",
+  "sourceReadyOrder": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/specifications/existing-commercial-bid-observation.work-order.md",
+  "evidence": [
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/specifications/existing-commercial-bid-observation.work-order.md",
+      "bytes": 17357,
+      "sha256": "55e51e828f88e8dcf25cdbd2a169383f26fd6a9492adb7cfa66dda2b254995f9"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/source-conformance-records/opentask-existing-bids-api.json",
+      "bytes": 51707,
+      "sha256": "9bb493e00b308550434e14a684988ca598ee238640c56b6540ab68cdd9853403"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/src/opentask-client.mjs",
+      "bytes": 11400,
+      "sha256": "cac7d6c2c0db71897aff533d22ea66715358f0454310af018491f62209c3b237"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/src/opentask-commercial-pass.mjs",
+      "bytes": 20512,
+      "sha256": "282ba624d3a3a2d4244b49fe425a7bf5620f8401bdf85f698d69c9f318544602"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/src/deployment.mjs",
+      "bytes": 4337,
+      "sha256": "2abedf16919a3396cdb041c44950698b207b97bf6d61daf9b3c12afcc6d05e0a"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/scripts/deploy.mjs",
+      "bytes": 7708,
+      "sha256": "b3080671b90bf1a9581c0e1746c68f7d883d2902c7c6b962979cdaa1ae2d254c"
+    },
+    {
+      "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/worker/earning-loops.mjs",
+      "bytes": 16730,
+      "sha256": "80e3179057969bf7fb0dbb3a5a8484590cc83d1b8f050bfeb5ca92b2658a97e0"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/src/plan-jsnode-modules.mjs",
+      "bytes": 8448,
+      "sha256": "fafef59e101c538649e3002adaec980ca338c151c3291df285fe01226f04422c"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/records/schema/jsnode-module-specification.schema.json",
+      "bytes": 2036,
+      "sha256": "dea4097cba57915b974c1bbeb509631c01730ae22d18fb7273853c51415a4182"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs",
+      "bytes": 8688,
+      "sha256": "50880b33208d05d9e2cf10ccc65fac41b0f448ad6dc8de4aec85ff4ffe1e8c80"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/src/fabrication/operations.mjs",
+      "bytes": 15127,
+      "sha256": "74f62c2f55b3780cd01791c6109bc76dad33966321911ecfd5214b8f8474b690"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/specifications/source-closure.md",
+      "bytes": 10632,
+      "sha256": "cf3dbdbdec2880843e380c5201c3cdaffa1db14a4c46a0a0fc16af78da1c7e27"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/agent-computer-system-engineering-services-section/apps/agent-organization-engine/lib/animating/package.json",
+      "bytes": 4315,
+      "sha256": "e5677d58376c197faa3d417ec5db55fc2f8118b3e54353361112b3e40d714db8"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/agent-computer-system-engineering-services-section/apps/agent-organization-engine/lib/animating/src/becoming/doing/working/software-change/mission/construction-admission.mjs",
+      "bytes": 6589,
+      "sha256": "76249e2ca0ea4c56902dd67fe80178474acadfe650ab0a9fe19da98cb753f977"
+    }
+  ],
+  "originalBids": [
+    {
+      "fulfillment": "Held for original OpenAPI Work source and acceptance intake; no delivery agreement or effects added.",
+      "role": "original-openapi-bid",
+      "identityReceiving": "Receive exact original bid/task/seller/price identities from protectedOriginalCreationReceipt and the authorized existing operation configuration; role labels cannot replace them."
+    },
+    {
+      "fulfillment": "Original selected prepared CSV behavior must survive.",
+      "role": "original-csv-bid",
+      "identityReceiving": "Receive exact original bid/task/seller/price identities from protectedOriginalCreationReceipt and the authorized existing operation configuration; role labels cannot replace them."
+    }
+  ],
+  "nativeMakerBoundary": {
+    "status": "not-qualified-for-effectful-batch",
+    "moduleMaker": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/src/plan-jsnode-modules.mjs",
+    "evidenceLines": {
+      "closedProjection": [
+        21,
+        38
+      ],
+      "singleValueAssays": [
+        109,
+        122
+      ]
+    },
+    "supported": "One JSON value argument per declared operation, ordinary object inputs included; direct or awaited JSON result; exact installed dependencies.",
+    "missing": "Trusted original client/private-storage capability composition and independent native IO/Worker-class integration assay; these do not travel as JSON functions.",
+    "notPermitted": [
+      "planner-only promotion",
+      "hidden effectful export",
+      "test-only fixture runner",
+      "ambient host capability fallback"
+    ],
+    "existingSourceCarrier": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/specifications/source-closure.md",
+    "sourceCarrierRuntime": "Bare Cedar Fog MetroPlat intentionally stopped for replacement; no restart or native authority manufactured.",
+    "staleAlternative": "CE README names aoe-code-mission, but current AOE Animating package has no such command or standalone mission/development export.",
+    "constructionAdmission": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/agent-computer-system-engineering-services-section/apps/agent-organization-engine/lib/animating/src/becoming/doing/working/software-change/mission/construction-admission.mjs",
+    "constructionAdmissionRequires": "Immutable complete engineering predecessor products and distinct host-authorized review; local authored prose is not that admission.",
+    "fabricationCandidateWritten": false,
+    "inferenceExecuted": false
+  },
+  "completeBatch": [
+    "src/existing-commercial-bid-observation.mjs",
+    "src/opentask-client.mjs",
+    "src/opentask-commercial-pass.mjs",
+    "src/deployment.mjs",
+    "scripts/deploy.mjs",
+    "worker/earning-loops.mjs",
+    "independent receiver + original client/commercial/clock/workerd tests",
+    "Group Economic optional instance projection and exact release receiving"
+  ],
+  "unresolvedBeforeConstruction": [
+    "Actual admitted source-work carrier or qualified existing-owner capability/assay fabrication extension",
+    "Group Economic finite follow-up deadlines and configuration-owned attemptLimit under original account/resource admission",
+    "Private retained-reading byte bound derived from actual original Durable Object resource contract",
+    "Independent full-batch construction review and shared inference allowance/provider receiving"
+  ],
+  "wireBound": {
+    "originalBudget": 12,
+    "maximumPerLogicalGet": 8,
+    "optionalReadAdmittedOnlyWhenCallsUsedAtMost": 4,
+    "basis": "Source branch count including pre-request refresh fallback, expired access-token response, second refresh fallback and one retried resource. Counter remains the same client instance.",
+    "scope": "Upper source wire bound, not resource entitlement, latency, useful result or provider permission."
+  },
+  "adminReceiving": {
+    "observedAt": "2026-10-25T01:36:54.266787+00:00",
+    "script": "earning-loops-561-group",
+    "settingsStatus": 200,
+    "cfRay": "a4fd7e2a5e931ccd-MSP",
+    "observabilityPresent": false,
+    "logpush": false,
+    "tailConsumers": [],
+    "originalPort": "POST /accounts/{account_id}/workers/scripts/{script_name}/tails; DELETE same script /tails/{id}",
+    "tailStarted": false,
+    "storedLoggingEnabled": false,
+    "docs": [
+      "https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/tail/",
+      "https://developers.cloudflare.com/workers/observability/logs/real-time-logs/"
+    ],
+    "receivingLimit": "Tail can observe invocation/exception; current source emits no observer result. Future source must emit a bounded redacted result with exact release and actual ordinary-pulse observation, never private identities/content."
+  },
+  "deploymentGuard": {
+    "path": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/scripts/deploy.mjs",
+    "lines": [
+      81,
+      85
+    ],
+    "problem": "Original deployed-DO branch fetches banned workers.dev /clock after upload.",
+    "required": "Explicit source-qualified no-public-arm selection preserving original armed ordinary alarm; report pulse receiving separately.",
+    "publicRetryPerformed": false,
+    "ban": "Original Error1010 browser_signature_banned; no disguise, proxy or alternate public route."
+  },
+  "marketReceipt": "/home/emsenn/info/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/source-conformance-records/market-existing-schema-receiving.json",
+  "runtimeSourceModified": false,
+  "deploymentPerformed": false,
+  "newBidPlaced": false,
+  "buyerMessageSent": false,
+  "cashExpense": 0,
+  "incomeReceived": 0,
+  "dailyIncomeObjectiveReceived": false,
+  "marketReceiptSha256": "19867af8b70cfdbc032e280efeeef87af017f52adef30f3a8d939ce0ceacd896",
+  "protectedOriginalCreationReceipt": {
+    "owner": "561-group-economic-services-section",
+    "path": "data/records/earning-attempt-records/2026-10-24-opentask-commercial-operation.json",
+    "sha256": "63d7810d2757743bbf77b1aeada343dbb4de25e986f575ec7961dd2091764325",
+    "privateIdentitiesPublished": false,
+    "retainedAtOriginalOwner": true
+  },
+  "publicSourceRedaction": {
+    "reason": "Public source retains roles and original custody provenance; private bid/task/price identities remain at their original Economic owner.",
+    "identityRequirementsWeakened": false,
+    "runtimeModified": false
+  }
+}
