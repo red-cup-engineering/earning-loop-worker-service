@@ -1,0 +1,990 @@
+{
+  "type": "PublicCatalogObservation",
+  "version": 1,
+  "at": "2026-10-25T01:39:24.669575+00:00",
+  "url": "https://market.561.group/v1/catalog",
+  "status": 200,
+  "cfRay": "a4fd81d79c47a22d-MSP",
+  "responseBytes": 375062,
+  "responseSha256": "7214ac2a274a6102941bc699080775879c19935ae8a6d208318c4891841a32bc",
+  "offerCount": 130,
+  "localSource": "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-market-services-section/data/catalog.json",
+  "localSourceSha256": "c3cb6aec63ff00ee82a24d0c7c9020bec06040cb3c41e39bda1f482aa16ac166",
+  "localOfferCount": 135,
+  "schemaOffers": [
+    {
+      "gateway": "json-schema",
+      "seller": {
+        "enterprise": "engineering",
+        "entity": "561-group-llc",
+        "record": {
+          "path": "engineering-services-section:lib/agency/enterprises/engineering.json",
+          "sha256": "6af4ed9d1e4612b0383267e7ffe0ad028c52164ee3c5136110d434384a29c39f"
+        }
+      },
+      "book": {
+        "enterprise": "engineering",
+        "account": "Income:Sales:X402"
+      },
+      "operation": "json-schema-check",
+      "name": "JSON Schema Meta-Validation and Reference Check",
+      "method": "POST",
+      "route": "/v1/data/json-schema-check",
+      "url": "https://market.561.group/v1/data/json-schema-check",
+      "price": "$0.0012",
+      "listed": true,
+      "amountAtomic": "1200",
+      "pricing": {
+        "mode": "canonical-json-byte-bands",
+        "includedBytes": 4096,
+        "additionalUnitBytes": 4096,
+        "additionalUnitAtomic": "100",
+        "maximumAtomic": "9600",
+        "minimumAtomic": "1200",
+        "priceBasis": "starting-price",
+        "settlementDecimals": 6,
+        "quote": "native-x402-payment-required",
+        "metering": "UTF-8 bytes of canonical JSON after input admission; whitespace and alternate escaping do not change the price",
+        "evidenceScope": "commercial-workload-tariff; no measured CPU, monetary-cost, physical-energy or customer-demand claim"
+      },
+      "mimeType": "application/json",
+      "request": {
+        "maxBytes": 102400,
+        "bodySchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema"
+          ],
+          "properties": {
+            "schema": {
+              "type": [
+                "object",
+                "boolean"
+              ],
+              "description": "JSON Schema document, evaluated by its declared supported dialect or the selected default."
+            },
+            "schemas": {
+              "type": "array",
+              "maxItems": 16,
+              "items": {
+                "type": "object"
+              },
+              "description": "Explicit reference documents with native $id (or id for draft 4). No HTTP or file retrieval."
+            },
+            "dialect": {
+              "type": "string",
+              "enum": [
+                "4",
+                "6",
+                "7",
+                "2019-09",
+                "2020-12"
+              ],
+              "default": "2020-12"
+            },
+            "baseUri": {
+              "type": "string",
+              "maxLength": 2048,
+              "description": "Optional absolute HTTP(S) or URN retrieval identifier; resolves relative schema identifiers/references. No fetching."
+            },
+            "assertFormats": {
+              "type": "boolean",
+              "default": false,
+              "description": "Format is annotation by default; true explicitly enables native format assertions."
+            }
+          }
+        },
+        "example": {
+          "method": "POST",
+          "url": "https://market.561.group/v1/data/json-schema-check",
+          "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+          },
+          "body": {
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "sku": "ni:///sha-256;N4MmkYGCZX38yHR8LjTPtEaBF35jq2NWDQ1cDvpcVbk",
+      "cell": "ni:///sha-256;XN2jIsV42vwWg_cA563gcR-l3wVN_f5JZ0MRANTqCOY",
+      "law": "ni:///sha-256;lBrYOlx6ucTNPsLBFkScE8SH53oAXaMR9JCziHDtCKo",
+      "category": "data",
+      "description": "Compile/meta-validate JSON Schema drafts 4, 6, 7, 2019-09 or 2020-12 with native Hyperjump. Resolve only the supplied reference corpus; no HTTP/file fetching. Return evaluated=false plus native diagnostics for invalid schemas or incomplete graphs. Up to 65536 JSON bytes, 8192 nodes, depth 64, 16 reference documents and 64 reported errors with explicit truncation. Format is annotation unless assertFormats=true. Diagnostics are paid results.",
+      "sourceRightsVerification": "not-declared",
+      "compute": {
+        "package": "@red-cup-engineering/json-schema-services-section",
+        "export": "checkSchema"
+      },
+      "output": {
+        "schema": {
+          "type": "object",
+          "required": [
+            "evaluated",
+            "formatAssertion"
+          ],
+          "properties": {
+            "evaluated": {
+              "type": "boolean"
+            },
+            "formatAssertion": {
+              "type": "boolean"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "errors": {
+              "type": "array",
+              "maxItems": 64,
+              "items": {
+                "type": "object"
+              }
+            },
+            "errorsTruncated": {
+              "type": "boolean"
+            },
+            "diagnostic": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 2048
+                },
+                "output": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "evaluated": true,
+          "valid": true,
+          "errors": [],
+          "errorsTruncated": false,
+          "formatAssertion": false
+        }
+      }
+    },
+    {
+      "gateway": "json-schema",
+      "seller": {
+        "enterprise": "engineering",
+        "entity": "561-group-llc",
+        "record": {
+          "path": "engineering-services-section:lib/agency/enterprises/engineering.json",
+          "sha256": "6af4ed9d1e4612b0383267e7ffe0ad028c52164ee3c5136110d434384a29c39f"
+        }
+      },
+      "book": {
+        "enterprise": "engineering",
+        "account": "Income:Sales:X402"
+      },
+      "operation": "json-schema-validate",
+      "name": "JSON Schema Instance Validation",
+      "method": "POST",
+      "route": "/v1/data/json-schema-validate",
+      "url": "https://market.561.group/v1/data/json-schema-validate",
+      "price": "$0.0012",
+      "listed": true,
+      "amountAtomic": "1200",
+      "pricing": {
+        "mode": "canonical-json-byte-bands",
+        "includedBytes": 4096,
+        "additionalUnitBytes": 4096,
+        "additionalUnitAtomic": "100",
+        "maximumAtomic": "9600",
+        "minimumAtomic": "1200",
+        "priceBasis": "starting-price",
+        "settlementDecimals": 6,
+        "quote": "native-x402-payment-required",
+        "metering": "UTF-8 bytes of canonical JSON after input admission; whitespace and alternate escaping do not change the price",
+        "evidenceScope": "commercial-workload-tariff; no measured CPU, monetary-cost, physical-energy or customer-demand claim"
+      },
+      "mimeType": "application/json",
+      "request": {
+        "maxBytes": 102400,
+        "bodySchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "value"
+          ],
+          "properties": {
+            "schema": {
+              "type": [
+                "object",
+                "boolean"
+              ],
+              "description": "JSON Schema document, evaluated by its declared supported dialect or the selected default."
+            },
+            "schemas": {
+              "type": "array",
+              "maxItems": 16,
+              "items": {
+                "type": "object"
+              },
+              "description": "Explicit reference documents with native $id (or id for draft 4). No HTTP or file retrieval."
+            },
+            "dialect": {
+              "type": "string",
+              "enum": [
+                "4",
+                "6",
+                "7",
+                "2019-09",
+                "2020-12"
+              ],
+              "default": "2020-12"
+            },
+            "baseUri": {
+              "type": "string",
+              "maxLength": 2048,
+              "description": "Optional absolute HTTP(S) or URN retrieval identifier; resolves relative schema identifiers/references. No fetching."
+            },
+            "assertFormats": {
+              "type": "boolean",
+              "default": false,
+              "description": "Format is annotation by default; true explicitly enables native format assertions."
+            },
+            "value": {
+              "description": "The exact JSON value to evaluate; no coercion or defaults."
+            }
+          }
+        },
+        "example": {
+          "method": "POST",
+          "url": "https://market.561.group/v1/data/json-schema-validate",
+          "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+          },
+          "body": {
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "required": [
+                "id",
+                "tags"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            "value": {
+              "id": "offer-1",
+              "tags": [
+                "x402",
+                "data"
+              ]
+            }
+          }
+        }
+      },
+      "sku": "ni:///sha-256;h6U9oPSfOthhVnT8tK7DKex37PYgC0B9fwYwS2eL1Ts",
+      "cell": "ni:///sha-256;XN2jIsV42vwWg_cA563gcR-l3wVN_f5JZ0MRANTqCOY",
+      "law": "ni:///sha-256;oo4RrOxhJchk4NJJg8bZkPPJ7n0PB7ej7xlwuNZroW4",
+      "category": "data",
+      "description": "Judge JSON values against native JSON Schema drafts 4, 6, 7, 2019-09 or 2020-12, including dynamic references and unevaluated values. Retain BASIC validity and instance/keyword locations. evaluated=false means compilation/graph failure, not invalid data. Explicit corpus only; no HTTP/file retrieval. Format annotation by default; assertion opt-in. Up to 65536 JSON bytes, 8192 nodes, depth 64, 16 references and 64 errors. Invalid data and schema diagnostics are paid results.",
+      "sourceRightsVerification": "not-declared",
+      "compute": {
+        "package": "@red-cup-engineering/json-schema-services-section",
+        "export": "evaluateSchemaInstance"
+      },
+      "output": {
+        "schema": {
+          "type": "object",
+          "required": [
+            "evaluated",
+            "formatAssertion"
+          ],
+          "properties": {
+            "evaluated": {
+              "type": "boolean"
+            },
+            "formatAssertion": {
+              "type": "boolean"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "errors": {
+              "type": "array",
+              "maxItems": 64,
+              "items": {
+                "type": "object"
+              }
+            },
+            "errorsTruncated": {
+              "type": "boolean"
+            },
+            "diagnostic": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 2048
+                },
+                "output": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "evaluated": true,
+          "valid": true,
+          "errors": [],
+          "errorsTruncated": false,
+          "formatAssertion": false
+        }
+      }
+    },
+    {
+      "gateway": "schema-validation",
+      "seller": null,
+      "book": null,
+      "operation": "schema-validate",
+      "name": "JSON Schema Validate",
+      "method": "POST",
+      "route": "/v1/schema/validate",
+      "url": "https://market.561.group/v1/schema/validate",
+      "price": "$0.005",
+      "listed": true,
+      "amountAtomic": "5000",
+      "mimeType": "application/json",
+      "request": {
+        "maxBytes": 102400,
+        "bodySchema": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "object"
+            },
+            "value": {},
+            "schemas": {
+              "type": "array"
+            }
+          },
+          "required": [
+            "schema",
+            "value"
+          ]
+        },
+        "example": {
+          "method": "POST",
+          "url": "https://market.561.group/v1/schema/validate",
+          "headers": {
+            "accept": "application/json",
+            "content-type": "application/json"
+          },
+          "body": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "value": {
+              "name": 5
+            }
+          }
+        }
+      },
+      "sku": "ni:///sha-256;zO5TTCQUHQxgkR19xoCuk-qbjtN4fRgibeg-2WYUJps",
+      "cell": "ni:///sha-256;tdxMUYcFT6JPU2rAamDxe-X9kBG0Jwqhzsu6j4OAvac",
+      "law": "ni:///sha-256;WWhagBfVv1bccUS7EQ4pJktFWTBlCgFTNhj9As1OphM",
+      "category": "data",
+      "description": "Validate one JSON value against one JSON Schema document (2020-12), with an optional corpus of referenced schemas; reports every violation, not just the first.",
+      "sourceRightsVerification": "not-declared",
+      "compute": {
+        "package": "@red-cup-engineering/json-schema-services-section",
+        "export": "validateJson"
+      },
+      "output": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "valid": {
+              "type": "boolean"
+            },
+            "errors": {
+              "type": "array"
+            }
+          }
+        },
+        "example": {
+          "valid": false,
+          "errors": [
+            {
+              "kind": "instance",
+              "path": "/name",
+              "keyword": "type",
+              "message": "must be string"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "comparisonObservation": {
+    "at": "2026-10-25T01:40:39.563960+00:00",
+    "status": 200,
+    "cfRay": "a4fd83a6ffb55120-MSP",
+    "responseSha256": "7214ac2a274a6102941bc699080775879c19935ae8a6d208318c4891841a32bc",
+    "sameBodyAsPrevious": true,
+    "routes": [
+      "/v1/aggressive-alpha",
+      "/v1/astronomy/positions/{date}",
+      "/v1/astronomy/precision-positions/{date}",
+      "/v1/attention/allocate",
+      "/v1/base-chain/balance",
+      "/v1/base-chain/gas-oracle",
+      "/v1/base-chain/transaction",
+      "/v1/book-record",
+      "/v1/content-address",
+      "/v1/data/base16-decode",
+      "/v1/data/base16-encode",
+      "/v1/data/base32-decode",
+      "/v1/data/base32-encode",
+      "/v1/data/base58btc-decode",
+      "/v1/data/base58btc-encode",
+      "/v1/data/base64-bytes",
+      "/v1/data/base64url-decode",
+      "/v1/data/base64url-encode",
+      "/v1/data/bytes-base64",
+      "/v1/data/cbor-deterministic-check",
+      "/v1/data/cbor-diagnose",
+      "/v1/data/cbor-json-decode",
+      "/v1/data/cbor-json-encode",
+      "/v1/data/cid-inspect",
+      "/v1/data/compress",
+      "/v1/data/content-digest",
+      "/v1/data/content-digest-verify",
+      "/v1/data/csv-to-json",
+      "/v1/data/decompress",
+      "/v1/data/form-to-json",
+      "/v1/data/html-body-text",
+      "/v1/data/html-entity-decode",
+      "/v1/data/html-entity-encode",
+      "/v1/data/html-links",
+      "/v1/data/html-parse-diagnostics",
+      "/v1/data/html-to-json-tree",
+      "/v1/data/http-date-to-json",
+      "/v1/data/http-field-to-json",
+      "/v1/data/http-field-validate",
+      "/v1/data/json-canonicalize",
+      "/v1/data/json-merge-patch",
+      "/v1/data/json-patch-apply",
+      "/v1/data/json-patch-check",
+      "/v1/data/json-patch-create",
+      "/v1/data/json-pointer",
+      "/v1/data/json-schema-check",
+      "/v1/data/json-schema-validate",
+      "/v1/data/json-to-csv",
+      "/v1/data/json-to-form",
+      "/v1/data/json-to-http-date",
+      "/v1/data/json-to-http-field",
+      "/v1/data/json-to-jsonl",
+      "/v1/data/json-to-toml",
+      "/v1/data/json-to-yaml",
+      "/v1/data/json-tree-to-xml",
+      "/v1/data/jsonl-to-json",
+      "/v1/data/mime-type-parse",
+      "/v1/data/mime-type-serialize",
+      "/v1/data/multihash-create",
+      "/v1/data/multihash-inspect",
+      "/v1/data/multihash-verify",
+      "/v1/data/ni-hash",
+      "/v1/data/ni-verify",
+      "/v1/data/raw-block-cid-create",
+      "/v1/data/raw-block-cid-verify",
+      "/v1/data/text-to-utf8",
+      "/v1/data/toml-to-json",
+      "/v1/data/toml-validate",
+      "/v1/data/unicode-normalize",
+      "/v1/data/uri-template-expand",
+      "/v1/data/uri-template-inspect",
+      "/v1/data/url-normalize",
+      "/v1/data/utf8-to-text",
+      "/v1/data/xml-normalize",
+      "/v1/data/xml-to-json-tree",
+      "/v1/data/xml-well-formedness",
+      "/v1/data/yaml-to-json",
+      "/v1/data/yaml-validate",
+      "/v1/divination/daily-reading",
+      "/v1/ephemeris/moment/{date}",
+      "/v1/ephemeris/precision-moment/{date}",
+      "/v1/four/reading-census",
+      "/v1/four/reading-conflate",
+      "/v1/four/reading-convert",
+      "/v1/four/reading-knowledge-join",
+      "/v1/four/reading-knowledge-meet",
+      "/v1/four/reading-negate",
+      "/v1/four/reading-truth-join",
+      "/v1/four/reading-truth-meet",
+      "/v1/inference",
+      "/v1/issuer-evidence",
+      "/v1/koios/briefing/current",
+      "/v1/market-action/admission",
+      "/v1/occupation-entropy",
+      "/v1/orphan-patch/score",
+      "/v1/pacing/analysis",
+      "/v1/pacing/heart-rate-threshold",
+      "/v1/paper-intent",
+      "/v1/pre-sign/conformance",
+      "/v1/publications/business-management-course-by-course",
+      "/v1/publications/business-strategy-course-by-course",
+      "/v1/publications/data-analytics-course-by-course",
+      "/v1/publications/project-management-course-by-course",
+      "/v1/publications/the-capm-domain-by-domain",
+      "/v1/publications/the-x402-economy",
+      "/v1/publications/ux-design-course-by-course",
+      "/v1/reconcile",
+      "/v1/reference-check",
+      "/v1/report-graphics/render",
+      "/v1/schema/validate",
+      "/v1/sen/articulate",
+      "/v1/sen/canonicalize",
+      "/v1/sen/coincide",
+      "/v1/sen/conflate-reading/{name}",
+      "/v1/sen/induce",
+      "/v1/sen/infer-type",
+      "/v1/sen/posit",
+      "/v1/sen/predicate",
+      "/v1/sen/relate-relations",
+      "/v1/sen/settle",
+      "/v1/sen/utter",
+      "/v1/strategies/synthesize",
+      "/v1/structural-claims/option-value",
+      "/v1/translate/cdrama/episode",
+      "/v1/translate/cdrama/review",
+      "/v1/translate/en-zh/cdrama-subtitles",
+      "/v1/translate/zh-en",
+      "/v1/translate/zh-en/cdrama-subtitles",
+      "/v1/translate/zh-en/interlinear",
+      "/v1/x402-market/observation"
+    ],
+    "sourceOnly": [
+      {
+        "route": "/v1/cve/advisory/assemble",
+        "listed": false,
+        "saleStatus": "held",
+        "operation": "assemble-public-advisories"
+      },
+      {
+        "route": "/v1/cve/applicability",
+        "listed": false,
+        "saleStatus": "held",
+        "operation": "scan-repository-cves"
+      },
+      {
+        "route": "/v1/cve/propagation/diff",
+        "listed": false,
+        "saleStatus": "held",
+        "operation": "diff-cve-findings"
+      },
+      {
+        "route": "/v1/issuer-revenue-comparison",
+        "listed": true,
+        "saleStatus": null,
+        "operation": "issuer-revenue-comparison"
+      },
+      {
+        "route": "/v1/publications/the-agent-operators-handbook",
+        "listed": null,
+        "saleStatus": null,
+        "operation": null
+      }
+    ],
+    "servedOnly": [],
+    "commonCount": 130,
+    "duplicateRemoteRouteCount": 0
+  },
+  "unpaidSchemaChallenge": {
+    "at": "2026-10-25T01:40:39.566754+00:00",
+    "url": "https://market.561.group/v1/data/json-schema-validate",
+    "method": "POST",
+    "input": {
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "required": [
+          "id",
+          "tags"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "value": {
+        "id": "offer-1",
+        "tags": [
+          "x402",
+          "data"
+        ]
+      }
+    },
+    "paymentAuthorizationSupplied": false,
+    "status": 402,
+    "cfRay": "a4fd83a85827072c-MSP",
+    "responseBytes": 2,
+    "responseSha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "contentType": "application/json",
+    "response": {},
+    "paymentRequired": {
+      "x402Version": 2,
+      "error": "Payment required",
+      "resource": {
+        "url": "https://market.561.group/v1/data/json-schema-validate",
+        "description": "Judge JSON values against native JSON Schema drafts 4, 6, 7, 2019-09 or 2020-12, including dynamic references and unevaluated values. Retain BASIC validity and instance/keyword locations. evaluated=false means compilation/graph failure, not invalid data. Explicit corpus only; no HTTP/file retrieval. Format annotation by default; assertion opt-in. Up to 65536 JSON bytes, 8192 nodes, depth 64, 16 references and 64 errors. Invalid data and schema diagnostics are paid results.",
+        "mimeType": "application/json",
+        "serviceName": "json-schema-validate",
+        "tags": [
+          "json-schema",
+          "validation",
+          "standards",
+          "data",
+          "2020-12"
+        ]
+      },
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "amount": "1200",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0x32886F6F361C1d570255c2762967A2e41D0E9B1a",
+          "maxTimeoutSeconds": 300,
+          "extra": {
+            "name": "USD Coin",
+            "version": "2"
+          }
+        }
+      ],
+      "extensions": {
+        "bazaar": {
+          "info": {
+            "input": {
+              "type": "http",
+              "method": "POST",
+              "bodyType": "json",
+              "body": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "tags"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "value": {
+                  "id": "offer-1",
+                  "tags": [
+                    "x402",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "output": {
+              "type": "json",
+              "example": {
+                "evaluated": true,
+                "valid": true,
+                "errors": [],
+                "errorsTruncated": false,
+                "formatAssertion": false
+              }
+            }
+          },
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "http"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "POST"
+                    ]
+                  },
+                  "bodyType": {
+                    "type": "string",
+                    "enum": [
+                      "json",
+                      "form-data",
+                      "text"
+                    ]
+                  },
+                  "body": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "schema",
+                      "value"
+                    ],
+                    "properties": {
+                      "schema": {
+                        "type": [
+                          "object",
+                          "boolean"
+                        ],
+                        "description": "JSON Schema document, evaluated by its declared supported dialect or the selected default."
+                      },
+                      "schemas": {
+                        "type": "array",
+                        "maxItems": 16,
+                        "items": {
+                          "type": "object"
+                        },
+                        "description": "Explicit reference documents with native $id (or id for draft 4). No HTTP or file retrieval."
+                      },
+                      "dialect": {
+                        "type": "string",
+                        "enum": [
+                          "4",
+                          "6",
+                          "7",
+                          "2019-09",
+                          "2020-12"
+                        ],
+                        "default": "2020-12"
+                      },
+                      "baseUri": {
+                        "type": "string",
+                        "maxLength": 2048,
+                        "description": "Optional absolute HTTP(S) or URN retrieval identifier; resolves relative schema identifiers/references. No fetching."
+                      },
+                      "assertFormats": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Format is annotation by default; true explicitly enables native format assertions."
+                      },
+                      "value": {
+                        "description": "The exact JSON value to evaluate; no coercion or defaults."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "method",
+                  "bodyType",
+                  "body"
+                ],
+                "additionalProperties": false
+              },
+              "output": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "example": {
+                    "type": "object",
+                    "required": [
+                      "evaluated",
+                      "formatAssertion"
+                    ],
+                    "properties": {
+                      "evaluated": {
+                        "type": "boolean"
+                      },
+                      "formatAssertion": {
+                        "type": "boolean"
+                      },
+                      "valid": {
+                        "type": "boolean"
+                      },
+                      "errors": {
+                        "type": "array",
+                        "maxItems": 64,
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "errorsTruncated": {
+                        "type": "boolean"
+                      },
+                      "diagnostic": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string",
+                            "maxLength": 2048
+                          },
+                          "output": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              }
+            },
+            "required": [
+              "input"
+            ]
+          }
+        },
+        "sign-in-with-x": {
+          "info": {
+            "domain": "market.561.group",
+            "uri": "https://market.561.group/v1/data/json-schema-validate",
+            "version": "1",
+            "nonce": "cbe8509e7fea26caa5d1ddb40904cbbc",
+            "issuedAt": "2026-10-25T01:40:37.825Z",
+            "expirationTime": "2026-10-25T01:45:37.825Z",
+            "statement": "Sign in to use what this wallet has been granted at market.561.group.",
+            "resources": [
+              "https://market.561.group/v1/data/json-schema-validate"
+            ]
+          },
+          "supportedChains": [
+            {
+              "chainId": "eip155:8453",
+              "type": "eip191"
+            }
+          ],
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "required": [
+              "domain",
+              "address",
+              "uri",
+              "version",
+              "chainId",
+              "type",
+              "nonce",
+              "issuedAt",
+              "signature"
+            ],
+            "properties": {
+              "domain": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "chainId": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "nonce": {
+                "type": "string"
+              },
+              "issuedAt": {
+                "type": "string"
+              },
+              "expirationTime": {
+                "type": "string"
+              },
+              "notBefore": {
+                "type": "string"
+              },
+              "requestId": {
+                "type": "string"
+              },
+              "statement": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "installedSchemaSupplier": {
+    "package": "@red-cup-engineering/json-schema-services-section",
+    "version": "0.5.0",
+    "subpath": "./schema-evaluation",
+    "module": "./src/schema-evaluation.mjs",
+    "operation": "evaluateSchemaInstance",
+    "admission": "admitInstanceEvaluation",
+    "evidenceScope": "Current original Market installed selection and catalog-compute identity; current deployed bundle version not independently inferred from catalog."
+  }
+}
