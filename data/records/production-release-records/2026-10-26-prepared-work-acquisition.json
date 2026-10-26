@@ -60,5 +60,141 @@
   },
   "canonicalCommercialSource": "e6159b2734fe93ee2d2b07e7fed5f42dbdf1e45b",
   "preservedLocalSourceHead": "3ebbc62056b31e339fc52c53ebbd7a0cb3a99317",
-  "businessReceiving": "https://github.com/561-group/internal-economic-services-section/blob/main/data/records/earning-attempt-records/2026-10-26-prepared-work-acquisition.json"
+  "businessReceiving": "https://github.com/561-group/internal-economic-services-section/blob/main/data/records/earning-attempt-records/2026-10-26-prepared-work-acquisition.json",
+  "commercialPortfolioProjection": {
+    "at": "2026-10-26T16:05:17.085Z",
+    "worker": "earning-loops-561-group",
+    "version": "771f7627-126b-4ad3-ad93-88e6867bb0cf",
+    "previousVersion": "b0c0ad84-6a0c-4a62-bbf5-5e59702a8882",
+    "compositionSha256": "48e2b1a4c0d8377dab64eff6baf1be8bc4b985e7e7058cce557b4d75c9ae8bf9",
+    "artifactSha256": "54e6b91f0ad89152721ebea2fa1ed3ef560cea4d1af6d80ab0eddfe21b2e5089",
+    "artifactBytes": 189070,
+    "installedNativeArtifactMatches": true,
+    "originalBindingsPreserved": true,
+    "sourceInputs": 32,
+    "newCashExpenseUsd": 0,
+    "source": "https://github.com/red-cup-engineering/earning-loop-worker-service/pull/11",
+    "receiving": [
+      {
+        "path": "/commercial.json",
+        "status": 200,
+        "body": {
+          "stage": "awaiting-hire",
+          "requests": 1,
+          "newCashExpenseUsd": 0,
+          "offers": [
+            {
+              "taskId": "cmp545xcw001bl704p3a7ock7",
+              "productId": "headered-csv-to-json-python",
+              "stage": "bid-created",
+              "at": "2026-10-26T15:39:11.666Z"
+            },
+            {
+              "taskId": "cmp545t0n0011l704htzztdbb",
+              "productId": "headered-csv-to-json-python",
+              "stage": "bid-created",
+              "at": "2026-10-26T15:52:30.002Z"
+            },
+            {
+              "taskId": "cmpupoqmm0027kw04351wcfhz",
+              "productId": "flat-json-to-csv-python",
+              "stage": "awaiting-hire",
+              "at": "2026-10-26T16:04:33.673Z"
+            }
+          ],
+          "at": "2026-10-26T16:04:33.673Z",
+          "taskId": "cmpupoqmm0027kw04351wcfhz",
+          "productId": "flat-json-to-csv-python",
+          "nextTick": "2026-10-26T16:07:30.000Z"
+        }
+      },
+      {
+        "path": "/last-run.json",
+        "status": 200,
+        "body": {
+          "cron": "*/15 * * * *",
+          "at": "2026-10-26T16:00:00.000Z",
+          "settlements": {
+            "received": [],
+            "refused": 0,
+            "total": 33
+          },
+          "routes": {
+            "probed": 3,
+            "held": 115,
+            "broken": 0,
+            "repairs": 0
+          },
+          "scorecard": {
+            "week": 0,
+            "trailing30": 0,
+            "perDayTrailing30": 0
+          },
+          "onchain": {
+            "status": "no-engine-attached",
+            "retainedStatus": "no-engine-attached"
+          }
+        }
+      },
+      {
+        "path": "/scorecard.json",
+        "status": 200,
+        "body": {
+          "type": "EarningsScorecard",
+          "at": "2026-10-26T16:00:00.000Z",
+          "outsideRevenueUSD": {
+            "week": 0,
+            "trailing30": 0,
+            "perDayTrailing30": 0
+          },
+          "outsideCashReceivedUSD": {
+            "week": 0,
+            "trailing30": 0
+          },
+          "outsidePaidDeliveriesUSD": {
+            "week": 0,
+            "trailing30": 0
+          },
+          "unclassifiedCashReceivedUSD": {
+            "week": 0.043,
+            "trailing30": 0.127
+          },
+          "groupPayerCashReceivedUSD": {
+            "week": 0,
+            "trailing30": 0.348
+          },
+          "outsideBuyers": 0,
+          "outsideRevenueByRoute": {},
+          "burnUSD": {
+            "monthly": 600,
+            "basis": "leader-estimate, 2026-10-23"
+          },
+          "targetsUSDPerDay": {
+            "floor": 20,
+            "goal": 200
+          },
+          "selfFundingRatio": 0,
+          "mode": "starving",
+          "offers": {
+            "listed": 323,
+            "buyable": 115,
+            "broken": 0
+          },
+          "onchain": {
+            "at": "2026-10-26T15:30:00.000Z",
+            "status": "no-engine-attached",
+            "occurrence": null,
+            "driver": "not-established",
+            "received": null,
+            "usefulWork": "not-established",
+            "externalReconciliation": "not-established",
+            "accountedEarnings": "not-established",
+            "lastRunAt": "2026-10-26T15:30:00.000Z"
+          },
+          "source": "two-provider Base transfers; prepared responses, requester acceptance and confirmed outside ownership are separate evidence",
+          "recognition": "outside revenue requires confirmed outside ownership, a prepared successful response, and requester acceptance; unknown wallets remain unclassified"
+        }
+      }
+    ]
+  }
 }
