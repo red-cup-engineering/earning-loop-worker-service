@@ -1,0 +1,12 @@
+{
+  "kind": "git.working-copy.integration",
+  "root": "/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service",
+  "repository": "red-cup-engineering/earning-loop-worker-service",
+  "repositoryId": 1431889714,
+  "previousMain": "c425608745ace8e864ba8e1df2fcd12058240f72",
+  "sourceCommit": "0ec990d37a8a6f60e4e86d25f64f720bce766865",
+  "tree": "1ee3326a5d8c78adf872450569d5270bdff826cb",
+  "commit": "09568b67cc8fd9600b58378eabeb9b6bad2c2d07",
+  "remoteReadback": true,
+  "received": false
+}

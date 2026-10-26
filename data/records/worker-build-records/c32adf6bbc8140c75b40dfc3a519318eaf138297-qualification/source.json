@@ -1,0 +1,10 @@
+{
+  "kind": "WorkerBuildSourceProjection",
+  "version": 1,
+  "repository": "red-cup-engineering/earning-loop-worker-service",
+  "commit": "c32adf6bbc8140c75b40dfc3a519318eaf138297",
+  "base": "902b4d5c3be0b206db25569f7e4184da04af6fb4",
+  "projection": "native git archive",
+  "purpose": "qualify exact owned source while concurrent commercial working-tree edits remain preserved",
+  "deploymentAdmitted": false
+}

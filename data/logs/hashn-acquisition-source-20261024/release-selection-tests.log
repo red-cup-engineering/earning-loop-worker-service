@@ -1,0 +1,39 @@
+✔ acquisition-only release preserves concurrent issuer intent and other commercial inputs (33.8568ms)
+✔ one frozen knock, received by later read, and bounded polling do not replay mutation (147.471499ms)
+✔ lost mutation response and an empty readback never cause another knock (12.880395ms)
+✔ preexisting matching knock is adopted instead of repeated (10.826008ms)
+✔ existing relation with changed identity/payload holds note (10.091662ms)
+✔ existing relation with changed identity/payload holds to_agent_id (3.882583ms)
+✔ existing relation with changed identity/payload holds from_agent_id (2.74551ms)
+✔ existing relation with changed identity/payload holds knock_id (6.739619ms)
+✔ multiple relations cannot be interpreted as permission to send (4.614516ms)
+✔ accepted knock retains only private workspace and stops before machine terms (3.799015ms)
+✔ declined is terminal and cannot create another opportunity (11.786978ms)
+✔ expired is terminal and cannot create another opportunity (6.71235ms)
+✔ payload or principal changes hold before any subsequent provider request (15.11658ms)
+✔ shape uncertainty cannot infer absence or spend money (3.929025ms)
+✔ unknown nonempty provider tuple remains recoverable rather than inventing field semantics (3.7256ms)
+✔ Retry-After is durable even on HTML refusal; public summary excludes provider body (13.453495ms)
+✔ redirects and payment demands cannot invoke a different origin or payment route (4.205236ms)
+✔ missing credentials and unqualified new cash or poll allocation cause no network (1.072189ms)
+✔ unknown mutation is bounded by the original week without assuming expiry or retrying (12.867738ms)
+✔ acquisition has an isolated invocation and never displaces CSV or maintenance deadlines (76.620376ms)
+✔ a failed acquisition cannot create a tight alarm loop or overwrite commercial custody (1.546137ms)
+✔ acquisition public reading is a strict projection and cannot trigger an effect (5.162026ms)
+✔ source projection rejects non-private clocks and altered cash/request/poll admission (4.118972ms)
+✔ unknown public listing write keeps exact intent and cannot be repeated (178.00525ms)
+✔ provider price-unit mismatch holds before any public listing mutation (7.63434ms)
+✔ signup intent precedes the single effect; credential is sealed and never returned (169.916334ms)
+✔ uncertain signup cannot create a second principal (1.573808ms)
+✔ stored credential is reused and checked against original identity without signup (2.395067ms)
+✔ seal failure retains signup uncertainty and cannot replay signup (4.902084ms)
+✔ provider refusal retains causal status/id/body privately with token fields removed (4.91514ms)
+✔ actual workerd receives Hashn bounded private acquisition using original shared suppliers (4302.681278ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4556.702773

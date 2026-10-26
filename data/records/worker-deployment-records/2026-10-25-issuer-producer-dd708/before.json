@@ -1,0 +1,254 @@
+{
+  "at": "2026-10-25T00:06:05.887Z",
+  "settings": {
+    "placement": {},
+    "compatibility_date": "2026-09-01",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "usage_model": "standard",
+    "tags": [],
+    "tail_consumers": [],
+    "logpush": false,
+    "annotations": {
+      "workers/triggered_by": "upload"
+    },
+    "bindings": [
+      {
+        "class_name": "EarningClock",
+        "name": "CLOCK",
+        "namespace_id": "c23d67c6148e4110a200911018cbe065",
+        "type": "durable_object_namespace"
+      },
+      {
+        "name": "HASHN_CREDENTIAL_JSON",
+        "type": "secret_text"
+      },
+      {
+        "bucket_name": "market-561-group-settlements",
+        "name": "MARKET_SETTLEMENTS",
+        "type": "r2_bucket"
+      },
+      {
+        "name": "OPENTASK_CREDENTIAL_JSON",
+        "type": "secret_text"
+      },
+      {
+        "name": "RELEASE_METADATA",
+        "type": "version_metadata"
+      },
+      {
+        "bucket_name": "561-group-working-state",
+        "name": "STATE",
+        "type": "r2_bucket"
+      }
+    ]
+  },
+  "deployments": {
+    "deployments": [
+      {
+        "id": "7785d5d8-317b-41ae-9dbe-37d7b79984c1",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "22fdfa72-ff0d-4e78-b29a-7f70e38e0047",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T23:32:40.252698Z"
+      },
+      {
+        "id": "5a51d064-aac2-4074-a77e-23fa32f3e47d",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "62d0bd59-7001-4b15-9a3b-5a4c36eacb82",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T23:24:12.555639Z"
+      },
+      {
+        "id": "8a1699da-b30d-4dea-b576-df708357dc0f",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "secret"
+        },
+        "versions": [
+          {
+            "version_id": "e185ec22-a5b0-4688-8597-f747af4bb4c5",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T23:07:37.329594Z"
+      },
+      {
+        "id": "014fa830-35fd-480a-a86f-59a11b97d646",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "71a4facb-9001-4d32-95a4-e75c97d2b4ee",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T21:36:27.500391Z"
+      },
+      {
+        "id": "02e70fa6-9ec7-418a-9399-5cb96ddab386",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "a67e8563-3e63-4f48-a703-dd727b0ded55",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T20:31:25.280424Z"
+      },
+      {
+        "id": "386b9003-05d3-4929-873d-82743f8ef229",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "8ec6fdc2-f20d-44d9-9166-7176846c05c2",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T20:18:31.902645Z"
+      },
+      {
+        "id": "34677d4f-858e-4964-9b23-3ec246671798",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "fed4ee4b-de65-4da8-820c-a64074d0b4c5",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T19:36:11.963608Z"
+      },
+      {
+        "id": "f666945c-4184-4fcc-86e9-d8d1880ff30c",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/triggered_by": "secret"
+        },
+        "versions": [
+          {
+            "version_id": "ee91f632-3b1b-4d92-8f38-323ac1cce968",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T19:36:10.397072Z"
+      },
+      {
+        "id": "0915e08c-7683-4440-be0c-c6ed2ef7b924",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "dcf44363-6117-49bc-ad54-b3d33c5ed5c6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T16:26:13.60315Z"
+      },
+      {
+        "id": "db4f66d6-1755-4546-bd56-76a229af0bf6",
+        "source": "api",
+        "strategy": "percentage",
+        "author_email": "morgan.sennhauser@gmail.com",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "129bbd9b-674b-4378-8983-1932306568b5",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-10-24T16:15:34.869168Z"
+      }
+    ]
+  },
+  "clock": {
+    "status": 200,
+    "body": "{\"nextTick\":\"2026-10-25T00:07:30.000Z\"}"
+  },
+  "sourceInputs": 74,
+  "sourceInputBytes": 614128,
+  "parameters": [
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-economic-services-section/data/records/earning-operation-records/earning-loops.json",
+      "bytes": 32876,
+      "sha256": "5d73016db3382b6fe6ab9e54615aeb6a6534aeb4014c3492034f447a7b323b00"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-agent-services-section/data/machine-delivery-products.json",
+      "bytes": 2499,
+      "sha256": "bca0241feb27a34d3fc894666ccb1f825f08385b2b59507d0b8cd3d229190c96"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-agent-services-section/data/machine-research-products.json",
+      "bytes": 1468,
+      "sha256": "d3e3b919be5862e01b3fda0cdd340d650e52062101c29c41a77f91e1d03705b7"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-economic-services-section/data/records/group-wallet-records/group-payer-addresses.json",
+      "bytes": 1429,
+      "sha256": "16821f4ec4e62cec11b47d918e5b859f7b45fbad8c8dfb3ed682778a5c371bac"
+    }
+  ],
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 356745,
+    "sha256": "27dc9af6dac3868807fb64fd5518e429193b6346547d4f6e11402517bd51b670"
+  },
+  "workerUrl": "https://earning-loops-561-group.561-group.workers.dev",
+  "producerOnly": true
+}

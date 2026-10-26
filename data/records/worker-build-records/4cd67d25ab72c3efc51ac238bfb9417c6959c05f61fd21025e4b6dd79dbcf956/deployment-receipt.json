@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-10-24T21:36:29.657Z",
+  "deploymentId": "014fa830-35fd-480a-a86f-59a11b97d646",
+  "versions": [
+    {
+      "version_id": "71a4facb-9001-4d32-95a4-e75c97d2b4ee",
+      "percentage": 100
+    }
+  ],
+  "createdOn": "2026-10-24T21:36:27.500391Z",
+  "sourceRevision": "09568b67cc8fd9600b58378eabeb9b6bad2c2d07",
+  "buildComposition": "4cd67d25ab72c3efc51ac238bfb9417c6959c05f61fd21025e4b6dd79dbcf956",
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 119472,
+    "sha256": "426095afffb322f7fb1ba387a746a5f2feefd5636b810d24de26b74ada62ca60"
+  },
+  "sourceInputsVerified": 23
+}

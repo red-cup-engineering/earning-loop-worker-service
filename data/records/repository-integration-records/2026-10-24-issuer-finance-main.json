@@ -1,0 +1,751 @@
+{
+  "target": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+  "priorHead": "7327df98f53f2a54a77226f123c525fbe92f75fb",
+  "rows": [
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/artifact.candidate.json",
+      "expected": "86706c8ab4eb4091e82e2d818653a30c86bb2d09",
+      "actual": "86706c8ab4eb4091e82e2d818653a30c86bb2d09",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/artifact.candidate.json",
+      "expected": "4c362a79d992a7f27ffe8b4b04fd063ed0c42522",
+      "actual": "4c362a79d992a7f27ffe8b4b04fd063ed0c42522",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/fabrication.json",
+      "expected": "df1a5d1e36f63d4900eae32473cd822ccbfaeccc",
+      "actual": "df1a5d1e36f63d4900eae32473cd822ccbfaeccc",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/gate.json",
+      "expected": "324c0f1c1b9ad20136a5155ff456ff40b222ee20",
+      "actual": "324c0f1c1b9ad20136a5155ff456ff40b222ee20",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/issuer-settlement-store.mjs",
+      "expected": "018b34e273ddfc90a2d161a3ce3a198f5bc2fdf2",
+      "actual": "018b34e273ddfc90a2d161a3ce3a198f5bc2fdf2",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/missing-client-delivery.json",
+      "expected": "b95b962b353e8e4facabd215e282f913e445f2ec",
+      "actual": "b95b962b353e8e4facabd215e282f913e445f2ec",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/missing-client-request.json",
+      "expected": "b5d04ac506c41787cc67a16edb34678f596d3070",
+      "actual": "b5d04ac506c41787cc67a16edb34678f596d3070",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/native-outcome-0.json",
+      "expected": "9f7a69612159f01cc0181c1e021b0d682f0290d0",
+      "actual": "9f7a69612159f01cc0181c1e021b0d682f0290d0",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/native-request-0.json",
+      "expected": "c0c60f72fc749744b48bfe82763a662cf1728561",
+      "actual": "c0c60f72fc749744b48bfe82763a662cf1728561",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/owner-projection.json",
+      "expected": "a8fc23cdaf3a140fecc2e367c0ce2611149286be",
+      "actual": "a8fc23cdaf3a140fecc2e367c0ce2611149286be",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/recalled-0.json",
+      "expected": "d63fa79dcc34dbd623fbe31665d0a281c9faba85",
+      "actual": "d63fa79dcc34dbd623fbe31665d0a281c9faba85",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/recalled-1.json",
+      "expected": "2b59388ed794e5fe4ba9ba60ee57438a1d1e7cb0",
+      "actual": "2b59388ed794e5fe4ba9ba60ee57438a1d1e7cb0",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/stderr.log",
+      "expected": "73bdf36d0917edfd4bbd2ad123a40a3ef958d6a9",
+      "actual": "73bdf36d0917edfd4bbd2ad123a40a3ef958d6a9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/continuation/stdout.json",
+      "expected": "2c17b27d0b0ebdc622cd2d6fea63064b3b2da861",
+      "actual": "2c17b27d0b0ebdc622cd2d6fea63064b3b2da861",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/fabrication-gate.json",
+      "expected": "7880231d2d5deb6d6b87dbe117e4f9a49fd8a9ea",
+      "actual": "7880231d2d5deb6d6b87dbe117e4f9a49fd8a9ea",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/qualification.json",
+      "expected": "ec887a92bbbe67cfad88184691ae85af6bcb42c9",
+      "actual": "ec887a92bbbe67cfad88184691ae85af6bcb42c9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving-fixtures/driver.mjs",
+      "expected": "9b849f4c3c9a0baf96de4448a5a925dd44841a6a",
+      "actual": "9b849f4c3c9a0baf96de4448a5a925dd44841a6a",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving-fixtures/loop.mjs",
+      "expected": "14106ce63df0ac1317c9ae18811da9906ce1a5af",
+      "actual": "14106ce63df0ac1317c9ae18811da9906ce1a5af",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving-fixtures/market.mjs",
+      "expected": "216a73ebcbbfbc840482b41a26b5fdf18be7b211",
+      "actual": "216a73ebcbbfbc840482b41a26b5fdf18be7b211",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving-fixtures/workerd.test.mjs",
+      "expected": "dd336c3dafc45bf612927fdad149aaffb3b6e350",
+      "actual": "dd336c3dafc45bf612927fdad149aaffb3b6e350",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/consumer-receiving.json",
+      "expected": "500484a0969ac2700dfe8ec73465fa7518d0aaf3",
+      "actual": "500484a0969ac2700dfe8ec73465fa7518d0aaf3",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/independent-io-gate.json",
+      "expected": "f549eec3d81419d0f77a46521b785531c07c6c61",
+      "actual": "f549eec3d81419d0f77a46521b785531c07c6c61",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/independent-io-outcome.json",
+      "expected": "25b0a6ada9beaa87f1bab78e5af2d6cef07a4c50",
+      "actual": "25b0a6ada9beaa87f1bab78e5af2d6cef07a4c50",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/independent-io-parent.json",
+      "expected": "96c4e33b1bb6fdebad0fcf3b12cb071ad97f0af1",
+      "actual": "96c4e33b1bb6fdebad0fcf3b12cb071ad97f0af1",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/independent-io-receiving.json",
+      "expected": "17d2dcf570d5a2b828f376f7842406bbf5b179b8",
+      "actual": "17d2dcf570d5a2b828f376f7842406bbf5b179b8",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/independent-io-request.json",
+      "expected": "5279bdfee252351a625f8fc32178aa9cb1698935",
+      "actual": "5279bdfee252351a625f8fc32178aa9cb1698935",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/first-receiver-overconstraints/issuer-settlement-independent.test.mjs",
+      "expected": "e0626b42e15c33afb803cc147c81b3d81d364bbb",
+      "actual": "e0626b42e15c33afb803cc147c81b3d81d364bbb",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-gate.json",
+      "expected": "f549eec3d81419d0f77a46521b785531c07c6c61",
+      "actual": "f549eec3d81419d0f77a46521b785531c07c6c61",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-outcome.json",
+      "expected": "fd59af918aad20b47fe760e8a3b3c9dd6545ff36",
+      "actual": "fd59af918aad20b47fe760e8a3b3c9dd6545ff36",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-parent.json",
+      "expected": "337c2974850c11d8119a6a49b75eaa09649505a6",
+      "actual": "337c2974850c11d8119a6a49b75eaa09649505a6",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-receiving.json",
+      "expected": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "actual": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-request.json",
+      "expected": "d818df78aaaa69464e5d2d61890b3d2e11d0cd7f",
+      "actual": "d818df78aaaa69464e5d2d61890b3d2e11d0cd7f",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/independent-io-template.json",
+      "expected": "76f9e03a4fdd9312219dfc266b1d98d0a7bcec7f",
+      "actual": "76f9e03a4fdd9312219dfc266b1d98d0a7bcec7f",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/ordinary-financial-gate.json",
+      "expected": "bd955cd60cc8ebf6fd8183b1bbb88a6451785ef9",
+      "actual": "bd955cd60cc8ebf6fd8183b1bbb88a6451785ef9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/ordinary-financial.stderr.log",
+      "expected": "1c3809792f6b972d737d58cd587fa0193bd8b6c9",
+      "actual": "1c3809792f6b972d737d58cd587fa0193bd8b6c9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/ordinary-financial.stdout.log",
+      "expected": "088f21a7ea2e4ac33f45ec1c3b3b86b399e949ea",
+      "actual": "088f21a7ea2e4ac33f45ec1c3b3b86b399e949ea",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd-direct-store.stderr.log",
+      "expected": "b84d527702d439e1193de0545368ca65f837b620",
+      "actual": "b84d527702d439e1193de0545368ca65f837b620",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd-direct-store.stdout.log",
+      "expected": "3d3c814bd3be5ced08438ae105caeced5ccde8af",
+      "actual": "3d3c814bd3be5ced08438ae105caeced5ccde8af",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd-gate.json",
+      "expected": "83e4966d5c10e91f738ac0fe46f424d86342b876",
+      "actual": "83e4966d5c10e91f738ac0fe46f424d86342b876",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd-wiring-gate.json",
+      "expected": "83e4966d5c10e91f738ac0fe46f424d86342b876",
+      "actual": "83e4966d5c10e91f738ac0fe46f424d86342b876",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd.stderr.log",
+      "expected": "d9eebddf6822ddcf95a387131dadf3f858d2591c",
+      "actual": "d9eebddf6822ddcf95a387131dadf3f858d2591c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/receiving/workerd.stdout.log",
+      "expected": "ff8779efad638ed377fb743e696451dfb3e77c50",
+      "actual": "ff8779efad638ed377fb743e696451dfb3e77c50",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/retained-delivery/derivations.json",
+      "expected": "d209b078a7b43a3d3c826805cf4db6a0f62da796",
+      "actual": "d209b078a7b43a3d3c826805cf4db6a0f62da796",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/retained-delivery/issuer-settlement-custody.mjs",
+      "expected": "fcde22ff55a4a6dcaab2abf35c28b2c3be35987c",
+      "actual": "fcde22ff55a4a6dcaab2abf35c28b2c3be35987c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/retained-delivery/refusal.json",
+      "expected": "38c94ed2fe20d40c9698a0fb065303abf8832a93",
+      "actual": "38c94ed2fe20d40c9698a0fb065303abf8832a93",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/retained-delivery/root-provider-mutation-diagnostic.json",
+      "expected": "1381fa96180f4efee7fcbfb3b30bec227ac293a8",
+      "actual": "1381fa96180f4efee7fcbfb3b30bec227ac293a8",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/adapter-contracts/translation.json",
+      "expected": "91fb49d20ef01e32574a388000792ce1851209e6",
+      "actual": "91fb49d20ef01e32574a388000792ce1851209e6",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/artifact.candidate.json",
+      "expected": "1cd9a85bb1dce201f7633cc8924361c12aae5c21",
+      "actual": "1cd9a85bb1dce201f7633cc8924361c12aae5c21",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/fabrication-gate.json",
+      "expected": "4f9832301a22f284a5e4a058d6e00e3216a54c3f",
+      "actual": "4f9832301a22f284a5e4a058d6e00e3216a54c3f",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/qualification.json",
+      "expected": "b88a50c139bdf0c082e333a589b606aa767c6546",
+      "actual": "b88a50c139bdf0c082e333a589b606aa767c6546",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/retained-source/work-order.md",
+      "expected": "ffae85110fe18bce4c2658be16d673d1858f233e",
+      "actual": "ffae85110fe18bce4c2658be16d673d1858f233e",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/clarification/translation.json",
+      "expected": "f15159febf1140dde77541f21a549c11e093ecda",
+      "actual": "f15159febf1140dde77541f21a549c11e093ecda",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/fabrication-gate.json",
+      "expected": "bab17709725150cff90eef2adaf6eeaa5c76e7d8",
+      "actual": "bab17709725150cff90eef2adaf6eeaa5c76e7d8",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/operation-direction.json",
+      "expected": "1e4c11702c56693f65563dfe3b00dac30068eb84",
+      "actual": "1e4c11702c56693f65563dfe3b00dac30068eb84",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/preauthored-consumer-tests.json",
+      "expected": "7604263088d49c12318e74b2353859663ac4ecbd",
+      "actual": "7604263088d49c12318e74b2353859663ac4ecbd",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/qualification.json",
+      "expected": "5d3a7b155514678b92c70511b7134eccd699e72c",
+      "actual": "5d3a7b155514678b92c70511b7134eccd699e72c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/retained-source/work-order.md",
+      "expected": "e91a3bbfe8eac434f557892d6496619dfa04665b",
+      "actual": "e91a3bbfe8eac434f557892d6496619dfa04665b",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-issuer-private-settlement-custody/translation.json",
+      "expected": "12c08d896e819ea7cde41f553e71de43ea2f5518",
+      "actual": "12c08d896e819ea7cde41f553e71de43ea2f5518",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/artifact.candidate.json",
+      "expected": "73292276be8eb8ad235efec41c276fc788981170",
+      "actual": "73292276be8eb8ad235efec41c276fc788981170",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/artifact.candidate.json",
+      "expected": "7c5f2357a9597ddc4d2e84bb6ba7f0322ffe1204",
+      "actual": "7c5f2357a9597ddc4d2e84bb6ba7f0322ffe1204",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/fabrication-gate.json",
+      "expected": "691424514a3ff085d1ed9f0b616a491fe21a72ff",
+      "actual": "691424514a3ff085d1ed9f0b616a491fe21a72ff",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/proposal.json",
+      "expected": "6061a5a373f5c569351f9a5df1ca037545dde99e",
+      "actual": "6061a5a373f5c569351f9a5df1ca037545dde99e",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/qualification.json",
+      "expected": "d9a5cb39769f17883a93815ff41627664262fe68",
+      "actual": "d9a5cb39769f17883a93815ff41627664262fe68",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/consumer-receiving.json",
+      "expected": "675b18c4e53541437d0858f1cca661e61af3cb07",
+      "actual": "675b18c4e53541437d0858f1cca661e61af3cb07",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/core-consumer-closure.json",
+      "expected": "46720b8e48ca387140c580aaff1173c526ea6d04",
+      "actual": "46720b8e48ca387140c580aaff1173c526ea6d04",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/core-consumer-request-receipt.json",
+      "expected": "46db61e5b54b6fe3100d6b095f25151d27406002",
+      "actual": "46db61e5b54b6fe3100d6b095f25151d27406002",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-outcome.json",
+      "expected": "94dc4443fef27fee51cddfb8b6b0e267428f49af",
+      "actual": "94dc4443fef27fee51cddfb8b6b0e267428f49af",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-parent.json",
+      "expected": "e269471b3064152cdb083578d0ed59b36806ed7b",
+      "actual": "e269471b3064152cdb083578d0ed59b36806ed7b",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-receiving.json",
+      "expected": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "actual": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/independent-io-request.json",
+      "expected": "6b9508bb49838cb685a7b155c48e95c5c5a55f39",
+      "actual": "6b9508bb49838cb685a7b155c48e95c5c5a55f39",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/ordinary-suite-gate.json",
+      "expected": "291734957b10d75249f6a4cf6f8aa91e0d738a51",
+      "actual": "291734957b10d75249f6a4cf6f8aa91e0d738a51",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/ordinary-suite-receiving.json",
+      "expected": "d969d31b95f333b6b8e2371ab738811b87a60fe2",
+      "actual": "d969d31b95f333b6b8e2371ab738811b87a60fe2",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/ordinary-suite-serial-gate.json",
+      "expected": "ee0809ab3e2b281652cd35c36ba9399ebb955456",
+      "actual": "ee0809ab3e2b281652cd35c36ba9399ebb955456",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/receiving/workerd-gate.json",
+      "expected": "d91c9bd64c2382788f210441e0d1ad4b02c77e1a",
+      "actual": "d91c9bd64c2382788f210441e0d1ad4b02c77e1a",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/retained-proposal/issuer-evidence-store.mjs",
+      "expected": "ed20b322a54fa1f311e6f1662bae4a85c8c19ec4",
+      "actual": "ed20b322a54fa1f311e6f1662bae4a85c8c19ec4",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/retained-proposal/issuer-sqlite-cache.mjs",
+      "expected": "756012b508cf6deade1342bfdb5b4c3c96eba107",
+      "actual": "756012b508cf6deade1342bfdb5b4c3c96eba107",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/runtime-specification-refusal.json",
+      "expected": "b474bf381e22dbed57804c6dd133d1c7677bd1de",
+      "actual": "b474bf381e22dbed57804c6dd133d1c7677bd1de",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/edge-refinement/translation.json",
+      "expected": "3f85825f019e07af4627b1649af7a5f37515a121",
+      "actual": "3f85825f019e07af4627b1649af7a5f37515a121",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/fabrication-gate.json",
+      "expected": "7033de9491c602c5b05476b6c9ec1c98eb33b8aa",
+      "actual": "7033de9491c602c5b05476b6c9ec1c98eb33b8aa",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/invocation.json",
+      "expected": "6b56b88995cc22aa1aa732eb3784316c9c242231",
+      "actual": "6b56b88995cc22aa1aa732eb3784316c9c242231",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/module-plan.json",
+      "expected": "298fdaa5429c5b39d568b30a441e5905bb7cde51",
+      "actual": "298fdaa5429c5b39d568b30a441e5905bb7cde51",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/qualification.json",
+      "expected": "e3861215d2e01b1f2ae09e1e363852cc6d821844",
+      "actual": "e3861215d2e01b1f2ae09e1e363852cc6d821844",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay-gate.json",
+      "expected": "fdc6684abac4c3ef7df9e701aad1adbd973e72ef",
+      "actual": "fdc6684abac4c3ef7df9e701aad1adbd973e72ef",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/diagnostic-lineage.json",
+      "expected": "5a3e6145f0f3f51c429b1680abfa0cec0cfa0386",
+      "actual": "5a3e6145f0f3f51c429b1680abfa0cec0cfa0386",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/diagnostic-parent.json",
+      "expected": "2717d7eaa5acfb25a2078bd72e89f429fe6e275e",
+      "actual": "2717d7eaa5acfb25a2078bd72e89f429fe6e275e",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/diagnostic-resource.json",
+      "expected": "69cc648f4d50e3013ebd1f82a12e99d99c7e4261",
+      "actual": "69cc648f4d50e3013ebd1f82a12e99d99c7e4261",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/fabrication.json",
+      "expected": "b6120435fa68fad83cf849c24a61b55fbe93e6c9",
+      "actual": "b6120435fa68fad83cf849c24a61b55fbe93e6c9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/fabrication.received-pure.json",
+      "expected": "b5922a31e6d61615925b41e5917ab1845ba4de35",
+      "actual": "b5922a31e6d61615925b41e5917ab1845ba4de35",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-outcome.corrected.json",
+      "expected": "f3f062d8028bd5a1efeb4292310ffa1e48eb71bc",
+      "actual": "f3f062d8028bd5a1efeb4292310ffa1e48eb71bc",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-outcome.json",
+      "expected": "b7ae5b71e2f55f4ff06453edc9517e61e321788c",
+      "actual": "b7ae5b71e2f55f4ff06453edc9517e61e321788c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-parent.corrected.json",
+      "expected": "e0a5bab891522443a2814b05d098f4cce425381d",
+      "actual": "e0a5bab891522443a2814b05d098f4cce425381d",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-parent.json",
+      "expected": "c575b89a85ad5dbe92302c4d98942bd1d24efabd",
+      "actual": "c575b89a85ad5dbe92302c4d98942bd1d24efabd",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-receiving.corrected.json",
+      "expected": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "actual": "fcaa704a14773cec63be939b79099c7589a54dbe",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-receiving.json",
+      "expected": "e337081adeb623ec8171a7e04ef631232fede793",
+      "actual": "e337081adeb623ec8171a7e04ef631232fede793",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-request.corrected.json",
+      "expected": "a6b30bb5f33ca34296811d35cb65274d0a92c142",
+      "actual": "a6b30bb5f33ca34296811d35cb65274d0a92c142",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/independent-io-request.json",
+      "expected": "d9782a6e3ab24e2576ba4f823d48197892201faa",
+      "actual": "d9782a6e3ab24e2576ba4f823d48197892201faa",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/judgments.json",
+      "expected": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "actual": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/native-diagnostic-outcome.json",
+      "expected": "3960cc6e4394c8692ff0163b416b49ac91c3c17c",
+      "actual": "3960cc6e4394c8692ff0163b416b49ac91c3c17c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/native-outcome-0.json",
+      "expected": "3960cc6e4394c8692ff0163b416b49ac91c3c17c",
+      "actual": "3960cc6e4394c8692ff0163b416b49ac91c3c17c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/native-request-0.json",
+      "expected": "3d77e38f07acceb7884a868327098e2c9ce6f658",
+      "actual": "3d77e38f07acceb7884a868327098e2c9ce6f658",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/received-placement-lineage.json",
+      "expected": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "actual": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/received-placement-outcome.json",
+      "expected": "f263e539153c5bb7bb85cf6dbb0a99dbfdbe24d7",
+      "actual": "f263e539153c5bb7bb85cf6dbb0a99dbfdbe24d7",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/received-placement-parent.json",
+      "expected": "263ebb27aa9a629e74de1d572e43e7f46c61b4eb",
+      "actual": "263ebb27aa9a629e74de1d572e43e7f46c61b4eb",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/replay/receiving-judgments.json",
+      "expected": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "actual": "fe51488c7066f6687ef680d6bfaa4f7768ef205c",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/clause-assays.json",
+      "expected": "eaa8caf9833f3bc758fdbca445312d1cece3efdf",
+      "actual": "eaa8caf9833f3bc758fdbca445312d1cece3efdf",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/delivery-0.json",
+      "expected": "1f1469f3c196595516e6b3d9bb72b4f24187022d",
+      "actual": "1f1469f3c196595516e6b3d9bb72b4f24187022d",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/delivery-1.json",
+      "expected": "66f1fe010fadcc7d7b14b7c454c944aff3abdf6a",
+      "actual": "66f1fe010fadcc7d7b14b7c454c944aff3abdf6a",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/delivery-2.json",
+      "expected": "b1bdd7ea1ae53e02899304aa0efe6b19eeb487c9",
+      "actual": "b1bdd7ea1ae53e02899304aa0efe6b19eeb487c9",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/issuer-evidence-store.mjs",
+      "expected": "fbaf5be47b9f0290d6ef6acafb7dfbf751c401cd",
+      "actual": "fbaf5be47b9f0290d6ef6acafb7dfbf751c401cd",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/issuer-sqlite-cache.mjs",
+      "expected": "b486f52305c2ce97b2a5f7ab6d60921a0bff74e5",
+      "actual": "b486f52305c2ce97b2a5f7ab6d60921a0bff74e5",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/source-receiving.json",
+      "expected": "4d4005977b29bbc05eca9f316ec886888f40316d",
+      "actual": "4d4005977b29bbc05eca9f316ec886888f40316d",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/selected-closure.json",
+      "expected": "7178f4e0bbd8b1b79e99ca2a962ee12d5d8fb14e",
+      "actual": "7178f4e0bbd8b1b79e99ca2a962ee12d5d8fb14e",
+      "match": true
+    },
+    {
+      "path": "data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/translation.json",
+      "expected": "4d13414f50dde5271e42d9b7e0e9bd8264746ed0",
+      "actual": "4d13414f50dde5271e42d9b7e0e9bd8264746ed0",
+      "match": true
+    },
+    {
+      "path": "data/records/schema/issuer-settlement-custody-plan.input.schema.json",
+      "expected": "0967ef424bce6791893e9a57bb952f80fd536e93",
+      "actual": "0967ef424bce6791893e9a57bb952f80fd536e93",
+      "match": true
+    },
+    {
+      "path": "data/records/schema/issuer-settlement-custody-plan.output.schema.json",
+      "expected": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
+      "actual": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
+      "match": true
+    },
+    {
+      "path": "data/records/schema/issuer-sqlite-storage-plan.input.schema.json",
+      "expected": "0967ef424bce6791893e9a57bb952f80fd536e93",
+      "actual": "0967ef424bce6791893e9a57bb952f80fd536e93",
+      "match": true
+    },
+    {
+      "path": "data/records/schema/issuer-sqlite-storage-plan.output.schema.json",
+      "expected": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
+      "actual": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
+      "match": true
+    },
+    {
+      "path": "specifications/issuer-private-settlement-custody.work-order.md",
+      "expected": "cf38bc0cdce542629694d8e8bcaa3be034c6794e",
+      "actual": "cf38bc0cdce542629694d8e8bcaa3be034c6794e",
+      "match": true
+    },
+    {
+      "path": "specifications/issuer-settlement-integration.md",
+      "expected": "8291f4f2ec27eb9c083873058ac563dfb2680100",
+      "actual": "8291f4f2ec27eb9c083873058ac563dfb2680100",
+      "match": true
+    },
+    {
+      "path": "src/deployment.mjs",
+      "expected": "61aabb86361b31dec88318e29a27361ddcef8860",
+      "actual": "61aabb86361b31dec88318e29a27361ddcef8860",
+      "match": true
+    },
+    {
+      "path": "src/issuer-settlement-custody.mjs",
+      "expected": "fcde22ff55a4a6dcaab2abf35c28b2c3be35987c",
+      "actual": "fcde22ff55a4a6dcaab2abf35c28b2c3be35987c",
+      "match": true
+    },
+    {
+      "path": "test/issuer-financial-clock.test.mjs",
+      "expected": "683cd237022cc87e97f7db822b4706e63091f452",
+      "actual": "683cd237022cc87e97f7db822b4706e63091f452",
+      "match": true
+    },
+    {
+      "path": "test/issuer-settlement-custody-plan-examples.test.mjs",
+      "expected": "0f4e5fbb071566e47a19d30cc1929008be7a2d26",
+      "actual": "0f4e5fbb071566e47a19d30cc1929008be7a2d26",
+      "match": true
+    },
+    {
+      "path": "worker/earning-loops.mjs",
+      "expected": "33a5bc0541aa283d7df2931e890b41a9750a9106",
+      "actual": "33a5bc0541aa283d7df2931e890b41a9750a9106",
+      "match": true
+    }
+  ],
+  "unreceived": []
+}

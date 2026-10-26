@@ -1,0 +1,68 @@
+{
+  "kind": "WorkerBuildReceivingRecord",
+  "version": 1,
+  "receivedAt": "2026-10-25T00:04:00.918732+00:00",
+  "sourceRevision": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+  "nativeEntry": "scripts/deploy.mjs --dry-run",
+  "buildRecord": "build.json",
+  "metafile": "esbuild.metafile.json",
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 356745,
+    "sha256": "27dc9af6dac3868807fb64fd5518e429193b6346547d4f6e11402517bd51b670"
+  },
+  "compositionSha256": "dd7080661ed2b05715ffbee11d01e027ebd91291ae27327a56953021467c0d9d",
+  "provider": {
+    "name": "esbuild",
+    "version": "0.28.1"
+  },
+  "finiteSourceVerification": {
+    "inputCount": 74,
+    "inputBytes": 614128,
+    "allCurrentSourceHashesMatch": true,
+    "temporaryPathInputs": []
+  },
+  "externalModules": [
+    "node:buffer",
+    "node:crypto"
+  ],
+  "requiredCompatibilityFlag": "nodejs_compat",
+  "readBackSourceParameters": [
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-economic-services-section/data/records/earning-operation-records/earning-loops.json",
+      "bytes": 32876,
+      "sha256": "5d73016db3382b6fe6ab9e54615aeb6a6534aeb4014c3492034f447a7b323b00"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-agent-services-section/data/machine-delivery-products.json",
+      "bytes": 2499,
+      "sha256": "bca0241feb27a34d3fc894666ccb1f825f08385b2b59507d0b8cd3d229190c96"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/public-services-section/services/public-agent-services-section/data/machine-research-products.json",
+      "bytes": 1468,
+      "sha256": "d3e3b919be5862e01b3fda0cdd340d650e52062101c29c41a77f91e1d03705b7"
+    },
+    {
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-economic-services-section/data/records/group-wallet-records/group-payer-addresses.json",
+      "bytes": 1429,
+      "sha256": "16821f4ec4e62cec11b47d918e5b859f7b45fbad8c8dfb3ed682778a5c371bac"
+    }
+  ],
+  "readBackOperationProjectionMatches": true,
+  "selectedIssuerProducer": true,
+  "selectedIssuerFinancialCustody": false,
+  "supplier": {
+    "name": "@red-cup-engineering/issuer-research-media-service",
+    "version": "0.1.5",
+    "preparedModuleSha256": "ca5ec47a426af6f86bf53be8b8ee3a21ea83b2b4dcc983f90fe43f1d1ab21bc5"
+  },
+  "originalGeneratedInputPreservation": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/deployment-input-logs/2026-10-24-issuer-main-before-native-build/preserved-inputs.json",
+  "gate": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/deployment-input-logs/2026-10-24-issuer-main-before-native-build/dry-run.gate.json",
+  "stdout": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/deployment-input-logs/2026-10-24-issuer-main-before-native-build/dry-run.stdout.log",
+  "stderr": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/logs/deployment-input-logs/2026-10-24-issuer-main-before-native-build/dry-run.stderr.log",
+  "exitCode": 0,
+  "elapsedSeconds": 0.3,
+  "maximumRssKiB": 66512,
+  "scope": "Source composition and native build only. No deployment, live Cloudflare SEC acquisition, buyer transaction, revenue or cost observation."
+}

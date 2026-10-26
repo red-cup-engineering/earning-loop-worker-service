@@ -1,0 +1,3 @@
+earning-loops-561-group: 357289 bundled bytes, composition 98c2cc012998df3489a619eb3571cae0ff9b56ca126d8dc5acd1df3791273c45, crons */15 * * * * | 30 13 * * * | 0 14 * * 1
+deployed earning-loops-561-group (etag b810b2c065fb), clock: durable-object-alarm
+clock armed: {"nextTick":"2026-10-25T00:15:53.647Z"}

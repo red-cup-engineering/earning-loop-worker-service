@@ -1,0 +1,195 @@
+{
+  "at": "2026-10-25T00:07:33.525Z",
+  "activeDeployment": {
+    "id": "541fa53d-5ab6-4474-9b7d-c9c80e1e7e2c",
+    "source": "api",
+    "strategy": "percentage",
+    "author_email": "morgan.sennhauser@gmail.com",
+    "annotations": {
+      "workers/message": "Automatic deployment on upload.",
+      "workers/triggered_by": "upload"
+    },
+    "versions": [
+      {
+        "version_id": "69f2f10c-1a73-44de-8ebf-0e1d75caf047",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-25T00:06:46.785524Z"
+  },
+  "settings": {
+    "placement": {},
+    "compatibility_date": "2026-09-01",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "usage_model": "standard",
+    "tags": [],
+    "tail_consumers": [],
+    "logpush": false,
+    "annotations": {
+      "workers/triggered_by": "upload"
+    },
+    "bindings": [
+      {
+        "class_name": "EarningClock",
+        "name": "CLOCK",
+        "namespace_id": "c23d67c6148e4110a200911018cbe065",
+        "type": "durable_object_namespace"
+      },
+      {
+        "name": "HASHN_CREDENTIAL_JSON",
+        "type": "secret_text"
+      },
+      {
+        "bucket_name": "market-561-group-settlements",
+        "name": "MARKET_SETTLEMENTS",
+        "type": "r2_bucket"
+      },
+      {
+        "name": "OPENTASK_CREDENTIAL_JSON",
+        "type": "secret_text"
+      },
+      {
+        "name": "RELEASE_METADATA",
+        "type": "version_metadata"
+      },
+      {
+        "bucket_name": "561-group-working-state",
+        "name": "STATE",
+        "type": "r2_bucket"
+      }
+    ]
+  },
+  "version": {
+    "id": "69f2f10c-1a73-44de-8ebf-0e1d75caf047",
+    "number": 18,
+    "metadata": {
+      "created_on": "2026-10-25T00:06:46.785524Z",
+      "source": "api",
+      "author_id": "4485b89ee36a9682f33295df11ffe364",
+      "author_email": "morgan.sennhauser@gmail.com",
+      "has_preview": false
+    },
+    "annotations": {
+      "workers/triggered_by": "upload"
+    },
+    "resources": {
+      "script": {
+        "etag": "678e0250c0406ee1321bd7dbb22f1f4a38d6735b68c52a8d4db6a59153bf37d7",
+        "handlers": [
+          "scheduled",
+          "fetch"
+        ],
+        "named_handlers": [
+          {
+            "name": "CRONS",
+            "handlers": [
+              "pass",
+              "directives",
+              "scorecard"
+            ]
+          },
+          {
+            "name": "EarningClock",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "run",
+            "handlers": [
+              "class"
+            ]
+          },
+          {
+            "name": "tick",
+            "handlers": [
+              "class"
+            ]
+          }
+        ],
+        "last_deployed_from": "api"
+      },
+      "script_runtime": {
+        "migration_tag": "v1",
+        "compatibility_date": "2026-09-01",
+        "compatibility_flags": [
+          "nodejs_compat"
+        ],
+        "usage_model": "standard"
+      },
+      "bindings": [
+        {
+          "class_name": "EarningClock",
+          "name": "CLOCK",
+          "namespace_id": "c23d67c6148e4110a200911018cbe065",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "HASHN_CREDENTIAL_JSON",
+          "type": "secret_text"
+        },
+        {
+          "bucket_name": "market-561-group-settlements",
+          "name": "MARKET_SETTLEMENTS",
+          "type": "r2_bucket"
+        },
+        {
+          "name": "OPENTASK_CREDENTIAL_JSON",
+          "type": "secret_text"
+        },
+        {
+          "name": "RELEASE_METADATA",
+          "type": "version_metadata"
+        },
+        {
+          "bucket_name": "561-group-working-state",
+          "name": "STATE",
+          "type": "r2_bucket"
+        }
+      ]
+    }
+  },
+  "source": {
+    "status": 200,
+    "contentType": "multipart/form-data; boundary=d3ea93d01945cfe286ee2f0be0ffab1354e58372e527ecbac8465add809f",
+    "bytes": 356930,
+    "sha256": "da743bf14e557cb5b0116fa23f98ed43d70f105b1b719284c4b7a6be0563f9cf",
+    "files": [
+      {
+        "name": "worker.mjs",
+        "bytes": 356745,
+        "sha256": "27dc9af6dac3868807fb64fd5518e429193b6346547d4f6e11402517bd51b670"
+      }
+    ]
+  },
+  "bindingsPreserved": true,
+  "readings": [
+    {
+      "path": "/clock",
+      "status": 200,
+      "body": "{\"nextTick\":\"2026-10-25T00:15:00.000Z\"}"
+    },
+    {
+      "path": "/commercial.json",
+      "status": 200,
+      "body": "{\"stage\":\"awaiting-hire\",\"requests\":1,\"newCashExpenseUsd\":0,\"at\":\"2026-10-25T00:07:30.002Z\",\"nextTick\":\"2026-10-25T00:15:00.000Z\"}"
+    },
+    {
+      "path": "/research.json",
+      "status": 200,
+      "body": "{\"stage\":\"research-cash-corroborated\",\"requests\":4,\"newCashExpenseUsd\":0,\"at\":\"2026-10-24T21:41:19.366Z\",\"taskId\":\"task_b73272a31705a9b8fa0d69d095b11539\",\"productId\":\"operator-purpose-v1\",\"receiptAccepted\":true,\"evaluationState\":\"GRADED\",\"approvedAmountAtomic\":\"25000\",\"providerPayoutState\":\"paid_confirmed\",\"payoutTx\":\"0xcf2d19e9f72bab8ee533b770a881f4b83261b5054d9a0d6246d9f36fba8440c3\",\"independentlyVerifiedCashAtomic\":\"25000\",\"recognizedOutsideRevenue\":null,\"nextTick\":\"2026-10-25T00:15:00.000Z\"}"
+    },
+    {
+      "path": "/acquisition.json",
+      "status": 200,
+      "body": "{\"stage\":\"hashn-pending\",\"requests\":1,\"newCashExpenseUsd\":0,\"at\":\"2026-10-24T23:32:47.009Z\",\"offerId\":\"hashn-recurring-revenue-reconciliation-v1\",\"knockStatus\":\"pending\",\"agreementReceived\":false,\"deliverySubmitted\":false,\"recognizedOutsideRevenue\":null}"
+    },
+    {
+      "path": "/last-run.json",
+      "status": 200,
+      "body": "{\"cron\":\"*/15 * * * *\",\"at\":\"2026-10-25T00:00:00.000Z\",\"settlements\":{\"received\":[],\"refused\":0,\"total\":33},\"routes\":{\"error\":\"catalog answered 503\"},\"scorecard\":{\"week\":0,\"trailing30\":0,\"perDayTrailing30\":0},\"onchain\":{\"status\":\"no-engine-attached\"}}"
+    }
+  ]
+}

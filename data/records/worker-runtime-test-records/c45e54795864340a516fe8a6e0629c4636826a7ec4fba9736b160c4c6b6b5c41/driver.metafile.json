@@ -1,0 +1,36 @@
+{
+  "inputs": {
+    "test/workerd-issuer-driver.mjs": {
+      "bytes": 1201,
+      "imports": [
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "workerd-issuer-driver.js": {
+      "imports": [
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [
+        "testPrivateSqliteCache"
+      ],
+      "entryPoint": "test/workerd-issuer-driver.mjs",
+      "inputs": {
+        "test/workerd-issuer-driver.mjs": {
+          "bytesInOutput": 1261
+        }
+      },
+      "bytes": 1332
+    }
+  }
+}

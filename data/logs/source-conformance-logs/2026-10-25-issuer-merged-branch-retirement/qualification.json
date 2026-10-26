@@ -1,0 +1,51 @@
+{
+  "kind": "IssuerMergedBranchRetirementQualification",
+  "repository": "red-cup-engineering/earning-loop-worker-service",
+  "readTransport": "GitHub connector PR/ref/compare/open-PR APIs",
+  "mutationTransport": "native git push with exact force-with-lease; connector exposes no branch retirement operation",
+  "noLocalBranchOrWorktreeDeletion": true,
+  "branches": [
+    {
+      "index": 3,
+      "repository": "red-cup-engineering/earning-loop-worker-service",
+      "ownerPath": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service",
+      "pr": 5,
+      "prUrl": "https://github.com/red-cup-engineering/earning-loop-worker-service/pull/5",
+      "branch": "receive-issuer-cache-custody-20261024",
+      "expectedHead": "02d2445332351cbcd55af9745bfad43ab7bb9a58",
+      "mergeCommit": "89e85ba6e303b07d53677331d9aaa21b38a41f93",
+      "main": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+      "comparison": {
+        "status": "behind",
+        "aheadBy": 0,
+        "behindBy": 8,
+        "mergeBase": "02d2445332351cbcd55af9745bfad43ab7bb9a58"
+      },
+      "openPrReuses": [],
+      "currentRef": "02d2445332351cbcd55af9745bfad43ab7bb9a58",
+      "status": "qualified-for-leased-retirement",
+      "mutation": null
+    },
+    {
+      "index": 4,
+      "repository": "red-cup-engineering/earning-loop-worker-service",
+      "ownerPath": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service",
+      "pr": 6,
+      "prUrl": "https://github.com/red-cup-engineering/earning-loop-worker-service/pull/6",
+      "branch": "receive-issuer-private-settlement-custody-20261024",
+      "expectedHead": "e2f540c2f6b2123a4347eba07f6b7c26a14e7a11",
+      "mergeCommit": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+      "main": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+      "comparison": {
+        "status": "behind",
+        "aheadBy": 0,
+        "behindBy": 1,
+        "mergeBase": "e2f540c2f6b2123a4347eba07f6b7c26a14e7a11"
+      },
+      "openPrReuses": [],
+      "currentRef": "e2f540c2f6b2123a4347eba07f6b7c26a14e7a11",
+      "status": "qualified-for-leased-retirement",
+      "mutation": null
+    }
+  ]
+}

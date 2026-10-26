@@ -1,0 +1,1371 @@
+{
+  "specificationDigest": "ni:///sha-256;fAFaI6nUTSnuNHw1AL0dO-ri6zHXvrRQ3Ry1vmopio0",
+  "plan": {
+    "type": "ArtifactFabricationRealizationPlan",
+    "version": 1,
+    "artifactId": "issuer-private-settlement-custody",
+    "specificationDigest": "ni:///sha-256;fAFaI6nUTSnuNHw1AL0dO-ri6zHXvrRQ3Ry1vmopio0",
+    "projectionIds": [
+      "jsnode-modules"
+    ],
+    "acceptanceObligationIds": [
+      "io-receiving",
+      "pure-receiving"
+    ],
+    "traceability": [
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "admission",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "pure-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "plans",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "no-expansion",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "pulse-budget",
+        "constraintIds": [
+          "composition",
+          "operation",
+          "platform"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      }
+    ]
+  },
+  "fabrication": {
+    "type": "JsnodeModuleDerivationRefusal",
+    "version": 1,
+    "phase": "derivation",
+    "code": "OPEN_QUESTION",
+    "message": "What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.",
+    "cause": {
+      "type": "JsnodeClosureDerivationRefusal",
+      "version": 1,
+      "code": "OPEN_QUESTION",
+      "operation": "issuer-settlement-custody-plan",
+      "question": "What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.",
+      "derivations": [
+        {
+          "phase": "clause-assays",
+          "outcome": "derived",
+          "lot": {
+            "workLot": "urn:work-lot:inference:agB9JBaM8SztM17jNWU2RHo8_hULcNeUdAXyznBewm8",
+            "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+            "taskClass": "code-fabrication-assays",
+            "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+            "receipt": "ni:///sha-256;NNv6GLtlRNhmyEOXW961dZ4wVpMNMz7tSQ2hx9YSIa8",
+            "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+            "model": "default",
+            "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+            "delivery": {
+              "outcome": "candidate-pending-codex-acceptance",
+              "workLot": "urn:work-lot:inference:agB9JBaM8SztM17jNWU2RHo8_hULcNeUdAXyznBewm8",
+              "taskClass": "code-fabrication-assays",
+              "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+              "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+              "model": "default",
+              "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+              "receipt": {
+                "id": "ni:///sha-256;NNv6GLtlRNhmyEOXW961dZ4wVpMNMz7tSQ2hx9YSIa8"
+              },
+              "candidate": {
+                "id": "exchange-20261024-231838-1587d5",
+                "object": "chat.completion",
+                "model": "default",
+                "choices": [
+                  {
+                    "index": 0,
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"cases\":[{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"absent configuration returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":null,\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"truthy enabled is insufficient even with invalid identity\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":\"true\",\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"wrong\"},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admission status is case sensitive and precedes identity validation\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"Received\"},\"amount\":50000},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"missing resource admission returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"normalized fixed plan ignores trusted coordinate and ceiling overrides; metadata only, not runtime no-expansion or budget receiving\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\",\"no-expansion\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913\",\"payTo\":\"0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"objectName\":\"other\",\"path\":\"/public\",\"prefix\":\"other/\",\"maximumWorkerCallsPerPulse\":999,\"maximumRecords\":999999},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"store shares exact fixed plan and receiving-ceiling metadata\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admitted missing required identity throws\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"}},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"numeric amount is not canonical decimal string\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":50000,\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"leading zero amount refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"050000\",\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"carriage return in gateway refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"s\",\"gateway\":\"g\\r\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"}],\"question\":null}",
+                      "tool_calls": []
+                    },
+                    "finish_reason": "unknown"
+                  }
+                ],
+                "usage": {
+                  "prompt_tokens": 34633,
+                  "completion_tokens": 1641
+                }
+              },
+              "endpointClass": "local-command-inference",
+              "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+              "configuration": {
+                "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                "model": "default",
+                "endpoint": "command:codex-exec",
+                "executionClass": "local-command-inference",
+                "mode": "assistant-turn:codex-exec:json-envelope:v1"
+              },
+              "selectionRule": "direct-endpoint-customer-ordered-pareto-route-after-a2a-market-residue",
+              "consideration": [
+                {
+                  "kind": "credit",
+                  "asset": "urn:union:consideration:provider-invocation",
+                  "unit": "provider-invocation",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "declaredResources": [
+                {
+                  "resource": "provider-attention",
+                  "unit": "bounded-lot",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "measuredResources": {
+                "scope": {
+                  "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "accountIdentity": null,
+                  "windowIdentity": null,
+                  "measurementCoverage": "completed-exchanges"
+                },
+                "resources": [
+                  {
+                    "resource": "requests",
+                    "unit": "request",
+                    "amount": {
+                      "numerator": "1",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "input-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "34633",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "output-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "1641",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "duration",
+                    "unit": "millisecond",
+                    "amount": {
+                      "numerator": "45149",
+                      "denominator": "1"
+                    }
+                  }
+                ],
+                "partialResources": [],
+                "callerObservedResources": [],
+                "uncertainty": [
+                  "total-token-usage-incomplete",
+                  "provider-reported-cost-incomplete",
+                  "account-window-identity-unknown"
+                ]
+              },
+              "settlement": "none-direct-endpoint-lane-carries-no-signed-compact-or-chain-settlement",
+              "durationMs": 45149,
+              "providerEvidence": {
+                "outputs": [
+                  {
+                    "id": "exchange-20261024-231838-1587d5",
+                    "object": "chat.completion",
+                    "model": "default",
+                    "choices": [
+                      {
+                        "index": 0,
+                        "message": {
+                          "role": "assistant",
+                          "content": "{\"cases\":[{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"absent configuration returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":null,\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"truthy enabled is insufficient even with invalid identity\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":\"true\",\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"wrong\"},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admission status is case sensitive and precedes identity validation\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"Received\"},\"amount\":50000},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"missing resource admission returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"normalized fixed plan ignores trusted coordinate and ceiling overrides; metadata only, not runtime no-expansion or budget receiving\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\",\"no-expansion\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913\",\"payTo\":\"0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"objectName\":\"other\",\"path\":\"/public\",\"prefix\":\"other/\",\"maximumWorkerCallsPerPulse\":999,\"maximumRecords\":999999},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"store shares exact fixed plan and receiving-ceiling metadata\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admitted missing required identity throws\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"}},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"numeric amount is not canonical decimal string\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":50000,\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"leading zero amount refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"050000\",\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"carriage return in gateway refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"s\",\"gateway\":\"g\\r\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"}],\"question\":null}",
+                          "tool_calls": []
+                        },
+                        "finish_reason": "unknown"
+                      }
+                    ],
+                    "usage": {
+                      "prompt_tokens": 34633,
+                      "completion_tokens": 1641
+                    }
+                  }
+                ],
+                "toolInvocations": [],
+                "exchanges": [
+                  {
+                    "finishReason": "unknown",
+                    "usage": {
+                      "promptTokens": 34633,
+                      "outputTokens": 1641,
+                      "totalTokens": null,
+                      "reportedCost": null
+                    },
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"cases\":[{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"absent configuration returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":null,\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"truthy enabled is insufficient even with invalid identity\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":\"true\",\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"wrong\"},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admission status is case sensitive and precedes identity validation\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"Received\"},\"amount\":50000},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"missing resource admission returns null\",\"clauses\":[\"admission\",\"plans\"],\"input\":{\"enabled\":true},\"output\":null,\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"normalized fixed plan ignores trusted coordinate and ceiling overrides; metadata only, not runtime no-expansion or budget receiving\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\",\"no-expansion\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913\",\"payTo\":\"0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"objectName\":\"other\",\"path\":\"/public\",\"prefix\":\"other/\",\"maximumWorkerCallsPerPulse\":999,\"maximumRecords\":999999},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"issuer\",\"gateway\":\"gateway\",\"ledgerAccount\":\"Income:Issuer\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"store shares exact fixed plan and receiving-ceiling metadata\",\"clauses\":[\"admission\",\"plans\",\"pulse-budget\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":{\"prefix\":\"issuer-settlements/\",\"metadataKey\":\"issuer-settlements/capacity\",\"witnessPrefix\":\"issuer-settlements/witness/\",\"pendingPrefix\":\"issuer-settlements/pending/\",\"receiptPrefix\":\"issuer-settlements/receipt/\",\"objectName\":\"earning-loops\",\"path\":\"/issuer-settlement-witness\",\"maximumRecords\":50000,\"maximumCustodyBytes\":268435456,\"maximumRawWitnessBytes\":32768,\"maximumTransactionBytes\":1900000,\"maximumWitnessesPerPulse\":4,\"maximumProviderAttemptsPerWitness\":4,\"maximumRpcBytes\":262144,\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0x1234567890abcdef1234567890abcdef12345678\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"sku\":\"é\",\"gateway\":\"g\",\"ledgerAccount\":\"l\",\"amount\":\"50000\",\"maximumWorkerCallsPerPulse\":50},\"throws\":null},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"admitted missing required identity throws\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"}},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"numeric amount is not canonical decimal string\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":50000,\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-custody-plan\",\"name\":\"leading zero amount refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"050000\",\"sku\":\"s\",\"gateway\":\"g\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"},{\"operation\":\"issuer-settlement-store-plan\",\"name\":\"carriage return in gateway refuses\",\"clauses\":[\"admission\"],\"input\":{\"enabled\":true,\"resourceAdmission\":{\"status\":\"received\"},\"network\":\"eip155:8453\",\"asset\":\"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\"payTo\":\"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"operation\":\"issuer-revenue-comparison\",\"method\":\"POST\",\"route\":\"/v1/issuer-revenue-comparison\",\"amount\":\"50000\",\"sku\":\"s\",\"gateway\":\"g\\r\",\"ledgerAccount\":\"l\"},\"output\":null,\"throws\":\"TypeError\"}],\"question\":null}",
+                      "tool_calls": []
+                    }
+                  }
+                ],
+                "tokenUsage": [
+                  {
+                    "promptTokens": 34633,
+                    "outputTokens": 1641,
+                    "totalTokens": null,
+                    "reportedCost": null
+                  }
+                ],
+                "measuredResources": {
+                  "scope": {
+                    "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "accountIdentity": null,
+                    "windowIdentity": null,
+                    "measurementCoverage": "completed-exchanges"
+                  },
+                  "resources": [
+                    {
+                      "resource": "requests",
+                      "unit": "request",
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "input-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "34633",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "output-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "1641",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "duration",
+                      "unit": "millisecond",
+                      "amount": {
+                        "numerator": "45149",
+                        "denominator": "1"
+                      }
+                    }
+                  ],
+                  "partialResources": [],
+                  "callerObservedResources": [],
+                  "uncertainty": [
+                    "total-token-usage-incomplete",
+                    "provider-reported-cost-incomplete",
+                    "account-window-identity-unknown"
+                  ]
+                },
+                "sharedBudgetRemaining": {}
+              },
+              "customerAssay": "chat-completion-turn-accepted",
+              "providerSchemaEnforcement": {
+                "attempted": false
+              },
+              "directLaneRefusals": [],
+              "integrationAccepted": false,
+              "receiverAcceptanceRequired": true,
+              "nextAct": "Codex may decide its own routine purchase and delivery outcome after an executable assay without Leader approval; only a later effect on another Actor crosses into that Actor's induction boundary.",
+              "contextOptimization": {
+                "mode": "automatic",
+                "estimated": true,
+                "budget": null,
+                "beforeBytes": 35120,
+                "afterBytes": 35120,
+                "retained": [
+                  "objective",
+                  "chat-completion"
+                ],
+                "dropped": [],
+                "rawRecall": []
+              },
+              "timing": {
+                "solicitation": 0,
+                "routeDecision": 5131,
+                "execution": 49219,
+                "assay": 0,
+                "receipt": 0,
+                "total": 68325
+              },
+              "acceptanceScope": "delivery-to-codex-customer-office-only",
+              "placement": {
+                "type": "WorkPlacementEvidenceProjection",
+                "version": 1,
+                "decisionType": "WorkPlacementDecision",
+                "disposition": "selected",
+                "selected": {
+                  "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                  "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "executionClass": "local-command-inference",
+                  "mode": "execute",
+                  "reuseReceipt": null,
+                  "plannedResources": [
+                    {
+                      "amount": {
+                        "numerator": "503612",
+                        "denominator": "7"
+                      },
+                      "resource": "duration",
+                      "unit": "millisecond"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "283219",
+                        "denominator": "7"
+                      },
+                      "resource": "input-tokens",
+                      "unit": "token"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "1500",
+                        "denominator": "7"
+                      },
+                      "resource": "output-tokens",
+                      "unit": "token"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      },
+                      "resource": "requests",
+                      "unit": "request"
+                    }
+                  ],
+                  "observationBasis": {
+                    "attempts": 7,
+                    "accepted": 0,
+                    "resourceBasis": "mean-per-attempt-including-refusals",
+                    "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                    "receipts": [
+                      "ni:///sha-256;7SogVZyMuVZmEV-dhmKLUYME7GGARv4s2JN-3839n2s",
+                      "ni:///sha-256;E4JrJzUNUt0QLIrcRBZs2r8koH9aCUuUwlhuk1CKPho",
+                      "ni:///sha-256;FcgksnNDH26SayqDCpa0oGzWH4M8bIOcDltKEkxc2Mo",
+                      "ni:///sha-256;SyMIUCmfrg9Mi5mnthJbN1LYDJ5zr7PC8qruq5QEl60",
+                      "ni:///sha-256;n0fv48n5VyMzKRGOUxQAD66ihdEvq7EiHh8QvAKgJDY",
+                      "ni:///sha-256;uW34-i-aXMjLnEhXOWqvDnRJ8-ub7CeEX8JFBLvyt5A",
+                      "ni:///sha-256;vlLTIFdOUC0wBMLDxRzGDDizDhXU9STvaK73whC6H7o"
+                    ],
+                    "qualityPrior": {
+                      "observations": 0,
+                      "accepted": 0,
+                      "sourceReceipts": []
+                    }
+                  }
+                },
+                "attemptPlan": [
+                  {
+                    "rank": 0,
+                    "relation": "single",
+                    "offers": [
+                      {
+                        "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                        "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                        "executionClass": "local-command-inference",
+                        "mode": "execute",
+                        "reuseReceipt": null,
+                        "plannedResources": [
+                          {
+                            "amount": {
+                              "numerator": "503612",
+                              "denominator": "7"
+                            },
+                            "resource": "duration",
+                            "unit": "millisecond"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "283219",
+                              "denominator": "7"
+                            },
+                            "resource": "input-tokens",
+                            "unit": "token"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "1500",
+                              "denominator": "7"
+                            },
+                            "resource": "output-tokens",
+                            "unit": "token"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "1",
+                              "denominator": "1"
+                            },
+                            "resource": "requests",
+                            "unit": "request"
+                          }
+                        ],
+                        "observationBasis": {
+                          "attempts": 7,
+                          "accepted": 0,
+                          "resourceBasis": "mean-per-attempt-including-refusals",
+                          "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                          "receipts": [
+                            "ni:///sha-256;7SogVZyMuVZmEV-dhmKLUYME7GGARv4s2JN-3839n2s",
+                            "ni:///sha-256;E4JrJzUNUt0QLIrcRBZs2r8koH9aCUuUwlhuk1CKPho",
+                            "ni:///sha-256;FcgksnNDH26SayqDCpa0oGzWH4M8bIOcDltKEkxc2Mo",
+                            "ni:///sha-256;SyMIUCmfrg9Mi5mnthJbN1LYDJ5zr7PC8qruq5QEl60",
+                            "ni:///sha-256;n0fv48n5VyMzKRGOUxQAD66ihdEvq7EiHh8QvAKgJDY",
+                            "ni:///sha-256;uW34-i-aXMjLnEhXOWqvDnRJ8-ub7CeEX8JFBLvyt5A",
+                            "ni:///sha-256;vlLTIFdOUC0wBMLDxRzGDDizDhXU9STvaK73whC6H7o"
+                          ],
+                          "qualityPrior": {
+                            "observations": 0,
+                            "accepted": 0,
+                            "sourceReceipts": []
+                          }
+                        }
+                      }
+                    ],
+                    "execution": "explicit-sequential-authority-required",
+                    "implicitFallbackPermitted": false,
+                    "speculativeExecutionPermitted": false,
+                    "stopCondition": "customer-assayed-acceptance"
+                  }
+                ],
+                "refusals": [],
+                "rationale": [
+                  "exact-feasibility-first",
+                  "fresh-execution-required",
+                  "customer-ordered-pareto-selection",
+                  "provider-and-model-identities-are-provenance-only"
+                ],
+                "offers": [
+                  {
+                    "type": "NormalizedWorkOffer",
+                    "id": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                    "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "executionClass": "local-command-inference",
+                    "operation": "code-fabrication-assays",
+                    "implementationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "capabilities": [
+                      "chat",
+                      "reasoning",
+                      "long-context",
+                      "json-output",
+                      "json-schema-output",
+                      "code",
+                      "classification",
+                      "extraction",
+                      "summarization",
+                      "inquiry",
+                      "software-engineering",
+                      "code-review",
+                      "text-output",
+                      "tool-calling"
+                    ],
+                    "qualityTiers": [
+                      "frontier-subscription"
+                    ],
+                    "authorityScopes": [
+                      "urn:scope:bounded-inference-candidate"
+                    ],
+                    "effects": [
+                      "read-only"
+                    ],
+                    "idempotence": [
+                      "idempotent"
+                    ],
+                    "dataConstraints": [],
+                    "custodyConstraints": [],
+                    "outputContractIdentities": [
+                      "ni:///sha-256;7IAXjNB0Sjczx3UutNZuD-puIhF9MCOp5lLHPi30PYc"
+                    ],
+                    "availability": "available",
+                    "availableCapacity": 1,
+                    "bounds": {},
+                    "consideration": [
+                      {
+                        "kind": "credit",
+                        "asset": "urn:union:consideration:provider-invocation",
+                        "unit": "provider-invocation",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      },
+                      {
+                        "kind": "currency",
+                        "asset": "urn:currency:usd",
+                        "unit": "cent",
+                        "amount": {
+                          "numerator": "0",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "declaredResources": [
+                      {
+                        "resource": "provider-attention",
+                        "unit": "bounded-lot",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "semantics": {
+                      "reuse": "none"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "cases": [
+            {
+              "operation": "issuer-settlement-custody-plan",
+              "name": "absent configuration returns null",
+              "clauses": [
+                "admission",
+                "plans"
+              ],
+              "input": null,
+              "output": null,
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-store-plan",
+              "name": "truthy enabled is insufficient even with invalid identity",
+              "clauses": [
+                "admission",
+                "plans"
+              ],
+              "input": {
+                "enabled": "true",
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "wrong"
+              },
+              "output": null,
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-custody-plan",
+              "name": "admission status is case sensitive and precedes identity validation",
+              "clauses": [
+                "admission",
+                "plans"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "Received"
+                },
+                "amount": 50000
+              },
+              "output": null,
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-store-plan",
+              "name": "missing resource admission returns null",
+              "clauses": [
+                "admission",
+                "plans"
+              ],
+              "input": {
+                "enabled": true
+              },
+              "output": null,
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-custody-plan",
+              "name": "normalized fixed plan ignores trusted coordinate and ceiling overrides; metadata only, not runtime no-expansion or budget receiving",
+              "clauses": [
+                "admission",
+                "plans",
+                "pulse-budget",
+                "no-expansion"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "eip155:8453",
+                "asset": "0x833589FCD6EDB6E08F4C7C32D4F71B54BDA02913",
+                "payTo": "0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "amount": "50000",
+                "sku": "issuer",
+                "gateway": "gateway",
+                "ledgerAccount": "Income:Issuer",
+                "objectName": "other",
+                "path": "/public",
+                "prefix": "other/",
+                "maximumWorkerCallsPerPulse": 999,
+                "maximumRecords": 999999
+              },
+              "output": {
+                "prefix": "issuer-settlements/",
+                "metadataKey": "issuer-settlements/capacity",
+                "witnessPrefix": "issuer-settlements/witness/",
+                "pendingPrefix": "issuer-settlements/pending/",
+                "receiptPrefix": "issuer-settlements/receipt/",
+                "objectName": "earning-loops",
+                "path": "/issuer-settlement-witness",
+                "maximumRecords": 50000,
+                "maximumCustodyBytes": 268435456,
+                "maximumRawWitnessBytes": 32768,
+                "maximumTransactionBytes": 1900000,
+                "maximumWitnessesPerPulse": 4,
+                "maximumProviderAttemptsPerWitness": 4,
+                "maximumRpcBytes": 262144,
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "sku": "issuer",
+                "gateway": "gateway",
+                "ledgerAccount": "Income:Issuer",
+                "amount": "50000",
+                "maximumWorkerCallsPerPulse": 50
+              },
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-store-plan",
+              "name": "store shares exact fixed plan and receiving-ceiling metadata",
+              "clauses": [
+                "admission",
+                "plans",
+                "pulse-budget"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0x1234567890abcdef1234567890abcdef12345678",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "amount": "50000",
+                "sku": "é",
+                "gateway": "g",
+                "ledgerAccount": "l"
+              },
+              "output": {
+                "prefix": "issuer-settlements/",
+                "metadataKey": "issuer-settlements/capacity",
+                "witnessPrefix": "issuer-settlements/witness/",
+                "pendingPrefix": "issuer-settlements/pending/",
+                "receiptPrefix": "issuer-settlements/receipt/",
+                "objectName": "earning-loops",
+                "path": "/issuer-settlement-witness",
+                "maximumRecords": 50000,
+                "maximumCustodyBytes": 268435456,
+                "maximumRawWitnessBytes": 32768,
+                "maximumTransactionBytes": 1900000,
+                "maximumWitnessesPerPulse": 4,
+                "maximumProviderAttemptsPerWitness": 4,
+                "maximumRpcBytes": 262144,
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0x1234567890abcdef1234567890abcdef12345678",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "sku": "é",
+                "gateway": "g",
+                "ledgerAccount": "l",
+                "amount": "50000",
+                "maximumWorkerCallsPerPulse": 50
+              },
+              "throws": null
+            },
+            {
+              "operation": "issuer-settlement-custody-plan",
+              "name": "admitted missing required identity throws",
+              "clauses": [
+                "admission"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                }
+              },
+              "output": null,
+              "throws": "TypeError"
+            },
+            {
+              "operation": "issuer-settlement-store-plan",
+              "name": "numeric amount is not canonical decimal string",
+              "clauses": [
+                "admission"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "amount": 50000,
+                "sku": "s",
+                "gateway": "g",
+                "ledgerAccount": "l"
+              },
+              "output": null,
+              "throws": "TypeError"
+            },
+            {
+              "operation": "issuer-settlement-custody-plan",
+              "name": "leading zero amount refuses",
+              "clauses": [
+                "admission"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "amount": "050000",
+                "sku": "s",
+                "gateway": "g",
+                "ledgerAccount": "l"
+              },
+              "output": null,
+              "throws": "TypeError"
+            },
+            {
+              "operation": "issuer-settlement-store-plan",
+              "name": "carriage return in gateway refuses",
+              "clauses": [
+                "admission"
+              ],
+              "input": {
+                "enabled": true,
+                "resourceAdmission": {
+                  "status": "received"
+                },
+                "network": "eip155:8453",
+                "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                "payTo": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "operation": "issuer-revenue-comparison",
+                "method": "POST",
+                "route": "/v1/issuer-revenue-comparison",
+                "amount": "50000",
+                "sku": "s",
+                "gateway": "g\r",
+                "ledgerAccount": "l"
+              },
+              "output": null,
+              "throws": "TypeError"
+            }
+          ]
+        },
+        {
+          "operation": "issuer-settlement-custody-plan",
+          "operations": [
+            "issuer-settlement-custody-plan"
+          ],
+          "module": "src/issuer-settlement-custody.mjs",
+          "attempt": 1,
+          "lot": {
+            "workLot": "urn:work-lot:inference:DMj0kq1DaGIB7BQcZ-dO9Lj7Le7OZqm1qG8dHEtDoVw",
+            "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+            "taskClass": "code-fabrication",
+            "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+            "receipt": "ni:///sha-256;3uVhfWPxKUdqblHATSF25ot8i85nb3lN0MNCe88Lg0A",
+            "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+            "model": "default",
+            "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+            "delivery": {
+              "outcome": "candidate-pending-codex-acceptance",
+              "workLot": "urn:work-lot:inference:DMj0kq1DaGIB7BQcZ-dO9Lj7Le7OZqm1qG8dHEtDoVw",
+              "taskClass": "code-fabrication",
+              "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+              "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+              "model": "default",
+              "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+              "receipt": {
+                "id": "ni:///sha-256;3uVhfWPxKUdqblHATSF25ot8i85nb3lN0MNCe88Lg0A"
+              },
+              "candidate": {
+                "id": "exchange-20261024-231937-84a3fd",
+                "object": "chat.completion",
+                "model": "default",
+                "choices": [
+                  {
+                    "index": 0,
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"source\":null,\"question\":\"What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.\"}",
+                      "tool_calls": []
+                    },
+                    "finish_reason": "unknown"
+                  }
+                ],
+                "usage": {
+                  "prompt_tokens": 34279,
+                  "completion_tokens": 178
+                }
+              },
+              "endpointClass": "local-command-inference",
+              "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+              "configuration": {
+                "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                "model": "default",
+                "endpoint": "command:codex-exec",
+                "executionClass": "local-command-inference",
+                "mode": "assistant-turn:codex-exec:json-envelope:v1"
+              },
+              "selectionRule": "direct-endpoint-customer-ordered-pareto-route-after-a2a-market-residue",
+              "consideration": [
+                {
+                  "kind": "credit",
+                  "asset": "urn:union:consideration:provider-invocation",
+                  "unit": "provider-invocation",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "declaredResources": [
+                {
+                  "resource": "provider-attention",
+                  "unit": "bounded-lot",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "measuredResources": {
+                "scope": {
+                  "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "accountIdentity": null,
+                  "windowIdentity": null,
+                  "measurementCoverage": "completed-exchanges"
+                },
+                "resources": [
+                  {
+                    "resource": "requests",
+                    "unit": "request",
+                    "amount": {
+                      "numerator": "1",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "input-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "34279",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "output-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "178",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "duration",
+                    "unit": "millisecond",
+                    "amount": {
+                      "numerator": "30849",
+                      "denominator": "1"
+                    }
+                  }
+                ],
+                "partialResources": [],
+                "callerObservedResources": [],
+                "uncertainty": [
+                  "total-token-usage-incomplete",
+                  "provider-reported-cost-incomplete",
+                  "account-window-identity-unknown"
+                ]
+              },
+              "settlement": "none-direct-endpoint-lane-carries-no-signed-compact-or-chain-settlement",
+              "durationMs": 30849,
+              "providerEvidence": {
+                "outputs": [
+                  {
+                    "id": "exchange-20261024-231937-84a3fd",
+                    "object": "chat.completion",
+                    "model": "default",
+                    "choices": [
+                      {
+                        "index": 0,
+                        "message": {
+                          "role": "assistant",
+                          "content": "{\"source\":null,\"question\":\"What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.\"}",
+                          "tool_calls": []
+                        },
+                        "finish_reason": "unknown"
+                      }
+                    ],
+                    "usage": {
+                      "prompt_tokens": 34279,
+                      "completion_tokens": 178
+                    }
+                  }
+                ],
+                "toolInvocations": [],
+                "exchanges": [
+                  {
+                    "finishReason": "unknown",
+                    "usage": {
+                      "promptTokens": 34279,
+                      "outputTokens": 178,
+                      "totalTokens": null,
+                      "reportedCost": null
+                    },
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"source\":null,\"question\":\"What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.\"}",
+                      "tool_calls": []
+                    }
+                  }
+                ],
+                "tokenUsage": [
+                  {
+                    "promptTokens": 34279,
+                    "outputTokens": 178,
+                    "totalTokens": null,
+                    "reportedCost": null
+                  }
+                ],
+                "measuredResources": {
+                  "scope": {
+                    "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "accountIdentity": null,
+                    "windowIdentity": null,
+                    "measurementCoverage": "completed-exchanges"
+                  },
+                  "resources": [
+                    {
+                      "resource": "requests",
+                      "unit": "request",
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "input-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "34279",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "output-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "178",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "duration",
+                      "unit": "millisecond",
+                      "amount": {
+                        "numerator": "30849",
+                        "denominator": "1"
+                      }
+                    }
+                  ],
+                  "partialResources": [],
+                  "callerObservedResources": [],
+                  "uncertainty": [
+                    "total-token-usage-incomplete",
+                    "provider-reported-cost-incomplete",
+                    "account-window-identity-unknown"
+                  ]
+                },
+                "sharedBudgetRemaining": {}
+              },
+              "customerAssay": "chat-completion-turn-accepted",
+              "providerSchemaEnforcement": {
+                "attempted": false
+              },
+              "directLaneRefusals": [],
+              "integrationAccepted": false,
+              "receiverAcceptanceRequired": true,
+              "nextAct": "Codex may decide its own routine purchase and delivery outcome after an executable assay without Leader approval; only a later effect on another Actor crosses into that Actor's induction boundary.",
+              "contextOptimization": {
+                "mode": "automatic",
+                "estimated": true,
+                "budget": null,
+                "beforeBytes": 34574,
+                "afterBytes": 34574,
+                "retained": [
+                  "objective",
+                  "chat-completion"
+                ],
+                "dropped": [],
+                "rawRecall": []
+              },
+              "timing": {
+                "solicitation": 0,
+                "routeDecision": 2856,
+                "execution": 34350,
+                "assay": 0,
+                "receipt": 0,
+                "total": 49690
+              },
+              "acceptanceScope": "delivery-to-codex-customer-office-only",
+              "placement": {
+                "type": "WorkPlacementEvidenceProjection",
+                "version": 1,
+                "decisionType": "WorkPlacementDecision",
+                "disposition": "selected",
+                "selected": {
+                  "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+                  "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "executionClass": "local-command-inference",
+                  "mode": "execute",
+                  "reuseReceipt": null,
+                  "plannedResources": [
+                    {
+                      "resource": "provider-attention",
+                      "unit": "bounded-lot",
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      }
+                    }
+                  ],
+                  "observationBasis": {
+                    "attempts": 0,
+                    "accepted": 0,
+                    "resourceBasis": "source-declared-resources",
+                    "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                    "receipts": [],
+                    "qualityPrior": {
+                      "observations": 0,
+                      "accepted": 0,
+                      "sourceReceipts": []
+                    }
+                  }
+                },
+                "attemptPlan": [
+                  {
+                    "rank": 0,
+                    "relation": "single",
+                    "offers": [
+                      {
+                        "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+                        "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                        "executionClass": "local-command-inference",
+                        "mode": "execute",
+                        "reuseReceipt": null,
+                        "plannedResources": [
+                          {
+                            "resource": "provider-attention",
+                            "unit": "bounded-lot",
+                            "amount": {
+                              "numerator": "1",
+                              "denominator": "1"
+                            }
+                          }
+                        ],
+                        "observationBasis": {
+                          "attempts": 0,
+                          "accepted": 0,
+                          "resourceBasis": "source-declared-resources",
+                          "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                          "receipts": [],
+                          "qualityPrior": {
+                            "observations": 0,
+                            "accepted": 0,
+                            "sourceReceipts": []
+                          }
+                        }
+                      }
+                    ],
+                    "execution": "explicit-sequential-authority-required",
+                    "implicitFallbackPermitted": false,
+                    "speculativeExecutionPermitted": false,
+                    "stopCondition": "customer-assayed-acceptance"
+                  }
+                ],
+                "refusals": [],
+                "rationale": [
+                  "exact-feasibility-first",
+                  "fresh-execution-required",
+                  "customer-ordered-pareto-selection",
+                  "provider-and-model-identities-are-provenance-only"
+                ],
+                "offers": [
+                  {
+                    "type": "NormalizedWorkOffer",
+                    "id": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+                    "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "executionClass": "local-command-inference",
+                    "operation": "code-fabrication",
+                    "implementationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "capabilities": [
+                      "chat",
+                      "reasoning",
+                      "long-context",
+                      "json-output",
+                      "json-schema-output",
+                      "code",
+                      "classification",
+                      "extraction",
+                      "summarization",
+                      "inquiry",
+                      "software-engineering",
+                      "code-review",
+                      "text-output",
+                      "tool-calling"
+                    ],
+                    "qualityTiers": [
+                      "frontier-subscription"
+                    ],
+                    "authorityScopes": [
+                      "urn:scope:bounded-inference-candidate"
+                    ],
+                    "effects": [
+                      "read-only"
+                    ],
+                    "idempotence": [
+                      "idempotent"
+                    ],
+                    "dataConstraints": [],
+                    "custodyConstraints": [],
+                    "outputContractIdentities": [
+                      "ni:///sha-256;7IAXjNB0Sjczx3UutNZuD-puIhF9MCOp5lLHPi30PYc"
+                    ],
+                    "availability": "available",
+                    "availableCapacity": 1,
+                    "bounds": {},
+                    "consideration": [
+                      {
+                        "kind": "credit",
+                        "asset": "urn:union:consideration:provider-invocation",
+                        "unit": "provider-invocation",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      },
+                      {
+                        "kind": "currency",
+                        "asset": "urn:currency:usd",
+                        "unit": "cent",
+                        "amount": {
+                          "numerator": "0",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "declaredResources": [
+                      {
+                        "resource": "provider-attention",
+                        "unit": "bounded-lot",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "semantics": {
+                      "reuse": "none"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "outcome": "question",
+          "evidence": "What are the original witnessProblem, corroborate and usdc adapter signatures and return contracts from src/settlements.mjs, including the witness fields used for the cash record and the arguments required for configured identity validation? The order requires reuse of those exact interfaces but does not supply their contracts or an offered tool to read them.",
+          "judged": "refused"
+        }
+      ],
+      "proofing": {
+        "type": "JsnodeDerivationProofing",
+        "version": 1,
+        "writer": {
+          "id": "ni:///sha-256;R_mQukyWO9p5QYySZO6qWl370pL0HKJIXnaW6nX7reY",
+          "method": "source-derivation",
+          "carrier": "default",
+          "evidence": "ni:///sha-256;jsfNJ2KJDVJiDofG4phj9dp-oM8IN9CGsMJ4Q_WIPpw"
+        },
+        "channels": [
+          {
+            "id": "ni:///sha-256;7T-7oV7uK6IllPauGQiC_NcZbpKiKuTax1d_KymyfQg",
+            "method": "admitted-examples",
+            "carrier": "work-order-author",
+            "evidence": "ni:///sha-256;1NhZRjndxTnhAMvSI2lfZxRsdxVr5S6y-9mTfmjbfP4",
+            "independent": false,
+            "reason": "the writer was shown these checks"
+          },
+          {
+            "id": "ni:///sha-256;R_mQukyWO9p5QYySZO6qWl370pL0HKJIXnaW6nX7reY",
+            "method": "clause-assays",
+            "carrier": "default",
+            "evidence": "ni:///sha-256;jsfNJ2KJDVJiDofG4phj9dp-oM8IN9CGsMJ4Q_WIPpw",
+            "independent": false,
+            "reason": "same carrier on the same evidence as the writer: one channel"
+          },
+          {
+            "id": "ni:///sha-256;1UtSYDe9RlK4SFo3BeLRPcfVquy8MuzsKPz4dhYVtQ8",
+            "method": "module-set-composition",
+            "carrier": "node-test-runner",
+            "evidence": "ni:///sha-256;3GBr4JSvHsULu9VXcWGdJNeVSU8vQUo98-sKten6Ryg",
+            "independent": true,
+            "reason": "different carrier"
+          },
+          {
+            "id": "ni:///sha-256;j2en-jkN19EDZcadu1Mj-xjqBHNz9XHc1dEqKyQkX8Q",
+            "method": "delivery-admission",
+            "carrier": "jsnode-delivery-schema",
+            "evidence": "ni:///sha-256;MTI4YG1Y_OcUasUiY_jURBE5rO1ydMeCgW0TWdFgdnc",
+            "independent": true,
+            "reason": "different carrier"
+          },
+          {
+            "id": "ni:///sha-256;ClvmaLYKGiJyHWafFDx1tBYNg5NcQKV15B0YvFxZrmY",
+            "method": "fold-check",
+            "carrier": "jsnode-misfold-reader",
+            "evidence": "ni:///sha-256;S62qJS_Vb73SdvumnHyt6WNwkWNUYhcP6IWY37EBUNE",
+            "independent": true,
+            "reason": "different carrier"
+          }
+        ],
+        "catches": [],
+        "independentBehavioralChannels": 0
+      }
+    },
+    "workOrderSpecificationDigest": "ni:///sha-256;fAFaI6nUTSnuNHw1AL0dO-ri6zHXvrRQ3Ry1vmopio0",
+    "source": {
+      "type": "ArtifactFabricationSource",
+      "version": 1,
+      "identity": {
+        "type": "ArtifactFabricationSourceIdentity",
+        "id": "issuer-private-settlement-custody"
+      },
+      "provenance": {
+        "type": "ArtifactFabricationSourceProvenance",
+        "locator": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md",
+        "digest": "sha256:db94e6aa9021304c824e01eeda2c3a623cbce7ef48b5fb87807aedc44424efe9",
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 1,
+          "endLine": 41
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "IndependentWorkerReleaseReceiving",
+  "at": "2026-10-25T00:30:01.700Z",
+  "deployment": "ab03a64b-8764-4ab8-8d8e-9fdf46c8d203",
+  "version": "465eda3a-a2f3-4072-a2b2-130c7f781e17",
+  "files": [
+    {
+      "name": "worker.mjs",
+      "bytes": 357289,
+      "sha256": "06553abd54d1ff56cc4394f7cb7a73ed4789ff3785243c17f59a8af3ae8e2843"
+    }
+  ],
+  "clockNamespace": "c23d67c6148e4110a200911018cbe065",
+  "bindings": [
+    {
+      "name": "CLOCK",
+      "type": "durable_object_namespace"
+    },
+    {
+      "name": "HASHN_CREDENTIAL_JSON",
+      "type": "secret_text"
+    },
+    {
+      "name": "MARKET_SETTLEMENTS",
+      "type": "r2_bucket"
+    },
+    {
+      "name": "OPENTASK_CREDENTIAL_JSON",
+      "type": "secret_text"
+    },
+    {
+      "name": "RELEASE_METADATA",
+      "type": "version_metadata"
+    },
+    {
+      "name": "STATE",
+      "type": "r2_bucket"
+    }
+  ],
+  "sourceParity": true,
+  "liveCacheReceiving": false,
+  "livePaidReceiving": false
+}

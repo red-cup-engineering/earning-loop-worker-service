@@ -1,0 +1,394 @@
+{
+  "inputs": {
+    "data/operation.mjs": {
+      "bytes": 2940,
+      "imports": [],
+      "format": "esm"
+    },
+    "data/group-payers.mjs": {
+      "bytes": 321,
+      "imports": [],
+      "format": "esm"
+    },
+    "data/products.mjs": {
+      "bytes": 2609,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+      "bytes": 2158,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+      "bytes": 4337,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+      "bytes": 2471,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs",
+          "kind": "import-statement",
+          "original": "./hash.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs": {
+      "bytes": 6611,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs": {
+      "bytes": 2768,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/integrity"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs",
+          "kind": "import-statement",
+          "original": "./json-web-token.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/opentask-client.mjs": {
+      "bytes": 11078,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/http-services-section/retry-after"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs",
+          "kind": "dynamic-import",
+          "original": "@red-cup-engineering/oauth-services-section/dpop"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/registers.mjs": {
+      "bytes": 646,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/settlements.mjs": {
+      "bytes": 7412,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/opentask-commercial-pass.mjs": {
+      "bytes": 20512,
+      "imports": [
+        {
+          "path": "src/opentask-client.mjs",
+          "kind": "import-statement",
+          "original": "./opentask-client.mjs"
+        },
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "./settlements.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/route-health.mjs": {
+      "bytes": 6323,
+      "imports": [
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "./settlements.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/scorecard.mjs": {
+      "bytes": 4437,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/border-price.mjs": {
+      "bytes": 1221,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/price-directives.mjs": {
+      "bytes": 5665,
+      "imports": [
+        {
+          "path": "src/scorecard.mjs",
+          "kind": "import-statement",
+          "original": "./scorecard.mjs"
+        },
+        {
+          "path": "src/border-price.mjs",
+          "kind": "import-statement",
+          "original": "./border-price.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/onchain-hook.mjs": {
+      "bytes": 1564,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/clock.mjs": {
+      "bytes": 1138,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/issuer-research.mjs": {
+      "bytes": 2667,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        },
+        {
+          "path": "@red-cup-engineering/issuer-research-media-service/prepared-cohort",
+          "kind": "dynamic-import",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "worker/earning-loops.mjs": {
+      "bytes": 8137,
+      "imports": [
+        {
+          "path": "data/operation.mjs",
+          "kind": "import-statement",
+          "original": "../data/operation.mjs"
+        },
+        {
+          "path": "data/group-payers.mjs",
+          "kind": "import-statement",
+          "original": "../data/group-payers.mjs"
+        },
+        {
+          "path": "data/products.mjs",
+          "kind": "import-statement",
+          "original": "../data/products.mjs"
+        },
+        {
+          "path": "src/opentask-commercial-pass.mjs",
+          "kind": "import-statement",
+          "original": "../src/opentask-commercial-pass.mjs"
+        },
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "../src/settlements.mjs"
+        },
+        {
+          "path": "src/route-health.mjs",
+          "kind": "import-statement",
+          "original": "../src/route-health.mjs"
+        },
+        {
+          "path": "src/scorecard.mjs",
+          "kind": "import-statement",
+          "original": "../src/scorecard.mjs"
+        },
+        {
+          "path": "src/price-directives.mjs",
+          "kind": "import-statement",
+          "original": "../src/price-directives.mjs"
+        },
+        {
+          "path": "src/onchain-hook.mjs",
+          "kind": "import-statement",
+          "original": "../src/onchain-hook.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "../src/registers.mjs"
+        },
+        {
+          "path": "src/clock.mjs",
+          "kind": "import-statement",
+          "original": "../src/clock.mjs"
+        },
+        {
+          "path": "src/issuer-research.mjs",
+          "kind": "import-statement",
+          "original": "../src/issuer-research.mjs"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "worker.mjs": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "@red-cup-engineering/issuer-research-media-service/prepared-cohort",
+          "kind": "dynamic-import",
+          "external": true
+        }
+      ],
+      "exports": [
+        "CRONS",
+        "EarningClock",
+        "default",
+        "run",
+        "tick"
+      ],
+      "entryPoint": "worker/earning-loops.mjs",
+      "inputs": {
+        "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+          "bytesInOutput": 551
+        },
+        "node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+          "bytesInOutput": 600
+        },
+        "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs": {
+          "bytesInOutput": 1607
+        },
+        "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs": {
+          "bytesInOutput": 2145
+        },
+        "data/operation.mjs": {
+          "bytesInOutput": 2806
+        },
+        "data/group-payers.mjs": {
+          "bytesInOutput": 223
+        },
+        "data/products.mjs": {
+          "bytesInOutput": 2523
+        },
+        "src/opentask-client.mjs": {
+          "bytesInOutput": 10532
+        },
+        "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+          "bytesInOutput": 2077
+        },
+        "src/registers.mjs": {
+          "bytesInOutput": 394
+        },
+        "src/settlements.mjs": {
+          "bytesInOutput": 6571
+        },
+        "src/opentask-commercial-pass.mjs": {
+          "bytesInOutput": 19802
+        },
+        "src/route-health.mjs": {
+          "bytesInOutput": 5559
+        },
+        "src/scorecard.mjs": {
+          "bytesInOutput": 4134
+        },
+        "src/border-price.mjs": {
+          "bytesInOutput": 322
+        },
+        "src/price-directives.mjs": {
+          "bytesInOutput": 4341
+        },
+        "src/onchain-hook.mjs": {
+          "bytesInOutput": 1041
+        },
+        "src/clock.mjs": {
+          "bytesInOutput": 646
+        },
+        "src/issuer-research.mjs": {
+          "bytesInOutput": 2222
+        },
+        "worker/earning-loops.mjs": {
+          "bytesInOutput": 6866
+        }
+      },
+      "bytes": 76341
+    }
+  }
+}

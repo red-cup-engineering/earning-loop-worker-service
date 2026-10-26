@@ -1,0 +1,38 @@
+{
+  "inputs": {
+    "../../apps/market.561.group/src/issuer-evidence-store.mjs": {
+      "bytes": 6852,
+      "imports": [],
+      "format": "esm"
+    },
+    "test/workerd-issuer-market.mjs": {
+      "bytes": 528,
+      "imports": [
+        {
+          "path": "../../apps/market.561.group/src/issuer-evidence-store.mjs",
+          "kind": "import-statement",
+          "original": "../../../apps/market.561.group/src/issuer-evidence-store.mjs"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "workerd-issuer-market.js": {
+      "imports": [],
+      "exports": [
+        "default"
+      ],
+      "entryPoint": "test/workerd-issuer-market.mjs",
+      "inputs": {
+        "../../apps/market.561.group/src/issuer-evidence-store.mjs": {
+          "bytesInOutput": 2761
+        },
+        "test/workerd-issuer-market.mjs": {
+          "bytesInOutput": 476
+        }
+      },
+      "bytes": 3388
+    }
+  }
+}

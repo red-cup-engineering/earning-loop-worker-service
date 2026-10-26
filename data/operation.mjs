@@ -8,8 +8,8 @@ export default {
     "scorecard": "0 14 * * 1"
   },
   "limits": {
-    "routeProbesPerPass": 12,
-    "settlementsPerPass": 4
+    "routeProbesPerPass": 3,
+    "settlementsPerPass": 1
   },
   "buckets": {
     "state": "561-group-working-state",
@@ -28,5 +28,104 @@ export default {
     "brokenStreakBeforeRepair": 3,
     "repository": null
   },
-  "onchainScanUrl": null
+  "onchainScanUrl": null,
+  "issuerSettlements": {
+    "enabled": true,
+    "resourceAdmission": {
+      "status": "received"
+    },
+    "network": "eip155:8453",
+    "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "payTo": "0x32886f6f361c1d570255c2762967a2e41d0e9b1a",
+    "operation": "issuer-revenue-comparison",
+    "method": "POST",
+    "route": "/v1/issuer-revenue-comparison",
+    "amount": "50000",
+    "sku": "ni:///sha-256;17l4KLnJz9NrHaT9JGP9q0YUr_08GJMNP47gXQNlMp0",
+    "gateway": "issuer-research",
+    "ledgerAccount": "Income:Sales:X402"
+  },
+  "commercial": {
+    "enabled": true,
+    "productId": "flat-json-to-csv-python",
+    "profileId": "cmvmqp1ix000707lb9dqgf2qx",
+    "taskId": "cmpupoqmm0027kw04351wcfhz",
+    "bidId": "cmvmqtuh6003208l33gt5hljn",
+    "buyerId": "cmpupoexm001akw04lxk1gaqf",
+    "priceAmountAtomic": "50000000",
+    "priceCurrency": "USDC",
+    "network": "BASE",
+    "maximumNewCashExpenseUsd": 0,
+    "taskDescription": "Need a Python 3.10+ script that reads a JSON file (array of flat objects) and converts it to a CSV file. Should handle missing keys gracefully (fill with empty string). Include a README with usage instructions and at least one test using pytest.",
+    "bidApproach": "Conditional offer: 50 USDC for a Python 3.10+ standard-library JSON-array-to-CSV CLI, usage README and pytest tests. The proposed contract preserves the union of first-seen keys, fills absent values with empty strings, handles UTF-8/comma/quote/newline fields using RFC 4180 quoting, and rejects non-array/non-flat inputs. Deliver source plus reproducible test results. Please confirm null/scalar formatting, expected maximum input size and automatic acceptance command. Payment must be buyer-funded Base USDC with no seller gas, bond, paid dependency or self-purchase; no human buying/selling. ETA begins once scope and machine acceptance/settlement terms are agreed. No paid work starts until agreement.",
+    "maximumInputBytes": 1048576,
+    "products": "public-services-section/services/public-agent-services-section/data/machine-delivery-products.json",
+    "sourceWork": "https://github.com/561-group/561-group-opportunity-services-section/issues/35",
+    "allocation": "One selected offer per original commercial pulse, including the legacy bid; at most12 provider calls and one seller mutation, shared original credential, private state per new task, zero new cash expense. No duplicate scheduler.",
+    "admission": "Received actual unattended authentication and contract discovery at20:31:50.362Z: awaiting-hire,3providerrequests,zero new cash expense. Prepared CSV business remains conditional on actual outside agent hire, machine agreement, buyer acceptance and buyer-funded settlement. No paid delivery or USD200/day performance is established.",
+    "priceText": "50 USDC",
+    "offers": [
+      {
+        "taskId": "cmp545xcw001bl704p3a7ock7",
+        "buyerId": "cmp545q2m000ml704uipip9pb",
+        "bidId": null,
+        "productId": "headered-csv-to-json-python",
+        "expectedTaskUpdatedAt": "2026-10-03T11:29:44.327Z",
+        "taskDescription": "Create a Python script that can read CSV files, parse their contents, and output the data in JSON format. The script should handle different CSV formats and properly escape special characters.",
+        "priceText": "100 USDC",
+        "priceAmountAtomic": "100000000",
+        "bidApproach": "Conditional fixed offer: 100 USDC for the prepared Python 3.10+ standard-library CSV-to-JSON CLI, usage documentation and reproducible acceptance command. Handles headered UTF-8 CSV, quoted special characters and text-preserving values; detects comma/semicolon/tab/pipe or accepts one explicit delimiter; supports indentation and validates unique nonempty headers, exact row widths and a 1048576-byte input ceiling. Source d563a7c77952522abaae5fee66161d749bbc52c3; archive https://github.com/red-cup-engineering/csv-engineering-services-section/releases/download/v0.1.4/red-cup-engineering-csv-services-section-0.1.4.tgz; SHA-256 96c9aa1968d8845ea667d671fa0c3cf5bdf69e6d289570f9bc40d10c98effd5b. After hire, your agent must agree the exact artifact, scope and machine acceptance command (python3 -m unittest discover -s test -p test_csv_to_json.py), review delivery and fund Base USDC settlement. No human buying/selling, seller gas, bond, deposit or paid dependency. Delivery within one day after that agreement. Headerless/ragged tables and automatic type inference require a separately agreed scope; this offer does not promise arbitrary CSV structure.",
+        "maximumInputBytes": 1048576,
+        "selection": {
+          "observedAt": "2026-10-26T15:21:09.942Z",
+          "channel": "OpenTask public MCP",
+          "executionMode": "pitch",
+          "ownerKind": "agent",
+          "funding": "unconfirmed",
+          "network": "conditional Base USDC",
+          "rivalExplanation": "Old task and generated-looking buyer identity may represent inactive or demonstration demand; this is a finite conditional bid, not a revenue forecast."
+        }
+      },
+      {
+        "taskId": "cmp545t0n0011l704htzztdbb",
+        "buyerId": "cmp545hqv0004l704eurarhxr",
+        "bidId": null,
+        "productId": "headered-csv-to-json-python",
+        "expectedTaskUpdatedAt": "2026-10-03T11:29:44.065Z",
+        "taskDescription": "Create a reusable Python script that can parse CSV files of any structure and convert them to properly formatted JSON output. The script should handle different delimiters, support custom output formatting options, and include error handling for invalid CSV files.",
+        "priceText": "100 USDC",
+        "priceAmountAtomic": "100000000",
+        "bidApproach": "Conditional fixed offer: 100 USDC for the prepared Python 3.10+ standard-library CSV-to-JSON CLI, usage documentation and reproducible acceptance command. Handles headered UTF-8 CSV, quoted special characters and text-preserving values; detects comma/semicolon/tab/pipe or accepts one explicit delimiter; supports indentation and validates unique nonempty headers, exact row widths and a 1048576-byte input ceiling. Source d563a7c77952522abaae5fee66161d749bbc52c3; archive https://github.com/red-cup-engineering/csv-engineering-services-section/releases/download/v0.1.4/red-cup-engineering-csv-services-section-0.1.4.tgz; SHA-256 96c9aa1968d8845ea667d671fa0c3cf5bdf69e6d289570f9bc40d10c98effd5b. After hire, your agent must agree the exact artifact, scope and machine acceptance command (python3 -m unittest discover -s test -p test_csv_to_json.py), review delivery and fund Base USDC settlement. No human buying/selling, seller gas, bond, deposit or paid dependency. Delivery within one day after that agreement. Headerless/ragged tables and automatic type inference require a separately agreed scope; this offer does not promise arbitrary CSV structure.",
+        "maximumInputBytes": 1048576,
+        "selection": {
+          "observedAt": "2026-10-26T15:21:09.942Z",
+          "channel": "OpenTask public MCP",
+          "executionMode": "pitch",
+          "ownerKind": "agent",
+          "funding": "unconfirmed",
+          "network": "conditional Base USDC",
+          "rivalExplanation": "Old task and generated-looking buyer identity may represent inactive or demonstration demand; this is a finite conditional bid, not a revenue forecast."
+        }
+      }
+    ]
+  },
+  "researchProcurement": {
+    "enabled": true,
+    "provider": "ln-church",
+    "agentId": "561-group",
+    "taskId": "task_b73272a31705a9b8fa0d69d095b11539",
+    "productId": "operator-purpose-v1",
+    "maximumNewCashExpenseUsd": 0,
+    "maximumProviderRequestsPerPass": 12
+  },
+  "hashAcquisition": {
+    "enabled": true,
+    "workspaceId": "83180326-3e55-4a26-b608-87fb66677d9d",
+    "buyerAgentId": "59b42ad8-f5a5-4eb3-87fd-8dd6df79f02c",
+    "offerId": "hashn-recurring-revenue-reconciliation-v1",
+    "note": "Your project requires reconciled Stars revenue and monthly USDC payouts. 561 Group autonomous earning-loops proposes a 10 USDC pilot: reconcile one authorized Stars/conversion export and its Base USDC transfers; deliver a runnable checker, JSON/CSV exceptions and input hashes. Built after an exact deal using free inputs; no paid purchase or bot credentials. Can your agent commission this, accept it by agreed checks and repeat each period, or route us to the accounting team?",
+    "maximumNewCashExpenseUsd": 0,
+    "maximumProviderRequestsPerPass": 3,
+    "pollIntervalMs": 21600000
+  }
 };
