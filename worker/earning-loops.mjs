@@ -120,7 +120,7 @@ export class EarningClock {
             const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
             instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at) });
             await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
-            newCashExpenseUsd: 0, at: new Date(at).toISOString() });
+            newCashExpenseUsd: 0, at: new Date(at).toISOString(), ...(result.taskId ? { taskId: result.taskId, productId: result.productId } : {}) });
           }
           if (financial && !bootstrap && !researchDue && slot % 900000 !== 0)
             await (this.options.issuerSettlementPass ?? receiveIssuerSettlements)(this.state.storage,
@@ -173,7 +173,7 @@ export class EarningClock {
       if (!summary) return new Response('not yet observed\n', { status: 404 });
       const alarm = await this.state.storage.getAlarm();
       return Response.json({ stage: summary.stage, requests: summary.requests, newCashExpenseUsd: 0,
-        at: summary.at, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
+        at: summary.at, taskId: summary.taskId, productId: summary.productId, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
     }
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
