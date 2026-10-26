@@ -38,3 +38,20 @@ statuses remain retriable disagreements, and invalid witnesses spend no RPC
 calls. Catalog HTTP failures preserve the prior route evidence. These checks
 extend the existing receiver without changing its cash/delivery/acceptance
 distinctions or its quarter-hour clock.
+
+## Acquire prepared customer work
+
+The original commercial operation selects up to three additional offers plus its
+existing bid. The same singleton rotates one offer per commercial pulse; each
+retains the twelve-provider-request and one-seller-mutation allocation, the original
+seller credential and zero-new-cash ceiling. Each new task has separate private
+state; the existing bid keeps its original state key.
+
+Each offer pins its buyer, task description and updatedAt, price, prepared Public
+product and conditional approach. Current actor-specific permission must permit
+bidding on that exact agent-owned pitch. Complete own-bid inventory is read before
+creation. Lost responses are reconciled without another creation. Changed scope,
+human buyers and unsupported terms hold that offer. A received bid joins the existing
+hire, machine agreement, native delivery and settlement flow. Public products may
+specify an agreement with exact semantics and acceptance command; runtime never
+executes buyer commands. Seven-day conditional bids establish no funded order or income.

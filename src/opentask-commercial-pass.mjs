@@ -1,4 +1,5 @@
 import { createOpenTaskClient } from "./opentask-client.mjs";
+import { commercialOffers, acquirePreparedBid } from "./opentask-bid-acquisition.mjs";
 import { BASE_USDC } from './settlements.mjs';
 
 const STATE = "opentask/commercial";
@@ -85,16 +86,34 @@ export function buyerConfirmation(message, expected, buyerId) {
 /** One durable stage per pulse; only the selected prepared CSV offer can write.
  * storage is PRIVATE Durable Object storage, never the public R2 registers.
  */
-export async function runCommercialPass({ storage, initialCredential, instance, products, merchant,
+export async function runCommercialPass(options = {}) {
+  const offers = commercialOffers(options.instance);
+  if (offers.length === 1) return runPreparedCommercialPass(options);
+  const slotKey = 'opentask/commercial-selector';
+  const ordinal = await options.storage.get(slotKey) ?? 0;
+  const selected = offers[ordinal % offers.length];
+  await options.storage.put(slotKey, (ordinal + 1) % offers.length);
+  const stateKey = selected.taskId === options.instance.taskId ? STATE : `opentask/commercial/${selected.taskId}`;
+  const result = await runPreparedCommercialPass({ ...options, instance: selected, stateKey });
+  return { ...result, taskId: selected.taskId, productId: selected.productId };
+}
+
+async function runPreparedCommercialPass({ storage, initialCredential, instance, products, merchant, stateKey = STATE,
   now = new Date(), clientFactory = createOpenTaskClient, fetchImpl = fetch, clock = () => Date.now() } = {}) {
+  const STATE = stateKey;
   const product = products?.[instance?.productId];
-  const refusal = qualifiedInstance(instance, product, merchant);
+  const refusal = qualifiedInstance({ ...instance, bidId: instance?.bidId ?? '_pending' }, product, merchant);
   if (refusal) return publicResult(refusal);
   const client = clientFactory({ storage, initialCredential, fetchImpl, budget: 12, now: clock });
   let state = await storage.get(STATE) ?? { stage: "discover", revisions: 0, observations: {} };
   const finish = async (stage) => { state.stage = stage; state.observedAt = now.toISOString(); await storage.put(STATE, state); return publicResult(stage, client.calls); };
   if (state.retryBlocked || Date.parse(state.nextAttemptAt) > now.getTime()) return publicResult('provider-retry-deferred');
   try {
+    if (!instance.bidId && !state.bidId) {
+      const stage = await acquirePreparedBid({ client, instance, state, now, save: () => storage.put(STATE, state) });
+      return finish(stage);
+    }
+    instance = { ...instance, bidId: instance.bidId ?? state.bidId };
     if (!state.contractId) {
       const page = await client.request(`/api/agent/contracts?role=seller&limit=20${state.cursor ? `&cursor=${encodeURIComponent(state.cursor)}` : ""}`);
       const found = page.contracts?.filter((c) => contractMatches(c, instance)) ?? [];
@@ -123,10 +142,9 @@ export async function runCommercialPass({ storage, initialCredential, instance, 
         !address(payee) || payee.toLowerCase() !== merchant.toLowerCase() || destination.token !== "USDC" || !["BASE", "EVM"].includes(destination.network)) return finish("payee-held");
     state.observations.payee = { address: merchant.toLowerCase(), at: now.toISOString() };
 
-    const expected = { schema: "opentask-csv-agreement-v1", contractId: contract.id, productId: instance.productId,
+    const expected = { ...(product.agreement ?? { schema: "opentask-csv-agreement-v1", nullEncoding: "empty-string", missingEncoding: "empty-string", booleanEncoding: "lowercase", columns: "first-seen-union", acceptanceCommand: "python3 -m pytest -q test/test_json_to_csv.py" }), contractId: contract.id, productId: instance.productId,
       sourceCommit: product.sourceCommit, artifactSha256: product.artifactSha256, termsSnapshotSha256: termsDigest,
-      nullEncoding: "empty-string", missingEncoding: "empty-string", booleanEncoding: "lowercase", columns: "first-seen-union",
-      maximumInputBytes: instance.maximumInputBytes, acceptanceCommand: "python3 -m pytest -q test/test_json_to_csv.py",
+      maximumInputBytes: instance.maximumInputBytes,
       machineAcceptance: true, buyerFundsSettlement: true, maximumSellerCashExpenseUsd: 0 };
     const permissionBasis = { availability: contract.nativeDeliveryAvailability, actions: context.availableActions ?? contract.availableActions };
     if (!state.agreement || state.agreement.termsSnapshotSha256 !== termsDigest) {
