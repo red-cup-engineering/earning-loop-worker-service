@@ -77,3 +77,21 @@ test('native release metadata arms one prompt private verification, retains the 
     assert.equal(values.get('opentask/auth'), auth, 'existing runtime auth and pending marker are untouched');
   } finally { Date.now = realNow; }
 });
+
+
+test('commercial status projects every selected original journal without exposing private custody',async()=>{
+  const values=new Map([
+    ['opentask/public-summary',{stage:'bid-created',requests:3,at:'2026-10-26T15:52:30Z',taskId:'new',productId:'csv'}],
+    ['opentask/commercial',{stage:'awaiting-hire',observedAt:'2026-10-26T15:22:30Z',agreement:{private:'hidden'}}],
+    ['opentask/commercial/new',{stage:'bid-created',observedAt:'2026-10-26T15:52:30Z',bidId:'private-bid',bidPending:{body:'hidden'}}],
+    ['opentask/auth',{accessToken:'hidden'}]
+  ]);
+  const clock=new EarningClock({storage:{get:async key=>values.get(key),getAlarm:async()=>null}}, {},
+    {configuration:{commercial:{enabled:true,taskId:'old',productId:'original',offers:[{taskId:'new',bidId:null,productId:'csv'}]}}});
+  const response=await clock.fetch(new Request('https://worker.test/commercial.json'));
+  const body=await response.json();
+  assert.deepEqual(body.offers.map(x=>[x.taskId,x.stage]),[['new','bid-created'],['old','awaiting-hire']]);
+  assert.equal(JSON.stringify(body).includes('hidden'),false);
+  assert.equal(JSON.stringify(body).includes('private-bid'),false);
+  assert.equal(values.size,4);
+});
