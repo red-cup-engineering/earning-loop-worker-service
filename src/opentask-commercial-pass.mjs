@@ -1,5 +1,5 @@
 import { createOpenTaskClient } from "./opentask-client.mjs";
-import { commercialOffers, acquirePreparedBid } from "./opentask-bid-acquisition.mjs";
+import { commercialOffers, commercialStateKey, acquirePreparedBid } from "./opentask-bid-acquisition.mjs";
 import { BASE_USDC } from './settlements.mjs';
 
 const STATE = "opentask/commercial";
@@ -93,7 +93,7 @@ export async function runCommercialPass(options = {}) {
   const ordinal = await options.storage.get(slotKey) ?? 0;
   const selected = offers[ordinal % offers.length];
   await options.storage.put(slotKey, (ordinal + 1) % offers.length);
-  const stateKey = selected.taskId === options.instance.taskId ? STATE : `opentask/commercial/${selected.taskId}`;
+  const stateKey = commercialStateKey(options.instance, selected);
   const result = await runPreparedCommercialPass({ ...options, instance: selected, stateKey });
   return { ...result, taskId: selected.taskId, productId: selected.productId };
 }

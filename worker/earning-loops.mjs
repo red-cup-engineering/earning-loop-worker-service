@@ -11,6 +11,7 @@ import groupPayerList from "../data/group-payers.mjs";
 import products from "../data/products.mjs";
 import researchProducts from '../data/research-products.mjs';
 import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
+import { commercialOffers, commercialStateKey } from '../src/opentask-bid-acquisition.mjs';
 import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
 import { runHashnAcquisition, hashnSchemaReadbackDue, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
 import { receiveSettlements, witnessProblem, corroborate, usdc, BASE_PROVIDERS } from "../src/settlements.mjs";
@@ -172,8 +173,14 @@ export class EarningClock {
       const summary = await this.state.storage.get('opentask/public-summary');
       if (!summary) return new Response('not yet observed\n', { status: 404 });
       const alarm = await this.state.storage.getAlarm();
+      const configured = (this.options.configuration ?? operation).commercial;
+      const offers = configured?.offers?.length ? await Promise.all(commercialOffers(configured).map(async offer => {
+        const state = await this.state.storage.get(commercialStateKey(configured, offer));
+        return { taskId: offer.taskId, productId: offer.productId,
+          stage: state?.stage ?? 'not-yet-observed', at: state?.observedAt ?? null };
+      })) : null;
       return Response.json({ stage: summary.stage, requests: summary.requests, newCashExpenseUsd: 0,
-        at: summary.at, taskId: summary.taskId, productId: summary.productId, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
+        ...(offers ? { offers } : {}), at: summary.at, taskId: summary.taskId, productId: summary.productId, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
     }
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
