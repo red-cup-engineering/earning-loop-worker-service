@@ -66,3 +66,5 @@ export async function acquirePreparedBid({ client, instance, state, save, now })
   state.bidPending = null;
   return 'bid-created';
 }
+
+export const commercialStateKey = (original, selected) => selected.taskId === original.taskId ? 'opentask/commercial' : `opentask/commercial/${selected.taskId}`;
