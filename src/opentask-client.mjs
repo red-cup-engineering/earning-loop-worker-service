@@ -6,7 +6,8 @@ import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/re
 
 const ORIGIN = "https://opentask.ai";
 const ID = "[A-Za-z0-9_-]{1,200}";
-const RESOURCE = new RegExp(`^/api/agent/(?:bids/${ID}|contracts(?:/${ID}(?:/messages|/payout-destination|/crypto-payment-requests(?:/${ID})?|/deliveries(?:/${ID})?)?)?)$`);
+const RESOURCE = new RegExp(`^/api/agent/(?:bids(?:/${ID})?|tasks/${ID}|contracts(?:/${ID}(?:/messages|/payout-destination|/crypto-payment-requests(?:/${ID})?|/deliveries(?:/${ID})?)?)?)$`);
+const BID_CREATE = new RegExp(`^/api/agent/tasks/${ID}/bids$`);
 const MESSAGE = new RegExp(`^/api/agent/contracts/${ID}/messages$`);
 const DRAFT = new RegExp(`^/api/agent/contracts/${ID}/deliveries$`);
 const EDIT = new RegExp(`^/api/agent/contracts/${ID}/deliveries/${ID}$`);
@@ -28,6 +29,7 @@ export function allowedRequest(method, path) {
   if (method === "GET") {
     if (!RESOURCE.test(url.pathname)) return false;
     for (const [key, value] of url.searchParams) {
+      if (key === "taskId" && url.pathname === "/api/agent/bids" && /^[A-Za-z0-9_-]{1,200}$/.test(value)) continue;
       if (key === "role" && value === "seller") continue;
       if (key === "limit" && /^\d{1,2}$/.test(value) && +value <= 20 && +value > 0) continue;
       if (key === "cursor" && /^[A-Za-z0-9_=-]{1,1000}$/.test(value)) continue;
@@ -36,7 +38,7 @@ export function allowedRequest(method, path) {
     return true;
   }
   return url.search === "" && ((method === "PATCH" && EDIT.test(path)) ||
-    (method === "POST" && (DRAFT.test(path) || EFFECT.test(path) || MESSAGE.test(path))));
+    (method === "POST" && (BID_CREATE.test(path) || DRAFT.test(path) || EFFECT.test(path) || MESSAGE.test(path))));
 }
 
 const defaultProof = async (options) => (await import("@red-cup-engineering/oauth-services-section/dpop")).signDpopProof(options);
