@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '24'
+          package-manager-cache: false
       - name: Verify source contract without credentials or registry packages
         run: |
           node --check src/agent-market-observation.mjs
@@ -33,6 +34,7 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '24'
+          package-manager-cache: false
       - name: Receive original immutable npm dependency closure
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Qualify actual native Worker source
