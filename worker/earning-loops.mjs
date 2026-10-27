@@ -21,6 +21,7 @@ import { writeDirectives } from "../src/price-directives.mjs";
 import { runOnchainHook } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
+import { observeAgentMarketIndex } from "../src/agent-market-observation.mjs";
 import { refreshIssuerResearch } from "../src/issuer-research.mjs";
 import { withIssuerSqliteStore, issuerSqliteResponse } from "../src/issuer-sqlite-cache.mjs";
 import { receiveIssuerSettlements, issuerSettlementResponse } from '../src/issuer-settlement-custody.mjs';
@@ -30,14 +31,37 @@ const issuerSettlementAdapters = Object.freeze({ witnessProblem, corroborate, us
   BASE_PROVIDERS: Object.freeze([...BASE_PROVIDERS]), groupPayers });
 export const CRONS = operation.crons;
 
-export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage } = {}) {
+export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage, marketObserver = observeAgentMarketIndex } = {}) {
   if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
     throw new TypeError('issuer operation has no subrequest allocation for an onchain hook');
   const outcome = { cron, at: now.toISOString() };
   const step = async (name, work) => {
     try { outcome[name] = await work(); } catch (error) { outcome[name] = { error: error.message }; }
   };
-  if (cron === configuration.crons.directives) await step("directives", () => writeDirectives(env, { now, groupPayers }));
+  if (cron === configuration.crons.directives) {
+    await step("directives", () => writeDirectives(env, { now, groupPayers }));
+    // This is a buyer-intent source observation on the existing self-arming
+    // Cloudflare clock, not a ChatGPT scheduled task or an offer updater.
+    // Directory failure must leave the previous useful observation intact;
+    // pricing, financial receipts and existing daily work still proceed.
+    if (configuration.agentMarketIntelligence?.enabled === true) await step("agentMarketIntelligence", async () => {
+      const plan = configuration.agentMarketIntelligence;
+      const observed = await marketObserver({
+        queries:plan.queries,ownHost:plan.ownHost,limit:plan.limit,
+        observedAt:now.toISOString()
+      });
+      if (!observed.searchReadings?.some(row => row.state === "observed-first-page"))
+        throw new Error("no source-confirmed external directory page; retained previous observation");
+      await put(env.STATE,register("agent-market-observation"),observed);
+      return {
+        observedAt:observed.observedAt,queries:observed.searchReadings.length,
+        observed:observed.searchReadings.filter(row=>row.state === "observed-first-page").length,
+        unavailable:observed.searchReadings.filter(row=>row.state === "unavailable").length,
+        directoryListings:observed.listings.length,
+        outsidePurchaseOrRevenueVerified:false
+      };
+    });
+  }
   else if (cron === configuration.crons.scorecard) await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
   else {
     await step("settlements", () => receiveSettlements(env, { now, groupPayers, limit: configuration.limits.settlementsPerPass }));
@@ -54,7 +78,8 @@ export async function run(env, cron, now = new Date(), { configuration = operati
 }
 
 const READINGS = { "/settlements.json": "settlements", "/route-health.json": "route-health", "/scorecard.json": "scorecard",
-  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run" };
+  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run",
+  "/agent-market-observation.json": "agent-market-observation" };
 
 // Run every loop whose operation cron matches this quarter-hour tick, the most frequent last so the daily and
 // weekly readings come from the previous pass's settled state.
