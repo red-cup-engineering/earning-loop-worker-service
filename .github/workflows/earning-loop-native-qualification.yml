@@ -2,7 +2,7 @@ name: Native earning-loop source and Worker receiving
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feat/self-hosted-agent-market-watch-20261024]
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,7 +23,44 @@ jobs:
           node --check src/agent-market-observation.mjs
           node --check test/agent-market-source-qualification.test.mjs
           node --test test/agent-market-source-qualification.test.mjs
+  reconcile-lockfile:
+    # Only the original owned review branch may perform this known,
+    # bounded, source-only lock regeneration. PRs and main remain read-only.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/self-hosted-agent-market-watch-20261024'
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Use native source-pinned package manager
+        run: |
+          mkdir -p "$RUNNER_TEMP/pnpm-tool"
+          npm install --prefix "$RUNNER_TEMP/pnpm-tool" --registry=https://registry.npmjs.org \
+            --no-save --ignore-scripts --no-audit --no-fund pnpm@11.19.0
+      - name: Reconcile only the canonical manifest-derived pnpm lock
+        run: |
+          node "$RUNNER_TEMP/pnpm-tool/node_modules/pnpm/bin/pnpm.cjs" install \
+            --lockfile-only --ignore-scripts --no-frozen-lockfile
+          git diff --check -- pnpm-lock.yaml
+          test -z "$(git status --porcelain -- . ':!pnpm-lock.yaml')"
+      - name: Source-own the actual deterministic lock revision
+        run: |
+          if git diff --quiet -- pnpm-lock.yaml; then exit 0; fi
+          git add -- pnpm-lock.yaml
+          git -c user.name='github-actions[bot]' \
+            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m 'Receive exact pruned Worker pnpm closure after source dependency removal'
+          git push origin HEAD:refs/heads/feat/self-hosted-agent-market-watch-20261024
   native-worker:
+    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
     needs: source
     runs-on: ubuntu-24.04
     timeout-minutes: 20
