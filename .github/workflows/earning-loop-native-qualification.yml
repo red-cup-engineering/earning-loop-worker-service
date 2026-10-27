@@ -45,12 +45,22 @@ jobs:
           mkdir -p "$RUNNER_TEMP/pnpm-tool"
           npm install --prefix "$RUNNER_TEMP/pnpm-tool" --registry=https://registry.npmjs.org \
             --no-save --ignore-scripts --no-audit --no-fund pnpm@11.19.0
-      - name: Reconcile only the canonical manifest-derived pnpm lock
+      - name: Regenerate from original manifest using native pnpm, retaining the source lock
         run: |
+          set -euo pipefail
+          cp pnpm-lock.yaml "$RUNNER_TEMP/original-pnpm-lock.yaml"
+          node "$RUNNER_TEMP/pnpm-tool/node_modules/pnpm/bin/pnpm.cjs" clean --lockfile
           node "$RUNNER_TEMP/pnpm-tool/node_modules/pnpm/bin/pnpm.cjs" install \
             --lockfile-only --ignore-scripts --no-frozen-lockfile
+          test -s pnpm-lock.yaml
           git diff --check -- pnpm-lock.yaml
           test -z "$(git status --porcelain -- . ':!pnpm-lock.yaml')"
+      - name: Independently receive the regenerated exact closure and original complete Worker
+        run: |
+          node "$RUNNER_TEMP/pnpm-tool/node_modules/pnpm/bin/pnpm.cjs" install \
+            --frozen-lockfile --ignore-scripts
+          npm run check
+          npm test
       - name: Source-own the actual deterministic lock revision
         run: |
           if git diff --quiet -- pnpm-lock.yaml; then exit 0; fi
