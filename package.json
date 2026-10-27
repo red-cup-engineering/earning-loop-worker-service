@@ -20,7 +20,8 @@
     "@red-cup-engineering/http-services-section": "0.6.2",
     "@red-cup-engineering/issuer-research-media-service": "0.1.5",
     "@red-cup-engineering/json-services-section": "0.4.0",
-    "@red-cup-engineering/oauth-services-section": "0.2.4"
+    "@red-cup-engineering/oauth-services-section": "0.2.4",
+    "@red-cup-engineering/x402-services-section": "0.13.8-dev.301"
   },
   "devDependencies": {
     "esbuild": "0.28.1",
