@@ -8,8 +8,11 @@ which also holds the runbook.
 - **Settlement receiving** (`src/settlements.mjs`): lists the seller's settlement witnesses in R2 and
   corroborates each against two public Base providers. A witness counts only when both providers return the same
   successful receipt holding exactly one USDC transfer from payer to seller for the amount. This is the rule of
-  `@red-cup-engineering/x402-services-section`'s `confirmSellerWitness`, without its Node-only R2 REST and
-  multi-package dependencies. The loop then classifies the payer against the Group payer list.
+  original `@red-cup-engineering/x402-services-section/settlement-derivation/base-usdc-receipt` pure
+  proof, not an independent ERC-20 matcher. The original Worker retains the separate side-effectful
+  R2/RPC acquisition and payer classification. The exact source candidate is
+  `0.13.8-dev.301`; this is held for independent immutable registry export, installed
+  dependency and Workerd bundle receiving before release.
 - **Buyability** (`src/route-health.mjs`): sends each listed offer the catalog's own example request and requires
   a 402 whose x402 challenge asks the catalog's exact amount in Base USDC. It tracks first-listed dates, held
   streaks and repair candidates, and can dispatch a repair to the seller's repository.
