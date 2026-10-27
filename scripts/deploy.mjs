@@ -68,7 +68,7 @@ if (operation.issuerResearch && existing.bindings?.some(b => b.name === 'ONCHAIN
   throw new TypeError('issuer operation has no subrequest allocation for the installed onchain hook');
 const metadata = deploymentMetadata(operation, existing);
 form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-form.append('worker.mjs', new Blob([readFileSync(join(built.directory, 'worker.mjs'))], { type: 'application/javascript+module' }), 'worker.mjs');
+form.append('worker.mjs', new Blob([built.bytes], { type: 'application/javascript+module' }), 'worker.mjs');
 let uploaded;
 try { uploaded = await call(api, { method: "PUT", body: form }); }
 catch (error) {
