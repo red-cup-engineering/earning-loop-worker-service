@@ -46,7 +46,7 @@ flowchart LR
   R --> T[Existing owner ephemeral tail receiving]
 ```
 
-## Native construction boundary
+## Native construction boundary — retained October24 observation
 
 The installed Code entrance scripts/fabricate-jsnode-closure.mjs selects only jsnode-modules and jsnode-operation-package. The original JSNode module closure admits operations, JSON examples and exact dependencies. Its testsOfClosure inserts each JSON example as one JavaScript value and awaits the export. An ordinary object argument is supported. Callable client/storage capabilities, existing Worker class changes and an independent native I/O assay are not represented by that current example carrier. No serialized function, hidden fixture runner or ambient host fallback may replace this missing boundary. A pure module's source qualification cannot certify the complete observer batch.
 
@@ -77,3 +77,24 @@ The Code source-work lifecycle can carry an exact source binding and independent
 
 - planner-assay: Native effect-free qualification and isolated source-derived planner cases cover disabled admission, each original bid, an alternate messages/contract phase, exact headroom boundary, deadline/attempt exhaustion, foreign identity and malformed/cursor refusal. No network, storage or authentication effect occurs.
 - singleton-assay: Independently preauthored native I/O/workerd cases exercise both original bid status reads, source-bound hire, buyer update and incomplete page; exact shared auth/wire accounting including refresh/nonce refusal; busy CSV deferral; no duplicate bid/message/read acknowledgement; public redaction; corrupt/full private storage; original CSV agreement/delivery behavior and unchanged research/acquisition/issuer/alarm composition. Actual deployed original-bid observation and private owner receiving remain required; the blocked public ingress remains a separate unreceived condition.
+
+
+## Current original supplier and native Work continuation — October27
+
+The original source supplier has advanced beyond the retained October24 observation above. CSF source `21320fe469aae8270f826a6f0cf4d6a56a96e3b0` supplies `deriveSourceTransformation` and `judgeSourceTransformation`, composed by `sourceTransformationFabrication` in its original `fabrication/operations` owner. It uses the original resumable inference submit/receive/judge ports, current authority and held development history. The native semantics require a genuine independently reviewed artifact specification, exact SoftwareChangeSourceSnapshot and complete NI-bound source views before admitting SoftwareSourceTransformation. Original FeltOS captures, projects and independently induces that same source proposal. Use these actual owners; a new planner-only effect carrier is unnecessary. This is source qualification, not a published/installed carrier claim.
+
+The original native source operator captured ten Worker files at source base `d946dd525325373f0b92c1afd0ff6615bd36e8c5` (164,114 bytes) through original source snapshot and immutable content custody. Complete source closure: `ni:///sha-256;S64Ug-VGtVh2bei5tT6ssCbrl2lmFUBY2gd1SWjqNNo`. Its six-target snapshot is `ni:///sha-256;heTBxTMMdIm-50lGdH5AVCNTzgSYaygODN0ApYMlpUo`; the proposed observer file is absent at that base. These are source inputs, not a construction review or a generated implementation. Later source changes require their own captured edition; retain the original bytes and identities.
+
+The existing BCF client entered as its issued Hai Zhou identity and actual held offices. The original portfolio remains a source relation; no absent remote parent was copied into this settlement. Actual native coordination at the retained live48 source is:
+
+| Original native object | Actual receiving |
+| --- | --- |
+| Commercial request `ni:///sha-256;7LNEQ30CZBunGkxdA3ACWPB-moeCg4xk9RAHMdhYmSw` | Opened00:07:22Z by Chief Engineering, at Group Operations home; six requirements covered, refined and ready. Submission `_r7ZA577MXSjqnzkeiewkXYquSXu0522jATNRKzkero` reconciled to reply `g2pZQTea99pZWaKOscJ6T4DsGSblEeADFGRKJD4-utA`, processing code0. |
+| Source-answer child `ni:///sha-256;8sYPjL4gy1h7jhUJyhqaIMwU9_qbqKuOJJrioVeL3ZY` | Actual serves edge to the commercial request. Held L-Space lead answered00:19:29Z with the original source closure and remaining receiving. Submission `ts_yUBPelRPrLBVKF2R8dl5j8kRFfUbAWND03O6_1FA` reconciled to reply `YP-ARPkcGIe1ZNw7qZDvk10r1zIc6ZOcx2Ojf22oArU`, code0; independent answer acceptance remains separate. |
+| Engineering contribution `ni:///sha-256;SphaTLNh4tCKXJ6aQFj__wOyfxxgby0ARzaZQ2OXTjI` | Actual serves edge to the same commercial request, opened by held CTO and addressed to held Chief Engineering. Chief Engineering promised it00:23:48Z via public work-move; submission `vjs_GYHiFVC3Et_5WUR3lDnDuLQUo_Xvj1R3r3c9nNI` reconciled to reply `5e3n5WUxQ2b_CgdvEXw_Rvnj0ykI9ICDb9xMjTnmzMo`, code0. |
+
+The request edition was `ni:///sha-256;FdruYI7i08lzgtkUgSpmaz-C-3YnbP2IESlLIH5GF60`. These openings and the own-office promise are actual native acts; peer handoff remains queued and no task allocation, observed model/session, source transformation or installed observer is asserted. The original office allocation reader returned `work-feed-unavailable`; the client's current powers did not grant privileged enterprise-loop-run/enterprise-work-run. No alternate identity or direct privileged loop was used.
+
+Source-authorized inquiry `ni:///sha-256;r1Fsg0lKg-uKmVdg1F-UQ6Ar37pzFYlWnQ3aMf6TtV4` retains its need and source contract but no received contribution or terminal receipt after its caller session disappeared. Reconcile that original outcome; do not resubmit an unobserved supplier request. The source answer above uses independently captured existing sources and makes no model-capacity claim.
+
+Continue the promised engineering contribution through genuine independent design receiving, native source transformation, the full existing client/commercial/clock receiving and the next ordinary singleton pulse. Enabled observation retains its original finite private retention/attempt/deadline admission. The original500-USDC OpenAPI bid expires October27,18:00UTC; it remains conditional, with current hire/reply and buyer route/doc inputs unreceived. No bid, credential mutation outside the singleton, customer delivery, new cash expense or new revenue resulted from this continuation.
