@@ -35,7 +35,12 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Receive original immutable npm dependency closure
-        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install exact source-owned package manager outside checkout
+        run: |
+          mkdir -p "$RUNNER_TEMP/pnpm-tool"
+          npm install --prefix "$RUNNER_TEMP/pnpm-tool" --registry=https://registry.npmjs.org \
+            --no-save --ignore-scripts --no-audit --no-fund pnpm@11.19.0
+      - name: Receive original frozen pnpm dependency closure
+        run: node "$RUNNER_TEMP/pnpm-tool/node_modules/pnpm/bin/pnpm.cjs" install --frozen-lockfile --ignore-scripts
       - name: Qualify actual native Worker source
         run: npm run check && npm test
