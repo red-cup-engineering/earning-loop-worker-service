@@ -1,0 +1,39 @@
+name: Native earning-loop source and Worker receiving
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '24'
+      - name: Verify source contract without credentials or registry packages
+        run: |
+          node --check src/agent-market-observation.mjs
+          node --check test/agent-market-source-qualification.test.mjs
+          node --test test/agent-market-source-qualification.test.mjs
+  native-worker:
+    needs: source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '24'
+      - name: Receive original immutable npm dependency closure
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Qualify actual native Worker source
+        run: npm run check && npm test
