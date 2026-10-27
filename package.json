@@ -26,5 +26,6 @@
   "devDependencies": {
     "esbuild": "0.28.1",
     "workerd": "1.20261024.1"
-  }
+  },
+  "packageManager": "pnpm@11.19.0"
 }
