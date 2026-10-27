@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 import { AGENT_MARKET_INDEX, observeAgentMarketIndex } from '../src/agent-market-observation.mjs';
 
 const at = '2026-10-27T14:00:00.000Z';
@@ -80,4 +81,11 @@ test('oversized independent source reads fail closed under the original byte cei
   assert.equal(observed.searchReadings[0].state, 'unavailable');
   assert.match(observed.searchReadings[0].error, /oversized/i);
   assert.deepEqual(observed.listings, []);
+});
+
+test('the autonomous Worker does not buy the unconsumed Web Platform and branding closure', () => {
+  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  assert.equal(Object.hasOwn(pkg.dependencies, '@red-cup-engineering/computer-web-platform'), false);
+  assert.equal(Object.hasOwn(pkg.dependencies, '@coesite-operations/enterprise-branding-services-section'), false);
+  assert.equal(pkg.name, '@red-cup-engineering/earning-loop-worker-service');
 });
