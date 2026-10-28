@@ -8,8 +8,11 @@ which also holds the runbook.
 - **Settlement receiving** (`src/settlements.mjs`): lists the seller's settlement witnesses in R2 and
   corroborates each against two public Base providers. A witness counts only when both providers return the same
   successful receipt holding exactly one USDC transfer from payer to seller for the amount. This is the rule of
-  `@red-cup-engineering/x402-services-section`'s `confirmSellerWitness`, without its Node-only R2 REST and
-  multi-package dependencies. The loop then classifies the payer against the Group payer list.
+  original `@red-cup-engineering/x402-services-section/settlement-derivation/base-usdc-receipt` pure
+  proof, not an independent ERC-20 matcher. The original Worker retains the separate side-effectful
+  R2/RPC acquisition and payer classification. The exact source candidate is
+  `0.13.8-dev.301`; this is held for independent immutable registry export, installed
+  dependency and Workerd bundle receiving before release.
 - **Buyability** (`src/route-health.mjs`): sends each listed offer the catalog's own example request and requires
   a 402 whose x402 challenge asks the catalog's exact amount in Base USDC. It tracks first-listed dates, held
   streaks and repair candidates, and can dispatch a repair to the seller's repository.
@@ -20,6 +23,7 @@ which also holds the runbook.
 - **Scorecard** (`src/scorecard.mjs`): outside revenue, Group-payer revenue, buyers, revenue by route, buyable
   offers, and the mode against the operation's burn and goal.
 - **On-chain hook** (`src/onchain-hook.mjs`): POSTs to an engine's scan endpoint each pass and keeps its answer.
+- **Agent-market intelligence** (`src/agent-market-observation.mjs`): free, bounded, task-specific public x402 listings from 402 Index. The **existing** daily price-directives tick in `worker/earning-loops.mjs` reads only the exact Group Economic instance's `agentMarketIntelligence` selection and retains the previous R2 observation if the directory has no qualified page. Its `GET /agent-market-observation.json` is a read-only source observation, not a seller-advertised offer, buyer payment, guaranteed discovery, merchant authorization, customer lead or earnings. Buyer-market interpretation remains with the original 561 Group Opportunity provider; no ChatGPT subscription, app task, separate agent scheduler, self-purchase or outgoing payment is involved.
 - **Clock** (`src/clock.mjs`): Workers cron triggers, or a self-re-arming Durable Object alarm when the account's
   cron allowance is spent.
 
