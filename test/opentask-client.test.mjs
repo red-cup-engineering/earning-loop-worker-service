@@ -18,6 +18,8 @@ test('finite allowlist refuses buyer, payment, foreign, encoded path and arbitra
     ['GET','/api/agent/contracts/%2fdecision'], ['GET','/api/agent/contracts?evil=1'], ['GET','//evil.invalid/api/agent/contracts']])
     assert.equal(allowedRequest(method, path), false, path);
   assert.equal(allowedRequest('GET','/api/agent/contracts?role=seller&limit=20'), true);
+  assert.equal(allowedRequest('GET','/api/agent/bids/b1/messages?limit=20'), true);
+  assert.equal(allowedRequest('POST','/api/agent/bids/b1/messages'), false);
   assert.equal(allowedRequest('POST','/api/agent/contracts/x/deliveries/y/submit'), true);
 });
 

@@ -6,7 +6,7 @@ import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/re
 
 const ORIGIN = "https://opentask.ai";
 const ID = "[A-Za-z0-9_-]{1,200}";
-const RESOURCE = new RegExp(`^/api/agent/(?:bids(?:/${ID})?|tasks/${ID}|contracts(?:/${ID}(?:/messages|/payout-destination|/crypto-payment-requests(?:/${ID})?|/deliveries(?:/${ID})?)?)?)$`);
+const RESOURCE = new RegExp(`^/api/agent/(?:bids(?:/${ID}(?:/messages)?)?|tasks/${ID}|contracts(?:/${ID}(?:/messages|/payout-destination|/crypto-payment-requests(?:/${ID})?|/deliveries(?:/${ID})?)?)?)$`);
 const BID_CREATE = new RegExp(`^/api/agent/tasks/${ID}/bids$`);
 const MESSAGE = new RegExp(`^/api/agent/contracts/${ID}/messages$`);
 const DRAFT = new RegExp(`^/api/agent/contracts/${ID}/deliveries$`);
@@ -50,7 +50,8 @@ export const defaultCanonical = (privateJwk, canonical) => sign("sha256", Buffer
  * No error or returned operational summary contains credentials/provider bodies.
  */
 export function createOpenTaskClient({ storage, initialCredential, fetchImpl = fetch,
-  proof = defaultProof, signCanonical = defaultCanonical, now = () => Date.now(), budget = 12 } = {}) {
+  proof = defaultProof, signCanonical = defaultCanonical, now = () => Date.now(), budget = 12,
+  DigestStream } = {}) {
   let calls = 0, nonce;
   const count = () => { if (calls >= budget) throw new OpenTaskError("commercial-request-budget"); calls++; };
   async function checkBackoff() {
@@ -61,7 +62,7 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
       throw error;
     }
   }
-  async function wire(path, { method = "GET", body, credential, token = true, key } = {}) {
+  async function wire(path, { method = "GET", body, credential, token = true, key, withReceipt = false } = {}) {
     await checkBackoff();
     count();
     if (!AUTH.has(path) && !allowedRequest(method, path)) throw new OpenTaskError("endpoint-refused");
@@ -93,32 +94,124 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
     if (response.status >= 300 && response.status < 400) throw responseError("redirect-refused");
     const receivedNonce = response.headers.get("dpop-nonce");
     if (receivedNonce && receivedNonce.length <= 512) nonce = receivedNonce;
-    if (Number(response.headers.get("content-length")) > 262144) throw responseError("response-too-large");
-    let bytes = 0, text = "";
-    try {
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      if (reader) for (;;) {
-        const part = await reader.read();
-        if (part.done) break;
-        bytes += part.value.byteLength;
-        if (bytes > 262144) { await reader.cancel(); throw responseError("response-too-large"); }
-        text += decoder.decode(part.value, { stream: true });
+
+    if (!withReceipt) {
+      if (Number(response.headers.get("content-length")) > 262144) throw responseError("response-too-large");
+      let bytes = 0, text = "";
+      try {
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+        if (reader) for (;;) {
+          const part = await reader.read();
+          if (part.done) break;
+          bytes += part.value.byteLength;
+          if (bytes > 262144) { await reader.cancel(); throw responseError("response-too-large"); }
+          text += decoder.decode(part.value, { stream: true });
+        }
+        text += decoder.decode();
+      } catch (error) { throw error instanceof OpenTaskError ? error : responseError('response-read-failed'); }
+      let data;
+      try { data = JSON.parse(text); } catch { throw responseError("invalid-response"); }
+      if (!response.ok) {
+        const identifiers = [data.code, data.error?.code, typeof data.error === 'string' ? data.error : undefined,
+          data.reason, data.revocation_reason, data.recovery?.code, data.error?.recovery?.code];
+        const code = identifiers.find(value => REPLAY.has(value)) ?? identifiers.find(value => typeof value === 'string') ?? "provider-error";
+        // Retain only a bounded protocol identifier, never an arbitrary error body.
+        const error = responseError(/^[a-z0-9_]{1,100}$/.test(code) ? code : "provider-error");
+        if (TERMINAL.has(error.code) && credential) await storage.put(AUTH_KEY, { ...credential, pendingRefresh: false, authFailure: error.code });
+        throw error;
       }
-      text += decoder.decode();
-    } catch (error) { throw error instanceof OpenTaskError ? error : responseError('response-read-failed'); }
+      return data;
+    }
+
+    const DigestStreamClass = DigestStream !== undefined ? DigestStream : (typeof globalThis.crypto?.DigestStream === 'function' ? globalThis.crypto.DigestStream : null);
+    if (!DigestStreamClass) throw responseError('digest-stream-unavailable');
+
+    let ds, writer;
+    try {
+      ds = new DigestStreamClass('SHA-256');
+      writer = ds.getWriter();
+    } catch {
+      throw responseError('digest-stream-unavailable');
+    }
+
+    let bytes = 0, text = "", streamComplete = false, digestHex = null;
+    let readError = null;
+
+    if (Number(response.headers.get("content-length")) > 262144) {
+      readError = responseError("response-too-large");
+    } else {
+      try {
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+        if (reader) for (;;) {
+          const part = await reader.read();
+          if (part.done) {
+            streamComplete = true;
+            break;
+          }
+          bytes += part.value.byteLength;
+          if (bytes > 262144) {
+            await reader.cancel().catch(() => {});
+            readError = responseError("response-too-large");
+            break;
+          }
+          try {
+            await writer.write(part.value);
+          } catch {
+            await reader.cancel().catch(() => {});
+            readError = responseError("response-read-failed");
+            break;
+          }
+          text += decoder.decode(part.value, { stream: true });
+        }
+        text += decoder.decode();
+      } catch (error) {
+        readError = error instanceof OpenTaskError ? error : responseError('response-read-failed');
+      }
+    }
+
+    try {
+      if (streamComplete && !readError) {
+        await writer.close();
+      } else {
+        await writer.close().catch(() => writer.abort().catch(() => {}));
+      }
+      const digestBuffer = await ds.digest;
+      if (digestBuffer) {
+        digestHex = Array.from(new Uint8Array(digestBuffer), b => b.toString(16).padStart(2, '0')).join('');
+      }
+    } catch {}
+
+    const receipt = {
+      byteLength: bytes,
+      sha256: digestHex,
+      complete: streamComplete && !readError
+    };
+
+    if (readError) {
+      readError.receipt = receipt;
+      throw readError;
+    }
+
     let data;
-    try { data = JSON.parse(text); } catch { throw responseError("invalid-response"); }
+    try { data = JSON.parse(text); } catch {
+      const error = responseError("invalid-response");
+      error.receipt = receipt;
+      throw error;
+    }
+
     if (!response.ok) {
       const identifiers = [data.code, data.error?.code, typeof data.error === 'string' ? data.error : undefined,
         data.reason, data.revocation_reason, data.recovery?.code, data.error?.recovery?.code];
       const code = identifiers.find(value => REPLAY.has(value)) ?? identifiers.find(value => typeof value === 'string') ?? "provider-error";
-      // Retain only a bounded protocol identifier, never an arbitrary error body.
       const error = responseError(/^[a-z0-9_]{1,100}$/.test(code) ? code : "provider-error");
+      error.receipt = receipt;
       if (TERMINAL.has(error.code) && credential) await storage.put(AUTH_KEY, { ...credential, pendingRefresh: false, authFailure: error.code });
       throw error;
     }
-    return data;
+
+    return { data, receipt };
   }
   async function load() {
     let c = await storage.get(AUTH_KEY);
@@ -178,12 +271,26 @@ export function createOpenTaskClient({ storage, initialCredential, fetchImpl = f
       await checkBackoff();
       let c = await load();
       if (c.pendingRefresh || c.expiresAt - now() < 300000) c = await refresh(c);
-      try { return await wire(path, { method, body, credential: c, key }); }
+      try { return await wire(path, { method, body, credential: c, key, withReceipt: false }); }
       catch (error) {
-        if (error.code === "use_dpop_nonce" && nonce) return wire(path, { method, body, credential: c, key });
+        if (error.code === "use_dpop_nonce" && nonce) return wire(path, { method, body, credential: c, key, withReceipt: false });
         if (error.code !== "expired_access_token") throw error;
         c = await refresh(c);
-        return wire(path, { method, body, credential: c, key });
+        return wire(path, { method, body, credential: c, key, withReceipt: false });
+      }
+    },
+    async requestWithReceipt(path, { method = "GET", body, key } = {}) {
+      if (method !== "GET") throw new OpenTaskError("endpoint-refused");
+      if (!allowedRequest(method, path)) throw new OpenTaskError("endpoint-refused");
+      await checkBackoff();
+      let c = await load();
+      if (c.pendingRefresh || c.expiresAt - now() < 300000) c = await refresh(c);
+      try { return await wire(path, { method, body, credential: c, key, withReceipt: true }); }
+      catch (error) {
+        if (error.code === "use_dpop_nonce" && nonce) return wire(path, { method, body, credential: c, key, withReceipt: true });
+        if (error.code !== "expired_access_token") throw error;
+        c = await refresh(c);
+        return wire(path, { method, body, credential: c, key, withReceipt: true });
       }
     },
   };

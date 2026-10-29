@@ -79,7 +79,7 @@ export class EarningClock {
       const configuration = this.options.configuration ?? operation;
       const acquisition = configuration.hashAcquisition?.enabled === true;
       const financial = configuration.issuerSettlements?.enabled === true && configuration.issuerSettlements.resourceAdmission?.status === 'received';
-      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition || financial;
+      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.commercialBidObservation?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition || financial;
       const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
       const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
       const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.retryAt > at) &&
@@ -111,11 +111,21 @@ export class EarningClock {
           if (researchDue || bootstrap && researchPending) {
             await (this.options.researchPass ?? runResearchPass)({ storage: this.state.storage, instance: configuration.researchProcurement,
               products: this.options.researchProducts ?? researchProducts, merchant: configuration.merchantPayTo, groupPayers });
-          } else if (configuration.commercial?.enabled) {
+          } else if (configuration.commercial?.enabled || configuration.commercialBidObservation?.enabled) {
             const result = await (this.options.commercialPass ?? runCommercialPass)({ storage: this.state.storage, initialCredential: this.env.OPENTASK_CREDENTIAL_JSON,
-            instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at) });
+            instance: configuration.commercial, products: this.options.products ?? products, merchant: configuration.merchantPayTo, now: new Date(at),
+            observation: configuration.commercialBidObservation ?? configuration.commercial?.bidObservation, releaseId });
             await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
-            newCashExpenseUsd: 0, at: new Date(at).toISOString(), ...(result.taskId ? { taskId: result.taskId, productId: result.productId } : {}) });
+            newCashExpenseUsd: 0, at: new Date(at).toISOString(), ...(result.taskId ? { taskId: result.taskId, productId: result.productId } : {}),
+            ...(result.observation ? {
+              observation: {
+                observed: result.observation.observed,
+                hired: result.observation.hired,
+                held: result.observation.held,
+                deferred: result.observation.deferred,
+                at: result.observation.at
+              }
+            } : {}) });
           }
           if (financial && !bootstrap && !researchDue && slot % 900000 !== 0)
             await (this.options.issuerSettlementPass ?? receiveIssuerSettlements)(this.state.storage,
@@ -174,12 +184,14 @@ export class EarningClock {
           stage: state?.stage ?? 'not-yet-observed', at: state?.observedAt ?? null };
       })) : null;
       return Response.json({ stage: summary.stage, requests: summary.requests, newCashExpenseUsd: 0,
-        ...(offers ? { offers } : {}), at: summary.at, taskId: summary.taskId, productId: summary.productId, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
+        ...(offers ? { offers } : {}),
+        ...(summary.observation ? { observation: summary.observation } : {}),
+        at: summary.at, taskId: summary.taskId, productId: summary.productId, nextTick: alarm ? new Date(alarm).toISOString() : null }, { headers: { 'cache-control': 'no-store' } });
     }
     return this.enqueue(async () => {
       let alarm = await this.state.storage.getAlarm();
       const configuration = this.options.configuration ?? operation;
-      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled
+      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.commercialBidObservation?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled
         || configuration.issuerSettlements?.enabled === true && configuration.issuerSettlements.resourceAdmission?.status === 'received';
       const releaseId = commercial ? this.releaseId() : null;
       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {

@@ -83,7 +83,11 @@ const crons = operation.clock === "durable-object-alarm" ? [] : Object.values(op
 await call(`${api}/schedules`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(crons) });
 console.log(`deployed ${operation.worker} (etag ${uploaded.etag?.slice(0, 12) ?? "?"}), clock: ${operation.clock}`);
 if (operation.clock === "durable-object-alarm") {
-  const subdomain = await call(`https://api.cloudflare.com/client/v4/accounts/${account}/workers/subdomain`, { method: "GET" });
-  const armed = await (await fetch(`https://${operation.worker}.${subdomain.subdomain}.workers.dev/clock`)).text();
-  console.log(`clock armed: ${armed}`);
+  if (process.argv.includes('--skip-clock-arming')) {
+    console.log(`clock arming skipped: preserving already armed ordinary alarm; ordinary-pulse receiving separate`);
+  } else {
+    const subdomain = await call(`https://api.cloudflare.com/client/v4/accounts/${account}/workers/subdomain`, { method: "GET" });
+    const armed = await (await fetch(`https://${operation.worker}.${subdomain.subdomain}.workers.dev/clock`)).text();
+    console.log(`clock armed: ${armed}`);
+  }
 }
