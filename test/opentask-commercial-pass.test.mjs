@@ -209,3 +209,18 @@ test('unchanged provider denial retains exact intent without replaying a refused
   assert.equal(h.requests.filter(r => r.method === 'POST' && r.path.endsWith('/deliveries')).length, 1);
   assert.ok(h.held.get('opentask/commercial').pending);
 });
+
+test('unfabricated two-bid observer refuses before private storage or provider access', async () => {
+  let touched = 0;
+  const refuseStorage = { async get() { touched++; throw new Error('storage accessed'); },
+    async put() { touched++; throw new Error('storage changed'); } };
+  const refuseClient = () => { touched++; throw new Error('provider accessed'); };
+  await assert.rejects(runCommercialPass({
+    instance: { ...instance, bidObservation: { enabled: true } },
+    storage: refuseStorage, clientFactory: refuseClient
+  }), /commercial-bid-observation-source-not-admitted/);
+  await assert.rejects(runCommercialPass({
+    observation: { enabled: true }, storage: refuseStorage, clientFactory: refuseClient
+  }), /commercial-bid-observation-source-not-admitted/);
+  assert.equal(touched, 0);
+});
