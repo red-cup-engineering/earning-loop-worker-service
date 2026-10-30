@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { EarningClock, CRONS } from '../worker/earning-loops.mjs';
 import { bucket } from './memory.mjs';
 import { RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
@@ -94,4 +96,27 @@ test('commercial status projects every selected original journal without exposin
   assert.equal(JSON.stringify(body).includes('hidden'),false);
   assert.equal(JSON.stringify(body).includes('private-bid'),false);
   assert.equal(values.size,4);
+});
+
+test('commercial entrypoint relative import graph resolves, with missing-module negative control', () => {
+  // The ordinary node --check does not resolve imports; the entrypoint graph must.
+  const importsOf = source => [...source.matchAll(/(?:^|\n)\s*(?:import|export)\s+(?:[^;]*?\s+from\s*)?['"](\.[^'"]+)['"]/g)].map(match => match[1]);
+  const entry = new URL('../worker/earning-loops.mjs', import.meta.url);
+  const pending = [entry], seen = new Set(), missing = [];
+  while (pending.length) {
+    const file = pending.pop(), name = fileURLToPath(file);
+    if (seen.has(name)) continue;
+    seen.add(name);
+    if (!existsSync(name)) { missing.push(name); continue; }
+    for (const specifier of importsOf(readFileSync(name, 'utf8'))) {
+      const target = new URL(specifier, file);
+      if (!existsSync(fileURLToPath(target))) missing.push(name + ' -> ' + specifier);
+      else pending.push(target);
+    }
+  }
+  assert.deepEqual(missing, [], 'all relative imports in the actual Worker graph must resolve');
+  const sentinel = './intentionally-absent-observer-fixture.mjs';
+  assert.deepEqual(importsOf("import { missing } from './intentionally-absent-observer-fixture.mjs';"), [sentinel]);
+  assert.equal(existsSync(fileURLToPath(new URL(sentinel, entry))), false,
+    'negative control must remain an absent relative module');
 });
