@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { projectOperation } from '../src/deployment.mjs';
 import { runCommercialPass, fingerprint, buyerConfirmation, criterionClaims } from '../src/opentask-commercial-pass.mjs';
 
 const merchant = '0x' + 'a'.repeat(40);
@@ -223,4 +224,13 @@ test('unfabricated two-bid observer refuses before private storage or provider a
     observation: { enabled: true }, storage: refuseStorage, clientFactory: refuseClient
   }), /commercial-bid-observation-source-not-admitted/);
   assert.equal(touched, 0);
+});
+
+test('release selector refuses unqualified observer, preserving disabled source shape', () => {
+  const record = { merchantPayTo: merchant, clock: 'durable-object-alarm',
+    repair: { brokenStreakBeforeRepair: 3, repository: null },
+    commercialBidObservation: { enabled: true } };
+  assert.throws(() => projectOperation(record), /commercial-bid-observation-source-not-admitted/);
+  const disabled = projectOperation({ ...record, commercialBidObservation: { enabled: false } });
+  assert.equal(disabled.commercialBidObservation.enabled, false);
 });
