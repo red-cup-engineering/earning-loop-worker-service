@@ -30,8 +30,8 @@ export function projectOperation(record, { excludeIssuerResearch = false } = {})
     operation.commercial = record.commercial;
   }
   if (record.commercialBidObservation) {
-    if (record.commercialBidObservation.enabled && operation.clock !== 'durable-object-alarm')
-      throw new TypeError('commercial bid observation requires serialized private Durable Object custody');
+    if (record.commercialBidObservation.enabled)
+      throw new TypeError('commercial-bid-observation-source-not-admitted');
     operation.commercialBidObservation = record.commercialBidObservation;
   }
   if (record.researchProcurement) {
