@@ -1,7 +1,6 @@
 import { createOpenTaskClient } from "./opentask-client.mjs";
 import { commercialOffers, commercialStateKey, acquirePreparedBid } from "./opentask-bid-acquisition.mjs";
 import { BASE_USDC } from './settlements.mjs';
-import { runBidObservationPass } from "./existing-commercial-bid-observation.mjs";
 
 const STATE = "opentask/commercial";
 const stable = (value) => value && typeof value === "object" ? Array.isArray(value) ? value.map(stable)
@@ -88,32 +87,10 @@ export function buyerConfirmation(message, expected, buyerId) {
  * storage is PRIVATE Durable Object storage, never the public R2 registers.
  */
 export async function runCommercialPass(options = {}) {
-  const observation = options.observation ?? options.instance?.bidObservation;
-  if (!options.instance?.enabled && observation?.enabled === true) {
-    const client = (options.clientFactory ?? createOpenTaskClient)({
-      storage: options.storage,
-      initialCredential: options.initialCredential,
-      fetchImpl: options.fetchImpl,
-      budget: 12,
-      now: options.clock ?? (() => Date.now())
-    });
-    let observationSummary = null;
-    try {
-      observationSummary = await runBidObservationPass({
-        storage: options.storage,
-        client,
-        configuration: observation,
-        now: options.now ?? new Date(),
-        releaseId: options.releaseId
-      });
-    } catch {}
-    return {
-      stage: 'disabled',
-      requests: client.calls,
-      newCashExpenseUsd: 0,
-      ...(observationSummary ? { observation: observationSummary } : {})
-    };
-  }
+  // The original observation lot is not fabricated or independently assayed.
+  // Refuse its enablement before touching a credential, buyer or private state.
+  if ((options.observation ?? options.instance?.bidObservation)?.enabled === true)
+    throw new TypeError('commercial-bid-observation-source-not-admitted');
   const offers = commercialOffers(options.instance);
   if (offers.length === 1) return runPreparedCommercialPass(options);
   const slotKey = 'opentask/commercial-selector';
@@ -126,8 +103,7 @@ export async function runCommercialPass(options = {}) {
 }
 
 async function runPreparedCommercialPass({ storage, initialCredential, instance, products, merchant, stateKey = STATE,
-  now = new Date(), clientFactory = createOpenTaskClient, fetchImpl = fetch, clock = () => Date.now(),
-  observation, releaseId } = {}) {
+  now = new Date(), clientFactory = createOpenTaskClient, fetchImpl = fetch, clock = () => Date.now() } = {}) {
   const STATE = stateKey;
   const product = products?.[instance?.productId];
   const refusal = qualifiedInstance({ ...instance, bidId: instance?.bidId ?? '_pending' }, product, merchant);
@@ -138,43 +114,10 @@ async function runPreparedCommercialPass({ storage, initialCredential, instance,
     state.stage = stage;
     state.observedAt = now.toISOString();
     await storage.put(STATE, state);
-    let observationSummary = null;
-    const observationConfig = observation ?? instance?.bidObservation;
-    if (observationConfig?.enabled === true) {
-      try {
-        observationSummary = await runBidObservationPass({
-          storage,
-          client,
-          configuration: observationConfig,
-          now,
-          releaseId
-        });
-      } catch (err) {}
-    }
-    return {
-      ...publicResult(stage, client.calls),
-      ...(observationSummary ? { observation: observationSummary } : {})
-    };
+    return publicResult(stage, client.calls);
   };
-  if (state.retryBlocked || Date.parse(state.nextAttemptAt) > now.getTime()) {
-    let observationSummary = null;
-    const observationConfig = observation ?? instance?.bidObservation;
-    if (observationConfig?.enabled === true) {
-      try {
-        observationSummary = await runBidObservationPass({
-          storage,
-          client,
-          configuration: observationConfig,
-          now,
-          releaseId
-        });
-      } catch (err) {}
-    }
-    return {
-      ...publicResult('provider-retry-deferred', client.calls),
-      ...(observationSummary ? { observation: observationSummary } : {})
-    };
-  }
+  if (state.retryBlocked || Date.parse(state.nextAttemptAt) > now.getTime())
+    return publicResult('provider-retry-deferred', client.calls);
   try {
     if (!instance.bidId && !state.bidId) {
       const stage = await acquirePreparedBid({ client, instance, state, now, save: () => storage.put(STATE, state) });

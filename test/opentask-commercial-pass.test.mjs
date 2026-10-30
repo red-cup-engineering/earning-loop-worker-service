@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { projectOperation } from '../src/deployment.mjs';
 import { runCommercialPass, fingerprint, buyerConfirmation, criterionClaims } from '../src/opentask-commercial-pass.mjs';
 
 const merchant = '0x' + 'a'.repeat(40);
@@ -208,4 +209,28 @@ test('unchanged provider denial retains exact intent without replaying a refused
   assert.equal((await h.pulse()).stage, 'provider-write-refused');
   assert.equal(h.requests.filter(r => r.method === 'POST' && r.path.endsWith('/deliveries')).length, 1);
   assert.ok(h.held.get('opentask/commercial').pending);
+});
+
+test('unfabricated two-bid observer refuses before private storage or provider access', async () => {
+  let touched = 0;
+  const refuseStorage = { async get() { touched++; throw new Error('storage accessed'); },
+    async put() { touched++; throw new Error('storage changed'); } };
+  const refuseClient = () => { touched++; throw new Error('provider accessed'); };
+  await assert.rejects(runCommercialPass({
+    instance: { ...instance, bidObservation: { enabled: true } },
+    storage: refuseStorage, clientFactory: refuseClient
+  }), /commercial-bid-observation-source-not-admitted/);
+  await assert.rejects(runCommercialPass({
+    observation: { enabled: true }, storage: refuseStorage, clientFactory: refuseClient
+  }), /commercial-bid-observation-source-not-admitted/);
+  assert.equal(touched, 0);
+});
+
+test('release selector refuses unqualified observer, preserving disabled source shape', () => {
+  const record = { merchantPayTo: merchant, clock: 'durable-object-alarm',
+    repair: { brokenStreakBeforeRepair: 3, repository: null },
+    commercialBidObservation: { enabled: true } };
+  assert.throws(() => projectOperation(record), /commercial-bid-observation-source-not-admitted/);
+  const disabled = projectOperation({ ...record, commercialBidObservation: { enabled: false } });
+  assert.equal(disabled.commercialBidObservation.enabled, false);
 });
