@@ -223,6 +223,12 @@ test('unfabricated two-bid observer refuses before private storage or provider a
   await assert.rejects(runCommercialPass({
     observation: { enabled: true }, storage: refuseStorage, clientFactory: refuseClient
   }), /commercial-bid-observation-source-not-admitted/);
+  // Conflicting selectors must fail closed, not let a disabled override hide the enabled instance.
+  await assert.rejects(runCommercialPass({
+    observation: { enabled: false },
+    instance: { ...instance, bidObservation: { enabled: true } },
+    storage: refuseStorage, clientFactory: refuseClient
+  }), /commercial-bid-observation-source-not-admitted/);
   assert.equal(touched, 0);
 });
 
