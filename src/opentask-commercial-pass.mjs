@@ -89,7 +89,7 @@ export function buyerConfirmation(message, expected, buyerId) {
 export async function runCommercialPass(options = {}) {
   // The original observation lot is not fabricated or independently assayed.
   // Refuse its enablement before touching a credential, buyer or private state.
-  if ((options.observation ?? options.instance?.bidObservation)?.enabled === true)
+  if (options.observation?.enabled === true || options.instance?.bidObservation?.enabled === true)
     throw new TypeError('commercial-bid-observation-source-not-admitted');
   const offers = commercialOffers(options.instance);
   if (offers.length === 1) return runPreparedCommercialPass(options);
