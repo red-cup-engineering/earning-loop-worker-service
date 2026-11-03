@@ -2,6 +2,7 @@
 // machine has to update. Payers are classified with the current Group payer list at read time, so a wallet
 // later found to be the Group's stops counting as revenue everywhere at once.
 import { register, record, read, put } from "./registers.mjs";
+import { onchainPublicReading } from './onchain-hook.mjs';
 
 export const BURN_USD_PER_MONTH = 600, FLOOR_USD_PER_DAY = 20, GOAL_USD_PER_DAY = 200;
 const DAY = 86_400_000;
@@ -42,7 +43,7 @@ export function scorecard({ settlements = {}, routes = {}, onchain = null }, { n
     targetsUSDPerDay: { floor: economics.floorUsdPerDay, goal: economics.goalUsdPerDay },
     selfFundingRatio: ratio, mode: mode(ratio),
     offers: { listed: live.length, buyable: live.filter((r) => r.held).length, broken: live.filter((r) => r.held === false).length },
-    onchain: onchain ? { lastRunAt: onchain.at, status: onchain.status ?? null } : null,
+    onchain: onchain ? { ...onchainPublicReading(onchain), lastRunAt: onchain.at } : null,
     source: "two-provider Base transfers; prepared responses, requester acceptance and confirmed outside ownership are separate evidence",
     recognition: "outside revenue requires confirmed outside ownership, a prepared successful response, and requester acceptance; unknown wallets remain unclassified",
   };

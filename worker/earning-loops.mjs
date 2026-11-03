@@ -18,7 +18,7 @@ import { receiveSettlements, witnessProblem, corroborate, usdc, BASE_PROVIDERS }
 import { checkRoutes } from "../src/route-health.mjs";
 import { writeScorecard } from "../src/scorecard.mjs";
 import { writeDirectives } from "../src/price-directives.mjs";
-import { runOnchainHook } from "../src/onchain-hook.mjs";
+import { runOnchainHook, onchainPublicReading } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
 import { dueCrons, nextTick } from "../src/clock.mjs";
 import { observeAgentMarketIndex } from "../src/agent-market-observation.mjs";
@@ -31,12 +31,15 @@ const issuerSettlementAdapters = Object.freeze({ witnessProblem, corroborate, us
   BASE_PROVIDERS: Object.freeze([...BASE_PROVIDERS]), groupPayers });
 export const CRONS = operation.crons;
 
-export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage, marketObserver = observeAgentMarketIndex } = {}) {
-  if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
+export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage, marketObserver = observeAgentMarketIndex, withOnchain } = {}) {
+  if (withOnchain !== undefined && typeof withOnchain !== 'function') throw new TypeError('Original resource selection is a private host function');
+  if (configuration.issuerResearch && (withOnchain || env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
     throw new TypeError('issuer operation has no subrequest allocation for an onchain hook');
   const outcome = { cron, at: now.toISOString() };
   const step = async (name, work) => {
-    try { outcome[name] = await work(); } catch (error) { outcome[name] = { error: error.message }; }
+    try { outcome[name] = await work(); } catch (error) {
+      outcome[name] = { error: name === 'onchain' ? 'original-onchain-custody-unconfirmed' : error.message };
+    }
   };
   if (cron === configuration.crons.directives) {
     await step("directives", () => writeDirectives(env, { now, groupPayers }));
@@ -68,7 +71,10 @@ export async function run(env, cron, now = new Date(), { configuration = operati
     await step("routes", () => checkRoutes(env, { now, catalogUrl: configuration.catalogUrl, limit: configuration.limits.routeProbesPerPass,
       brokenStreak: configuration.repair.brokenStreakBeforeRepair, repository: configuration.repair.repository, payTo: configuration.merchantPayTo }));
     await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
-    await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl }));
+    await step("onchain", () => {
+      const receive = onchain => runOnchainHook(env, { now, cron, onchain, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl });
+      return withOnchain ? withOnchain(Object.freeze({ at: now.toISOString(), cron }), receive) : receive();
+    });
     if (configuration.issuerResearch) await step("issuerResearch", () => withIssuerSqliteStore(issuerStorage, configuration.issuerResearch,
       store => refreshIssuerResearch(store, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort })));
   }
@@ -233,8 +239,11 @@ export class EarningClock {
   }
 }
 
-export default {
-  async scheduled(event, env, context) { context.waitUntil(run(env, event.cron)); },
+export function createEarningWorker({ withOnchain } = {}) { return {
+  async scheduled(event, env, context) {
+    if (!Number.isFinite(event.scheduledTime)) throw new TypeError('Original scheduled occurrence is required');
+    context.waitUntil(run(env, event.cron, new Date(event.scheduledTime), { withOnchain }));
+  },
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
     if (path === "/products.json") return Response.json(products, { headers: { "cache-control": "public, max-age=300" } });
@@ -245,7 +254,7 @@ export default {
     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
     if (READINGS[path]) {
       const value = await read(env.STATE, register(READINGS[path]));
-      return value ? Response.json(value, { headers: { "cache-control": "no-store" } }) : new Response("not yet observed\n", { status: 404 });
+      return value ? Response.json(path === '/onchain.json' ? onchainPublicReading(value) : value, { headers: { "cache-control": "no-store" } }) : new Response("not yet observed\n", { status: 404 });
     }
     if (path !== "/") return new Response("not found\n", { status: 404 });
     const [health, card, last] = await Promise.all(["route-health", "scorecard", "last-run"].map((name) => read(env.STATE, register(name))));
@@ -259,4 +268,5 @@ export default {
     ];
     return new Response(`${lines.join("\n")}\n`, { status: broken.length ? 503 : 200, headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" } });
   },
-};
+}; }
+export default createEarningWorker();
