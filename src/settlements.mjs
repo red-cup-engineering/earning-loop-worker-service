@@ -4,6 +4,9 @@
 // the transaction succeeded, and it holds exactly one USDC transfer from the payer to the seller for the amount.
 // A corroborated transfer is cash received; it is not delivery, acceptance or recognized revenue.
 import { register, read, put } from "./registers.mjs";
+import {
+  baseUsdcWitnessProblem, matchingBaseUsdcTransfers, corroborateBaseUsdcReceiptPair,
+} from "@red-cup-engineering/x402-services-section/settlement-derivation/base-usdc-receipt";
 
 export const BASE_USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 // Ordered by observed availability of receipts (2026-10-24); the pass reads until two answer.
@@ -13,44 +16,13 @@ export const BASE_PROVIDERS = [
   "https://base-mainnet.public.blastapi.io",
   "https://mainnet.base.org",
 ];
-const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+// One source-owned pure proof; the existing Worker owns RPC acquisition and
+// operational settlement persistence, not a second ERC-20 event verifier.
+// The exact published supplier must be received before the Worker is deployed.
 const PREFIX = "settlements/eip155:8453/";
-const TX = /^0x[\da-f]{64}$/i, ADDRESS = /^0x[\da-f]{40}$/i;
-const topic = (address) => `0x${"0".repeat(24)}${address.slice(2).toLowerCase()}`;
-
-export function matchingTransfers(receipt, witness) {
-  return (receipt?.logs ?? []).filter((log) => log.address?.toLowerCase() === BASE_USDC
-    && log.topics?.[0]?.toLowerCase() === TRANSFER
-    && log.topics?.[1]?.toLowerCase() === topic(witness.payer)
-    && log.topics?.[2]?.toLowerCase() === topic(witness.payTo)
-    && /^0x[\da-f]{64}$/i.test(log.data ?? "") && BigInt(log.data).toString() === witness.amount);
-}
-
-export function witnessProblem(witness) {
-  if (witness?.network !== "eip155:8453" || !TX.test(witness.transaction ?? "")) return "invalid-transaction";
-  if (!ADDRESS.test(witness.payer ?? "") || !ADDRESS.test(witness.payTo ?? "")) return "invalid-address";
-  if (witness.asset?.toLowerCase() !== BASE_USDC) return "not-base-usdc";
-  if (!/^[1-9]\d*$/.test(witness.amount ?? "")) return "invalid-amount";
-  return null;
-}
-
-export function corroborate(witness, receipts) {
-  const problem = witnessProblem(witness);
-  if (problem) return { ok: false, reason: problem };
-  if (!Array.isArray(receipts) || receipts.length < 2) return { ok: false, reason: "two-provider-receipts-required", retry: true };
-  const [a, b] = receipts;
-  if (!a || !b || !["0x0", "0x1"].includes(a.status) || a.status !== b.status
-    || !Array.isArray(a.logs) || !Array.isArray(b.logs)) return { ok: false, reason: "provider-disagreement", retry: true };
-  if (a.status === "0x0") return { ok: false, reason: "failed-transaction" };
-  if (!TX.test(a.blockHash ?? "") || !TX.test(b.blockHash ?? "") || a.blockHash.toLowerCase() !== b.blockHash.toLowerCase() || a.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
-    || b.transactionHash?.toLowerCase() !== witness.transaction.toLowerCase()
-    || !/^0x[\da-f]+$/i.test(a.blockNumber ?? "") || a.blockNumber !== b.blockNumber || matchingTransfers(a, witness).length !== matchingTransfers(b, witness).length) return { ok: false, reason: "provider-disagreement", retry: true };
-  const transfers = matchingTransfers(a, witness);
-  if (transfers.length !== 1) return { ok: false, reason: "exactly-one-matching-usdc-transfer-required" };
-  if (!/^0x[\da-f]+$/i.test(transfers[0].logIndex ?? "") || transfers[0].logIndex !== matchingTransfers(b, witness)[0].logIndex || transfers[0].removed === true || matchingTransfers(b, witness)[0].removed === true)
-    return { ok: false, reason: "provider-disagreement", retry: true };
-  return { ok: true, receipt: a, transfer: transfers[0] };
-}
+export const matchingTransfers = matchingBaseUsdcTransfers;
+export const witnessProblem = baseUsdcWitnessProblem;
+export const corroborate = corroborateBaseUsdcReceiptPair;
 
 export const usdc = (atomic) => Number(BigInt(atomic)) / 1e6;
 

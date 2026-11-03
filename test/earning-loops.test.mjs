@@ -20,11 +20,19 @@ const challenge = (amount, url = "https://m/x", override = {}) => btoa(JSON.stri
 
 test("a settlement corroborates only when two providers agree on one matching USDC transfer", () => {
   assert.equal(corroborate(witness, [receipt, receipt]).ok, true);
+  // Both consumers now use exactly the same source-owned pure proof rather
+  // than accepting superficially equivalent balances on divergent matchers.
+  const extra = { ...receipt, logs: [receipt.logs[0], { ...receipt.logs[0] }] };
+  assert.equal(corroborate(witness, [extra, extra]).reason,
+    "receipt-must-contain-exactly-one-matching-usdc-transfer");
+  const extraTopic = { ...receipt, logs: [{ ...receipt.logs[0],
+    topics: [...receipt.logs[0].topics, topic(payer)] }] };
+  assert.equal(corroborate(witness, [extraTopic, extraTopic]).ok, false);
   assert.equal(corroborate(witness, [receipt]).reason, "two-provider-receipts-required");
-  assert.equal(corroborate(witness, [receipt, { ...receipt, blockHash: "0x" + "e".repeat(64) }]).reason, "provider-disagreement");
-  assert.equal(corroborate({ ...witness, amount: "1" }, [receipt, receipt]).reason, "exactly-one-matching-usdc-transfer-required");
-  assert.deepEqual(corroborate(witness, [{ ...receipt, status: "0x0" }, receipt]), { ok: false, reason: "provider-disagreement", retry: true });
-  assert.equal(corroborate(witness, [{ ...receipt, status: "0x0" }, { ...receipt, status: "0x0" }]).reason, "failed-transaction");
+  assert.equal(corroborate(witness, [receipt, { ...receipt, blockHash: "0x" + "e".repeat(64) }]).reason, "receipt-provider-disagreement-or-failed-transaction");
+  assert.equal(corroborate({ ...witness, amount: "1" }, [receipt, receipt]).reason, "receipt-must-contain-exactly-one-matching-usdc-transfer");
+  assert.deepEqual(corroborate(witness, [{ ...receipt, status: "0x0" }, receipt]), { ok: false, reason: "receipt-provider-disagreement-or-failed-transaction", retry: true });
+  assert.equal(corroborate(witness, [{ ...receipt, status: "0x0" }, { ...receipt, status: "0x0" }]).reason, "receipt-provider-disagreement-or-failed-transaction");
   const truncated = { ...receipt, logs: [{ ...receipt.logs[0], data: "0xc350" }] };
   assert.equal(corroborate(witness, [truncated, truncated]).ok, false);
   assert.equal(corroborate(witness, [null, receipt]).retry, true);
