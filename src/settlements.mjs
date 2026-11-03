@@ -1,6 +1,6 @@
 // Receive market.561.group's x402 sales without a house machine: list the seller's settlement witnesses in R2,
 // corroborate each against two independent public Base providers, and classify the payer as outside or Group.
-// The rule is Red Cup's confirmSellerWitness (x402-services-section, settlement-derivation): both receipts agree,
+// The rule is Red Cup's confirmSellerWitness (x402-computer-networks-engineering-services-section, settlement-derivation): both receipts agree,
 // the transaction succeeded, and it holds exactly one USDC transfer from the payer to the seller for the amount.
 // A corroborated transfer is cash received; it is not delivery, acceptance or recognized revenue.
 import { register, read, put } from "./registers.mjs";
