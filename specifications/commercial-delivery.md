@@ -1,6 +1,6 @@
 # Prepared machine delivery
 
-Original Work: [Opportunity 35](https://github.com/561-group/internal-opportunity-services-section/issues/35). The operating requirement is a real external machine buyer, original reusable production, automatic delivery and separate payment evidence, with no human purchase/sale or new cash expense.
+Original Work: [Opportunity 35](https://github.com/561-group/561-group-business-opportunity-services-section/issues/35). The operating requirement is a real external machine buyer, original reusable production, automatic delivery and separate payment evidence, with no human purchase/sale or new cash expense.
 
 Group Economic owns task/bid/profile/price/payee and finite input limits. Public owns the product map, immutable artifact digest, original source and exact criterion evidence. This Engineering package consumes both; it owns neither the CSV producer nor credential recovery authority. Deploy compiles those records into parameter modules. Committed `data/products.mjs` is an empty reusable fixture.
 
