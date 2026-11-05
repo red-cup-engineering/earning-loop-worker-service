@@ -1,0 +1,1503 @@
+diff --git a/specifications/hashn-acquisition.md b/specifications/hashn-acquisition.md
+new file mode 100644
+index 0000000..2982891
+--- /dev/null
++++ b/specifications/hashn-acquisition.md
+@@ -0,0 +1,15 @@
++# Bounded machine buyer acquisition
++
++Requirement: improve customer acquisition through the original earning-loop Worker, preserving existing CSV credentials, paid research, issuer admission and maintenance. Hashn is a facilitation service, not escrow or a funded job guarantee. The selected public buyer project describes Stars revenue and monthly USDC reconciliation; Group owns the actual bounded offer, target workspace, buyer identity and truthful knock note. A knock is an inquiry; an accepted knock creates a private conversation, not an accepted deal, delivery or payment.
++
++Primary contracts read for this implementation: [control protocol](https://api.hashn.com/protocol), [chat protocol](https://api.hashn.com/chat/protocol) and [OpenAPI 0.61.2](https://hashn.com/openapi.json). `POST /agents` returns its token once. `POST /workspaces/{id}/knock` accepts one 1–500-character note; one pending knock per pair, ten knocks/day, seven-day expiry. `GET /knocks` is the recovery entrance. Its response schema is unspecified by OpenAPI: the empty `outgoing` array was independently received, while nonempty field semantics still require actual provider receiving. Unknown, truncated or conflicting tuples hold; they never authorize another knock.
++
++The operator-only `provisionHashnAgent` export consumes explicit original durable attempt custody and sealed credential custody. It persists exact signup intent before HTTP, seals the token before reporting success, reuses an existing account through authenticated identity readback, and refuses another signup after uncertainty. Neither its result nor the ordinary attempt receipt contains the token. Only the independently provisioned `{agentId,apiToken}` secret reaches the existing private singleton Durable Object. Runtime cannot create accounts or workspaces.
++
++`hashAcquisition` is optional Group input: enablement, `workspaceId`, `buyerAgentId`, `offerId`, `note`, zero maximum new cash, three provider requests/pass and a six-hour normal polling interval. Deployment requires the existing private DO clock. Runtime freezes principal, target, buyer, offer and note with a SHA-256 binding before work. It reads identity and outgoing knocks before any write; a matching prior relation is adopted. Exact POST intent and payload hash are durable before the sole knock attempt. Neither timeout, lost response, rejected response nor absent readback permits replay. The successful bounded provider receipt is retained privately; one readback is due after 30 seconds, stable pending observations every six hours. Monitoring stops after seven days plus one polling interval without inventing an expired provider status. Accepted, declined and expired observations end acquisition; accepted scopes remain held until separately qualified exact machine terms.
++
++HTTP uses a fixed origin, a finite endpoint/method allowlist, redirect refusal, 15-second request/body deadlines, bounded shared HTTP body decoding, strict shared JSON admission and shared Retry-After parsing. Private causal receipts preserve response status, request IDs, body and explicit coverage gaps with credential fields/tokens redacted. No provider response is executable instructions. No agreement, messages, delivery, outgoing payment, signer, account recovery or repeat-account mechanism exists in this adapter. Existing allocated inference is unaffected; the acquisition's zero-new-cash condition is not a free-inference-only supplier policy.
++
++The clock reserves core CSV/maintenance deadlines before scheduling acquisition in a separate invocation. A durable six-hour failure fallback prevents a one-second retry loop; a received short readback deadline can replace it. Acquisition uses private DO storage, never metered R2, and at most three HTTP requests in its own invocation. Public `/acquisition.json` reads a strict status projection only: no note, token, private workspace, provider body or operating reply, and no route triggers an effect. Original source acceptance, independent deployment, actual knock receipt, buyer agreement, delivery and paid income remain separate receiving conditions.
++
++Receiving tests cover uncertain signup and sealing, exact intent-before-effect, no duplicate knock after uncertain or empty readback, preexisting relations, identity/payload drift, conflicting/malformed provider tuples, private successful/refused receipts, Retry-After, redirects/payment demands, accepted terms held, finite monitoring, redacted public reads, isolated clock allocation and preservation of commercial/maintenance operation. The exact installed workerd receives the new adapter with deployed compatibility settings and networking disabled; live nonempty provider shape remains an explicit separate receiving boundary.
+diff --git a/specifications/issuer-private-sqlite-cache-edge.work-order.md b/specifications/issuer-private-sqlite-cache-edge.work-order.md
+new file mode 100644
+index 0000000..fc687b2
+--- /dev/null
++++ b/specifications/issuer-private-sqlite-cache-edge.work-order.md
+@@ -0,0 +1,37 @@
++# issuer-private-sqlite-cache
++## Requirements
++- `admission`: Both pure plans and all additional interfaces accept host configuration only. If configuration is absent or enabled is not exactly true or resourceAdmission.status is not exactly 'received', return null from plans; withIssuerSqliteStore returns {status:'not-configured'} without calling work or touching storage; private handler returns HTTP404 without storage. Once admitted require cacheKey a nonempty string whose UTF8 length is at most256 bytes, and maximumCohortBytes a positive safe integer no greater than524288; cacheKey must differ from 'registers/earning-loops/issuer-research.json', otherwise throw TypeError before effects. Ignore additional trusted metadata. These guards grant no resource or source authority.
++- `coordinates`: issuerSqliteStoragePlan(configuration) is pure and returns exactly {cohortKey:'issuer-evidence/cohort',statusKey:'issuer-evidence/status',logicalStatusKey:'registers/earning-loops/issuer-research.json',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes,maximumStatusBytes:524288,maximumTransactionBytes:1900000}. issuerEvidenceReadPlan(configuration) is pure and returns exactly {objectName:'earning-loops',path:'/issuer-evidence',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes}. These are real transport/storage plans used by additional interfaces; no fixture-mode APIs.
++## Prohibitions
++- `no-authority-expansion`: No public cache or refresh route, source acquisition, OpenTask/credential read, arbitrary key, alarm mutation, new namespace, schedule, external dependency, private worker package import or deployment. [claims: bounded-cache]
++## Laws
++- `byte-custody` | IETF | RFC9110 | https://www.rfc-editor.org/rfc/rfc9110 | Private GET and response representation preserve actual body bytes and length; retrieval does not authorize refresh. | Correct status and media semantics, no hidden mutations on GET.
++## Standards
++- `edge-transport` | Cloudflare | actual workerd1.20261024.1 native receiving 2026-10-24 | /home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/worker-runtime-test-records/61bfd8ff392d5904ccc9b1a088e8af5ca7871a632bb90f608f82903d27d54898/config.capnp | Runtime Request supports follow/manual and refuses error; no-follow is manual with status refusal. | Independently witnessed native Request error: Invalid redirect value, must be one of follow or manual. Source-free whole-unit refinement corrects the target-runtime specification only; do not handpatch proposed source.
++- `house-operation` | 561 Group | original paid issuer operation 2026-10-24 | /home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-issuer-period-reconciliation.json | Actual annual AAPL/MSFT paid comparison requires one trusted completed cache and no request-driven SEC acquisition or unadmitted incremental cash. | Root independently approved fixed singleton/two bounded keys; supplier owns all reconciliation/provenance/selector semantics.
++- `sqlite-platform` | Cloudflare | docs observed 2026-10-24 | https://developers.cloudflare.com/durable-objects/platform/limits/ | SQLite key+value/row limit2MB and existing cross-script bindings; no billable headroom inference. | Conservative serialized transaction ceiling1900000 bytes; existing EarningClock namespace and object name only.
++- `async-contract` | Red Cup Engineering | accepted issuer caller contract at c425608745ace8e864ba8e1df2fcd12058240f72 | ./issuer-research-integration.md | Keep existing Retry-After and full-only publication; no data writes through R2. | All additional interfaces in the Requirements are complete mandatory contracts; deterministic plans are real adapter metadata and assay is scoped to plans only.
++- `source-free` | Red Cup Engineering | native deriveJsnodeModules | /home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs | Whole-unit source-free construction and independent receiving. | No handwritten behavioral source or fake fixture adapter; unchanged source proposal from native derivation is received at its specified consumer owners before ordinary wiring.
++- `async-custody` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The server module exports withIssuerSqliteStore(storage,configuration,work). It accepts only existing DurableObjectStorage get and transaction capabilities and a function work. It creates one scoped bucket-compatible store with async get(key) and put(key,text), passes it to work once, and returns that work's resolved result only after publication. Only configured cacheKey and the exact logicalStatusKey are admitted; all other keys throw TypeError before any underlying storage access. No getAlarm/setAlarm/delete/list, no env, network, credentials or OpenTask keys. The two physical keys above are the only keys this module ever reads or writes. Each physical value is exactly {cacheKey:configuration.cacheKey,body:theUnchangedJSONText}; get hides mismatched logicalKey as missing, returns null for missing, otherwise returns {json:async()=>JSON.parse(body)}. Wrong/corrupt physical record shape, invalid JSON or oversized stored record throws before work can acquire new sources. The wrapper must not accept a corrupt retry status as permission to refresh.
++- `async-atomic` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | put only stages validated valid JSON text, never writes immediately. Bound actual UTF8 text length separately: cohort by maximumCohortBytes, status by524288. Stage the most recent value per admitted key. work executes and finishes outside storage.transaction. If work rejects, commit nothing and rethrow unchanged. On resolved work, invoke storage.transaction once only when staged writes exist; inside its callback put all staged physical values, no work/producer/network. A transaction failure propagates and leaves all prior physical values unchanged. Successful complete-cohort and status publication is one atomic transaction; failure-only status can replace status alone. JSON.stringify physical values plus UTF8 physical keys for all staged writes must total at most1900000 bytes; each key+serialized value must also fit1900000. This is an explicit conservative bound below SQLite's2MB row limit, not a billable-capacity claim. Invalid/oversized cohort put throws before staging it so existing coordinator's catch can stage an unavailable status without overwriting prior cohort.
++- `async-overflow` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | If status JSON cannot serialize/parse or its actual UTF8 bytes exceed524288, or the staged transaction would exceed1900000, discard every staged cohort update and replace staged status with JSON text of exactly {status:'unavailable',cacheKey:configuration.cacheKey,retryBlocked:true,reason:'status-overflow',nextAttemptAt:null}. Persist that minimal sentinel atomically; return the sentinel as withIssuerSqliteStore's result after commit rather than returning a false prepared result. Do not retain an earlier staged retry deadline or truncate Retry-After/error text. This deliberate durable fail-closed hold preserves prior cohort and is read back on later work; the existing coordinator sees retryBlocked and performs no acquisition. Stored corrupt state still throws closed instead of being treated as missing. In absence of this overflow no status/body content is rewritten.
++- `async-server` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The server module exports async issuerSqliteResponse(request,storage,configuration). It is called only from existing EarningClock.fetch before the alarm-arming catch-all. For a pathname other than /issuer-evidence return null, no effects. For this pathname, require admitted configuration as above; only GET is accepted, other methods return405 with Allow:GET, no effects. Require URL query to contain exactly one key entry equal to configured cacheKey; reject missing/extra/duplicate/mismatched query with404 and no effects. Read physical cohortKey once, validate wrapper cacheKey/JSON/actual byte bounds; missing/mismatched yields404, corrupt/oversized/storage failure yields503. Return cached original JSON text as HTTP200 application/json with exact UTF8 Content-Length and Cache-Control:no-store. Do not disclose error/status/credentials. No refresh, producer call, alarm call, status read, public routing or mutation. A prior complete cohort may be read after a failed refresh; the unchanged supplier selector independently decides freshness and returns503 when stale.
++- `async-client` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The market module exports createIssuerEvidenceReadStore(namespace,configuration). If admission plan is null, return undefined. Otherwise require namespace.idFromName/get functions or throw TypeError. Return an object with async get(key). Reject any key not exactly configured cacheKey with TypeError before namespace or stub calls. For allowed get, resolve namespace.idFromName('earning-loops'), namespace.get(id), then stub.fetch one new Request using https://issuer-cache.invalid/issuer-evidence with exactly URLSearchParams key=cacheKey; methodGET, redirect:manual, never follow redirects and reject every non200 response except missing404. No public origin fetch. HTTP404 returns null; any other non200 result or thrown failure throws an Error with code issuer-revenue-unavailable,status503,retryable:true and no responsebody/error disclosure. A successful response must have body a ReadableStream and Content-Length a canonical nonnegative safe integer no greater than maximumCohortBytes; invalid/missing/overflow length refuses and cancels body when possible. Return exactly {body:response.body,size:length}. Never consume, parse, modify or cache the stream, never acquire sources or mutate storage/alarms.
++- `async-integration` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | Source-free unit produces src/issuer-sqlite-cache.mjs and src/issuer-evidence-store.mjs only plus native schema/test projections. Their final actual owners are earning-loop-worker-service/src/issuer-sqlite-cache.mjs and market.561.group/src/issuer-evidence-store.mjs respectively; the second exact proposal is received at that owning consumer without a new package or private worker dependency. No cross-module import is needed. Additional async exports above are mandatory full implementations. Source imports no external package, filesystem, process or env. Pure default operation examples qualify only pureplans; additional I/O requires independent realworkerd receiving. Ordinary integration changes existing refreshIssuerResearch to consume the supplied issuerStore and removes every issuer STATE fallback; EarningClock wraps existing refresh in withIssuerSqliteStore on same serialized queue and calls private handler before alarm arming. Existing run/tick, OpenTask state/custody/alarms, public routes and other maintenance remain intact. Market binds existing external namespace/class/script and same singleton; it injects readStore only, never refresh. No new namespace/migration/schedule/public cache route.
++- `async-status` | Red Cup Engineering | independent receiving correction 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Minimal actual existing coordinator record validation; no new retry policy or authority. | Both physical wrappers have cacheKey exactly configuration.cacheKey, including the status wrapper; get(logicalStatusKey) maps to physical statusKey and compares that configured cohort identity. Stored status JSON must be a nonnull nonarray object with cacheKey exactly configuration.cacheKey and status exactly prepared or unavailable. For normal records at must be a canonical UTC ISO millisecond instant; prepared observedAt is canonical instant or null, nextAttemptAt a canonical instant no earlier than at, retryBlocked absent or false. Normal unavailable has error string, code/reason each string or null, retryable boolean, retryAfter string or null and retryBlocked boolean; if blocked, nextAttemptAt must be null; otherwise nextAttemptAt is canonical instant no earlier than at. Additional normal status fields may be retained unchanged. The only special record is the exact minimal status-overflow sentinel already specified, accepted with retryBlocked true and nextAttemptAt null without at/error fields. Reject corrupt stored null/array/number, nonboolean retryBlocked, missing/malformed/contradictory deadlines and wrong cache identity before calling work or producer. Invalid staged status shape throws so the complete transaction rolls back; syntactically unrepresentable or oversized status uses the specified minimal overflow sentinel. Do not reinterpret retryable or recalculate Retry-After: the original coordinator owns policy.
++## Open questions
++none
++## Claims
++- `bounded-cache` | derived | world | The selected paid operation needs compact private cache consumption with existing singleton state, not another platform or provider | none | constraint:house-operation; constraint:sqlite-platform; constraint:async-contract; constraint:source-free | Preserve original supplier semantics, private OpenTask custody and zero cash conditions; local qualification is not live income.
++## Modules
++```json
++{"operations":[{"name":"issuer-sqlite-storage-plan","module":"src/issuer-sqlite-cache.mjs","exportName":"issuerSqliteStoragePlan","description":"Admit the actual private issuer-only SQLite cache coordinates; complete async transaction/private-read interfaces are mandatory source clauses.","inputSchema":{},"outputSchema":{"anyOf":[{"type":"null"},{"type":"object"}]}},{"name":"issuer-evidence-read-plan","module":"src/issuer-evidence-store.mjs","exportName":"issuerEvidenceReadPlan","description":"Admit the market's private existing-singleton read coordinates; complete streaming async client interface is mandatory source clauses.","inputSchema":{},"outputSchema":{"anyOf":[{"type":"null"},{"type":"object"}]}}],"examples":[{"name":"admitted","operation":"issuer-sqlite-storage-plan","input":{"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":{"cohortKey":"issuer-evidence/cohort","statusKey":"issuer-evidence/status","logicalStatusKey":"registers/earning-loops/issuer-research.json","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288,"maximumStatusBytes":524288,"maximumTransactionBytes":1900000}},{"name":"disabled","operation":"issuer-sqlite-storage-plan","input":{"enabled":false,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":null},{"name":"admitted","operation":"issuer-evidence-read-plan","input":{"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":{"objectName":"earning-loops","path":"/issuer-evidence","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288}},{"name":"unreceived","operation":"issuer-evidence-read-plan","input":{"enabled":true,"resourceAdmission":{"status":"unreceived"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":null}],"dependencies":{}}
++```
++## Acceptance obligations
++```json
++[{"id":"pure-receiving","kind":"assay","statement":"Admitted, disabled, unreceived and invalid configuration plans; no effects. Pure examples do not qualify async interfaces."},{"id":"io-receiving","kind":"assay","statement":"Independent memory and actual workerd receiving across two Worker services/private binding on original singleton: deferred producer leaves prior value; atomic cohort+status; transaction rollback; failed source/serialization preserves cohort; literal long RetryAfter durable reentry; oversized status sentinel durable reentry/no acquisition; only two physical keys, no OpenTask/alarm mutation; exact configured logical key/no arbitrary read; GET405/wrongquery/public404/disabled404; original body and exact byte size; Unicode+limit+overflow/malformed transport; missing/stale consumer503; native prepared producer/read supplier full path separately required; old OpenTask commercial tests and current alarm retained; no deployment/paid success/cost claim."}]
++```
++## Traceability
++- `admission` -> projection `jsnode-modules`; acceptance `io-receiving`; constraints `edge-transport`, `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
++- `coordinates` -> projection `jsnode-modules`; acceptance `pure-receiving`; constraints `edge-transport`, `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
++- `no-authority-expansion` -> projection `jsnode-modules`; acceptance `io-receiving`; constraints `edge-transport`, `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
+diff --git a/specifications/issuer-private-sqlite-cache.work-order.md b/specifications/issuer-private-sqlite-cache.work-order.md
+new file mode 100644
+index 0000000..040de96
+--- /dev/null
++++ b/specifications/issuer-private-sqlite-cache.work-order.md
+@@ -0,0 +1,36 @@
++# issuer-private-sqlite-cache
++## Requirements
++- `admission`: Both pure plans and all additional interfaces accept host configuration only. If configuration is absent or enabled is not exactly true or resourceAdmission.status is not exactly 'received', return null from plans; withIssuerSqliteStore returns {status:'not-configured'} without calling work or touching storage; private handler returns HTTP404 without storage. Once admitted require cacheKey a nonempty string whose UTF8 length is at most256 bytes, and maximumCohortBytes a positive safe integer no greater than524288; cacheKey must differ from 'registers/earning-loops/issuer-research.json', otherwise throw TypeError before effects. Ignore additional trusted metadata. These guards grant no resource or source authority.
++- `coordinates`: issuerSqliteStoragePlan(configuration) is pure and returns exactly {cohortKey:'issuer-evidence/cohort',statusKey:'issuer-evidence/status',logicalStatusKey:'registers/earning-loops/issuer-research.json',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes,maximumStatusBytes:524288,maximumTransactionBytes:1900000}. issuerEvidenceReadPlan(configuration) is pure and returns exactly {objectName:'earning-loops',path:'/issuer-evidence',cacheKey:configuration.cacheKey,maximumCohortBytes:configuration.maximumCohortBytes}. These are real transport/storage plans used by additional interfaces; no fixture-mode APIs.
++## Prohibitions
++- `no-authority-expansion`: No public cache or refresh route, source acquisition, OpenTask/credential read, arbitrary key, alarm mutation, new namespace, schedule, external dependency, private worker package import or deployment. [claims: bounded-cache]
++## Laws
++- `byte-custody` | IETF | RFC9110 | https://www.rfc-editor.org/rfc/rfc9110 | Private GET and response representation preserve actual body bytes and length; retrieval does not authorize refresh. | Correct status and media semantics, no hidden mutations on GET.
++## Standards
++- `house-operation` | 561 Group | original paid issuer operation 2026-10-24 | /home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-issuer-period-reconciliation.json | Actual annual AAPL/MSFT paid comparison requires one trusted completed cache and no request-driven SEC acquisition or unadmitted incremental cash. | Root independently approved fixed singleton/two bounded keys; supplier owns all reconciliation/provenance/selector semantics.
++- `sqlite-platform` | Cloudflare | docs observed 2026-10-24 | https://developers.cloudflare.com/durable-objects/platform/limits/ | SQLite key+value/row limit2MB and existing cross-script bindings; no billable headroom inference. | Conservative serialized transaction ceiling1900000 bytes; existing EarningClock namespace and object name only.
++- `async-contract` | Red Cup Engineering | accepted issuer caller contract at c425608745ace8e864ba8e1df2fcd12058240f72 | ./issuer-research-integration.md | Keep existing Retry-After and full-only publication; no data writes through R2. | All additional interfaces in the Requirements are complete mandatory contracts; deterministic plans are real adapter metadata and assay is scoped to plans only.
++- `source-free` | Red Cup Engineering | native deriveJsnodeModules | /home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-code-development-system-services-section/apps/computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs | Whole-unit source-free construction and independent receiving. | No handwritten behavioral source or fake fixture adapter; unchanged source proposal from native derivation is received at its specified consumer owners before ordinary wiring.
++- `async-custody` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The server module exports withIssuerSqliteStore(storage,configuration,work). It accepts only existing DurableObjectStorage get and transaction capabilities and a function work. It creates one scoped bucket-compatible store with async get(key) and put(key,text), passes it to work once, and returns that work's resolved result only after publication. Only configured cacheKey and the exact logicalStatusKey are admitted; all other keys throw TypeError before any underlying storage access. No getAlarm/setAlarm/delete/list, no env, network, credentials or OpenTask keys. The two physical keys above are the only keys this module ever reads or writes. Each physical value is exactly {cacheKey:configuration.cacheKey,body:theUnchangedJSONText}; get hides mismatched logicalKey as missing, returns null for missing, otherwise returns {json:async()=>JSON.parse(body)}. Wrong/corrupt physical record shape, invalid JSON or oversized stored record throws before work can acquire new sources. The wrapper must not accept a corrupt retry status as permission to refresh.
++- `async-atomic` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | put only stages validated valid JSON text, never writes immediately. Bound actual UTF8 text length separately: cohort by maximumCohortBytes, status by524288. Stage the most recent value per admitted key. work executes and finishes outside storage.transaction. If work rejects, commit nothing and rethrow unchanged. On resolved work, invoke storage.transaction once only when staged writes exist; inside its callback put all staged physical values, no work/producer/network. A transaction failure propagates and leaves all prior physical values unchanged. Successful complete-cohort and status publication is one atomic transaction; failure-only status can replace status alone. JSON.stringify physical values plus UTF8 physical keys for all staged writes must total at most1900000 bytes; each key+serialized value must also fit1900000. This is an explicit conservative bound below SQLite's2MB row limit, not a billable-capacity claim. Invalid/oversized cohort put throws before staging it so existing coordinator's catch can stage an unavailable status without overwriting prior cohort.
++- `async-overflow` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | If status JSON cannot serialize/parse or its actual UTF8 bytes exceed524288, or the staged transaction would exceed1900000, discard every staged cohort update and replace staged status with JSON text of exactly {status:'unavailable',cacheKey:configuration.cacheKey,retryBlocked:true,reason:'status-overflow',nextAttemptAt:null}. Persist that minimal sentinel atomically; return the sentinel as withIssuerSqliteStore's result after commit rather than returning a false prepared result. Do not retain an earlier staged retry deadline or truncate Retry-After/error text. This deliberate durable fail-closed hold preserves prior cohort and is read back on later work; the existing coordinator sees retryBlocked and performs no acquisition. Stored corrupt state still throws closed instead of being treated as missing. In absence of this overflow no status/body content is rewritten.
++- `async-server` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The server module exports async issuerSqliteResponse(request,storage,configuration). It is called only from existing EarningClock.fetch before the alarm-arming catch-all. For a pathname other than /issuer-evidence return null, no effects. For this pathname, require admitted configuration as above; only GET is accepted, other methods return405 with Allow:GET, no effects. Require URL query to contain exactly one key entry equal to configured cacheKey; reject missing/extra/duplicate/mismatched query with404 and no effects. Read physical cohortKey once, validate wrapper cacheKey/JSON/actual byte bounds; missing/mismatched yields404, corrupt/oversized/storage failure yields503. Return cached original JSON text as HTTP200 application/json with exact UTF8 Content-Length and Cache-Control:no-store. Do not disclose error/status/credentials. No refresh, producer call, alarm call, status read, public routing or mutation. A prior complete cohort may be read after a failed refresh; the unchanged supplier selector independently decides freshness and returns503 when stale.
++- `async-client` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | The market module exports createIssuerEvidenceReadStore(namespace,configuration). If admission plan is null, return undefined. Otherwise require namespace.idFromName/get functions or throw TypeError. Return an object with async get(key). Reject any key not exactly configured cacheKey with TypeError before namespace or stub calls. For allowed get, resolve namespace.idFromName('earning-loops'), namespace.get(id), then stub.fetch one new Request using https://issuer-cache.invalid/issuer-evidence with exactly URLSearchParams key=cacheKey; methodGET, redirect:error. No public origin fetch. HTTP404 returns null; any other non200 result or thrown failure throws an Error with code issuer-revenue-unavailable,status503,retryable:true and no responsebody/error disclosure. A successful response must have body a ReadableStream and Content-Length a canonical nonnegative safe integer no greater than maximumCohortBytes; invalid/missing/overflow length refuses and cancels body when possible. Return exactly {body:response.body,size:length}. Never consume, parse, modify or cache the stream, never acquire sources or mutate storage/alarms.
++- `async-integration` | Red Cup Engineering | approved private cache contract 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Mandatory complete additional named async interfaces; independently qualified I/O, not JSON preassay. | Source-free unit produces src/issuer-sqlite-cache.mjs and src/issuer-evidence-store.mjs only plus native schema/test projections. Their final actual owners are earning-loop-worker-service/src/issuer-sqlite-cache.mjs and market.561.group/src/issuer-evidence-store.mjs respectively; the second exact proposal is received at that owning consumer without a new package or private worker dependency. No cross-module import is needed. Additional async exports above are mandatory full implementations. Source imports no external package, filesystem, process or env. Pure default operation examples qualify only pureplans; additional I/O requires independent realworkerd receiving. Ordinary integration changes existing refreshIssuerResearch to consume the supplied issuerStore and removes every issuer STATE fallback; EarningClock wraps existing refresh in withIssuerSqliteStore on same serialized queue and calls private handler before alarm arming. Existing run/tick, OpenTask state/custody/alarms, public routes and other maintenance remain intact. Market binds existing external namespace/class/script and same singleton; it injects readStore only, never refresh. No new namespace/migration/schedule/public cache route.
++- `async-status` | Red Cup Engineering | independent receiving correction 2026-10-24 | ./issuer-private-sqlite-cache.work-order.md | Minimal actual existing coordinator record validation; no new retry policy or authority. | Both physical wrappers have cacheKey exactly configuration.cacheKey, including the status wrapper; get(logicalStatusKey) maps to physical statusKey and compares that configured cohort identity. Stored status JSON must be a nonnull nonarray object with cacheKey exactly configuration.cacheKey and status exactly prepared or unavailable. For normal records at must be a canonical UTC ISO millisecond instant; prepared observedAt is canonical instant or null, nextAttemptAt a canonical instant no earlier than at, retryBlocked absent or false. Normal unavailable has error string, code/reason each string or null, retryable boolean, retryAfter string or null and retryBlocked boolean; if blocked, nextAttemptAt must be null; otherwise nextAttemptAt is canonical instant no earlier than at. Additional normal status fields may be retained unchanged. The only special record is the exact minimal status-overflow sentinel already specified, accepted with retryBlocked true and nextAttemptAt null without at/error fields. Reject corrupt stored null/array/number, nonboolean retryBlocked, missing/malformed/contradictory deadlines and wrong cache identity before calling work or producer. Invalid staged status shape throws so the complete transaction rolls back; syntactically unrepresentable or oversized status uses the specified minimal overflow sentinel. Do not reinterpret retryable or recalculate Retry-After: the original coordinator owns policy.
++## Open questions
++none
++## Claims
++- `bounded-cache` | derived | world | The selected paid operation needs compact private cache consumption with existing singleton state, not another platform or provider | none | constraint:house-operation; constraint:sqlite-platform; constraint:async-contract; constraint:source-free | Preserve original supplier semantics, private OpenTask custody and zero cash conditions; local qualification is not live income.
++## Modules
++```json
++{"operations":[{"name":"issuer-sqlite-storage-plan","module":"src/issuer-sqlite-cache.mjs","exportName":"issuerSqliteStoragePlan","description":"Admit the actual private issuer-only SQLite cache coordinates; complete async transaction/private-read interfaces are mandatory source clauses.","inputSchema":{},"outputSchema":{"anyOf":[{"type":"null"},{"type":"object"}]}},{"name":"issuer-evidence-read-plan","module":"src/issuer-evidence-store.mjs","exportName":"issuerEvidenceReadPlan","description":"Admit the market's private existing-singleton read coordinates; complete streaming async client interface is mandatory source clauses.","inputSchema":{},"outputSchema":{"anyOf":[{"type":"null"},{"type":"object"}]}}],"examples":[{"name":"admitted","operation":"issuer-sqlite-storage-plan","input":{"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":{"cohortKey":"issuer-evidence/cohort","statusKey":"issuer-evidence/status","logicalStatusKey":"registers/earning-loops/issuer-research.json","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288,"maximumStatusBytes":524288,"maximumTransactionBytes":1900000}},{"name":"disabled","operation":"issuer-sqlite-storage-plan","input":{"enabled":false,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":null},{"name":"admitted","operation":"issuer-evidence-read-plan","input":{"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":{"objectName":"earning-loops","path":"/issuer-evidence","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288}},{"name":"unreceived","operation":"issuer-evidence-read-plan","input":{"enabled":true,"resourceAdmission":{"status":"unreceived"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288},"output":null}],"dependencies":{}}
++```
++## Acceptance obligations
++```json
++[{"id":"pure-receiving","kind":"assay","statement":"Admitted, disabled, unreceived and invalid configuration plans; no effects. Pure examples do not qualify async interfaces."},{"id":"io-receiving","kind":"assay","statement":"Independent memory and actual workerd receiving across two Worker services/private binding on original singleton: deferred producer leaves prior value; atomic cohort+status; transaction rollback; failed source/serialization preserves cohort; literal long RetryAfter durable reentry; oversized status sentinel durable reentry/no acquisition; only two physical keys, no OpenTask/alarm mutation; exact configured logical key/no arbitrary read; GET405/wrongquery/public404/disabled404; original body and exact byte size; Unicode+limit+overflow/malformed transport; missing/stale consumer503; native prepared producer/read supplier full path separately required; old OpenTask commercial tests and current alarm retained; no deployment/paid success/cost claim."}]
++```
++## Traceability
++- `admission` -> projection `jsnode-modules`; acceptance `io-receiving`; constraints `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
++- `coordinates` -> projection `jsnode-modules`; acceptance `pure-receiving`; constraints `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
++- `no-authority-expansion` -> projection `jsnode-modules`; acceptance `io-receiving`; constraints `byte-custody`, `house-operation`, `sqlite-platform`, `async-contract`, `source-free`, `async-custody`, `async-atomic`, `async-overflow`, `async-server`, `async-client`, `async-integration`, `async-status`
+diff --git a/specifications/issuer-research-integration.md b/specifications/issuer-research-integration.md
+index 0b5a4db..de4c8a1 100644
+--- a/specifications/issuer-research-integration.md
++++ b/specifications/issuer-research-integration.md
+@@ -2,10 +2,12 @@
+ 
+ Requirements: the Group's researched issuer comparison operation needs one autonomous trusted producer, complete-cohort atomic cache replacement, retained prior evidence on source failure, persistent bounded Retry-After, and no customer-driven SEC egress. The issuer supplier owns acquisition, reconciliation, validation and provenance. This service only projects trusted operation data, calls its prepared-cohort export, and stores the complete returned object.
+ 
+-Behavior/design: optional `issuerResearch` is preserved verbatim only when explicitly enabled and its resourceAdmission.status is received; a disabled/unreceived instance adds no producer step or new cache writes. Existing operations without it acquire no issuer data. A pass reads a dedicated issuer-research status register, honors `nextAttemptAt`, calls `prepareIssuerRevenueCohort(configuration)` once, then writes the returned complete object to the configured STATE cache key. No partial source data is stored. Status is separate from the serving cache and survives directives/scorecard passes. Retry-After accepts HTTP delay seconds or an HTTP date, retained without shortening; unrepresentable positive delays durably hold acquisition; absent/invalid values defer to the next ordinary pass. Successful refreshes also defer until the next ordinary pass. Only operational status is exposed through the existing readings interface.
++Behavior/design: optional `issuerResearch` is preserved verbatim only when explicitly enabled and its resourceAdmission.status is received, using the existing Durable Object alarm clock. A disabled/unreceived instance adds no producer work or cache writes. The original serialized EarningClock passes its own SQLite storage to the qualified two-key adapter, which validates prior cohort/status before calling the producer and atomically publishes staged complete cohort/status only after full success. Cohort and status use only `issuer-evidence/cohort` and `issuer-evidence/status`; both wrappers retain the exact configured logical cache key. No issuer cache/status/retry value is written through STATE/R2. Status survives directives/scorecard passes. Retry-After accepts HTTP delay seconds or an HTTP date without shortening; unrepresentable positive delays durably hold acquisition. Oversized status or transaction serialization durably holds with the specified sentinel while preserving the prior cohort; semantically corrupt status refuses. The existing coordinator retains its retry policy. Public readings and persisted last-run omit issuer status; only the internal run result retains it.
+ 
+-Resource allocation: for the initial two-issuer operation, three route probes and four settlement witnesses give at most 41 Worker subrequests in an ordinary pass; the coincident weekly tick adds six, and alarm rearming adds one storage call (48 total measured calls): settlement STATE get + one LIST + four witness gets + sixteen RPC attempts + STATE put = 23; route STATE get + catalog get + three probes + STATE put = 6; scorecard three gets + two puts = 5; absent onchain hook one put; last-run one put; issuer status get + two SEC reads + complete cache put + status put = 5. Repair dispatch and an attached onchain hook are disabled for this allocation. No third-party retry is added here. Deploy projection refuses issuer instances exceeding this bound. More issuers require fewer route probes. The operation projection reserves six subrequests for a coincident weekly scorecard run. One settlement LIST page uses the witness limit and retains its opaque continuation cursor only after all returned witnesses have been processed; reaching the end restarts the next scan so later arrivals and retryable witnesses remain eligible.
++Resource allocation: for the initial two-issuer operation, three route probes and four existing settlement witnesses measured 38 external calls in an ordinary pass; the coincident weekly branch adds six, and alarm rearming adds one storage call (45 measured calls). Existing settlement STATE get + one LIST + four witness gets + sixteen RPC attempts + STATE put = 23; route STATE get + catalog get + three probes + STATE put = 6; scorecard three gets + two puts = 5; absent onchain hook one put; last-run one put; issuer source acquisition two SEC reads = 2. The issuer's SQLite reads and atomic writes stay inside the same object; actual storage/free-capacity admission is separate. Existing unrelated R2 maintenance remains. Repair dispatch and an attached onchain hook are disabled for this allocation. No third-party retry is added here. More issuers require fewer route probes. One settlement LIST page retains its continuation cursor only after all returned witnesses have been processed; reaching the end restarts the next scan so later arrivals and retryable witnesses remain eligible. The separate new issuer-only financial custody pass has its own between-maintenance allocation and is not admitted by these cache tests.
++
++Private market consumption: one uniquely selected compiled issuer declaration supplies the same compute.configuration object to the qualified read adapter. It reaches the existing earning-loops singleton through a cross-script binding, accepts only its fixed logical cohort key, and exposes only get/body/size to the original supplier selector. The raw namespace is removed from the compute environment. The private GET precedes EarningClock's alarm-arming catchall and performs no alarm/status read or refresh. The public Worker never forwards it. The native edge transport uses manual redirects with explicit non-200 refusal; Workers rejects redirect:error at Request construction.
+ 
+ Construction: bounded caller/source normalization against the supplier's admitted prepared-cohort API, not a new semantic producer or workflow platform. Native esbuild bundles declared imports from the selected graph. Deployment uploads the resulting ESM artifact and keeps existing bindings/secrets, rather than maintaining an eleven-file upload whitelist. Build artifacts and standard esbuild metadata remain under source-owned worker-build records, keyed by input content.
+ 
+-Predesign receiving: test absent optional config; full return before atomic write; source error preserves old cache; numeric/date/invalid/greater-than24-hour/unrepresentable Retry-After and next-tick suppression; continuation over seen pages without loss; deployment projection preserves all issuer fields and refuses over-budget combinations; count the actual worst-case four-provider/four-witness, three-route, two-issuer caller (41 per pass; 48 including the coincident weekly branch and alarm). Generated supplier tests independently qualify source acquisition semantics. No deployment or incremental-cost admission is asserted by these local tests.
++Predesign receiving: test absent/unreceived config; full return before atomic write; prior cohort/status preservation on callback or transaction failure; numeric/date/greater-than24-hour/unrepresentable Retry-After and durable sentinel reentry; corruption/byte/transaction bounds; continuation over seen pages; exact private key/query/method and unchanged Unicode byte stream; no public cache/status/credential/alarm access; source-owned singleton/config selection and namespace pruning. Count the actual worst-case original four-provider/four-witness, three-route, two-issuer caller and coincident alarms. Native independent I/O and actual SQLite workerd private-binding tests are separate from generated pure-plan cases. Original supplier acquisition/paid-selector receiving, complete deployment closure, capacity and incremental-cost admission remain independently required before promotion.
+diff --git a/src/deployment.mjs b/src/deployment.mjs
+index 944b95a..362ae23 100644
+--- a/src/deployment.mjs
++++ b/src/deployment.mjs
+@@ -1,3 +1,5 @@
++import { hashnInstanceProblem } from './hashn-acquisition.mjs';
++
+ export function projectOperation(record) {
+   if (typeof record.merchantPayTo !== 'string' || !/^0x[\da-f]{40}$/i.test(record.merchantPayTo))
+     throw new TypeError('operation.merchantPayTo must name the independently authorized merchant recipient');
+@@ -5,6 +7,8 @@ export function projectOperation(record) {
+     economics: record.economics, merchantPayTo: record.merchantPayTo, clock: record.clock ?? 'cron-triggers',
+     repair: { brokenStreakBeforeRepair: record.repair.brokenStreakBeforeRepair, repository: record.repair.repository }, onchainScanUrl: record.onchainScanUrl };
+   if (record.issuerResearch?.enabled === true && record.issuerResearch.resourceAdmission?.status === 'received') {
++    if (operation.clock !== 'durable-object-alarm')
++      throw new TypeError('issuer operation requires serialized private Durable Object custody');
+     const n = record.issuerResearch.issuers?.length;
+     const routes = record.limits?.routeProbesPerPass, witnesses = record.limits?.settlementsPerPass;
+     if (!Number.isInteger(n) || n < 2 || n > 5 || !Number.isInteger(routes) || routes < 0 || routes + n > 5
+@@ -22,6 +26,11 @@ export function projectOperation(record) {
+       throw new TypeError('research procurement requires serialized private Durable Object custody');
+     operation.researchProcurement = record.researchProcurement;
+   }
++  if (record.hashAcquisition) {
++    if (record.hashAcquisition.enabled && (operation.clock !== 'durable-object-alarm' || hashnInstanceProblem(record.hashAcquisition)))
++      throw new TypeError('Hashn acquisition requires private singleton custody and a qualified zero-cash bounded instance');
++    operation.hashAcquisition = record.hashAcquisition;
++  }
+   return operation;
+ }
+ 
+diff --git a/src/hashn-acquisition.mjs b/src/hashn-acquisition.mjs
+new file mode 100644
+index 0000000..c07435c
+--- /dev/null
++++ b/src/hashn-acquisition.mjs
+@@ -0,0 +1,113 @@
++import { canonicalJson } from '@red-cup-engineering/json-services-section/canonical-json';
++import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
++
++export const HASHN_STATE = 'hashn/acquisition';
++export const HASHN_SUMMARY = 'hashn/public-summary';
++const AUTH = 'hashn/auth';
++const SIX_HOURS = 6 * 60 * 60 * 1000;
++const WEEK = 7 * 24 * 60 * 60 * 1000;
++const hash = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2,'0')).join('');
++
++export function hashnInstanceProblem(instance) {
++  if (!instance?.enabled) return 'hashn-disabled';
++  if (!UUID.test(instance.workspaceId ?? '') || !UUID.test(instance.buyerAgentId ?? '') ||
++    !/^[a-zA-Z0-9_-]{1,100}$/.test(instance.offerId ?? '') || typeof instance.note !== 'string' ||
++    [...instance.note].length < 1 || [...instance.note].length > 500 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(instance.note) ||
++    instance.maximumNewCashExpenseUsd !== 0 || instance.maximumProviderRequestsPerPass !== 3 ||
++    instance.pollIntervalMs !== SIX_HOURS) return 'hashn-instance-refused';
++  return null;
++}
++
++/** The caller is the existing singleton DO queue. This operation can only send
++ * one frozen knock and observe its disposition. A response is never an agreement
++ * or delivery instruction. Token, note, replies and workspace ids stay private. */
++export async function runHashnAcquisition({ storage, instance, initialCredential, fetchImpl = fetch, now = () => Date.now() } = {}) {
++  const refusal = hashnInstanceProblem(instance);
++  if (refusal) return { stage: refusal, requests: 0, newCashExpenseUsd: 0 };
++  let state = await storage.get(HASHN_STATE) ?? {};
++  let calls = 0;
++  const finish = async (stage, terminal = false, delay = SIX_HOURS) => {
++    state.stage = stage; state.terminal = terminal;
++    state.nextAttemptAt = terminal || state.retryBlocked ? null : Math.max(now() + delay, state.retryAt ?? 0);
++    await storage.put(HASHN_STATE, state);
++    const summary = { stage, requests: calls, newCashExpenseUsd: 0, at: new Date(now()).toISOString(),
++      offerId: instance.offerId, knockStatus: state.knockStatus ?? null,
++      agreementReceived: false, deliverySubmitted: false, recognizedOutsideRevenue: null };
++    await storage.put(HASHN_SUMMARY, summary);
++    return summary;
++  };
++  const wire = async (path, options = {}) => {
++    if (calls >= instance.maximumProviderRequestsPerPass) throw hashnError('hashn-request-budget');
++    if (state.retryBlocked || state.retryAt > now()) throw hashnError('hashn-retry-deferred');
++    calls++;
++    return hashnRequest(path, { ...options, fetchImpl, now, onRetry: async retry => {
++      Object.assign(state,retry); await storage.put(HASHN_STATE,state);
++    } });
++  };
++  try {
++    const credential = hashnCredential(initialCredential);
++    if (!credential) return finish('hashn-credential-held');
++    const bound = { agentId: credential.agentId, workspaceId: instance.workspaceId,
++      buyerAgentId: instance.buyerAgentId, offerId: instance.offerId, note: instance.note };
++    const binding = await hash(bound);
++    if (state.binding && state.binding !== binding) return finish('hashn-binding-drift',true);
++    const priorAuth = await storage.get(AUTH);
++    if (priorAuth && (priorAuth.agentId !== credential.agentId || priorAuth.apiToken !== credential.apiToken)) return finish('hashn-credential-drift',true);
++    if (state.terminal) return finish(state.stage,true);
++    if (state.retryBlocked || state.nextAttemptAt > now()) return { stage: state.stage, requests: 0, newCashExpenseUsd: 0 };
++    if (state.monitoringUntil && now() >= state.monitoringUntil) return finish('hashn-reconciliation-deadline-held',true);
++    if (!priorAuth) {
++      const { data } = await wire('/agents/me',{credential});
++      if ((data.agent_id ?? data.id) !== credential.agentId) return finish('hashn-account-mismatch',true);
++      await storage.put(AUTH,credential);
++    }
++    state.binding ??= binding;
++    state.scope ??= bound;
++    if (state.intent && !state.reconciliationAttempted) state.reconciliationAttempted = true;
++    await storage.put(HASHN_STATE,state);
++    const { data, providerReceipt } = await wire('/knocks',{credential});
++    state.knocksReadbackReceipt = providerReceipt;
++    // Provider OpenAPI deliberately leaves this response untyped. Admit only
++    // its independently received outgoing shape; never infer absence otherwise.
++    if (!Array.isArray(data.outgoing)) throw hashnError('hashn-knocks-shape-held');
++    if (data.has_more === true || data.next_cursor || data.nextCursor) throw hashnError('hashn-knocks-truncated-held');
++    if (data.outgoing.some(k => !k || !UUID.test(k.workspace_id ?? ''))) throw hashnError('hashn-knocks-shape-held');
++    const related = data.outgoing.filter(k => k.workspace_id === instance.workspaceId);
++    if (related.length > 1) return finish('hashn-knock-conflict-held',true);
++    const knock = related[0];
++    if (knock) {
++      if (!['knock_id','from_agent_id','to_agent_id','note','status'].every(key => Object.hasOwn(knock,key)))
++        return finish('hashn-knock-shape-held');
++      if (!UUID.test(knock.knock_id ?? '') || knock.from_agent_id !== credential.agentId ||
++          knock.to_agent_id !== instance.buyerAgentId || knock.note !== instance.note ||
++          !['pending','accepted','declined','expired'].includes(knock.status)) return finish('hashn-knock-scope-held',true);
++      if (state.knockId && state.knockId !== knock.knock_id) return finish('hashn-knock-identity-held',true);
++      state.knockId = knock.knock_id; state.knockStatus = knock.status;
++      state.monitoringUntil ??= now() + WEEK + SIX_HOURS;
++      if (knock.status === 'accepted') {
++        if (!UUID.test(knock.result_workspace_id ?? '')) return finish('hashn-acceptance-shape-held',true);
++        state.resultWorkspaceId = knock.result_workspace_id;
++        return finish('hashn-accepted-terms-held',true);
++      }
++      return finish('hashn-' + knock.status, knock.status !== 'pending');
++    }
++    if (state.intent) return finish('hashn-knock-readback-pending'); // absolutely no POST replay after uncertainty/absence
++    state.intent = { method: 'POST', path: `/workspaces/${instance.workspaceId}/knock`, body: { note: instance.note },
++      payloadSha256: await hash({ note: instance.note }), at: new Date(now()).toISOString() };
++    state.monitoringUntil = now() + WEEK + SIX_HOURS;
++    await storage.put(HASHN_STATE,state); // before the only permissible mutation
++    const result = await wire(state.intent.path,{method:'POST',body:state.intent.body,credential});
++    state.knockWriteReceipt = result.providerReceipt;
++    await storage.put(HASHN_STATE,state);
++    if (result.status !== 201) throw hashnError('hashn-knock-response-held');
++    // Even a successful write is reconciled from GET /knocks; raw provider
++    // response stays untrusted and is never exposed or treated as a deal.
++    return finish('hashn-knock-sent-readback-pending',false,30000);
++  } catch (e) {
++    const code = /^hashn-[a-z-]{1,80}$/.test(e.code ?? '') ? e.code : 'hashn-failure';
++    state.lastFailure = code;
++    if (e.providerReceipt) state.providerReceipt = e.providerReceipt;
++    return finish(code,[400,401,403,404,402,410,422].includes(e.status) || e.status === 409 && !state.intent || code === 'hashn-redirect-refused',
++      state.intent && !state.reconciliationAttempted ? 30000 : SIX_HOURS);
++  }
++}
+diff --git a/src/hashn-client.mjs b/src/hashn-client.mjs
+new file mode 100644
+index 0000000..bc847f6
+--- /dev/null
++++ b/src/hashn-client.mjs
+@@ -0,0 +1,68 @@
++// Hashn 0.61.2 control API: fixed origin, no redirects or automatic replay.
++import { readTextBody } from '@red-cup-engineering/http-services-section/body/web';
++import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/retry-after';
++import { admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-services-section/canonical-json';
++
++export const HASHN_ORIGIN = 'https://api.hashn.com';
++export const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
++const LIMIT = 32768;
++const envelope = { ...JSON_RESOURCE_ENVELOPE, maxSourceBytes: LIMIT, maxCanonicalBytes: LIMIT, maxDepth: 20, maxNodes: 12000 };
++export const hashnError = (code, status = 0) => Object.assign(new Error(code), { code, status });
++export function privateHashnReceipt(value, credential) {
++  const redact = v => {
++    if (typeof v === 'string') return v.replace(/aw_[A-Za-z0-9._~-]+/g,'[redacted-token]')
++      .split(credential?.apiToken || '\u0000').join('[redacted-token]');
++    if (Array.isArray(v)) return v.map(redact);
++    if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k,x]) =>
++      [k,/authorization|token|secret|password|credential/i.test(k) ? '[redacted]' : redact(x)]));
++    return v;
++  };
++  const safe = redact(value);
++  if (new TextEncoder().encode(JSON.stringify(safe)).length > LIMIT)
++    return { status: safe.status, requestId: safe.requestId, cfRay: safe.cfRay, coverage: 'redacted-receipt-exceeds-storage-limit', bodyOmitted: true };
++  return safe;
++}
++export function hashnCredential(value) {
++  let c;
++  try { c = typeof value === 'string' ? JSON.parse(value) : value; } catch { return null; }
++  return UUID.test(c?.agentId ?? '') && typeof c.apiToken === 'string' && /^aw_[A-Za-z0-9_-]{8,512}$/.test(c.apiToken)
++    ? { agentId: c.agentId, apiToken: c.apiToken } : null;
++}
++
++export async function hashnRequest(path, { method = 'GET', body, credential, fetchImpl = fetch, now = () => Date.now(), onRetry = async () => {} } = {}) {
++  const allowed = method === 'GET' && ['/agents/me', '/knocks', '/listings'].includes(path) && credential ||
++    method === 'POST' && (path === '/agents' && !credential ||
++      (/^\/workspaces\/[a-f0-9-]{36}\/knock$/i.test(path) || ['/listings/check','/listings'].includes(path)) && credential);
++  if (!allowed) throw hashnError('hashn-endpoint-refused');
++  const signal = AbortSignal.timeout(15000);
++  let response;
++  try {
++    response = await fetchImpl(HASHN_ORIGIN + path, { method, redirect: 'manual', signal,
++      headers: { accept: 'application/json', ...(credential ? { authorization: `Bearer ${credential.apiToken}` } : {}),
++        ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
++      ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
++  } catch { throw Object.assign(hashnError('hashn-response-unknown'), { providerReceipt: { status: null, coverage: 'response-not-received' } }); }
++  const receipt = { status: response.status, requestId: response.headers.get('x-request-id')?.slice(0,256) ?? null,
++    cfRay: response.headers.get('cf-ray')?.slice(0,256) ?? null, coverage: 'headers-only' };
++  const refuse = code => Object.assign(hashnError(code,response.status), { providerReceipt: privateHashnReceipt(receipt,credential) });
++  const retry = response.headers.get('retry-after');
++  if (retry) {
++    const delay = retry.length <= 256 ? retryAfterDelayMs(retry, now()) : null;
++    const retryBlocked = retry.length > 256 || delay === null && /^\d+$/.test(retry.trim()) || delay !== null && !Number.isFinite(new Date(now() + delay).getTime());
++    if (retryBlocked || delay !== null) await onRetry({ retryBlocked, retryAt: retryBlocked ? null : now() + delay });
++  }
++  if (Number(response.headers.get('content-length')) > LIMIT) {
++    receipt.coverage = 'declared-body-too-large';
++    void response.body?.cancel().catch(() => {}); throw refuse('hashn-response-too-large');
++  }
++  let text;
++  try {
++    text = await readTextBody({ body: response.body, headers: response.headers, signal }, { maxBytes: LIMIT, decodeContentEncoding: false });
++  } catch { receipt.coverage = 'body-unreceived-or-limit'; throw refuse('hashn-response-invalid'); }
++  receipt.coverage = 'complete-bounded-body';
++  let data;
++  try { data = admitCanonicalJson(text, envelope).value; receipt.body = data; }
++  catch { receipt.body = text; if (response.ok) throw refuse('hashn-response-invalid'); }
++  if (!response.ok) throw refuse(response.status >= 300 && response.status < 400 ? 'hashn-redirect-refused' : response.status === 402 ? 'hashn-payment-refused' : 'hashn-provider-refused');
++  return { status: response.status, data, providerReceipt: privateHashnReceipt(receipt,credential) };
++}
+diff --git a/src/hashn-offer-publication.mjs b/src/hashn-offer-publication.mjs
+new file mode 100644
+index 0000000..d5812bd
+--- /dev/null
++++ b/src/hashn-offer-publication.mjs
+@@ -0,0 +1,55 @@
++import { canonicalJson } from '@red-cup-engineering/json-services-section/canonical-json';
++import { hashnCredential, hashnRequest, UUID } from './hashn-client.mjs';
++
++const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',
++  new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2, '0')).join('');
++
++// Source-owned Public offers are published explicitly; the clock cannot invoke
++// this operation. A publication never creates a deal or authorizes production.
++export async function publishHashnOffer({ descriptor, credential: rawCredential, custody, fetchImpl = fetch, now = () => Date.now() }) {
++  const credential = hashnCredential(rawCredential);
++  const listing = descriptor?.listing;
++  if (!credential || descriptor?.provider !== 'https://api.hashn.com' || descriptor.agentId !== credential.agentId ||
++      !UUID.test(descriptor.agentId) || !/^[a-z0-9][a-z0-9.-]{1,99}$/.test(listing?.name ?? '') ||
++      listing.path !== `listings/${listing.name}.md` || listing.convention !== 'agent-services' ||
++      !Number.isSafeInteger(descriptor.price?.amount) || descriptor.price.amount <= 0 || descriptor.price.currency !== 'USDC' ||
++      typeof listing.can !== 'string' || !listing.can || Object.hasOwn(listing, 'need') ||
++      listing.contact_method !== 'hashn knock' ||
++      listing.contact_info !== `POST https://api.hashn.com/agents/${credential.agentId}/knock`)
++    throw new TypeError('source-owned seller offer and matching admitted credential required');
++  const payloadSha256 = await digest(listing);
++  let state = await custody.getAttempt();
++  if (state?.payloadSha256 && state.payloadSha256 !== payloadSha256)
++    return { stage: 'publication-scope-held', newCashExpenseUsd: 0 };
++  // No blind replay after an unknown listing write. Native GET /listings and
++  // the public source URL reconcile it without another publication mutation.
++  if (state?.intent) return { stage: state.stage, newCashExpenseUsd: 0 };
++  state = { payloadSha256, agentId: credential.agentId, path: listing.path, at: new Date(now()).toISOString() };
++  try {
++    const me = await hashnRequest('/agents/me', { credential, fetchImpl, now });
++    if (me.data.agent_id !== credential.agentId) throw new Error('publication-account-mismatch');
++    const check = await hashnRequest('/listings/check', { method: 'POST', body: listing, credential, fetchImpl, now });
++    state.check = check.providerReceipt;
++    if (check.data.ok !== true || check.data.in_forest !== true || check.data.path !== listing.path ||
++        check.data.header?.can !== listing.can || check.data.header?.project !== listing.fields.project ||
++        check.data.header?.['payment.amount'] !== descriptor.price.amount ||
++        check.data.header?.['payment.currency'] !== descriptor.price.currency) {
++      state.stage = 'publication-check-held'; await custody.putAttempt(state);
++      return { stage: state.stage, newCashExpenseUsd: 0 };
++    }
++    state.intent = { method: 'POST', path: '/listings', body: listing };
++    state.stage = 'publication-intent';
++    await custody.putAttempt(state);
++    const result = await hashnRequest('/listings', { method: 'POST', body: listing, credential, fetchImpl, now });
++    state.receipt = result.providerReceipt;
++    state.stage = result.status === 201 ? 'publication-received' : 'publication-readback-required';
++    await custody.putAttempt(state);
++    return { stage: state.stage, receipt: result.data, newCashExpenseUsd: 0 };
++  } catch (error) {
++    state.stage = state.intent ? 'publication-outcome-held' : 'publication-precondition-held';
++    state.failure = { code: error.code ?? 'publication-failure', message: error.message,
++      ...(error.providerReceipt ? { providerReceipt: error.providerReceipt } : {}) };
++    await custody.putAttempt(state);
++    return { stage: state.stage, newCashExpenseUsd: 0 };
++  }
++}
+diff --git a/src/hashn-provisioning.mjs b/src/hashn-provisioning.mjs
+new file mode 100644
+index 0000000..aea10af
+--- /dev/null
++++ b/src/hashn-provisioning.mjs
+@@ -0,0 +1,37 @@
++import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
++
++export const HASHN_CREDENTIAL_ID = 'earning-loops.hashn-credential-json';
++const NAME = '561-group earning-loops';
++
++/** Explicit operator-only one-time provisioning. The caller supplies original
++ * durable attempt custody and sealed credential custody; no tokens are returned
++ * or written to the attempt receipt. This is never called by the Worker. */
++export async function provisionHashnAgent({ custody, fetchImpl = fetch, now = () => Date.now() } = {}) {
++  if (!custody || ['getAttempt','putAttempt','getCredential','putCredential'].some(k => typeof custody[k] !== 'function'))
++    throw new TypeError('durable attempt and sealed credential custody required');
++  let attempt = await custody.getAttempt();
++  const existingRaw = await custody.getCredential(HASHN_CREDENTIAL_ID);
++  const existing = hashnCredential(existingRaw);
++  if (existingRaw && !existing) throw hashnError('hashn-credential-invalid');
++  if (existing) {
++    const { data } = await hashnRequest('/agents/me', { credential: existing, fetchImpl, now });
++    if ((data.agent_id ?? data.id) !== existing.agentId || data.name !== NAME) throw hashnError('hashn-account-mismatch');
++    await custody.putAttempt({ ...attempt, stage: 'credential-received', agentId: existing.agentId, observedAt: new Date(now()).toISOString() });
++    return { stage: 'credential-received', agentId: existing.agentId, created: false, newCashExpenseUsd: 0 };
++  }
++  if (attempt) return { stage: 'signup-outcome-held', created: false, newCashExpenseUsd: 0 };
++  attempt = { stage: 'signup-intent', method: 'POST', path: '/agents', body: { name: NAME }, at: new Date(now()).toISOString() };
++  await custody.putAttempt(attempt); // write-ahead: an ambiguous signup is never repeated
++  try {
++    const { status, data, providerReceipt } = await hashnRequest('/agents', { method: 'POST', body: attempt.body, fetchImpl, now });
++    const credential = hashnCredential({ agentId: data.agent_id, apiToken: data.api_token });
++    if (status !== 201 || !UUID.test(data.agent_id ?? '') || !credential) throw Object.assign(hashnError('hashn-signup-response-invalid'),{providerReceipt});
++    await custody.putCredential(HASHN_CREDENTIAL_ID, credential); // original seal before a success receipt
++    await custody.putAttempt({ ...attempt, stage: 'credential-received', agentId: credential.agentId, observedAt: new Date(now()).toISOString() });
++    return { stage: 'credential-received', agentId: credential.agentId, created: true, newCashExpenseUsd: 0 };
++  } catch (error) {
++    await custody.putAttempt({ ...attempt, stage: 'signup-outcome-held', code: /^hashn-[a-z-]+$/.test(error.code ?? '') ? error.code : 'hashn-custody-failure',
++      ...(error.providerReceipt ? { providerReceipt: error.providerReceipt } : {}) });
++    return { stage: 'signup-outcome-held', created: false, newCashExpenseUsd: 0 };
++  }
++}
+diff --git a/src/issuer-research.mjs b/src/issuer-research.mjs
+index d4548f7..e2476f5 100644
+--- a/src/issuer-research.mjs
++++ b/src/issuer-research.mjs
+@@ -12,10 +12,10 @@ export function retryDelayMs(value, now) {
+   return Number.isFinite(delay) ? Math.max(0, delay) : 0;
+ }
+ 
+-export async function refreshIssuerResearch(env, configuration, { now = new Date(), prepare, clock = () => new Date() } = {}) {
++export async function refreshIssuerResearch(store, configuration, { now = new Date(), prepare, clock = () => new Date() } = {}) {
+   if (!configuration) return { status: 'not-configured' };
+   const key = register('issuer-research');
+-  const previous = await read(env.STATE, key);
++  const previous = await read(store, key);
+   if (previous?.retryBlocked) return { ...previous, status: 'deferred' };
+   if (previous?.cacheKey === configuration.cacheKey && Date.parse(previous.nextAttemptAt) > now.getTime())
+     return { ...previous, status: 'deferred' };
+@@ -25,7 +25,7 @@ export async function refreshIssuerResearch(env, configuration, { now = new Date
+     const complete = await producer(configuration);
+     // The producer owns completeness and provenance. Publish only its completed
+     // return value; failures before this point leave the last serving object intact.
+-    await put(env.STATE, configuration.cacheKey, complete);
++    await put(store, configuration.cacheKey, complete);
+     reading = { status: 'prepared', at: now.toISOString(), cacheKey: configuration.cacheKey,
+       observedAt: complete.observedAt ?? null, nextAttemptAt: new Date(now.getTime() + 900_000).toISOString() };
+   } catch (error) {
+@@ -39,6 +39,6 @@ export async function refreshIssuerResearch(env, configuration, { now = new Date
+       retryBlocked: !Number.isFinite(delay),
+       nextAttemptAt: Number.isFinite(delay) ? new Date(refusedAt.getTime() + delay).toISOString() : null };
+   }
+-  await put(env.STATE, key, reading);
++  await put(store, key, reading);
+   return reading;
+ }
+diff --git a/src/issuer-sqlite-cache.mjs b/src/issuer-sqlite-cache.mjs
+new file mode 100644
+index 0000000..756012b
+--- /dev/null
++++ b/src/issuer-sqlite-cache.mjs
+@@ -0,0 +1,176 @@
++/*
++ * issuer-private-sqlite-cache / src/issuer-sqlite-cache.mjs
++ * ArtifactFabricationSpecification v2; projection jsnode-modules.
++ * Source: earning-loop-worker-service/specifications/issuer-private-sqlite-cache-edge.work-order.md, lines 1–37.
++ * Source digest: sha256:e7974b3d619a4293d95f501e5273739caad95942989c8fce212dfc0fdb6ef28a.
++ * Specification: ni:///sha-256;QqZcGyMOQUowWQ9OPhouLllz12w33a4Vg8t_Hmo1Jr8.
++ * Normative authority register (locators relative to the supplied carrier remain relative):
++ * byte-custody: IETF, RFC9110, https://www.rfc-editor.org/rfc/rfc9110; actual private GET bytes, length, media semantics and no refresh.
++ * edge-transport: Cloudflare, actual workerd1.20261024.1 native receiving 2026-10-24; earning-loop-worker-service/data/records/worker-runtime-test-records/61bfd8ff392d5904ccc9b1a088e8af5ca7871a632bb90f608f82903d27d54898/config.capnp; client manual redirects and status refusal belong to the other module.
++ * house-operation: 561 Group, original paid issuer operation 2026-10-24; 561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-issuer-period-reconciliation.json; fixed singleton and two keys, supplier owns reconciliation/provenance/freshness, no request-driven acquisition or incremental cash authority.
++ * sqlite-platform: Cloudflare, docs observed 2026-10-24, https://developers.cloudflare.com/durable-objects/platform/limits/; conservative 1900000-byte serialized transaction ceiling below SQLite 2MB, no billable headroom inference.
++ * async-contract: Red Cup Engineering, accepted issuer caller contract at c425608745ace8e864ba8e1df2fcd12058240f72, ./issuer-research-integration.md; preserve Retry-After and full-only publication, no R2 writes.
++ * source-free: Red Cup Engineering, native deriveJsnodeModules; computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs; unchanged whole-unit proposal requires independent receiving before wiring.
++ * async-custody, async-atomic, async-overflow, async-server, async-client, async-integration: Red Cup Engineering, approved private cache contract 2026-10-24, ./issuer-private-sqlite-cache.work-order.md; complete mandatory async contracts, independently qualified I/O.
++ * async-status: Red Cup Engineering, independent receiving correction 2026-10-24, same locator; validate existing coordinator records without inventing retry policy.
++ * Trace: admission and no-authority-expansion -> all thirteen constraints -> jsnode-modules -> io-receiving; coordinates -> same constraints/projection -> pure-receiving.
++ * Receiving obligations remain outstanding: pure admission/disabled/unreceived/invalid assays do not qualify I/O. Independent memory and actual workerd two-service/private-binding receiving must verify deferred and atomic publication, rollback, failures, durable Retry-After and overflow reentry, exact keys, no OpenTask/alarm effects, HTTP/query/admission rules, bytes/Unicode/bounds/malformed transport, stale/missing consumer refusal, native supplier producer/read path, retained commercial tests and alarms. No deployment, paid success or cost claim.
++ * Integration owner: earning-loop-worker-service/src/issuer-sqlite-cache.mjs. Existing serialized EarningClock queue wraps refresh; private handler precedes alarm catch-all. Supplier consumes issuerStore with no issuer STATE fallback. Existing run/tick, public routes, OpenTask custody and maintenance remain intact. The market module is separately received at market.561.group/src/issuer-evidence-store.mjs using the existing external namespace/singleton and readStore only.
++ * No public cache/refresh route, source acquisition, credentials, arbitrary keys, alarm mutation, namespace, migration, schedule, external dependency, private worker import or deployment is authorized.
++ */
++const COHORT = 'issuer-evidence/cohort';
++const STATUS = 'issuer-evidence/status';
++const LOGICAL_STATUS = 'registers/earning-loops/issuer-research.json';
++const STATUS_LIMIT = 524288;
++const TRANSACTION_LIMIT = 1900000;
++const encoder = new TextEncoder();
++const bytes = value => encoder.encode(value).byteLength;
++const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
++const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
++function invalid() { return new TypeError('Invalid issuer cache record'); }
++
++/**
++ * Admit host configuration and return the exact bounded SQLite coordinates, without effects.
++ * @param {*} configuration Host resource admission and cache configuration.
++ * @returns {object|null} The storage plan, or null when not admitted.
++ */
++export function issuerSqliteStoragePlan(configuration) {
++  if (configuration == null || configuration.enabled !== true || configuration.resourceAdmission?.status !== 'received') return null;
++  const { cacheKey, maximumCohortBytes } = configuration;
++  if (typeof cacheKey !== 'string' || cacheKey.length === 0 || bytes(cacheKey) > 256 || cacheKey === LOGICAL_STATUS || !Number.isSafeInteger(maximumCohortBytes) || maximumCohortBytes <= 0 || maximumCohortBytes > STATUS_LIMIT) throw new TypeError('Invalid issuer cache configuration');
++  return { cohortKey: COHORT, statusKey: STATUS, logicalStatusKey: LOGICAL_STATUS, cacheKey, maximumCohortBytes, maximumStatusBytes: STATUS_LIMIT, maximumTransactionBytes: TRANSACTION_LIMIT };
++}
++function instant(value) {
++  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value)) return false;
++  const time = Date.parse(value);
++  return Number.isFinite(time) && new Date(time).toISOString() === value;
++}
++function sentinel(cacheKey) {
++  return { status: 'unavailable', cacheKey, retryBlocked: true, reason: 'status-overflow', nextAttemptAt: null };
++}
++function validateStatus(value, cacheKey) {
++  if (!object(value) || value.cacheKey !== cacheKey) throw invalid();
++  const special = sentinel(cacheKey);
++  if (Object.keys(value).length === Object.keys(special).length && Object.keys(special).every(key => own(value, key) && value[key] === special[key])) return;
++  if (!instant(value.at)) throw invalid();
++  const deadline = () => instant(value.nextAttemptAt) && Date.parse(value.nextAttemptAt) >= Date.parse(value.at);
++  if (value.status === 'prepared') {
++    if (!(value.observedAt === null || instant(value.observedAt)) || (own(value, 'retryBlocked') && value.retryBlocked !== false) || !deadline()) throw invalid();
++  } else if (value.status === 'unavailable') {
++    const nullableString = v => v === null || typeof v === 'string';
++    if (typeof value.error !== 'string' || !nullableString(value.code) || !nullableString(value.reason) || typeof value.retryable !== 'boolean' || !nullableString(value.retryAfter) || typeof value.retryBlocked !== 'boolean' || (value.retryBlocked ? value.nextAttemptAt !== null : !deadline())) throw invalid();
++  } else throw invalid();
++}
++function physicalSize(key, record) { return bytes(key) + bytes(JSON.stringify(record)); }
++function readRecord(record, key, plan) {
++  if (record === undefined) return null;
++  if (!object(record) || Object.keys(record).length !== 2 || !own(record, 'cacheKey') || !own(record, 'body') || typeof record.cacheKey !== 'string' || typeof record.body !== 'string') throw invalid();
++  const limit = key === COHORT ? plan.maximumCohortBytes : STATUS_LIMIT;
++  if (bytes(record.body) > limit || physicalSize(key, record) > TRANSACTION_LIMIT) throw invalid();
++  const parsed = JSON.parse(record.body);
++  if (record.cacheKey !== plan.cacheKey) return null;
++  if (key === STATUS) validateStatus(parsed, plan.cacheKey);
++  return record.body;
++}
++
++/**
++ * Run work once outside a transaction using a scoped bucket adapter, then atomically publish staged JSON.
++ * Stored records are validated before work; overflow durably blocks retry while preserving the prior cohort.
++ * @param {object} storage Existing DurableObjectStorage get and transaction capabilities.
++ * @param {*} configuration Host resource admission and cache configuration.
++ * @param {function(object): *} work Existing coordinator receiving async get and put methods.
++ * @returns {Promise<*>} The resolved work result after publication, an overflow sentinel, or not-configured status.
++ */
++export async function withIssuerSqliteStore(storage, configuration, work) {
++  const plan = issuerSqliteStoragePlan(configuration);
++  if (plan === null) return { status: 'not-configured' };
++  if (!storage || typeof storage.get !== 'function' || typeof storage.transaction !== 'function' || typeof work !== 'function') throw new TypeError('Invalid issuer storage capabilities');
++  const initial = new Map();
++  initial.set(COHORT, readRecord(await storage.get(COHORT), COHORT, plan));
++  initial.set(STATUS, readRecord(await storage.get(STATUS), STATUS, plan));
++  const staged = new Map();
++  let closed = false;
++  let overflow = false;
++  let fatal = null;
++  const hold = sentinel(plan.cacheKey);
++  function resolve(key) {
++    if (closed) throw new TypeError('Issuer store scope closed');
++    if (key === plan.cacheKey) return COHORT;
++    if (key === LOGICAL_STATUS) return STATUS;
++    throw new TypeError('Unadmitted issuer cache key');
++  }
++  function failClosed() {
++    overflow = true;
++    staged.clear();
++    staged.set(STATUS, { cacheKey: plan.cacheKey, body: JSON.stringify(hold) });
++  }
++  function boundTransaction() {
++    let total = 0;
++    for (const [key, record] of staged) {
++      const size = physicalSize(key, record);
++      if (size > TRANSACTION_LIMIT) { failClosed(); return; }
++      total += size;
++    }
++    if (total > TRANSACTION_LIMIT) failClosed();
++  }
++  const store = {
++    async get(key) {
++      const physical = resolve(key);
++      const body = staged.has(physical) ? staged.get(physical).body : initial.get(physical);
++      return body === null ? null : { json: async () => JSON.parse(body) };
++    },
++    async put(key, text) {
++      const physical = resolve(key);
++      let parsed;
++      if (physical === STATUS) {
++        try {
++          if (typeof text !== 'string' || bytes(text) > STATUS_LIMIT) { failClosed(); return; }
++          parsed = JSON.parse(text);
++        } catch { failClosed(); return; }
++        try { validateStatus(parsed, plan.cacheKey); } catch (error) { fatal = error; throw error; }
++      } else {
++        if (typeof text !== 'string' || bytes(text) > plan.maximumCohortBytes) throw invalid();
++        JSON.parse(text);
++      }
++      if (overflow) return;
++      staged.set(physical, { cacheKey: plan.cacheKey, body: text });
++      boundTransaction();
++    }
++  };
++  let result;
++  try { result = await work(store); } finally { closed = true; }
++  if (fatal !== null) throw fatal;
++  if (staged.size !== 0) {
++    await storage.transaction(async transaction => {
++      for (const [key, record] of staged) await transaction.put(key, record);
++    });
++  }
++  return overflow ? hold : result;
++}
++function response(status, headers = {}) {
++  return new Response(null, { status, headers: { 'Cache-Control': 'no-store', ...headers } });
++}
++
++/**
++ * Serve only the private admitted GET endpoint using one cohort read and its unchanged JSON bytes.
++ * Invoke before the existing alarm-arming catch-all; freshness remains the supplier selector's responsibility.
++ * @param {Request} request The existing EarningClock fetch request.
++ * @param {object} storage Existing DurableObjectStorage get capability.
++ * @param {*} configuration Host resource admission and cache configuration.
++ * @returns {Promise<Response|null>} A private HTTP response, or null for another pathname.
++ */
++export async function issuerSqliteResponse(request, storage, configuration) {
++  const url = new URL(request.url);
++  if (url.pathname !== '/issuer-evidence') return null;
++  const plan = issuerSqliteStoragePlan(configuration);
++  if (plan === null) return response(404);
++  if (request.method !== 'GET') return response(405, { Allow: 'GET' });
++  const entries = [...url.searchParams];
++  if (entries.length !== 1 || entries[0][0] !== 'key' || entries[0][1] !== plan.cacheKey) return response(404);
++  try {
++    const body = readRecord(await storage.get(COHORT), COHORT, plan);
++    if (body === null) return response(404);
++    const data = encoder.encode(body);
++    return new Response(data, { status: 200, headers: { 'Content-Type': 'application/json', 'Content-Length': String(data.byteLength), 'Cache-Control': 'no-store' } });
++  } catch { return response(503); }
++}
+diff --git a/test/hashn-acquisition.test.mjs b/test/hashn-acquisition.test.mjs
+new file mode 100644
+index 0000000..0cf4e7e
+--- /dev/null
++++ b/test/hashn-acquisition.test.mjs
+@@ -0,0 +1,100 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY, hashnInstanceProblem } from '../src/hashn-acquisition.mjs';
++const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
++const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
++const credential={agentId,apiToken:'aw_private_fixture_only'};
++const instance={enabled:true,workspaceId,buyerAgentId,offerId:'test-offer',note:'A bounded pilot, exact machine terms before work.',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++function fixture() {
++  let time=Date.parse('2026-10-24T22:00:00Z'),outgoing=[],postFailure=null;
++  const map=new Map(),calls=[];
++  const storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};
++  const knock={knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'};
++  const fetchImpl=async(url,init)=>{
++    calls.push({url,...init});assert.equal(init.redirect,'manual');assert.equal(init.headers.authorization,'Bearer '+credential.apiToken);
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId,name:'fixture'});
++    if(url.endsWith('/knocks'))return Response.json({outgoing});
++    assert.equal(init.method,'POST');assert.equal(url,`https://api.hashn.com/workspaces/${workspaceId}/knock`);
++    const saved=map.get(HASHN_STATE);assert.equal(saved.intent.body.note,instance.note);assert.match(saved.intent.payloadSha256,/^[a-f0-9]{64}$/);
++    assert.deepEqual(JSON.parse(init.body),{note:instance.note});
++    if(postFailure)throw postFailure;
++    outgoing=[structuredClone(knock)];return Response.json({knock_id:knockId,status:'pending'},{status:201});
++  };
++  return {map,calls,storage,knock,options:{storage,instance,initialCredential:credential,fetchImpl,now:()=>time},
++    advance(ms=21600000){time+=ms;},setOutgoing(v){outgoing=v;},failPost(){postFailure=new Error('unknown wire outcome');}};
++}
++test('one frozen knock, received by later read, and bounded polling do not replay mutation',async()=>{
++  const f=fixture();let r=await runHashnAcquisition(f.options);
++  assert.equal(r.stage,'hashn-knock-sent-readback-pending');assert.equal(r.requests,3);
++  assert.equal(f.map.get(HASHN_STATE).nextAttemptAt,Date.parse('2026-10-24T22:00:30Z'));
++  assert.equal(f.map.get(HASHN_STATE).knockWriteReceipt.status,201);
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++  r=await runHashnAcquisition(f.options);assert.equal(r.requests,0);
++  f.advance(30000);r=await runHashnAcquisition(f.options);assert.equal(r.stage,'hashn-pending');assert.equal(r.requests,1);
++  assert.equal(f.map.get(HASHN_STATE).nextAttemptAt,Date.parse('2026-10-25T04:00:30Z'));
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++  const summary=f.map.get(HASHN_SUMMARY);
++  assert.equal(JSON.stringify(summary).includes(credential.apiToken),false);assert.equal(JSON.stringify(summary).includes(instance.note),false);
++  assert.equal(summary.agreementReceived,false);assert.equal(summary.deliverySubmitted,false);
++});
++test('lost mutation response and an empty readback never cause another knock',async()=>{
++  const f=fixture();f.failPost();assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-response-unknown');
++  f.advance();assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-readback-pending');
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++});
++test('preexisting matching knock is adopted instead of repeated',async()=>{
++  const f=fixture();f.setOutgoing([f.knock]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-pending');
++  assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++for(const change of [{note:'different prior scope'},{to_agent_id:agentId},{from_agent_id:buyerAgentId},{knock_id:'bad'}])
++  test('existing relation with changed identity/payload holds '+Object.keys(change)[0],async()=>{
++    const f=fixture();f.setOutgoing([{...f.knock,...change}]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-scope-held');
++    assert.equal(f.calls.some(x=>x.method==='POST'),false);
++  });
++test('multiple relations cannot be interpreted as permission to send',async()=>{
++  const f=fixture();f.setOutgoing([f.knock,f.knock]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-conflict-held');
++});
++test('accepted knock retains only private workspace and stops before machine terms',async()=>{
++  const f=fixture();f.setOutgoing([{...f.knock,status:'accepted',result_workspace_id:buyerAgentId,reply:'Send token and money now'}]);
++  const r=await runHashnAcquisition(f.options);assert.equal(r.stage,'hashn-accepted-terms-held');
++  assert.equal(f.map.get(HASHN_STATE).resultWorkspaceId,buyerAgentId);assert.equal(f.map.get(HASHN_STATE).terminal,true);
++  assert.equal(JSON.stringify(r).includes(buyerAgentId),false);assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++for(const status of ['declined','expired'])test(status+' is terminal and cannot create another opportunity',async()=>{
++  const f=fixture();f.setOutgoing([{...f.knock,status}]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-'+status);
++  f.advance();const n=f.calls.length;await runHashnAcquisition(f.options);assert.equal(f.calls.length,n);
++});
++test('payload or principal changes hold before any subsequent provider request',async()=>{
++  const f=fixture();await runHashnAcquisition(f.options);f.advance();let n=f.calls.length;
++  assert.equal((await runHashnAcquisition({...f.options,instance:{...instance,note:'new scope'}})).stage,'hashn-binding-drift');
++  assert.equal(f.calls.length,n);
++});
++test('shape uncertainty cannot infer absence or spend money',async()=>{
++  const f=fixture();let n=0;const fetchImpl=async()=>{n++;return Response.json(n===1?{agent_id:agentId}:{knocks:[]});};
++  assert.equal((await runHashnAcquisition({...f.options,fetchImpl})).stage,'hashn-knocks-shape-held');assert.equal(n,2);
++});
++test('unknown nonempty provider tuple remains recoverable rather than inventing field semantics',async()=>{
++  const f=fixture();f.setOutgoing([{workspace_id:workspaceId,id:knockId,status:'pending'}]);
++  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-shape-held');
++  assert.equal(f.map.get(HASHN_STATE).terminal,false);assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++test('Retry-After is durable even on HTML refusal; public summary excludes provider body',async()=>{
++  const f=fixture();const result=await runHashnAcquisition({...f.options,fetchImpl:async()=>new Response('private provider detail aw_secret_fixture',{status:503,headers:{'retry-after':'86400','x-request-id':'req-fixture'}})});
++  const state=f.map.get(HASHN_STATE);assert.equal(state.providerReceipt.status,503);assert.equal(state.providerReceipt.requestId,'req-fixture');
++  assert.equal(state.providerReceipt.body,'private provider detail [redacted-token]');assert.equal(JSON.stringify(result).includes('private provider'),false);
++  assert.equal(state.nextAttemptAt,Date.parse('2026-10-25T22:00:00Z'));
++});
++test('redirects and payment demands cannot invoke a different origin or payment route',async()=>{
++  for(const status of [302,402]){const f=fixture();let calls=0;const r=await runHashnAcquisition({...f.options,fetchImpl:async()=>{calls++;return Response.json({error:'no'},{status,headers:{location:'https://evil.example'}});}});
++    assert.equal(calls,1);assert.equal(f.map.get(HASHN_STATE).terminal,true);assert.match(r.stage,/refused/);}
++});
++test('missing credentials and unqualified new cash or poll allocation cause no network',async()=>{
++  const f=fixture();assert.equal((await runHashnAcquisition({...f.options,initialCredential:null})).requests,0);
++  assert.equal(hashnInstanceProblem({...instance,maximumNewCashExpenseUsd:1}),'hashn-instance-refused');
++  assert.equal(hashnInstanceProblem({...instance,note:'x'.repeat(501)}),'hashn-instance-refused');
++  assert.equal(hashnInstanceProblem({...instance,pollIntervalMs:1}),'hashn-instance-refused');
++});
++test('unknown mutation is bounded by the original week without assuming expiry or retrying',async()=>{
++  const f=fixture();f.failPost();await runHashnAcquisition(f.options);for(let i=0;i<30;i++)f.advance();
++  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-reconciliation-deadline-held');assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++});
+diff --git a/test/hashn-clock.test.mjs b/test/hashn-clock.test.mjs
+new file mode 100644
+index 0000000..eee72e8
+--- /dev/null
++++ b/test/hashn-clock.test.mjs
+@@ -0,0 +1,52 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { EarningClock, CRONS } from '../worker/earning-loops.mjs';
++import { HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
++import { projectOperation } from '../src/deployment.mjs';
++import { bucket } from './memory.mjs';
++
++const instance={enabled:true,workspaceId:'11111111-1111-4111-8111-111111111111',buyerAgentId:'22222222-2222-4222-8222-222222222222',
++  offerId:'private-proposal',note:'private acquisition scope',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++test('acquisition has an isolated invocation and never displaces CSV or maintenance deadlines',async()=>{
++  const realNow=Date.now,realFetch=globalThis.fetch;let time=Date.parse('2026-10-24T23:07:30Z');Date.now=()=>time;
++  globalThis.fetch=async()=>Response.json({offers:[]});
++  const auth={refreshToken:'held'},values=new Map([['opentask/auth',auth]]);let alarm=null,csv=0,acq=0;
++  const storage={async get(k){return values.get(k);},async put(k,v){values.set(k,v);},async getAlarm(){return alarm;},async setAlarm(v){alarm=v;}};
++  const env={STATE:bucket(),MARKET_SETTLEMENTS:bucket()};
++  const clock=new EarningClock({storage},env,{configuration:{commercial:{enabled:true},hashAcquisition:instance,crons:CRONS,
++    limits:{settlementsPerPass:1,routeProbesPerPass:0},repair:{},catalogUrl:'https://fixture.example/catalog'},
++    commercialPass:async()=>{csv++;return{stage:'awaiting-hire',requests:1};},
++    acquisitionPass:async()=>{acq++;assert.ok(values.get('hashn/next-pulse-at')>time);await storage.put(HASHN_STATE,{stage:'hashn-pending',nextAttemptAt:time+21600000});}
++  });
++  try{
++    await clock.alarm();assert.equal(csv,1);assert.equal(acq,0);assert.equal(alarm,time+1000);
++    time=alarm;await clock.alarm();assert.equal(csv,1);assert.equal(acq,1);assert.equal(alarm,Date.parse('2026-10-24T23:15:00Z'));
++    assert.equal(env.STATE.store.size,0,'isolated acquisition and CSV do not touch R2');assert.equal(values.get('opentask/auth'),auth);
++    time=alarm;await clock.alarm();assert.equal(acq,1);assert.ok(env.STATE.store.has('registers/earning-loops/last-run.json'),'maintenance ran on time');
++    time=Date.parse('2026-10-24T23:22:30Z');await clock.alarm();assert.equal(csv,2);assert.equal(acq,1);
++  }finally{Date.now=realNow;globalThis.fetch=realFetch;}
++});
++test('a failed acquisition cannot create a tight alarm loop or overwrite commercial custody',async()=>{
++  const realNow=Date.now;let time=Date.parse('2026-10-24T23:08:00Z');Date.now=()=>time;
++  const values=new Map([['earning-clock/core-next-at',time+420000]]);let alarm;
++  const storage={async get(k){return values.get(k);},async put(k,v){values.set(k,v);},async setAlarm(v){alarm=v;}};
++  const clock=new EarningClock({storage},{},{configuration:{hashAcquisition:instance,crons:CRONS},acquisitionPass:async()=>{throw new Error('test failure');}});
++  try{await assert.rejects(clock.alarm(),/test failure/);assert.equal(alarm,time+420000);assert.equal(values.get('hashn/next-pulse-at'),time+21600000);}
++  finally{Date.now=realNow;}
++});
++test('acquisition public reading is a strict projection and cannot trigger an effect',async()=>{
++  const secret='aw_should_never_appear';let calls=0;
++  const values=new Map([[HASHN_SUMMARY,{stage:'hashn-pending',requests:1,at:'2026-10-24T23:00:00Z',newCashExpenseUsd:0,
++    apiToken:secret,note:'private',providerReceipt:{body:'private'},resultWorkspaceId:'private',offerId:'public-offer',agreementReceived:false}]]);
++  const clock=new EarningClock({storage:{async get(k){return values.get(k);}}},{},{acquisitionPass:async()=>{calls++;}});
++  const r=await(await clock.fetch(new Request('https://fixture.example/acquisition.json'))).json();
++  assert.equal(calls,0);for(const k of ['apiToken','note','providerReceipt','resultWorkspaceId'])assert.equal(r[k],undefined);
++  assert.equal(r.agreementReceived,false);
++});
++test('source projection rejects non-private clocks and altered cash/request/poll admission',()=>{
++  const base={merchantPayTo:'0x'+'1'.repeat(40),clock:'durable-object-alarm',repair:{},hashAcquisition:instance};
++  assert.deepEqual(projectOperation(base).hashAcquisition,instance);
++  for(const hashAcquisition of [{...instance,maximumNewCashExpenseUsd:1},{...instance,maximumProviderRequestsPerPass:99},{...instance,pollIntervalMs:1}])
++    assert.throws(()=>projectOperation({...base,hashAcquisition}));
++  assert.throws(()=>projectOperation({...base,clock:'cron-triggers'}));
++});
+diff --git a/test/hashn-offer-publication.test.mjs b/test/hashn-offer-publication.test.mjs
+new file mode 100644
+index 0000000..01459bc
+--- /dev/null
++++ b/test/hashn-offer-publication.test.mjs
+@@ -0,0 +1,24 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { publishHashnOffer } from '../src/hashn-offer-publication.mjs';
++const agentId='33333333-3333-4333-8333-333333333333';
++const credential={agentId,apiToken:'aw_publication_fixture_only'};
++const listing={name:'reconciliation-pilot',path:'listings/reconciliation-pilot.md',convention:'agent-services',can:'One bounded reconciliation pilot after exact agreement.',
++  contact_method:'hashn knock',contact_info:`POST https://api.hashn.com/agents/${agentId}/knock`,fields:{project:'fixture-project'}};
++const descriptor={provider:'https://api.hashn.com',agentId,price:{amount:10,currency:'USDC'},listing};
++function fixture(price=10){let state,posts=0;const custody={async getAttempt(){return structuredClone(state);},async putAttempt(v){state=structuredClone(v);}};
++  const fetchImpl=async(url,init)=>{
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId});
++    if(url.endsWith('/listings/check'))return Response.json({ok:true,in_forest:true,path:listing.path,header:{can:listing.can,project:'fixture-project','payment.amount':price,'payment.currency':'USDC'}});
++    assert.equal(url,'https://api.hashn.com/listings');assert.equal(state.stage,'publication-intent');assert.deepEqual(state.intent.body,listing);posts++;
++    throw new Error('response lost after provider may have committed');
++  };return{custody,fetchImpl,state:()=>state,posts:()=>posts};}
++test('unknown public listing write keeps exact intent and cannot be repeated',async()=>{
++  const f=fixture();assert.equal((await publishHashnOffer({...f,descriptor,credential})).stage,'publication-outcome-held');
++  const prior=f.state();assert.equal(prior.intent.path,'/listings');assert.equal(f.posts(),1);
++  assert.equal((await publishHashnOffer({...f,descriptor,credential})).stage,'publication-outcome-held');assert.equal(f.posts(),1);
++});
++test('provider price-unit mismatch holds before any public listing mutation',async()=>{
++  const f=fixture(10000000);const result=await publishHashnOffer({...f,descriptor,credential});
++  assert.equal(result.stage,'publication-check-held');assert.equal(f.posts(),0);assert.equal(f.state().intent,undefined);
++});
+diff --git a/test/hashn-provisioning.test.mjs b/test/hashn-provisioning.test.mjs
+new file mode 100644
+index 0000000..2463e31
+--- /dev/null
++++ b/test/hashn-provisioning.test.mjs
+@@ -0,0 +1,45 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { provisionHashnAgent, HASHN_CREDENTIAL_ID } from '../src/hashn-provisioning.mjs';
++const agentId = '33333333-3333-4333-8333-333333333333';
++const credential = { agentId, apiToken: 'aw_private_fixture_only' };
++function fixture(fetchImpl) {
++  let attempt, secret;
++  const custody = { async getAttempt() { return structuredClone(attempt); }, async putAttempt(v) { attempt = structuredClone(v); },
++    async getCredential() { return secret; }, async putCredential(id,v) { assert.equal(id,HASHN_CREDENTIAL_ID); secret = v; } };
++  return { custody, fetchImpl, attempt: () => attempt, secret: () => secret };
++}
++test('signup intent precedes the single effect; credential is sealed and never returned', async () => {
++  let calls = 0;
++  const f = fixture(async (url, init) => {
++    calls++; assert.equal(f.attempt().stage,'signup-intent'); assert.equal(url,'https://api.hashn.com/agents');
++    assert.deepEqual(JSON.parse(init.body),{name:'561-group earning-loops'});
++    return Response.json({agent_id:agentId,api_token:credential.apiToken},{status:201});
++  });
++  const result = await provisionHashnAgent(f);
++  assert.equal(calls,1); assert.equal(result.created,true); assert.deepEqual(f.secret(),credential);
++  assert.equal(JSON.stringify([result,f.attempt()]).includes(credential.apiToken),false);
++});
++test('uncertain signup cannot create a second principal',async()=>{
++  let calls=0; const f=fixture(async()=>{calls++;throw new Error('response lost');});
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');assert.equal(calls,1);
++});
++test('stored credential is reused and checked against original identity without signup',async()=>{
++  let calls=0;const f=fixture(async(url,init)=>{calls++;assert.equal(url,'https://api.hashn.com/agents/me');assert.equal(init.headers.authorization,'Bearer '+credential.apiToken);return Response.json({agent_id:agentId,name:'561-group earning-loops'});});
++  await f.custody.putCredential(HASHN_CREDENTIAL_ID,credential);
++  assert.equal((await provisionHashnAgent(f)).created,false);assert.equal(calls,1);
++});
++test('seal failure retains signup uncertainty and cannot replay signup',async()=>{
++  let calls=0;const f=fixture(async()=>{calls++;return Response.json({agent_id:agentId,api_token:credential.apiToken},{status:201});});
++  f.custody.putCredential=async()=>{throw new Error('sealing refused');};
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');await provisionHashnAgent(f);assert.equal(calls,1);
++});
++test('provider refusal retains causal status/id/body privately with token fields removed',async()=>{
++  const f=fixture(async()=>Response.json({error:'reserved_name',message:'provider explains refusal',api_token:'aw_provider_secret'},
++    {status:400,headers:{'x-request-id':'request-fixture'}}));
++  const result=await provisionHashnAgent(f),receipt=f.attempt().providerReceipt;
++  assert.equal(receipt.status,400);assert.equal(receipt.requestId,'request-fixture');
++  assert.equal(receipt.body.error,'reserved_name');assert.equal(receipt.body.message,'provider explains refusal');
++  assert.equal(receipt.body.api_token,'[redacted]');assert.equal(JSON.stringify(result).includes('reserved_name'),false);
++});
+diff --git a/test/issuer-research.test.mjs b/test/issuer-research.test.mjs
+index 7107650..e908b0d 100644
+--- a/test/issuer-research.test.mjs
++++ b/test/issuer-research.test.mjs
+@@ -13,7 +13,7 @@ test('optional issuer configuration causes no reads, writes or producer calls',
+ test('complete producer result replaces the old cohort once, only after resolution', async () => {
+   const state = bucket({ [config.cacheKey]: { old: true } });
+   let complete; const waiting = new Promise(resolve => { complete = resolve; });
+-  const work = refreshIssuerResearch({ STATE: state }, config, { now: at, prepare: async supplied => { assert.equal(supplied, config); return waiting; } });
++  const work = refreshIssuerResearch(state, config, { now: at, prepare: async supplied => { assert.equal(supplied, config); return waiting; } });
+   await new Promise(resolve => setImmediate(resolve));
+   assert.deepEqual(await (await state.get(config.cacheKey)).json(), { old: true });
+   const full = { type: 'IssuerRevenuePreparedCohort', results: { annual: { complete: true }, quarter: { complete: true } } };
+@@ -23,10 +23,10 @@ test('complete producer result replaces the old cohort once, only after resoluti
+ test('a failed source preserves the prior cohort and durable Retry-After suppresses the next tick', async () => {
+   const state = bucket({ [config.cacheKey]: { old: true } }); let calls = 0;
+   const prepare = async () => { calls++; throw Object.assign(new Error('SEC busy'), { code: 'issuer-revenue-source-unavailable', reason: 'http-429', retryable: true, retryAfter: '3600' }); };
+-  const failed = await refreshIssuerResearch({ STATE: state }, config, { now: at, prepare, clock: () => at });
++  const failed = await refreshIssuerResearch(state, config, { now: at, prepare, clock: () => at });
+   assert.equal(failed.retryAfter, '3600'); assert.equal(failed.nextAttemptAt, '2026-10-24T21:00:00.000Z');
+   assert.deepEqual(await (await state.get(config.cacheKey)).json(), { old: true });
+-  const deferred = await refreshIssuerResearch({ STATE: state }, config, { now: new Date(at.getTime() + 900000), prepare });
++  const deferred = await refreshIssuerResearch(state, config, { now: new Date(at.getTime() + 900000), prepare });
+   assert.equal(deferred.status, 'deferred'); assert.equal(calls, 1);
+ });
+ test('Retry-After honors delays beyond24hours and blocks unrepresentable positive instructions', () => {
+@@ -41,8 +41,8 @@ test('long Retry-After is never shortened; unrepresentable delay remains durably
+   for (const retryAfter of ['172800','Mon, 26 Oct 2026 20:00:00 GMT','999999999999999999999999']) {
+     const state=bucket({[config.cacheKey]:{old:true}});let calls=0;
+     const prepare=async()=>{calls++;throw Object.assign(new Error('SEC busy'),{retryAfter});};
+-    const failed=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>at});
+-    const deferred=await refreshIssuerResearch({STATE:state},config,{now:new Date(at.getTime()+86400000),prepare});
++    const failed=await refreshIssuerResearch(state,config,{now:at,prepare,clock:()=>at});
++    const deferred=await refreshIssuerResearch(state,config,{now:new Date(at.getTime()+86400000),prepare});
+     assert.equal(deferred.status,'deferred');assert.equal(calls,1);
+     if(retryAfter.startsWith('999'))assert.equal(failed.retryBlocked,true);
+     else assert.equal(failed.nextAttemptAt,'2026-10-26T20:00:00.000Z');
+@@ -52,12 +52,12 @@ test('Retry-After seconds starts at the observed refusal, after a slow source at
+   const state=bucket();
+   const refusedAt=new Date(at.getTime()+60000);
+   const prepare=async()=>{throw Object.assign(new Error('SEC busy'),{retryAfter:'172800'});};
+-  const result=await refreshIssuerResearch({STATE:state},config,{now:at,prepare,clock:()=>refusedAt});
++  const result=await refreshIssuerResearch(state,config,{now:at,prepare,clock:()=>refusedAt});
+   assert.equal(result.nextAttemptAt,'2026-10-26T20:01:00.000Z');
+ });
+ test('deployment projection activates only explicitly admitted issuer configuration and refuses over-budget acquisition', () => {
+   const admitted = { ...config, enabled: true, resourceAdmission: { status: 'received' } };
+-  const record = { worker: 'test', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: admitted };
++  const record = { worker: 'test', clock:'durable-object-alarm', merchantPayTo: '0x'+'b'.repeat(40), limits: { settlementsPerPass: 4, routeProbesPerPass: 3 }, repair: { repository: null }, issuerResearch: admitted };
+   assert.equal(projectOperation({ ...record, issuerResearch: config }).issuerResearch, undefined);
+   assert.equal(projectOperation({ ...record, issuerResearch: { ...admitted, resourceAdmission: { status: 'unreceived' } } }).issuerResearch, undefined);
+   assert.deepEqual(projectOperation(record).issuerResearch, admitted);
+@@ -108,17 +108,19 @@ async function measuredPass({ routeProbes = 3, alarm = false, date = at } = {})
+     return new Response('{}',{status:402});
+   };
+   try {
+-    const options={configuration,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:date.toISOString()};}};
++    const values=new Map();const issuerStorage={async get(key){return values.get(key);},async transaction(work){const next=new Map(values);await work({async put(key,value){next.set(key,value);}});values.clear();for(const [key,value]of next)values.set(key,value);}};
++    configuration.issuerResearch={...config,enabled:true,resourceAdmission:{status:'received'},maximumCohortBytes:524288};
++    const options={configuration,issuerStorage,prepareIssuerRevenueCohort:async()=>{await fetch('https://data.sec.gov/a');await fetch('https://data.sec.gov/b');return {type:'IssuerRevenuePreparedCohort',observedAt:date.toISOString()};}};
+     if(alarm){
+       const originalNow=Date.now;Date.now=()=>date.getTime();
+-      try{await new EarningClock({storage:{async setAlarm(){calls++;}}},env,options).alarm();}
++      try{await new EarningClock({storage:{...issuerStorage,async setAlarm(){calls++;}}},env,options).alarm();}
+       finally{Date.now=originalNow;}
+     }else await run(env,CRONS.pass,date,options);
+     const result=JSON.parse(env.STATE.store.get('registers/earning-loops/last-run.json'));
+-    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,routeProbes);assert.equal(result.issuerResearch.status,'prepared');
++    assert.equal(result.settlements.received.length,4);assert.equal(result.routes.probed,routeProbes);assert.equal(Object.hasOwn(result,'issuerResearch'),false);assert.equal(JSON.parse(values.get('issuer-evidence/status').body).status,'prepared');
+     assert.equal(rpc,16);return calls;
+   } finally {globalThis.fetch=original;}
+ }
+-test('actual qualified pass uses41 subrequests for four witnesses/four provider attempts, three routes and two SEC reads',async()=>{assert.equal(await measuredPass(),41);});
+-test('the coincident weekly alarm includes the scorecard branch and clock rearm within48 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-26T14:00:00Z')}),48);});
+-test('the coincident daily alarm includes price directives and clock rearm within47 measured calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-27T13:30:00Z')}),47);});
++test('actual qualified pass uses38 external calls for four witnesses/four provider attempts, three routes and two SEC reads',async()=>{assert.equal(await measuredPass(),38);});
++test('the coincident weekly alarm includes the scorecard branch and clock rearm within45 measured external calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-26T14:00:00Z')}),45);});
++test('the coincident daily alarm includes price directives and clock rearm within44 measured external calls',async()=>{assert.equal(await measuredPass({alarm:true,date:new Date('2026-10-27T13:30:00Z')}),44);});
+diff --git a/test/issuer-sqlite-cache.test.mjs b/test/issuer-sqlite-cache.test.mjs
+new file mode 100644
+index 0000000..165b0b1
+--- /dev/null
++++ b/test/issuer-sqlite-cache.test.mjs
+@@ -0,0 +1,159 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { withIssuerSqliteStore, issuerSqliteResponse, issuerSqliteStoragePlan } from '../src/issuer-sqlite-cache.mjs';
++import { refreshIssuerResearch } from '../src/issuer-research.mjs';
++const cfg={enabled:true,resourceAdmission:{status:'received'},cacheKey:'issuer-research/current.json',maximumCohortBytes:524288};
++const at=new Date('2026-10-24T20:00:00.000Z');
++const status={status:'prepared',at:at.toISOString(),cacheKey:cfg.cacheKey,observedAt:at.toISOString(),nextAttemptAt:'2026-10-24T20:15:00.000Z'};
++function state(initial={}) {
++  const values=new Map(Object.entries(initial));const calls=[];
++  return {values,calls,failCommit:false,
++    async get(key){calls.push(['get',key]);return structuredClone(values.get(key));},
++    async transaction(work){calls.push(['transaction']);const next=new Map(values);
++      await work({async put(key,value){calls.push(['put',key]);next.set(key,structuredClone(value));}});
++      if(this.failCommit)throw new Error('storage unavailable');
++      values.clear();for(const [key,value]of next)values.set(key,value);
++    }};
++}
++const wrapper=body=>({cacheKey:cfg.cacheKey,body:JSON.stringify(body)});
++const request=(key=cfg.cacheKey,method='GET')=>new Request('https://private.invalid/issuer-evidence?'+new URLSearchParams({key}),{method});
++test('disabled and unreceived issuer configuration grants no storage or work',async()=>{
++  for(const configuration of [undefined,{...cfg,enabled:false},{...cfg,resourceAdmission:{status:'pending'}}]){
++    const storage=state();assert.deepEqual(await withIssuerSqliteStore(storage,configuration,()=>assert.fail()),{status:'not-configured'});
++    assert.equal((await issuerSqliteResponse(request(),storage,configuration)).status,404);assert.deepEqual(storage.calls,[]);
++  }
++  assert.throws(()=>issuerSqliteStoragePlan({...cfg,cacheKey:'registers/earning-loops/issuer-research.json'}),TypeError);
++});
++test('full return precedes atomic cohort and status publication, preserving unrelated custody',async()=>{
++  const storage=state({'opentask/auth':{secret:'untouched'},'earning-clock/observed-release-id':'existing','issuer-evidence/cohort':wrapper({old:true})});
++  let release;const pending=new Promise(resolve=>release=resolve);
++  const work=withIssuerSqliteStore(storage,cfg,async store=>{await store.put(cfg.cacheKey,JSON.stringify({new:true}));await pending;await store.put('registers/earning-loops/issuer-research.json',JSON.stringify(status));return 'prepared';});
++  await new Promise(resolve=>setImmediate(resolve));assert.deepEqual(storage.values.get('issuer-evidence/cohort'),wrapper({old:true}));
++  release();assert.equal(await work,'prepared');assert.deepEqual(storage.values.get('issuer-evidence/cohort'),wrapper({new:true}));
++  assert.deepEqual(storage.values.get('opentask/auth'),{secret:'untouched'});assert.equal(storage.values.get('earning-clock/observed-release-id'),'existing');
++  assert.equal(storage.calls.filter(([name])=>name==='transaction').length,1);
++  assert.deepEqual(storage.calls.filter(([name])=>name==='put').map(([,key])=>key).sort(),['issuer-evidence/cohort','issuer-evidence/status']);
++});
++test('failed callback and failed atomic transaction retain both prior values',async()=>{
++  for(const commitFailure of [false,true]){
++    const storage=state({'issuer-evidence/cohort':wrapper({old:true}),'issuer-evidence/status':wrapper(status)});storage.failCommit=commitFailure;
++    const before=structuredClone([...storage.values]);
++    await assert.rejects(withIssuerSqliteStore(storage,cfg,async store=>{await store.put(cfg.cacheKey,'{"new":true}');await store.put('registers/earning-loops/issuer-research.json',JSON.stringify(status));if(!commitFailure)throw new Error('producer incomplete');}));
++    assert.deepEqual([...storage.values],before);
++  }
++});
++test('scoped store refuses arbitrary keys before touching OpenTask or control storage',async()=>{
++  const storage=state();
++  await withIssuerSqliteStore(storage,cfg,async store=>{
++    for(const key of ['opentask/auth','earning-clock/armed-release','other']){
++      await assert.rejects(store.get(key),TypeError);await assert.rejects(store.put(key,'{}'),TypeError);
++    }
++  });assert.deepEqual(storage.calls,[['get','issuer-evidence/cohort'],['get','issuer-evidence/status']]);
++});
++test('corrupt persisted status cannot authorize source acquisition',async()=>{
++  for(const value of [null,[],42,{...status,retryBlocked:'true'},{...status,nextAttemptAt:'bad'},{...status,nextAttemptAt:'2026-10-23T20:00:00.000Z'}]){
++    const storage=state({'issuer-evidence/status':wrapper(value)});let acquisitions=0;
++    await assert.rejects(withIssuerSqliteStore(storage,cfg,store=>refreshIssuerResearch(store,cfg,{now:at,prepare:async()=>{acquisitions++;return{};}})));
++    assert.equal(acquisitions,0);
++  }
++});
++test('literal long Retry-After survives SQLite reentry and prior cohort remains served',async()=>{
++  const storage=state({'issuer-evidence/cohort':wrapper({old:true})});let acquisitions=0;
++  const options={now:at,clock:()=>at,prepare:async()=>{acquisitions++;throw Object.assign(new Error('SEC busy'),{retryAfter:'172800'});}};
++  await withIssuerSqliteStore(storage,cfg,store=>refreshIssuerResearch(store,cfg,options));
++  const second=await withIssuerSqliteStore(storage,cfg,store=>refreshIssuerResearch(store,cfg,{...options,now:new Date(at.getTime()+86400000)}));
++  assert.equal(second.status,'deferred');assert.equal(acquisitions,1);
++  const retained=JSON.parse(storage.values.get('issuer-evidence/status').body);assert.equal(retained.retryAfter,'172800');assert.equal(retained.nextAttemptAt,'2026-10-26T20:00:00.000Z');
++  assert.equal(await(await issuerSqliteResponse(request(),storage,cfg)).text(),'{"old":true}');
++});
++test('oversized status commits a durable hold and never publishes a staged new cohort',async()=>{
++  const storage=state({'issuer-evidence/cohort':wrapper({old:true})});
++  const result=await withIssuerSqliteStore(storage,cfg,async store=>{
++    await store.put(cfg.cacheKey,'{"new":true}');
++    await store.put('registers/earning-loops/issuer-research.json',JSON.stringify({...status,error:'x'.repeat(524288)}));
++    return {status:'prepared'};
++  });
++  assert.deepEqual(result,{status:'unavailable',cacheKey:cfg.cacheKey,retryBlocked:true,reason:'status-overflow',nextAttemptAt:null});
++  assert.deepEqual(storage.values.get('issuer-evidence/cohort'),wrapper({old:true}));
++  let acquisitions=0;
++  const reentry=await withIssuerSqliteStore(storage,cfg,store=>refreshIssuerResearch(store,cfg,{now:at,prepare:async()=>{acquisitions++;return{};}}));
++  assert.equal(reentry.status,'deferred');assert.equal(acquisitions,0);
++});
++test('private read preserves exact Unicode bytes and never changes alarm or status',async()=>{
++  const body=JSON.stringify({value:'é🙂'}),storage=state({'issuer-evidence/cohort':{cacheKey:cfg.cacheKey,body}});
++  const response=await issuerSqliteResponse(request(),storage,cfg);
++  assert.equal(response.status,200);assert.equal(response.headers.get('content-length'),String(new TextEncoder().encode(body).length));
++  assert.equal(await response.text(),body);assert.deepEqual(storage.calls,[['get','issuer-evidence/cohort']]);
++});
++test('private read rejects other methods/keys/query shapes without storage and cannot arm a clock',async()=>{
++  const storage=state();
++  assert.equal(await issuerSqliteResponse(new Request('https://private.invalid/clock'),storage,cfg),null);
++  assert.equal((await issuerSqliteResponse(request(cfg.cacheKey,'POST'),storage,cfg)).status,405);
++  for(const url of ['https://private.invalid/issuer-evidence','https://private.invalid/issuer-evidence?key=opentask%2Fauth','https://private.invalid/issuer-evidence?'+new URLSearchParams({key:cfg.cacheKey,extra:'x'}),'https://private.invalid/issuer-evidence?key='+encodeURIComponent(cfg.cacheKey)+'&key='+encodeURIComponent(cfg.cacheKey)])
++    assert.equal((await issuerSqliteResponse(new Request(url),storage,cfg)).status,404);
++  assert.deepEqual(storage.calls,[]);
++});
++test('missing, mismatched, corrupt or oversized cohort never becomes a successful read',async()=>{
++  for(const [value,expected]of [[undefined,404],[{cacheKey:'other',body:'{}'},404],[wrapper(null),200],[{cacheKey:cfg.cacheKey,body:'bad'},503],[{cacheKey:cfg.cacheKey,body:JSON.stringify('x'.repeat(524288))},503]]){
++    const storage=state(value===undefined?{}:{'issuer-evidence/cohort':value});
++    assert.equal((await issuerSqliteResponse(request(),storage,cfg)).status,expected);
++  }
++});
++
++ 
++
++test('actual clock private cache read bypasses alarm arming and public Worker exposes neither cache nor private status',async()=>{
++  const {EarningClock,default:worker}=await import('../worker/earning-loops.mjs');
++  const storage=state({'issuer-evidence/cohort':wrapper({old:true})});
++  storage.getAlarm=()=>assert.fail('private read must not inspect or arm alarm');
++  storage.setAlarm=()=>assert.fail('private read must not change alarm');
++  const clock=new EarningClock({storage},{},{configuration:{issuerResearch:cfg}});
++  assert.equal(await(await clock.fetch(request())).text(),'{"old":true}');
++  for(const path of ['/issuer-evidence?key='+encodeURIComponent(cfg.cacheKey),'/issuer-research.json']){
++    assert.equal((await worker.fetch(new Request('https://public.invalid'+path),{STATE:{get(){assert.fail('public issuer read must not reach R2');}},CLOCK:{get(){assert.fail('public issuer read must not reach private DO');}}})).status,404);
++  }
++});
++test('ordinary run publishes issuer data and retry state only in SQLite, excluding private result from R2 last-run',async()=>{
++  const {run,CRONS}=await import('../worker/earning-loops.mjs');
++  const {bucket}=await import('./memory.mjs');
++  const STATE=bucket(),issuerStorage=state();
++  const configuration={crons:CRONS,limits:{settlementsPerPass:0,routeProbesPerPass:0},repair:{repository:null},issuerResearch:cfg};
++  const previousFetch=globalThis.fetch;globalThis.fetch=()=>assert.fail('no external network in integration receiving');
++  try{
++    const result=await run({STATE},CRONS.pass,at,{configuration,issuerStorage,prepareIssuerRevenueCohort:async()=>({type:'IssuerRevenuePreparedCohort',observedAt:at.toISOString()})});
++    assert.equal(result.issuerResearch.status,'prepared');
++    assert.ok(issuerStorage.values.has('issuer-evidence/cohort'));
++    assert.ok(issuerStorage.values.has('issuer-evidence/status'));
++    assert.equal(STATE.store.has(cfg.cacheKey),false);
++    assert.equal(STATE.store.has('registers/earning-loops/issuer-research.json'),false);
++    assert.equal(Object.hasOwn(JSON.parse(STATE.store.get('registers/earning-loops/last-run.json')),'issuerResearch'),false);
++  }finally{globalThis.fetch=previousFetch;}
++});
++
++ 
++
++test('semantically invalid staged status rolls back the entire publication even when work catches the rejection',async()=>{
++  const storage=state({'issuer-evidence/cohort':wrapper({old:true}),'issuer-evidence/status':wrapper(status)});
++  const before=structuredClone([...storage.values]);
++  await assert.rejects(withIssuerSqliteStore(storage,cfg,async store=>{
++    await store.put(cfg.cacheKey,'{"new":true}');
++    await assert.rejects(store.put('registers/earning-loops/issuer-research.json','{"status":"prepared"}'));
++    return 'ignored-invalid-status';
++  }));
++  assert.deepEqual([...storage.values],before);
++});
++test('serialized transaction ceiling discards staged cohort and durably holds instead of shortening retry authority',async()=>{
++  const storage=state({'issuer-evidence/cohort':wrapper({old:true})});
++  const cohort=JSON.stringify('\\'.repeat(260000));
++  const unavailable={status:'unavailable',at:at.toISOString(),cacheKey:cfg.cacheKey,error:'\\'.repeat(250000),code:null,reason:null,retryable:true,retryAfter:'172800',retryBlocked:false,nextAttemptAt:'2026-10-26T20:00:00.000Z'};
++  assert.ok(new TextEncoder().encode(cohort).length<=cfg.maximumCohortBytes);
++  assert.ok(new TextEncoder().encode(JSON.stringify(unavailable)).length<=524288);
++  const result=await withIssuerSqliteStore(storage,cfg,async store=>{
++    await store.put(cfg.cacheKey,cohort);
++    await store.put('registers/earning-loops/issuer-research.json',JSON.stringify(unavailable));
++    return {status:'prepared'};
++  });
++  assert.equal(result.reason,'status-overflow');assert.equal(result.retryBlocked,true);
++  assert.deepEqual(storage.values.get('issuer-evidence/cohort'),wrapper({old:true}));
++});
++
+diff --git a/test/issuer-sqlite-storage-plan-examples.test.mjs b/test/issuer-sqlite-storage-plan-examples.test.mjs
+new file mode 100644
+index 0000000..1697959
+--- /dev/null
++++ b/test/issuer-sqlite-storage-plan-examples.test.mjs
+@@ -0,0 +1,35 @@
++// Derived from the work order's admitted examples, before the operation's source was derived.
++import assert from "node:assert/strict";
++import test from "node:test";
++import { issuerSqliteStoragePlan } from "../src/issuer-sqlite-cache.mjs";
++
++test("issuer-sqlite-storage-plan: admitted", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288}), {"cohortKey":"issuer-evidence/cohort","statusKey":"issuer-evidence/status","logicalStatusKey":"registers/earning-loops/issuer-research.json","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288,"maximumStatusBytes":524288,"maximumTransactionBytes":1900000});
++});
++test("issuer-sqlite-storage-plan: disabled", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan({"enabled":false,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288}), null);
++});
++test("issuer-sqlite-storage-plan: clause assay admitted-fixed-coordinates", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"issuer-research/current.json","maximumCohortBytes":524288}), {"cohortKey":"issuer-evidence/cohort","statusKey":"issuer-evidence/status","logicalStatusKey":"registers/earning-loops/issuer-research.json","cacheKey":"issuer-research/current.json","maximumCohortBytes":524288,"maximumStatusBytes":524288,"maximumTransactionBytes":1900000});
++});
++test("issuer-sqlite-storage-plan: clause assay absent-configuration", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan(null), null);
++});
++test("issuer-sqlite-storage-plan: clause assay disabled-precedes-invalid-fields", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan({"enabled":false,"resourceAdmission":{"status":"received"},"cacheKey":"","maximumCohortBytes":0}), null);
++});
++test("issuer-sqlite-storage-plan: clause assay empty-cache-key", async () => {
++  await assert.rejects(async () => await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"","maximumCohortBytes":1}), { name: "TypeError" });
++});
++test("issuer-sqlite-storage-plan: clause assay reserved-logical-status-key", async () => {
++  await assert.rejects(async () => await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"registers/earning-loops/issuer-research.json","maximumCohortBytes":1}), { name: "TypeError" });
++});
++test("issuer-sqlite-storage-plan: clause assay zero-cohort-limit", async () => {
++  await assert.rejects(async () => await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"cache","maximumCohortBytes":0}), { name: "TypeError" });
++});
++test("issuer-sqlite-storage-plan: clause assay cohort-limit-over-maximum", async () => {
++  await assert.rejects(async () => await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"cache","maximumCohortBytes":524289}), { name: "TypeError" });
++});
++test("issuer-sqlite-storage-plan: clause assay trusted-coordinate-overrides-ignored", async () => {
++  assert.deepStrictEqual(await issuerSqliteStoragePlan({"enabled":true,"resourceAdmission":{"status":"received"},"cacheKey":"cache","maximumCohortBytes":1,"cohortKey":"other","statusKey":"other-status","logicalStatusKey":"other-logical","maximumTransactionBytes":9999999}), {"cohortKey":"issuer-evidence/cohort","statusKey":"issuer-evidence/status","logicalStatusKey":"registers/earning-loops/issuer-research.json","cacheKey":"cache","maximumCohortBytes":1,"maximumStatusBytes":524288,"maximumTransactionBytes":1900000});
++});
+diff --git a/test/workerd-hashn-worker.mjs b/test/workerd-hashn-worker.mjs
+new file mode 100644
+index 0000000..b136a81
+--- /dev/null
++++ b/test/workerd-hashn-worker.mjs
+@@ -0,0 +1,18 @@
++import assert from 'node:assert/strict';
++import { runHashnAcquisition, HASHN_STATE } from '../src/hashn-acquisition.mjs';
++export const testNativeHashn = { async test() {
++  const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
++  const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
++  const instance={enabled:true,workspaceId,buyerAgentId,offerId:'fixture',note:'Exact terms before work.',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++  let time=Date.parse('2026-10-24T22:00:00Z'),posts=0,outgoing=[];
++  const values=new Map(),storage={async get(k){return structuredClone(values.get(k));},async put(k,v){values.set(k,structuredClone(v));}};
++  const options={storage,instance,initialCredential:{agentId,apiToken:'aw_runtime_fixture_only'},now:()=>time,fetchImpl:async(url,init)=>{
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId});
++    if(url.endsWith('/knocks'))return Response.json({outgoing});
++    assert.equal(values.get(HASHN_STATE).intent.body.note,instance.note);assert.equal(init.method,'POST');posts++;
++    outgoing=[{knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'}];
++    return Response.json({knock_id:knockId},{status:201});
++  }};
++  const first=await runHashnAcquisition(options);assert.equal(first.requests,3);assert.equal(first.stage,'hashn-knock-sent-readback-pending');
++  time+=30000;const next=await runHashnAcquisition(options);assert.equal(next.requests,1);assert.equal(next.stage,'hashn-pending');assert.equal(posts,1);
++} };
+diff --git a/test/workerd-hashn.test.mjs b/test/workerd-hashn.test.mjs
+new file mode 100644
+index 0000000..0fc8f35
+--- /dev/null
++++ b/test/workerd-hashn.test.mjs
+@@ -0,0 +1,22 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { build } from 'esbuild';
++import { mkdir, writeFile } from 'node:fs/promises';
++import { createHash } from 'node:crypto';
++import { spawnSync } from 'node:child_process';
++import { fileURLToPath } from 'node:url';
++import { resolve } from 'node:path';
++
++test('actual workerd receives Hashn bounded private acquisition using original shared suppliers',async()=>{
++  const root=fileURLToPath(new URL('../',import.meta.url));
++  const built=await build({absWorkingDir:root,entryPoints:['test/workerd-hashn-worker.mjs'],bundle:true,format:'esm',platform:'browser',conditions:['workerd','worker'],target:'es2022',external:['node:*'],write:false});
++  const bytes=built.outputFiles[0].contents,directory=resolve(root,'data/records/worker-runtime-test-records',createHash('sha256').update(bytes).digest('hex'));
++  await mkdir(directory,{recursive:true});await writeFile(resolve(directory,'worker.mjs'),bytes);
++  await writeFile(resolve(directory,'config.capnp'),`using Workerd = import "/workerd/workerd.capnp";
++const tests :Workerd.Config = (services = [(name = "main", worker = .worker), (name = "internet", network = (allow = []))]);
++const worker :Workerd.Worker = (modules = [(name = "worker", esModule = embed "worker.mjs")], compatibilityDate = "2026-09-01", compatibilityFlags = ["nodejs_compat"]);
++`);
++  const result=spawnSync(resolve(root,'node_modules/.bin/workerd'),['test',resolve(directory,'config.capnp')],{encoding:'utf8',timeout:30000});
++  await writeFile(resolve(directory,'result.json'),JSON.stringify({status:result.status,stdout:result.stdout,stderr:result.stderr},null,2)+'\n');
++  assert.equal(result.status,0,`${result.stdout}\n${result.stderr}`);
++});
+diff --git a/test/workerd-issuer-driver.mjs b/test/workerd-issuer-driver.mjs
+new file mode 100644
+index 0000000..575b94d
+--- /dev/null
++++ b/test/workerd-issuer-driver.mjs
+@@ -0,0 +1,18 @@
++import assert from 'node:assert/strict';
++export const testPrivateSqliteCache={
++  async test(controller,env){
++    const object=env.CLOCK.get(env.CLOCK.idFromName('earning-loops'));
++    assert.equal((await env.MARKET.fetch('https://market.invalid/read')).status,404);
++    const seeded=await(await object.fetch('https://private.invalid/fixture/seed')).json();
++    const first=await env.MARKET.fetch('https://market.invalid/read');
++    assert.equal(first.status,200);assert.deepEqual(await first.json(),{complete:true,marker:'é🙂'});
++    await object.fetch('https://private.invalid/fixture/failure');
++    const second=await env.MARKET.fetch('https://market.invalid/read');
++    assert.deepEqual(await second.json(),{complete:true,marker:'é🙂'});
++    const wrong=await object.fetch('https://private.invalid/issuer-evidence?key=opentask%2Fauth');assert.equal(wrong.status,404);
++    const inspected=await(await object.fetch('https://private.invalid/fixture/inspect')).json();
++    assert.deepEqual(inspected.auth,{marker:'PRIVATE-TEST-CUSTODY'});assert.equal(inspected.alarm,seeded.alarm);
++    assert.deepEqual(inspected.keys,['issuer-evidence/cohort','issuer-evidence/status','opentask/auth']);
++  }
++};
++
+diff --git a/test/workerd-issuer-loop.mjs b/test/workerd-issuer-loop.mjs
+new file mode 100644
+index 0000000..9230ddc
+--- /dev/null
++++ b/test/workerd-issuer-loop.mjs
+@@ -0,0 +1,34 @@
++// Local receiving fixture only: no external networking, credentials or installed objects.
++import { EarningClock as RuntimeClock } from '../worker/earning-loops.mjs';
++import { withIssuerSqliteStore } from '../src/issuer-sqlite-cache.mjs';
++const cfg={enabled:true,resourceAdmission:{status:'received'},cacheKey:'issuer-research/current.json',maximumCohortBytes:524288};
++export class EarningClock extends RuntimeClock {
++  constructor(state,env){super(state,env,{configuration:{issuerResearch:cfg}});}
++  async fetch(request){
++    const path=new URL(request.url).pathname;
++    if(path==='/fixture/seed')return this.enqueue(async()=>{
++      this.state.storage.sql.exec('SELECT 1');
++      await this.state.storage.put('opentask/auth',{marker:'PRIVATE-TEST-CUSTODY'});
++      const alarm=Date.now()+86400000;await this.state.storage.setAlarm(alarm);
++      const status={status:'prepared',cacheKey:cfg.cacheKey,at:'2026-10-24T20:00:00.000Z',observedAt:'2026-10-24T20:00:00.000Z',nextAttemptAt:'2026-10-24T20:15:00.000Z'};
++      await withIssuerSqliteStore(this.state.storage,cfg,async store=>{
++        await store.put(cfg.cacheKey,JSON.stringify({complete:true,marker:'é🙂'}));
++        await store.put('registers/earning-loops/issuer-research.json',JSON.stringify(status));
++      });
++      return Response.json({alarm});
++    });
++    if(path==='/fixture/failure')return this.enqueue(async()=>{
++      try{await withIssuerSqliteStore(this.state.storage,cfg,async store=>{
++        await store.put(cfg.cacheKey,'{"partial":true}');throw new Error('refused source');
++      });}catch{}
++      return new Response('held');
++    });
++    if(path==='/fixture/inspect')return Response.json({
++      auth:await this.state.storage.get('opentask/auth'),alarm:await this.state.storage.getAlarm(),
++      keys:[...(await this.state.storage.list()).keys()].sort()
++    });
++    return super.fetch(request);
++  }
++}
++export default {fetch(){return new Response('not found',{status:404});}};
++
+diff --git a/test/workerd-issuer-market.mjs b/test/workerd-issuer-market.mjs
+new file mode 100644
+index 0000000..b83e468
+--- /dev/null
++++ b/test/workerd-issuer-market.mjs
+@@ -0,0 +1,8 @@
++import {createIssuerEvidenceReadStore} from '../../../apps/market.561.group/src/issuer-evidence-store.mjs';
++const cfg={enabled:true,resourceAdmission:{status:'received'},cacheKey:'issuer-research/current.json',maximumCohortBytes:524288};
++export default {async fetch(request,env){
++  const store=createIssuerEvidenceReadStore(env.ISSUER_EVIDENCE_CLOCK,cfg);
++  const item=await store.get(cfg.cacheKey);
++  return item?new Response(item.body,{headers:{'content-length':String(item.size)}}):new Response('missing',{status:404});
++}};
++
+diff --git a/test/workerd-issuer.test.mjs b/test/workerd-issuer.test.mjs
+new file mode 100644
+index 0000000..bc59d6f
+--- /dev/null
++++ b/test/workerd-issuer.test.mjs
+@@ -0,0 +1,26 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {build} from 'esbuild';
++import {mkdir,writeFile} from 'node:fs/promises';
++import {createHash,randomUUID} from 'node:crypto';
++import {spawnSync} from 'node:child_process';
++import {fileURLToPath} from 'node:url';
++import {resolve} from 'node:path';
++test('actual SQLite DO shares original singleton through private cross-Worker binding without alarm or custody changes',async()=>{
++  const root=fileURLToPath(new URL('../',import.meta.url)),modules={};
++  for(const [name,entry]of [['loop','test/workerd-issuer-loop.mjs'],['market','test/workerd-issuer-market.mjs'],['driver','test/workerd-issuer-driver.mjs']]){
++    const built=await build({absWorkingDir:root,entryPoints:[entry],bundle:true,format:'esm',platform:'browser',conditions:['workerd','worker'],target:'es2022',external:['node:*'],write:false});
++    modules[name]=built.outputFiles[0].contents;
++  }
++  const digest=createHash('sha256').update('native-sqlite-localDisk-v1');for(const name of Object.keys(modules).sort())digest.update(modules[name]);
++  const directory=resolve(root,'data/records/worker-runtime-test-records',digest.digest('hex'),randomUUID());await mkdir(directory,{recursive:true});
++  for(const[name,bytes]of Object.entries(modules))await writeFile(resolve(directory,name+'.mjs'),bytes);
++  const stateDirectory=resolve(root,'data/logs/worker-runtime-test-logs',...directory.split('/').slice(-2));await mkdir(stateDirectory,{recursive:true});
++  const binding='durableObjectNamespace = (className = "EarningClock", serviceName = "loop")';
++  const config="using Workerd = import \"/workerd/workerd.capnp\";\nconst tests :Workerd.Config = (services = [\n (name = \"loop\", worker = .loop), (name = \"market\", worker = .market),\n (name = \"main\", worker = .driver), (name = \"internet\", network = (allow = []))\n]);\nconst loop :Workerd.Worker = (\n modules = [(name = \"worker\", esModule = embed \"loop.mjs\")],\n compatibilityDate = \"2026-09-01\", compatibilityFlags = [\"nodejs_compat\"],\n durableObjectNamespaces = [(className = \"EarningClock\", uniqueKey = \"issuer-cache-receiving\", enableSql = true)],\n durableObjectStorage = (localDisk = \"sqlite\")\n);\nconst market :Workerd.Worker = (\n modules = [(name = \"worker\", esModule = embed \"market.mjs\")],\n compatibilityDate = \"2026-09-01\", compatibilityFlags = [\"nodejs_compat\"],\n bindings = [(name = \"ISSUER_EVIDENCE_CLOCK\", @@BINDING@@)]\n);\nconst driver :Workerd.Worker = (\n modules = [(name = \"worker\", esModule = embed \"driver.mjs\")],\n compatibilityDate = \"2026-09-01\", compatibilityFlags = [\"nodejs_compat\"],\n bindings = [(name = \"CLOCK\", @@BINDING@@), (name = \"MARKET\", service = \"market\")]\n);\n";
++  await writeFile(resolve(directory,'config.capnp'),config.replaceAll('@@BINDING@@',binding).replace('(name = "internet", network = (allow = []))','(name = "internet", network = (allow = [])), (name = "sqlite", disk = (path = '+JSON.stringify(stateDirectory)+', writable = true))'));
++  const result=spawnSync(resolve(root,'node_modules/@cloudflare/workerd-linux-64/bin/workerd'),['test',resolve(directory,'config.capnp')],{encoding:'utf8',timeout:30000,maxBuffer:65536});
++  await writeFile(resolve(directory,'result.json'),JSON.stringify({status:result.status,stdout:result.stdout,stderr:result.stderr},null,2)+'\n');
++  assert.equal(result.status,0,result.stdout+'\n'+result.stderr);
++});
++
+diff --git a/worker/earning-loops.mjs b/worker/earning-loops.mjs
+index 55bebfe..91d9450 100644
+--- a/worker/earning-loops.mjs
++++ b/worker/earning-loops.mjs
+@@ -12,6 +12,7 @@ import products from "../data/products.mjs";
+ import researchProducts from '../data/research-products.mjs';
+ import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
+ import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
++import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
+ import { receiveSettlements } from "../src/settlements.mjs";
+ import { checkRoutes } from "../src/route-health.mjs";
+ import { writeScorecard } from "../src/scorecard.mjs";
+@@ -20,11 +21,12 @@ import { runOnchainHook } from "../src/onchain-hook.mjs";
+ import { register, read, put } from "../src/registers.mjs";
+ import { dueCrons, nextTick } from "../src/clock.mjs";
+ import { refreshIssuerResearch } from "../src/issuer-research.mjs";
++import { withIssuerSqliteStore, issuerSqliteResponse } from "../src/issuer-sqlite-cache.mjs";
+ 
+ const groupPayers = new Set(groupPayerList);
+ export const CRONS = operation.crons;
+ 
+-export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort } = {}) {
++export async function run(env, cron, now = new Date(), { configuration = operation, prepareIssuerRevenueCohort, issuerStorage } = {}) {
+   if (configuration.issuerResearch && (env.ONCHAIN_SCAN_URL || configuration.onchainScanUrl))
+     throw new TypeError('issuer operation has no subrequest allocation for an onchain hook');
+   const outcome = { cron, at: now.toISOString() };
+@@ -39,14 +41,16 @@ export async function run(env, cron, now = new Date(), { configuration = operati
+       brokenStreak: configuration.repair.brokenStreakBeforeRepair, repository: configuration.repair.repository, payTo: configuration.merchantPayTo }));
+     await step("scorecard", async () => (await writeScorecard(env, { now, groupPayers, economics: configuration.economics })).outsideRevenueUSD);
+     await step("onchain", () => runOnchainHook(env, { now, cron, url: env.ONCHAIN_SCAN_URL ?? configuration.onchainScanUrl }));
+-    if (configuration.issuerResearch) await step("issuerResearch", () => refreshIssuerResearch(env, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort }));
++    if (configuration.issuerResearch) await step("issuerResearch", () => withIssuerSqliteStore(issuerStorage, configuration.issuerResearch,
++      store => refreshIssuerResearch(store, configuration.issuerResearch, { now, prepare: prepareIssuerRevenueCohort })));
+   }
+-  await put(env.STATE, register("last-run"), outcome);
++  const { issuerResearch, ...publicOutcome } = outcome;
++  await put(env.STATE, register("last-run"), publicOutcome);
+   return outcome;
+ }
+ 
+ const READINGS = { "/settlements.json": "settlements", "/route-health.json": "route-health", "/scorecard.json": "scorecard",
+-  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run", "/issuer-research.json": "issuer-research" };
++  "/price-directives.json": "price-directives", "/onchain.json": "onchain", "/last-run.json": "last-run" };
+ 
+ // Run every loop whose operation cron matches this quarter-hour tick, the most frequent last so the daily and
+ // weekly readings come from the previous pass's settled state.
+@@ -69,7 +73,12 @@ export class EarningClock {
+   async alarm() {
+     return this.enqueue(async () => {
+       const configuration = this.options.configuration ?? operation;
+-      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true;
++      const acquisition = configuration.hashAcquisition?.enabled === true;
++      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition;
++      const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
++      const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
++      const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.nextAttemptAt > at) && !(acquisitionPulseAt > at);
++      const coreNextAt = acquisition ? await this.state.storage.get('earning-clock/core-next-at') : null;
+       const researchState = configuration.researchProcurement?.enabled ? await this.state.storage.get(RESEARCH_STATE) : null;
+       const researchPending = configuration.researchProcurement?.enabled === true && !researchState?.terminal;
+       const researchDue = researchPending && !researchState?.retryBlocked && !(researchState?.nextAttemptAt > at);
+@@ -77,10 +86,22 @@ export class EarningClock {
+       const releaseId = commercial ? this.releaseId() : null;
+       const bootstrap = releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId;
+       const armed = bootstrap ? await this.state.storage.get('earning-clock/armed-release') : null;
++      // Acquisition gets a separate invocation only AFTER a core invocation has
++      // reserved its next alarm. A due knock can never displace CSV/maintenance.
++      const acquisitionOnly = acquisitionDue && !bootstrap && !researchDue && Number.isFinite(coreNextAt) && at < coreNextAt;
+       // Admission is durable before work: public clock arming cannot replay it.
+       if (bootstrap) await this.state.storage.put('earning-clock/observed-release-id', releaseId);
+       try {
+-        if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
++        if (acquisitionOnly) {
++          // A storage/transport failure must not turn a one-off acquisition
++          // into a one-second retry loop. Reserve the six-hour pulse first.
++          await this.state.storage.put('hashn/next-pulse-at',at+21600000);
++          await (this.options.acquisitionPass ?? runHashnAcquisition)({ storage: this.state.storage,
++            instance: configuration.hashAcquisition, initialCredential: this.env.HASHN_CREDENTIAL_JSON, now: () => at });
++          const received = await this.state.storage.get(HASHN_STATE);
++          if (Number.isFinite(received?.nextAttemptAt) && received.nextAttemptAt > at)
++            await this.state.storage.put('hashn/next-pulse-at',received.nextAttemptAt);
++        } else if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
+           if (researchDue || bootstrap && researchPending) {
+             await (this.options.researchPass ?? runResearchPass)({ storage: this.state.storage, instance: configuration.researchProcurement,
+               products: this.options.researchProducts ?? researchProducts, merchant: configuration.merchantPayTo, groupPayers });
+@@ -90,21 +111,38 @@ export class EarningClock {
+             await this.state.storage.put('opentask/public-summary', { stage: result.stage, requests: result.requests,
+             newCashExpenseUsd: 0, at: new Date(at).toISOString() });
+           }
+-        } else await tick(this.env, new Date(slot), this.options);
++        } else await tick(this.env, new Date(slot), { ...this.options, issuerStorage: this.state.storage });
+       } finally {
+-        let alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
++        let alarm = acquisitionOnly ? coreNextAt : commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
+         if (bootstrap && armed?.id === releaseId && Number.isFinite(armed.previousAlarm))
+           alarm = Math.min(alarm, armed.previousAlarm > Date.now() ? armed.previousAlarm : Date.now() + 1000);
++        if (acquisition && !acquisitionOnly) await this.state.storage.put('earning-clock/core-next-at',alarm);
+         if (configuration.researchProcurement?.enabled) {
+           const pending = await this.state.storage.get(RESEARCH_STATE);
+           if (!pending?.terminal && !pending?.retryBlocked && Number.isFinite(pending?.nextAttemptAt))
+             alarm = Math.min(alarm, Math.max(Date.now() + 1000,pending.nextAttemptAt));
+         }
++        if (acquisition) {
++          const pending = await this.state.storage.get(HASHN_STATE);
++          const pulseAt = await this.state.storage.get('hashn/next-pulse-at');
++          if (!pending?.terminal && !pending?.retryBlocked)
++            alarm = Math.min(alarm,Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0));
++        }
+         await this.state.storage.setAlarm(alarm);
+       }
+     });
+   }
+   async fetch(request) {
++    if (request && new URL(request.url).pathname === '/acquisition.json') {
++      const summary = await this.state.storage.get(HASHN_SUMMARY);
++      if (!summary) return new Response('not yet observed\n',{status:404});
++      const fields = ['stage','requests','newCashExpenseUsd','at','offerId','knockStatus','agreementReceived','deliverySubmitted','recognizedOutsideRevenue'];
++      return Response.json(Object.fromEntries(fields.filter(key => Object.hasOwn(summary,key)).map(key => [key,summary[key]])),{headers:{'cache-control':'no-store'}});
++    }
++    if (request) {
++      const response = await issuerSqliteResponse(request, this.state.storage, (this.options.configuration ?? operation).issuerResearch);
++      if (response) return response;
++    }
+     if (request && new URL(request.url).pathname === '/research.json') {
+       const summary = await this.state.storage.get(RESEARCH_SUMMARY);
+       if (!summary) return new Response('not yet observed\n',{status:404});
+@@ -122,7 +160,7 @@ export class EarningClock {
+     return this.enqueue(async () => {
+       let alarm = await this.state.storage.getAlarm();
+       const configuration = this.options.configuration ?? operation;
+-      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled;
++      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled;
+       const releaseId = commercial ? this.releaseId() : null;
+       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
+         const armed = await this.state.storage.get('earning-clock/armed-release');
+@@ -146,6 +184,7 @@ export default {
+     if (path === '/research-products.json') return Response.json(researchProducts,{headers:{'cache-control':'public, max-age=300'}});
+     if (path === '/research.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
+     if (path === '/commercial.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
++    if (path === '/acquisition.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
+     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
+     if (READINGS[path]) {
+       const value = await read(env.STATE, register(READINGS[path]));

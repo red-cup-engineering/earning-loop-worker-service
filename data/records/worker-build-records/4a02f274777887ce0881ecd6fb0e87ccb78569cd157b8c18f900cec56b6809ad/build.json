@@ -1,0 +1,121 @@
+{
+  "kind": "WorkerBuildRecord",
+  "version": 1,
+  "compositionSha256": "4a02f274777887ce0881ecd6fb0e87ccb78569cd157b8c18f900cec56b6809ad",
+  "provider": {
+    "name": "esbuild",
+    "version": "0.28.1"
+  },
+  "sourceInputs": [
+    {
+      "path": "data/group-payers.mjs",
+      "bytes": 321,
+      "sha256": "b114520d14e128ddd7aaeca3057669bc5ee75065dce169f61b11da9ee017f83e"
+    },
+    {
+      "path": "data/operation.mjs",
+      "bytes": 3061,
+      "sha256": "585898f5be791cef8caae83e948781637a80a2bb40a654f9a220ed748132d081"
+    },
+    {
+      "path": "data/products.mjs",
+      "bytes": 2609,
+      "sha256": "08e051767b7d2d0d63715fbf8c5fb27ac084db3e0adc111534cd9dbf4887423b"
+    },
+    {
+      "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+      "bytes": 2158,
+      "sha256": "629ebb98a416ad708e6357c8ce2b1b8573c5e074a76355b8a1859462112c9340"
+    },
+    {
+      "path": "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs",
+      "bytes": 4337,
+      "sha256": "fa5a032c22a2c6b3b7ef99d0490d09ffd6cba1bfdf56e408d09bedb55d9c2279"
+    },
+    {
+      "path": "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs",
+      "bytes": 2509,
+      "sha256": "a00258443af2940a0ac7a0d2145a94f11fbc0fed908fed37c41d977aa2faffc9"
+    },
+    {
+      "path": "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs",
+      "bytes": 2768,
+      "sha256": "92d0729552ae775d80a2e0b6bffd4645a108225ebcf5461c9870ec9fb2e86f5b"
+    },
+    {
+      "path": "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs",
+      "bytes": 6649,
+      "sha256": "680bbbd35360e762f3a098152cf2457073da9c5d07e9d79ad0740492daf4ca50"
+    },
+    {
+      "path": "src/border-price.mjs",
+      "bytes": 1221,
+      "sha256": "e8fd82901fdd6d923eea2e9912400176ff9fa85f8a5f3f57c9c1256a8bc60073"
+    },
+    {
+      "path": "src/clock.mjs",
+      "bytes": 1138,
+      "sha256": "6e87ef0d45056d74549393897bfc3978cec211ef9bac32898a1baf5d6cb8010c"
+    },
+    {
+      "path": "src/issuer-research.mjs",
+      "bytes": 2667,
+      "sha256": "60d21045c133cb116d4dfb914de90d4fcbdc7a1207c430f139f17214ea33095a"
+    },
+    {
+      "path": "src/onchain-hook.mjs",
+      "bytes": 1564,
+      "sha256": "05b1aec282dc809f32c1ce6d0b125df595e198cf3ddbe0263df4d7b2e6f90cdf"
+    },
+    {
+      "path": "src/opentask-client.mjs",
+      "bytes": 11438,
+      "sha256": "62f2d0128874b33acf34633a60ec63135767a1cf7f8057de34907d4733f0d47c"
+    },
+    {
+      "path": "src/opentask-commercial-pass.mjs",
+      "bytes": 20512,
+      "sha256": "282ba624d3a3a2d4244b49fe425a7bf5620f8401bdf85f698d69c9f318544602"
+    },
+    {
+      "path": "src/price-directives.mjs",
+      "bytes": 5665,
+      "sha256": "b46b75e547aa337316084a16815aa890964871950b420a39430e9289b661e135"
+    },
+    {
+      "path": "src/registers.mjs",
+      "bytes": 646,
+      "sha256": "020b80166d6ef6be67b07dbff9a8257bf3f12e1b635199e9f55fdfe86c75e4f5"
+    },
+    {
+      "path": "src/route-health.mjs",
+      "bytes": 6323,
+      "sha256": "256132a5d9e53a7c801ce95117f00c8d299088d8a8bf2d6a7bf941025395f98a"
+    },
+    {
+      "path": "src/scorecard.mjs",
+      "bytes": 4437,
+      "sha256": "18ce49a5123658c10ee26765b8200f918071c83b4bef7b565a52e249f0b813a3"
+    },
+    {
+      "path": "src/settlements.mjs",
+      "bytes": 7412,
+      "sha256": "90ff281fefaf9d0a13885497d0bd95463eb1dee6a615e67e3e472fa624d1b35a"
+    },
+    {
+      "path": "worker/earning-loops.mjs",
+      "bytes": 9623,
+      "sha256": "3c283dc89c01f4997c5f9ad10d7a883c3e6d8156d3238e30ff7155a2bb9b24de"
+    }
+  ],
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 78628,
+    "sha256": "5db36904e8c6f97808061dda41b11c9988286022b8444a56df03eb64aa50884e"
+  },
+  "externalModules": [
+    "@red-cup-engineering/issuer-research-media-service/prepared-cohort",
+    "node:buffer",
+    "node:crypto"
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "status": 0,
+  "stdout": "",
+  "stderr": "service main: The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.\nworkerd/server/server/run.rs:481: debug: [ TEST ] main:testNativeAuthentication\nworkerd/server/server/run.rs:488: debug: [ PASS ] main:testNativeAuthentication (5.137015ms)\n",
+  "originalOAuthSource": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-networking-engineering-services-section/services/oauth-services-section",
+  "jwtSha256": "14662a356437299b184372626601d8987418cb683bddba5a9181a1037662b5ce",
+  "bundleSha256": "3b4db5fa69aea0bad44ca81e1fb24d8c1e3887dce46c9a1f1df9dd30110d9ed5",
+  "compatibilityDate": "2026-09-01",
+  "compatibilityFlags": [
+    "nodejs_compat"
+  ],
+  "outboundNetworkAllowed": false,
+  "metafile": {
+    "inputs": {
+      "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+        "bytes": 2158,
+        "imports": [],
+        "format": "esm"
+      },
+      "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+        "bytes": 4337,
+        "imports": [
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+        "bytes": 2509,
+        "imports": [
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/hash.mjs",
+            "kind": "import-statement",
+            "original": "./hash.mjs"
+          }
+        ],
+        "format": "esm"
+      },
+      "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/json-web-token.mjs": {
+        "bytes": 6829,
+        "imports": [
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/dpop.mjs": {
+        "bytes": 2768,
+        "imports": [
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/integrity.mjs",
+            "kind": "import-statement",
+            "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/integrity"
+          },
+          {
+            "path": "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/json-web-token.mjs",
+            "kind": "import-statement",
+            "original": "./json-web-token.mjs"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/opentask-client.mjs": {
+        "bytes": 11400,
+        "imports": [
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+            "kind": "import-statement",
+            "original": "@red-cup-engineering/http-services-section/retry-after"
+          },
+          {
+            "path": "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/dpop.mjs",
+            "kind": "dynamic-import",
+            "original": "@red-cup-engineering/oauth-services-section/dpop"
+          }
+        ],
+        "format": "esm"
+      },
+      "test/workerd-auth-worker.mjs": {
+        "bytes": 2914,
+        "imports": [
+          {
+            "path": "node:assert/strict",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/opentask-client.mjs",
+            "kind": "import-statement",
+            "original": "../src/opentask-client.mjs"
+          },
+          {
+            "path": "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/dpop.mjs",
+            "kind": "import-statement",
+            "original": "@red-cup-engineering/oauth-services-section/dpop"
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "workerd-auth-worker.js": {
+        "imports": [
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:assert/strict",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:buffer",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "testNativeAuthentication"
+        ],
+        "entryPoint": "test/workerd-auth-worker.mjs",
+        "inputs": {
+          "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+            "bytesInOutput": 590
+          },
+          "../../../../../../../computer-data-engineering-services-section/services/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+            "bytesInOutput": 689
+          },
+          "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/json-web-token.mjs": {
+            "bytesInOutput": 1738
+          },
+          "../../../../../../../computer-networking-engineering-services-section/services/oauth-services-section/src/dpop.mjs": {
+            "bytesInOutput": 2183
+          },
+          "test/workerd-auth-worker.mjs": {
+            "bytesInOutput": 2668
+          },
+          "src/opentask-client.mjs": {
+            "bytesInOutput": 10890
+          },
+          "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+            "bytesInOutput": 2077
+          }
+        },
+        "bytes": 22045
+      }
+    }
+  }
+}

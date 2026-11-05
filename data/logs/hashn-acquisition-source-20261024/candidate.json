@@ -1,0 +1,27 @@
+{
+  "base": "09568b67cc8fd9600b58378eabeb9b6bad2c2d07",
+  "candidate": "3987cd1d455d4be85a9018867135a3d08f01b3ee",
+  "paths": [
+    "specifications/hashn-acquisition.md",
+    "src/deployment.mjs",
+    "src/hashn-acquisition.mjs",
+    "src/hashn-client.mjs",
+    "src/hashn-offer-publication.mjs",
+    "src/hashn-provisioning.mjs",
+    "test/hashn-acquisition.test.mjs",
+    "test/hashn-clock.test.mjs",
+    "test/hashn-offer-publication.test.mjs",
+    "test/hashn-provisioning.test.mjs",
+    "test/workerd-hashn-worker.mjs",
+    "test/workerd-hashn.test.mjs",
+    "worker/earning-loops.mjs"
+  ],
+  "ownSharedPreimages": {
+    "src/deployment.mjs": "a4e86aa57f2dfc553c00bd964af47dfb19a89f2f",
+    "worker/earning-loops.mjs": "93414932bee36e89ead04c2b923dad206b17e0f6"
+  },
+  "peerSharedDeltasExcluded": true,
+  "canonicalHeadPreserved": "09568b67cc8fd9600b58378eabeb9b6bad2c2d07",
+  "canonicalIndexSha256Preserved": "98cc318f71d9ae772e95cc21033ce9d6569a59931f408231e18ca7c1ef2f0249",
+  "noPush": true
+}

@@ -1,0 +1,122 @@
+{
+  "kind": "WorkerDeploymentReceivingRecord",
+  "version": 1,
+  "receivedAt": "2026-10-25T00:16:46.737874+00:00",
+  "sourceRevision": "af983bc96edf6a3d033a3d2b53a2be7c3a97492b",
+  "groupSourceRevision": "0c741bcc8d1c4a91740e65bb6d4a2f4987b283ef",
+  "publicSourceRevision": "02ea08011d736d10206057ef174da3eeaa774aaf",
+  "issuerSku": "ni:///sha-256;17l4KLnJz9NrHaT9JGP9q0YUr_08GJMNP47gXQNlMp0",
+  "supplier": "@red-cup-engineering/issuer-research-media-service@0.1.5",
+  "compositionSha256": "98c2cc012998df3489a619eb3571cae0ff9b56ca126d8dc5acd1df3791273c45",
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 357289,
+    "sha256": "06553abd54d1ff56cc4394f7cb7a73ed4789ff3785243c17f59a8af3ae8e2843"
+  },
+  "buildRecord": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/worker-build-records/98c2cc012998df3489a619eb3571cae0ff9b56ca126d8dc5acd1df3791273c45/build.json",
+  "sourceInputReceiving": {
+    "count": 74,
+    "bytes": 614672,
+    "allCurrentHashesMatch": true,
+    "temporaryInputs": [],
+    "changedFromProducer": [
+      "data/operation.mjs"
+    ]
+  },
+  "previousActiveVersion": "69f2f10c-1a73-44de-8ebf-0e1d75caf047",
+  "activeDeployment": {
+    "id": "ab03a64b-8764-4ab8-8d8e-9fdf46c8d203",
+    "source": "api",
+    "strategy": "percentage",
+    "author_email": "morgan.sennhauser@gmail.com",
+    "annotations": {
+      "workers/message": "Automatic deployment on upload.",
+      "workers/triggered_by": "upload"
+    },
+    "versions": [
+      {
+        "version_id": "465eda3a-a2f3-4072-a2b2-130c7f781e17",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-25T00:15:51.312815Z"
+  },
+  "deployedSourceReadback": {
+    "status": 200,
+    "contentType": "multipart/form-data; boundary=95478b555b051d59ad17dae3a363e111e7f43d9453a2c7deb5bd33fda0b0",
+    "bytes": 357474,
+    "sha256": "ba83b7cf4f0d6a8b1aa33fc164e24c36f9ba1af472bf78cceafd2345ded34063",
+    "files": [
+      {
+        "name": "worker.mjs",
+        "bytes": 357289,
+        "sha256": "06553abd54d1ff56cc4394f7cb7a73ed4789ff3785243c17f59a8af3ae8e2843"
+      }
+    ]
+  },
+  "installedBindingsPreserved": true,
+  "producerEnabled": true,
+  "financialCustodyEnabled": true,
+  "nativeDeployExit": 0,
+  "deployElapsedSeconds": 3.68,
+  "deployMaximumRssKiB": 96068,
+  "operationalReadings": [
+    {
+      "path": "/clock",
+      "status": 200,
+      "body": "{\"nextTick\":\"2026-10-25T00:22:30.000Z\"}"
+    },
+    {
+      "path": "/commercial.json",
+      "status": 200,
+      "body": "{\"stage\":\"awaiting-hire\",\"requests\":1,\"newCashExpenseUsd\":0,\"at\":\"2026-10-25T00:15:53.648Z\",\"nextTick\":\"2026-10-25T00:22:30.000Z\"}"
+    },
+    {
+      "path": "/research.json",
+      "status": 200,
+      "body": "{\"stage\":\"research-cash-corroborated\",\"requests\":4,\"newCashExpenseUsd\":0,\"at\":\"2026-10-24T21:41:19.366Z\",\"taskId\":\"task_b73272a31705a9b8fa0d69d095b11539\",\"productId\":\"operator-purpose-v1\",\"receiptAccepted\":true,\"evaluationState\":\"GRADED\",\"approvedAmountAtomic\":\"25000\",\"providerPayoutState\":\"paid_confirmed\",\"payoutTx\":\"0xcf2d19e9f72bab8ee533b770a881f4b83261b5054d9a0d6246d9f36fba8440c3\",\"independentlyVerifiedCashAtomic\":\"25000\",\"recognizedOutsideRevenue\":null,\"nextTick\":\"2026-10-25T00:22:30.000Z\"}"
+    },
+    {
+      "path": "/acquisition.json",
+      "status": 200,
+      "body": "{\"stage\":\"hashn-pending\",\"requests\":1,\"newCashExpenseUsd\":0,\"at\":\"2026-10-24T23:32:47.009Z\",\"offerId\":\"hashn-recurring-revenue-reconciliation-v1\",\"knockStatus\":\"pending\",\"agreementReceived\":false,\"deliverySubmitted\":false,\"recognizedOutsideRevenue\":null}"
+    },
+    {
+      "path": "/last-run.json",
+      "status": 200,
+      "body": "{\"cron\":\"*/15 * * * *\",\"at\":\"2026-10-25T00:15:00.000Z\",\"settlements\":{\"received\":[],\"refused\":0,\"total\":33},\"routes\":{\"error\":\"catalog answered 503\"},\"scorecard\":{\"week\":0,\"trailing30\":0,\"perDayTrailing30\":0},\"onchain\":{\"status\":\"no-engine-attached\"}}"
+    }
+  ],
+  "sourceAndBindingEvidence": [
+    "source-selection-review.json",
+    "canonical-source-receiving.json",
+    "before.json",
+    "after.json",
+    "upload-summary.json",
+    "upload-result.json",
+    "previous-source.json",
+    "previous-worker.multipart",
+    "deployed-worker.multipart"
+  ],
+  "commandsAndLogs": [
+    "dry-run.gate.json",
+    "dry-run.stdout.log",
+    "dry-run.stderr.log",
+    "deploy.gate.json",
+    "deploy.stdout.log",
+    "deploy.stderr.log"
+  ],
+  "liveIssuerAcquisitionReceived": false,
+  "liveIssuerSettlementReceived": false,
+  "remainingConditions": [
+    "Receive private cache through admitted Market reader, including actual Cloudflare SEC egress/current source snapshot.",
+    "Market final artifact and public unpaid/paid delivery receiving remain owned by deployment leader.",
+    "Receive actual outside witness/corroboration and buyer acceptance before counting income."
+  ],
+  "limitations": [
+    "Server receiving assumes trusted immutable provider array; ordinary caller freezes original BASE_PROVIDERS array as independently qualified.",
+    "Initial96 regularpulses/day and4witnesses/pulse provide384daily receiving slots, not200USD/day capacity or demand.",
+    "Existing R2 maintenance is preserved and is not reclassified as free.",
+    "No new sale, buyer acceptance, new cash, recognized revenue or complete account-usage proof inferred."
+  ]
+}

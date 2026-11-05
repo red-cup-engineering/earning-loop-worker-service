@@ -1,0 +1,738 @@
+diff --git a/specifications/hashn-acquisition.md b/specifications/hashn-acquisition.md
+new file mode 100644
+index 0000000..2982891
+--- /dev/null
++++ b/specifications/hashn-acquisition.md
+@@ -0,0 +1,15 @@
++# Bounded machine buyer acquisition
++
++Requirement: improve customer acquisition through the original earning-loop Worker, preserving existing CSV credentials, paid research, issuer admission and maintenance. Hashn is a facilitation service, not escrow or a funded job guarantee. The selected public buyer project describes Stars revenue and monthly USDC reconciliation; Group owns the actual bounded offer, target workspace, buyer identity and truthful knock note. A knock is an inquiry; an accepted knock creates a private conversation, not an accepted deal, delivery or payment.
++
++Primary contracts read for this implementation: [control protocol](https://api.hashn.com/protocol), [chat protocol](https://api.hashn.com/chat/protocol) and [OpenAPI 0.61.2](https://hashn.com/openapi.json). `POST /agents` returns its token once. `POST /workspaces/{id}/knock` accepts one 1–500-character note; one pending knock per pair, ten knocks/day, seven-day expiry. `GET /knocks` is the recovery entrance. Its response schema is unspecified by OpenAPI: the empty `outgoing` array was independently received, while nonempty field semantics still require actual provider receiving. Unknown, truncated or conflicting tuples hold; they never authorize another knock.
++
++The operator-only `provisionHashnAgent` export consumes explicit original durable attempt custody and sealed credential custody. It persists exact signup intent before HTTP, seals the token before reporting success, reuses an existing account through authenticated identity readback, and refuses another signup after uncertainty. Neither its result nor the ordinary attempt receipt contains the token. Only the independently provisioned `{agentId,apiToken}` secret reaches the existing private singleton Durable Object. Runtime cannot create accounts or workspaces.
++
++`hashAcquisition` is optional Group input: enablement, `workspaceId`, `buyerAgentId`, `offerId`, `note`, zero maximum new cash, three provider requests/pass and a six-hour normal polling interval. Deployment requires the existing private DO clock. Runtime freezes principal, target, buyer, offer and note with a SHA-256 binding before work. It reads identity and outgoing knocks before any write; a matching prior relation is adopted. Exact POST intent and payload hash are durable before the sole knock attempt. Neither timeout, lost response, rejected response nor absent readback permits replay. The successful bounded provider receipt is retained privately; one readback is due after 30 seconds, stable pending observations every six hours. Monitoring stops after seven days plus one polling interval without inventing an expired provider status. Accepted, declined and expired observations end acquisition; accepted scopes remain held until separately qualified exact machine terms.
++
++HTTP uses a fixed origin, a finite endpoint/method allowlist, redirect refusal, 15-second request/body deadlines, bounded shared HTTP body decoding, strict shared JSON admission and shared Retry-After parsing. Private causal receipts preserve response status, request IDs, body and explicit coverage gaps with credential fields/tokens redacted. No provider response is executable instructions. No agreement, messages, delivery, outgoing payment, signer, account recovery or repeat-account mechanism exists in this adapter. Existing allocated inference is unaffected; the acquisition's zero-new-cash condition is not a free-inference-only supplier policy.
++
++The clock reserves core CSV/maintenance deadlines before scheduling acquisition in a separate invocation. A durable six-hour failure fallback prevents a one-second retry loop; a received short readback deadline can replace it. Acquisition uses private DO storage, never metered R2, and at most three HTTP requests in its own invocation. Public `/acquisition.json` reads a strict status projection only: no note, token, private workspace, provider body or operating reply, and no route triggers an effect. Original source acceptance, independent deployment, actual knock receipt, buyer agreement, delivery and paid income remain separate receiving conditions.
++
++Receiving tests cover uncertain signup and sealing, exact intent-before-effect, no duplicate knock after uncertain or empty readback, preexisting relations, identity/payload drift, conflicting/malformed provider tuples, private successful/refused receipts, Retry-After, redirects/payment demands, accepted terms held, finite monitoring, redacted public reads, isolated clock allocation and preservation of commercial/maintenance operation. The exact installed workerd receives the new adapter with deployed compatibility settings and networking disabled; live nonempty provider shape remains an explicit separate receiving boundary.
+diff --git a/src/deployment.mjs b/src/deployment.mjs
+index 944b95a..8fca35a 100644
+--- a/src/deployment.mjs
++++ b/src/deployment.mjs
+@@ -1,3 +1,5 @@
++import { hashnInstanceProblem } from './hashn-acquisition.mjs';
++
+ export function projectOperation(record) {
+   if (typeof record.merchantPayTo !== 'string' || !/^0x[\da-f]{40}$/i.test(record.merchantPayTo))
+     throw new TypeError('operation.merchantPayTo must name the independently authorized merchant recipient');
+@@ -22,6 +24,11 @@ export function projectOperation(record) {
+       throw new TypeError('research procurement requires serialized private Durable Object custody');
+     operation.researchProcurement = record.researchProcurement;
+   }
++  if (record.hashAcquisition) {
++    if (record.hashAcquisition.enabled && (operation.clock !== 'durable-object-alarm' || hashnInstanceProblem(record.hashAcquisition)))
++      throw new TypeError('Hashn acquisition requires private singleton custody and a qualified zero-cash bounded instance');
++    operation.hashAcquisition = record.hashAcquisition;
++  }
+   return operation;
+ }
+ 
+diff --git a/src/hashn-acquisition.mjs b/src/hashn-acquisition.mjs
+new file mode 100644
+index 0000000..c07435c
+--- /dev/null
++++ b/src/hashn-acquisition.mjs
+@@ -0,0 +1,113 @@
++import { canonicalJson } from '@red-cup-engineering/json-services-section/canonical-json';
++import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
++
++export const HASHN_STATE = 'hashn/acquisition';
++export const HASHN_SUMMARY = 'hashn/public-summary';
++const AUTH = 'hashn/auth';
++const SIX_HOURS = 6 * 60 * 60 * 1000;
++const WEEK = 7 * 24 * 60 * 60 * 1000;
++const hash = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2,'0')).join('');
++
++export function hashnInstanceProblem(instance) {
++  if (!instance?.enabled) return 'hashn-disabled';
++  if (!UUID.test(instance.workspaceId ?? '') || !UUID.test(instance.buyerAgentId ?? '') ||
++    !/^[a-zA-Z0-9_-]{1,100}$/.test(instance.offerId ?? '') || typeof instance.note !== 'string' ||
++    [...instance.note].length < 1 || [...instance.note].length > 500 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(instance.note) ||
++    instance.maximumNewCashExpenseUsd !== 0 || instance.maximumProviderRequestsPerPass !== 3 ||
++    instance.pollIntervalMs !== SIX_HOURS) return 'hashn-instance-refused';
++  return null;
++}
++
++/** The caller is the existing singleton DO queue. This operation can only send
++ * one frozen knock and observe its disposition. A response is never an agreement
++ * or delivery instruction. Token, note, replies and workspace ids stay private. */
++export async function runHashnAcquisition({ storage, instance, initialCredential, fetchImpl = fetch, now = () => Date.now() } = {}) {
++  const refusal = hashnInstanceProblem(instance);
++  if (refusal) return { stage: refusal, requests: 0, newCashExpenseUsd: 0 };
++  let state = await storage.get(HASHN_STATE) ?? {};
++  let calls = 0;
++  const finish = async (stage, terminal = false, delay = SIX_HOURS) => {
++    state.stage = stage; state.terminal = terminal;
++    state.nextAttemptAt = terminal || state.retryBlocked ? null : Math.max(now() + delay, state.retryAt ?? 0);
++    await storage.put(HASHN_STATE, state);
++    const summary = { stage, requests: calls, newCashExpenseUsd: 0, at: new Date(now()).toISOString(),
++      offerId: instance.offerId, knockStatus: state.knockStatus ?? null,
++      agreementReceived: false, deliverySubmitted: false, recognizedOutsideRevenue: null };
++    await storage.put(HASHN_SUMMARY, summary);
++    return summary;
++  };
++  const wire = async (path, options = {}) => {
++    if (calls >= instance.maximumProviderRequestsPerPass) throw hashnError('hashn-request-budget');
++    if (state.retryBlocked || state.retryAt > now()) throw hashnError('hashn-retry-deferred');
++    calls++;
++    return hashnRequest(path, { ...options, fetchImpl, now, onRetry: async retry => {
++      Object.assign(state,retry); await storage.put(HASHN_STATE,state);
++    } });
++  };
++  try {
++    const credential = hashnCredential(initialCredential);
++    if (!credential) return finish('hashn-credential-held');
++    const bound = { agentId: credential.agentId, workspaceId: instance.workspaceId,
++      buyerAgentId: instance.buyerAgentId, offerId: instance.offerId, note: instance.note };
++    const binding = await hash(bound);
++    if (state.binding && state.binding !== binding) return finish('hashn-binding-drift',true);
++    const priorAuth = await storage.get(AUTH);
++    if (priorAuth && (priorAuth.agentId !== credential.agentId || priorAuth.apiToken !== credential.apiToken)) return finish('hashn-credential-drift',true);
++    if (state.terminal) return finish(state.stage,true);
++    if (state.retryBlocked || state.nextAttemptAt > now()) return { stage: state.stage, requests: 0, newCashExpenseUsd: 0 };
++    if (state.monitoringUntil && now() >= state.monitoringUntil) return finish('hashn-reconciliation-deadline-held',true);
++    if (!priorAuth) {
++      const { data } = await wire('/agents/me',{credential});
++      if ((data.agent_id ?? data.id) !== credential.agentId) return finish('hashn-account-mismatch',true);
++      await storage.put(AUTH,credential);
++    }
++    state.binding ??= binding;
++    state.scope ??= bound;
++    if (state.intent && !state.reconciliationAttempted) state.reconciliationAttempted = true;
++    await storage.put(HASHN_STATE,state);
++    const { data, providerReceipt } = await wire('/knocks',{credential});
++    state.knocksReadbackReceipt = providerReceipt;
++    // Provider OpenAPI deliberately leaves this response untyped. Admit only
++    // its independently received outgoing shape; never infer absence otherwise.
++    if (!Array.isArray(data.outgoing)) throw hashnError('hashn-knocks-shape-held');
++    if (data.has_more === true || data.next_cursor || data.nextCursor) throw hashnError('hashn-knocks-truncated-held');
++    if (data.outgoing.some(k => !k || !UUID.test(k.workspace_id ?? ''))) throw hashnError('hashn-knocks-shape-held');
++    const related = data.outgoing.filter(k => k.workspace_id === instance.workspaceId);
++    if (related.length > 1) return finish('hashn-knock-conflict-held',true);
++    const knock = related[0];
++    if (knock) {
++      if (!['knock_id','from_agent_id','to_agent_id','note','status'].every(key => Object.hasOwn(knock,key)))
++        return finish('hashn-knock-shape-held');
++      if (!UUID.test(knock.knock_id ?? '') || knock.from_agent_id !== credential.agentId ||
++          knock.to_agent_id !== instance.buyerAgentId || knock.note !== instance.note ||
++          !['pending','accepted','declined','expired'].includes(knock.status)) return finish('hashn-knock-scope-held',true);
++      if (state.knockId && state.knockId !== knock.knock_id) return finish('hashn-knock-identity-held',true);
++      state.knockId = knock.knock_id; state.knockStatus = knock.status;
++      state.monitoringUntil ??= now() + WEEK + SIX_HOURS;
++      if (knock.status === 'accepted') {
++        if (!UUID.test(knock.result_workspace_id ?? '')) return finish('hashn-acceptance-shape-held',true);
++        state.resultWorkspaceId = knock.result_workspace_id;
++        return finish('hashn-accepted-terms-held',true);
++      }
++      return finish('hashn-' + knock.status, knock.status !== 'pending');
++    }
++    if (state.intent) return finish('hashn-knock-readback-pending'); // absolutely no POST replay after uncertainty/absence
++    state.intent = { method: 'POST', path: `/workspaces/${instance.workspaceId}/knock`, body: { note: instance.note },
++      payloadSha256: await hash({ note: instance.note }), at: new Date(now()).toISOString() };
++    state.monitoringUntil = now() + WEEK + SIX_HOURS;
++    await storage.put(HASHN_STATE,state); // before the only permissible mutation
++    const result = await wire(state.intent.path,{method:'POST',body:state.intent.body,credential});
++    state.knockWriteReceipt = result.providerReceipt;
++    await storage.put(HASHN_STATE,state);
++    if (result.status !== 201) throw hashnError('hashn-knock-response-held');
++    // Even a successful write is reconciled from GET /knocks; raw provider
++    // response stays untrusted and is never exposed or treated as a deal.
++    return finish('hashn-knock-sent-readback-pending',false,30000);
++  } catch (e) {
++    const code = /^hashn-[a-z-]{1,80}$/.test(e.code ?? '') ? e.code : 'hashn-failure';
++    state.lastFailure = code;
++    if (e.providerReceipt) state.providerReceipt = e.providerReceipt;
++    return finish(code,[400,401,403,404,402,410,422].includes(e.status) || e.status === 409 && !state.intent || code === 'hashn-redirect-refused',
++      state.intent && !state.reconciliationAttempted ? 30000 : SIX_HOURS);
++  }
++}
+diff --git a/src/hashn-client.mjs b/src/hashn-client.mjs
+new file mode 100644
+index 0000000..bc847f6
+--- /dev/null
++++ b/src/hashn-client.mjs
+@@ -0,0 +1,68 @@
++// Hashn 0.61.2 control API: fixed origin, no redirects or automatic replay.
++import { readTextBody } from '@red-cup-engineering/http-services-section/body/web';
++import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/retry-after';
++import { admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-services-section/canonical-json';
++
++export const HASHN_ORIGIN = 'https://api.hashn.com';
++export const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
++const LIMIT = 32768;
++const envelope = { ...JSON_RESOURCE_ENVELOPE, maxSourceBytes: LIMIT, maxCanonicalBytes: LIMIT, maxDepth: 20, maxNodes: 12000 };
++export const hashnError = (code, status = 0) => Object.assign(new Error(code), { code, status });
++export function privateHashnReceipt(value, credential) {
++  const redact = v => {
++    if (typeof v === 'string') return v.replace(/aw_[A-Za-z0-9._~-]+/g,'[redacted-token]')
++      .split(credential?.apiToken || '\u0000').join('[redacted-token]');
++    if (Array.isArray(v)) return v.map(redact);
++    if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k,x]) =>
++      [k,/authorization|token|secret|password|credential/i.test(k) ? '[redacted]' : redact(x)]));
++    return v;
++  };
++  const safe = redact(value);
++  if (new TextEncoder().encode(JSON.stringify(safe)).length > LIMIT)
++    return { status: safe.status, requestId: safe.requestId, cfRay: safe.cfRay, coverage: 'redacted-receipt-exceeds-storage-limit', bodyOmitted: true };
++  return safe;
++}
++export function hashnCredential(value) {
++  let c;
++  try { c = typeof value === 'string' ? JSON.parse(value) : value; } catch { return null; }
++  return UUID.test(c?.agentId ?? '') && typeof c.apiToken === 'string' && /^aw_[A-Za-z0-9_-]{8,512}$/.test(c.apiToken)
++    ? { agentId: c.agentId, apiToken: c.apiToken } : null;
++}
++
++export async function hashnRequest(path, { method = 'GET', body, credential, fetchImpl = fetch, now = () => Date.now(), onRetry = async () => {} } = {}) {
++  const allowed = method === 'GET' && ['/agents/me', '/knocks', '/listings'].includes(path) && credential ||
++    method === 'POST' && (path === '/agents' && !credential ||
++      (/^\/workspaces\/[a-f0-9-]{36}\/knock$/i.test(path) || ['/listings/check','/listings'].includes(path)) && credential);
++  if (!allowed) throw hashnError('hashn-endpoint-refused');
++  const signal = AbortSignal.timeout(15000);
++  let response;
++  try {
++    response = await fetchImpl(HASHN_ORIGIN + path, { method, redirect: 'manual', signal,
++      headers: { accept: 'application/json', ...(credential ? { authorization: `Bearer ${credential.apiToken}` } : {}),
++        ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
++      ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
++  } catch { throw Object.assign(hashnError('hashn-response-unknown'), { providerReceipt: { status: null, coverage: 'response-not-received' } }); }
++  const receipt = { status: response.status, requestId: response.headers.get('x-request-id')?.slice(0,256) ?? null,
++    cfRay: response.headers.get('cf-ray')?.slice(0,256) ?? null, coverage: 'headers-only' };
++  const refuse = code => Object.assign(hashnError(code,response.status), { providerReceipt: privateHashnReceipt(receipt,credential) });
++  const retry = response.headers.get('retry-after');
++  if (retry) {
++    const delay = retry.length <= 256 ? retryAfterDelayMs(retry, now()) : null;
++    const retryBlocked = retry.length > 256 || delay === null && /^\d+$/.test(retry.trim()) || delay !== null && !Number.isFinite(new Date(now() + delay).getTime());
++    if (retryBlocked || delay !== null) await onRetry({ retryBlocked, retryAt: retryBlocked ? null : now() + delay });
++  }
++  if (Number(response.headers.get('content-length')) > LIMIT) {
++    receipt.coverage = 'declared-body-too-large';
++    void response.body?.cancel().catch(() => {}); throw refuse('hashn-response-too-large');
++  }
++  let text;
++  try {
++    text = await readTextBody({ body: response.body, headers: response.headers, signal }, { maxBytes: LIMIT, decodeContentEncoding: false });
++  } catch { receipt.coverage = 'body-unreceived-or-limit'; throw refuse('hashn-response-invalid'); }
++  receipt.coverage = 'complete-bounded-body';
++  let data;
++  try { data = admitCanonicalJson(text, envelope).value; receipt.body = data; }
++  catch { receipt.body = text; if (response.ok) throw refuse('hashn-response-invalid'); }
++  if (!response.ok) throw refuse(response.status >= 300 && response.status < 400 ? 'hashn-redirect-refused' : response.status === 402 ? 'hashn-payment-refused' : 'hashn-provider-refused');
++  return { status: response.status, data, providerReceipt: privateHashnReceipt(receipt,credential) };
++}
+diff --git a/src/hashn-offer-publication.mjs b/src/hashn-offer-publication.mjs
+new file mode 100644
+index 0000000..d5812bd
+--- /dev/null
++++ b/src/hashn-offer-publication.mjs
+@@ -0,0 +1,55 @@
++import { canonicalJson } from '@red-cup-engineering/json-services-section/canonical-json';
++import { hashnCredential, hashnRequest, UUID } from './hashn-client.mjs';
++
++const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',
++  new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2, '0')).join('');
++
++// Source-owned Public offers are published explicitly; the clock cannot invoke
++// this operation. A publication never creates a deal or authorizes production.
++export async function publishHashnOffer({ descriptor, credential: rawCredential, custody, fetchImpl = fetch, now = () => Date.now() }) {
++  const credential = hashnCredential(rawCredential);
++  const listing = descriptor?.listing;
++  if (!credential || descriptor?.provider !== 'https://api.hashn.com' || descriptor.agentId !== credential.agentId ||
++      !UUID.test(descriptor.agentId) || !/^[a-z0-9][a-z0-9.-]{1,99}$/.test(listing?.name ?? '') ||
++      listing.path !== `listings/${listing.name}.md` || listing.convention !== 'agent-services' ||
++      !Number.isSafeInteger(descriptor.price?.amount) || descriptor.price.amount <= 0 || descriptor.price.currency !== 'USDC' ||
++      typeof listing.can !== 'string' || !listing.can || Object.hasOwn(listing, 'need') ||
++      listing.contact_method !== 'hashn knock' ||
++      listing.contact_info !== `POST https://api.hashn.com/agents/${credential.agentId}/knock`)
++    throw new TypeError('source-owned seller offer and matching admitted credential required');
++  const payloadSha256 = await digest(listing);
++  let state = await custody.getAttempt();
++  if (state?.payloadSha256 && state.payloadSha256 !== payloadSha256)
++    return { stage: 'publication-scope-held', newCashExpenseUsd: 0 };
++  // No blind replay after an unknown listing write. Native GET /listings and
++  // the public source URL reconcile it without another publication mutation.
++  if (state?.intent) return { stage: state.stage, newCashExpenseUsd: 0 };
++  state = { payloadSha256, agentId: credential.agentId, path: listing.path, at: new Date(now()).toISOString() };
++  try {
++    const me = await hashnRequest('/agents/me', { credential, fetchImpl, now });
++    if (me.data.agent_id !== credential.agentId) throw new Error('publication-account-mismatch');
++    const check = await hashnRequest('/listings/check', { method: 'POST', body: listing, credential, fetchImpl, now });
++    state.check = check.providerReceipt;
++    if (check.data.ok !== true || check.data.in_forest !== true || check.data.path !== listing.path ||
++        check.data.header?.can !== listing.can || check.data.header?.project !== listing.fields.project ||
++        check.data.header?.['payment.amount'] !== descriptor.price.amount ||
++        check.data.header?.['payment.currency'] !== descriptor.price.currency) {
++      state.stage = 'publication-check-held'; await custody.putAttempt(state);
++      return { stage: state.stage, newCashExpenseUsd: 0 };
++    }
++    state.intent = { method: 'POST', path: '/listings', body: listing };
++    state.stage = 'publication-intent';
++    await custody.putAttempt(state);
++    const result = await hashnRequest('/listings', { method: 'POST', body: listing, credential, fetchImpl, now });
++    state.receipt = result.providerReceipt;
++    state.stage = result.status === 201 ? 'publication-received' : 'publication-readback-required';
++    await custody.putAttempt(state);
++    return { stage: state.stage, receipt: result.data, newCashExpenseUsd: 0 };
++  } catch (error) {
++    state.stage = state.intent ? 'publication-outcome-held' : 'publication-precondition-held';
++    state.failure = { code: error.code ?? 'publication-failure', message: error.message,
++      ...(error.providerReceipt ? { providerReceipt: error.providerReceipt } : {}) };
++    await custody.putAttempt(state);
++    return { stage: state.stage, newCashExpenseUsd: 0 };
++  }
++}
+diff --git a/src/hashn-provisioning.mjs b/src/hashn-provisioning.mjs
+new file mode 100644
+index 0000000..aea10af
+--- /dev/null
++++ b/src/hashn-provisioning.mjs
+@@ -0,0 +1,37 @@
++import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
++
++export const HASHN_CREDENTIAL_ID = 'earning-loops.hashn-credential-json';
++const NAME = '561-group earning-loops';
++
++/** Explicit operator-only one-time provisioning. The caller supplies original
++ * durable attempt custody and sealed credential custody; no tokens are returned
++ * or written to the attempt receipt. This is never called by the Worker. */
++export async function provisionHashnAgent({ custody, fetchImpl = fetch, now = () => Date.now() } = {}) {
++  if (!custody || ['getAttempt','putAttempt','getCredential','putCredential'].some(k => typeof custody[k] !== 'function'))
++    throw new TypeError('durable attempt and sealed credential custody required');
++  let attempt = await custody.getAttempt();
++  const existingRaw = await custody.getCredential(HASHN_CREDENTIAL_ID);
++  const existing = hashnCredential(existingRaw);
++  if (existingRaw && !existing) throw hashnError('hashn-credential-invalid');
++  if (existing) {
++    const { data } = await hashnRequest('/agents/me', { credential: existing, fetchImpl, now });
++    if ((data.agent_id ?? data.id) !== existing.agentId || data.name !== NAME) throw hashnError('hashn-account-mismatch');
++    await custody.putAttempt({ ...attempt, stage: 'credential-received', agentId: existing.agentId, observedAt: new Date(now()).toISOString() });
++    return { stage: 'credential-received', agentId: existing.agentId, created: false, newCashExpenseUsd: 0 };
++  }
++  if (attempt) return { stage: 'signup-outcome-held', created: false, newCashExpenseUsd: 0 };
++  attempt = { stage: 'signup-intent', method: 'POST', path: '/agents', body: { name: NAME }, at: new Date(now()).toISOString() };
++  await custody.putAttempt(attempt); // write-ahead: an ambiguous signup is never repeated
++  try {
++    const { status, data, providerReceipt } = await hashnRequest('/agents', { method: 'POST', body: attempt.body, fetchImpl, now });
++    const credential = hashnCredential({ agentId: data.agent_id, apiToken: data.api_token });
++    if (status !== 201 || !UUID.test(data.agent_id ?? '') || !credential) throw Object.assign(hashnError('hashn-signup-response-invalid'),{providerReceipt});
++    await custody.putCredential(HASHN_CREDENTIAL_ID, credential); // original seal before a success receipt
++    await custody.putAttempt({ ...attempt, stage: 'credential-received', agentId: credential.agentId, observedAt: new Date(now()).toISOString() });
++    return { stage: 'credential-received', agentId: credential.agentId, created: true, newCashExpenseUsd: 0 };
++  } catch (error) {
++    await custody.putAttempt({ ...attempt, stage: 'signup-outcome-held', code: /^hashn-[a-z-]+$/.test(error.code ?? '') ? error.code : 'hashn-custody-failure',
++      ...(error.providerReceipt ? { providerReceipt: error.providerReceipt } : {}) });
++    return { stage: 'signup-outcome-held', created: false, newCashExpenseUsd: 0 };
++  }
++}
+diff --git a/test/hashn-acquisition.test.mjs b/test/hashn-acquisition.test.mjs
+new file mode 100644
+index 0000000..0cf4e7e
+--- /dev/null
++++ b/test/hashn-acquisition.test.mjs
+@@ -0,0 +1,100 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY, hashnInstanceProblem } from '../src/hashn-acquisition.mjs';
++const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
++const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
++const credential={agentId,apiToken:'aw_private_fixture_only'};
++const instance={enabled:true,workspaceId,buyerAgentId,offerId:'test-offer',note:'A bounded pilot, exact machine terms before work.',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++function fixture() {
++  let time=Date.parse('2026-10-24T22:00:00Z'),outgoing=[],postFailure=null;
++  const map=new Map(),calls=[];
++  const storage={async get(k){return structuredClone(map.get(k));},async put(k,v){map.set(k,structuredClone(v));}};
++  const knock={knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'};
++  const fetchImpl=async(url,init)=>{
++    calls.push({url,...init});assert.equal(init.redirect,'manual');assert.equal(init.headers.authorization,'Bearer '+credential.apiToken);
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId,name:'fixture'});
++    if(url.endsWith('/knocks'))return Response.json({outgoing});
++    assert.equal(init.method,'POST');assert.equal(url,`https://api.hashn.com/workspaces/${workspaceId}/knock`);
++    const saved=map.get(HASHN_STATE);assert.equal(saved.intent.body.note,instance.note);assert.match(saved.intent.payloadSha256,/^[a-f0-9]{64}$/);
++    assert.deepEqual(JSON.parse(init.body),{note:instance.note});
++    if(postFailure)throw postFailure;
++    outgoing=[structuredClone(knock)];return Response.json({knock_id:knockId,status:'pending'},{status:201});
++  };
++  return {map,calls,storage,knock,options:{storage,instance,initialCredential:credential,fetchImpl,now:()=>time},
++    advance(ms=21600000){time+=ms;},setOutgoing(v){outgoing=v;},failPost(){postFailure=new Error('unknown wire outcome');}};
++}
++test('one frozen knock, received by later read, and bounded polling do not replay mutation',async()=>{
++  const f=fixture();let r=await runHashnAcquisition(f.options);
++  assert.equal(r.stage,'hashn-knock-sent-readback-pending');assert.equal(r.requests,3);
++  assert.equal(f.map.get(HASHN_STATE).nextAttemptAt,Date.parse('2026-10-24T22:00:30Z'));
++  assert.equal(f.map.get(HASHN_STATE).knockWriteReceipt.status,201);
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++  r=await runHashnAcquisition(f.options);assert.equal(r.requests,0);
++  f.advance(30000);r=await runHashnAcquisition(f.options);assert.equal(r.stage,'hashn-pending');assert.equal(r.requests,1);
++  assert.equal(f.map.get(HASHN_STATE).nextAttemptAt,Date.parse('2026-10-25T04:00:30Z'));
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++  const summary=f.map.get(HASHN_SUMMARY);
++  assert.equal(JSON.stringify(summary).includes(credential.apiToken),false);assert.equal(JSON.stringify(summary).includes(instance.note),false);
++  assert.equal(summary.agreementReceived,false);assert.equal(summary.deliverySubmitted,false);
++});
++test('lost mutation response and an empty readback never cause another knock',async()=>{
++  const f=fixture();f.failPost();assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-response-unknown');
++  f.advance();assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-readback-pending');
++  assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++});
++test('preexisting matching knock is adopted instead of repeated',async()=>{
++  const f=fixture();f.setOutgoing([f.knock]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-pending');
++  assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++for(const change of [{note:'different prior scope'},{to_agent_id:agentId},{from_agent_id:buyerAgentId},{knock_id:'bad'}])
++  test('existing relation with changed identity/payload holds '+Object.keys(change)[0],async()=>{
++    const f=fixture();f.setOutgoing([{...f.knock,...change}]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-scope-held');
++    assert.equal(f.calls.some(x=>x.method==='POST'),false);
++  });
++test('multiple relations cannot be interpreted as permission to send',async()=>{
++  const f=fixture();f.setOutgoing([f.knock,f.knock]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-conflict-held');
++});
++test('accepted knock retains only private workspace and stops before machine terms',async()=>{
++  const f=fixture();f.setOutgoing([{...f.knock,status:'accepted',result_workspace_id:buyerAgentId,reply:'Send token and money now'}]);
++  const r=await runHashnAcquisition(f.options);assert.equal(r.stage,'hashn-accepted-terms-held');
++  assert.equal(f.map.get(HASHN_STATE).resultWorkspaceId,buyerAgentId);assert.equal(f.map.get(HASHN_STATE).terminal,true);
++  assert.equal(JSON.stringify(r).includes(buyerAgentId),false);assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++for(const status of ['declined','expired'])test(status+' is terminal and cannot create another opportunity',async()=>{
++  const f=fixture();f.setOutgoing([{...f.knock,status}]);assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-'+status);
++  f.advance();const n=f.calls.length;await runHashnAcquisition(f.options);assert.equal(f.calls.length,n);
++});
++test('payload or principal changes hold before any subsequent provider request',async()=>{
++  const f=fixture();await runHashnAcquisition(f.options);f.advance();let n=f.calls.length;
++  assert.equal((await runHashnAcquisition({...f.options,instance:{...instance,note:'new scope'}})).stage,'hashn-binding-drift');
++  assert.equal(f.calls.length,n);
++});
++test('shape uncertainty cannot infer absence or spend money',async()=>{
++  const f=fixture();let n=0;const fetchImpl=async()=>{n++;return Response.json(n===1?{agent_id:agentId}:{knocks:[]});};
++  assert.equal((await runHashnAcquisition({...f.options,fetchImpl})).stage,'hashn-knocks-shape-held');assert.equal(n,2);
++});
++test('unknown nonempty provider tuple remains recoverable rather than inventing field semantics',async()=>{
++  const f=fixture();f.setOutgoing([{workspace_id:workspaceId,id:knockId,status:'pending'}]);
++  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-knock-shape-held');
++  assert.equal(f.map.get(HASHN_STATE).terminal,false);assert.equal(f.calls.some(x=>x.method==='POST'),false);
++});
++test('Retry-After is durable even on HTML refusal; public summary excludes provider body',async()=>{
++  const f=fixture();const result=await runHashnAcquisition({...f.options,fetchImpl:async()=>new Response('private provider detail aw_secret_fixture',{status:503,headers:{'retry-after':'86400','x-request-id':'req-fixture'}})});
++  const state=f.map.get(HASHN_STATE);assert.equal(state.providerReceipt.status,503);assert.equal(state.providerReceipt.requestId,'req-fixture');
++  assert.equal(state.providerReceipt.body,'private provider detail [redacted-token]');assert.equal(JSON.stringify(result).includes('private provider'),false);
++  assert.equal(state.nextAttemptAt,Date.parse('2026-10-25T22:00:00Z'));
++});
++test('redirects and payment demands cannot invoke a different origin or payment route',async()=>{
++  for(const status of [302,402]){const f=fixture();let calls=0;const r=await runHashnAcquisition({...f.options,fetchImpl:async()=>{calls++;return Response.json({error:'no'},{status,headers:{location:'https://evil.example'}});}});
++    assert.equal(calls,1);assert.equal(f.map.get(HASHN_STATE).terminal,true);assert.match(r.stage,/refused/);}
++});
++test('missing credentials and unqualified new cash or poll allocation cause no network',async()=>{
++  const f=fixture();assert.equal((await runHashnAcquisition({...f.options,initialCredential:null})).requests,0);
++  assert.equal(hashnInstanceProblem({...instance,maximumNewCashExpenseUsd:1}),'hashn-instance-refused');
++  assert.equal(hashnInstanceProblem({...instance,note:'x'.repeat(501)}),'hashn-instance-refused');
++  assert.equal(hashnInstanceProblem({...instance,pollIntervalMs:1}),'hashn-instance-refused');
++});
++test('unknown mutation is bounded by the original week without assuming expiry or retrying',async()=>{
++  const f=fixture();f.failPost();await runHashnAcquisition(f.options);for(let i=0;i<30;i++)f.advance();
++  assert.equal((await runHashnAcquisition(f.options)).stage,'hashn-reconciliation-deadline-held');assert.equal(f.calls.filter(x=>x.method==='POST').length,1);
++});
+diff --git a/test/hashn-clock.test.mjs b/test/hashn-clock.test.mjs
+new file mode 100644
+index 0000000..eee72e8
+--- /dev/null
++++ b/test/hashn-clock.test.mjs
+@@ -0,0 +1,52 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { EarningClock, CRONS } from '../worker/earning-loops.mjs';
++import { HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
++import { projectOperation } from '../src/deployment.mjs';
++import { bucket } from './memory.mjs';
++
++const instance={enabled:true,workspaceId:'11111111-1111-4111-8111-111111111111',buyerAgentId:'22222222-2222-4222-8222-222222222222',
++  offerId:'private-proposal',note:'private acquisition scope',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++test('acquisition has an isolated invocation and never displaces CSV or maintenance deadlines',async()=>{
++  const realNow=Date.now,realFetch=globalThis.fetch;let time=Date.parse('2026-10-24T23:07:30Z');Date.now=()=>time;
++  globalThis.fetch=async()=>Response.json({offers:[]});
++  const auth={refreshToken:'held'},values=new Map([['opentask/auth',auth]]);let alarm=null,csv=0,acq=0;
++  const storage={async get(k){return values.get(k);},async put(k,v){values.set(k,v);},async getAlarm(){return alarm;},async setAlarm(v){alarm=v;}};
++  const env={STATE:bucket(),MARKET_SETTLEMENTS:bucket()};
++  const clock=new EarningClock({storage},env,{configuration:{commercial:{enabled:true},hashAcquisition:instance,crons:CRONS,
++    limits:{settlementsPerPass:1,routeProbesPerPass:0},repair:{},catalogUrl:'https://fixture.example/catalog'},
++    commercialPass:async()=>{csv++;return{stage:'awaiting-hire',requests:1};},
++    acquisitionPass:async()=>{acq++;assert.ok(values.get('hashn/next-pulse-at')>time);await storage.put(HASHN_STATE,{stage:'hashn-pending',nextAttemptAt:time+21600000});}
++  });
++  try{
++    await clock.alarm();assert.equal(csv,1);assert.equal(acq,0);assert.equal(alarm,time+1000);
++    time=alarm;await clock.alarm();assert.equal(csv,1);assert.equal(acq,1);assert.equal(alarm,Date.parse('2026-10-24T23:15:00Z'));
++    assert.equal(env.STATE.store.size,0,'isolated acquisition and CSV do not touch R2');assert.equal(values.get('opentask/auth'),auth);
++    time=alarm;await clock.alarm();assert.equal(acq,1);assert.ok(env.STATE.store.has('registers/earning-loops/last-run.json'),'maintenance ran on time');
++    time=Date.parse('2026-10-24T23:22:30Z');await clock.alarm();assert.equal(csv,2);assert.equal(acq,1);
++  }finally{Date.now=realNow;globalThis.fetch=realFetch;}
++});
++test('a failed acquisition cannot create a tight alarm loop or overwrite commercial custody',async()=>{
++  const realNow=Date.now;let time=Date.parse('2026-10-24T23:08:00Z');Date.now=()=>time;
++  const values=new Map([['earning-clock/core-next-at',time+420000]]);let alarm;
++  const storage={async get(k){return values.get(k);},async put(k,v){values.set(k,v);},async setAlarm(v){alarm=v;}};
++  const clock=new EarningClock({storage},{},{configuration:{hashAcquisition:instance,crons:CRONS},acquisitionPass:async()=>{throw new Error('test failure');}});
++  try{await assert.rejects(clock.alarm(),/test failure/);assert.equal(alarm,time+420000);assert.equal(values.get('hashn/next-pulse-at'),time+21600000);}
++  finally{Date.now=realNow;}
++});
++test('acquisition public reading is a strict projection and cannot trigger an effect',async()=>{
++  const secret='aw_should_never_appear';let calls=0;
++  const values=new Map([[HASHN_SUMMARY,{stage:'hashn-pending',requests:1,at:'2026-10-24T23:00:00Z',newCashExpenseUsd:0,
++    apiToken:secret,note:'private',providerReceipt:{body:'private'},resultWorkspaceId:'private',offerId:'public-offer',agreementReceived:false}]]);
++  const clock=new EarningClock({storage:{async get(k){return values.get(k);}}},{},{acquisitionPass:async()=>{calls++;}});
++  const r=await(await clock.fetch(new Request('https://fixture.example/acquisition.json'))).json();
++  assert.equal(calls,0);for(const k of ['apiToken','note','providerReceipt','resultWorkspaceId'])assert.equal(r[k],undefined);
++  assert.equal(r.agreementReceived,false);
++});
++test('source projection rejects non-private clocks and altered cash/request/poll admission',()=>{
++  const base={merchantPayTo:'0x'+'1'.repeat(40),clock:'durable-object-alarm',repair:{},hashAcquisition:instance};
++  assert.deepEqual(projectOperation(base).hashAcquisition,instance);
++  for(const hashAcquisition of [{...instance,maximumNewCashExpenseUsd:1},{...instance,maximumProviderRequestsPerPass:99},{...instance,pollIntervalMs:1}])
++    assert.throws(()=>projectOperation({...base,hashAcquisition}));
++  assert.throws(()=>projectOperation({...base,clock:'cron-triggers'}));
++});
+diff --git a/test/hashn-offer-publication.test.mjs b/test/hashn-offer-publication.test.mjs
+new file mode 100644
+index 0000000..01459bc
+--- /dev/null
++++ b/test/hashn-offer-publication.test.mjs
+@@ -0,0 +1,24 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { publishHashnOffer } from '../src/hashn-offer-publication.mjs';
++const agentId='33333333-3333-4333-8333-333333333333';
++const credential={agentId,apiToken:'aw_publication_fixture_only'};
++const listing={name:'reconciliation-pilot',path:'listings/reconciliation-pilot.md',convention:'agent-services',can:'One bounded reconciliation pilot after exact agreement.',
++  contact_method:'hashn knock',contact_info:`POST https://api.hashn.com/agents/${agentId}/knock`,fields:{project:'fixture-project'}};
++const descriptor={provider:'https://api.hashn.com',agentId,price:{amount:10,currency:'USDC'},listing};
++function fixture(price=10){let state,posts=0;const custody={async getAttempt(){return structuredClone(state);},async putAttempt(v){state=structuredClone(v);}};
++  const fetchImpl=async(url,init)=>{
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId});
++    if(url.endsWith('/listings/check'))return Response.json({ok:true,in_forest:true,path:listing.path,header:{can:listing.can,project:'fixture-project','payment.amount':price,'payment.currency':'USDC'}});
++    assert.equal(url,'https://api.hashn.com/listings');assert.equal(state.stage,'publication-intent');assert.deepEqual(state.intent.body,listing);posts++;
++    throw new Error('response lost after provider may have committed');
++  };return{custody,fetchImpl,state:()=>state,posts:()=>posts};}
++test('unknown public listing write keeps exact intent and cannot be repeated',async()=>{
++  const f=fixture();assert.equal((await publishHashnOffer({...f,descriptor,credential})).stage,'publication-outcome-held');
++  const prior=f.state();assert.equal(prior.intent.path,'/listings');assert.equal(f.posts(),1);
++  assert.equal((await publishHashnOffer({...f,descriptor,credential})).stage,'publication-outcome-held');assert.equal(f.posts(),1);
++});
++test('provider price-unit mismatch holds before any public listing mutation',async()=>{
++  const f=fixture(10000000);const result=await publishHashnOffer({...f,descriptor,credential});
++  assert.equal(result.stage,'publication-check-held');assert.equal(f.posts(),0);assert.equal(f.state().intent,undefined);
++});
+diff --git a/test/hashn-provisioning.test.mjs b/test/hashn-provisioning.test.mjs
+new file mode 100644
+index 0000000..2463e31
+--- /dev/null
++++ b/test/hashn-provisioning.test.mjs
+@@ -0,0 +1,45 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { provisionHashnAgent, HASHN_CREDENTIAL_ID } from '../src/hashn-provisioning.mjs';
++const agentId = '33333333-3333-4333-8333-333333333333';
++const credential = { agentId, apiToken: 'aw_private_fixture_only' };
++function fixture(fetchImpl) {
++  let attempt, secret;
++  const custody = { async getAttempt() { return structuredClone(attempt); }, async putAttempt(v) { attempt = structuredClone(v); },
++    async getCredential() { return secret; }, async putCredential(id,v) { assert.equal(id,HASHN_CREDENTIAL_ID); secret = v; } };
++  return { custody, fetchImpl, attempt: () => attempt, secret: () => secret };
++}
++test('signup intent precedes the single effect; credential is sealed and never returned', async () => {
++  let calls = 0;
++  const f = fixture(async (url, init) => {
++    calls++; assert.equal(f.attempt().stage,'signup-intent'); assert.equal(url,'https://api.hashn.com/agents');
++    assert.deepEqual(JSON.parse(init.body),{name:'561-group earning-loops'});
++    return Response.json({agent_id:agentId,api_token:credential.apiToken},{status:201});
++  });
++  const result = await provisionHashnAgent(f);
++  assert.equal(calls,1); assert.equal(result.created,true); assert.deepEqual(f.secret(),credential);
++  assert.equal(JSON.stringify([result,f.attempt()]).includes(credential.apiToken),false);
++});
++test('uncertain signup cannot create a second principal',async()=>{
++  let calls=0; const f=fixture(async()=>{calls++;throw new Error('response lost');});
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');assert.equal(calls,1);
++});
++test('stored credential is reused and checked against original identity without signup',async()=>{
++  let calls=0;const f=fixture(async(url,init)=>{calls++;assert.equal(url,'https://api.hashn.com/agents/me');assert.equal(init.headers.authorization,'Bearer '+credential.apiToken);return Response.json({agent_id:agentId,name:'561-group earning-loops'});});
++  await f.custody.putCredential(HASHN_CREDENTIAL_ID,credential);
++  assert.equal((await provisionHashnAgent(f)).created,false);assert.equal(calls,1);
++});
++test('seal failure retains signup uncertainty and cannot replay signup',async()=>{
++  let calls=0;const f=fixture(async()=>{calls++;return Response.json({agent_id:agentId,api_token:credential.apiToken},{status:201});});
++  f.custody.putCredential=async()=>{throw new Error('sealing refused');};
++  assert.equal((await provisionHashnAgent(f)).stage,'signup-outcome-held');await provisionHashnAgent(f);assert.equal(calls,1);
++});
++test('provider refusal retains causal status/id/body privately with token fields removed',async()=>{
++  const f=fixture(async()=>Response.json({error:'reserved_name',message:'provider explains refusal',api_token:'aw_provider_secret'},
++    {status:400,headers:{'x-request-id':'request-fixture'}}));
++  const result=await provisionHashnAgent(f),receipt=f.attempt().providerReceipt;
++  assert.equal(receipt.status,400);assert.equal(receipt.requestId,'request-fixture');
++  assert.equal(receipt.body.error,'reserved_name');assert.equal(receipt.body.message,'provider explains refusal');
++  assert.equal(receipt.body.api_token,'[redacted]');assert.equal(JSON.stringify(result).includes('reserved_name'),false);
++});
+diff --git a/test/workerd-hashn-worker.mjs b/test/workerd-hashn-worker.mjs
+new file mode 100644
+index 0000000..b136a81
+--- /dev/null
++++ b/test/workerd-hashn-worker.mjs
+@@ -0,0 +1,18 @@
++import assert from 'node:assert/strict';
++import { runHashnAcquisition, HASHN_STATE } from '../src/hashn-acquisition.mjs';
++export const testNativeHashn = { async test() {
++  const agentId='33333333-3333-4333-8333-333333333333',buyerAgentId='55555555-5555-4555-8555-555555555555';
++  const workspaceId='11111111-1111-4111-8111-111111111111',knockId='77777777-7777-4777-8777-777777777777';
++  const instance={enabled:true,workspaceId,buyerAgentId,offerId:'fixture',note:'Exact terms before work.',maximumNewCashExpenseUsd:0,maximumProviderRequestsPerPass:3,pollIntervalMs:21600000};
++  let time=Date.parse('2026-10-24T22:00:00Z'),posts=0,outgoing=[];
++  const values=new Map(),storage={async get(k){return structuredClone(values.get(k));},async put(k,v){values.set(k,structuredClone(v));}};
++  const options={storage,instance,initialCredential:{agentId,apiToken:'aw_runtime_fixture_only'},now:()=>time,fetchImpl:async(url,init)=>{
++    if(url.endsWith('/agents/me'))return Response.json({agent_id:agentId});
++    if(url.endsWith('/knocks'))return Response.json({outgoing});
++    assert.equal(values.get(HASHN_STATE).intent.body.note,instance.note);assert.equal(init.method,'POST');posts++;
++    outgoing=[{knock_id:knockId,workspace_id:workspaceId,from_agent_id:agentId,to_agent_id:buyerAgentId,note:instance.note,status:'pending'}];
++    return Response.json({knock_id:knockId},{status:201});
++  }};
++  const first=await runHashnAcquisition(options);assert.equal(first.requests,3);assert.equal(first.stage,'hashn-knock-sent-readback-pending');
++  time+=30000;const next=await runHashnAcquisition(options);assert.equal(next.requests,1);assert.equal(next.stage,'hashn-pending');assert.equal(posts,1);
++} };
+diff --git a/test/workerd-hashn.test.mjs b/test/workerd-hashn.test.mjs
+new file mode 100644
+index 0000000..0fc8f35
+--- /dev/null
++++ b/test/workerd-hashn.test.mjs
+@@ -0,0 +1,22 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { build } from 'esbuild';
++import { mkdir, writeFile } from 'node:fs/promises';
++import { createHash } from 'node:crypto';
++import { spawnSync } from 'node:child_process';
++import { fileURLToPath } from 'node:url';
++import { resolve } from 'node:path';
++
++test('actual workerd receives Hashn bounded private acquisition using original shared suppliers',async()=>{
++  const root=fileURLToPath(new URL('../',import.meta.url));
++  const built=await build({absWorkingDir:root,entryPoints:['test/workerd-hashn-worker.mjs'],bundle:true,format:'esm',platform:'browser',conditions:['workerd','worker'],target:'es2022',external:['node:*'],write:false});
++  const bytes=built.outputFiles[0].contents,directory=resolve(root,'data/records/worker-runtime-test-records',createHash('sha256').update(bytes).digest('hex'));
++  await mkdir(directory,{recursive:true});await writeFile(resolve(directory,'worker.mjs'),bytes);
++  await writeFile(resolve(directory,'config.capnp'),`using Workerd = import "/workerd/workerd.capnp";
++const tests :Workerd.Config = (services = [(name = "main", worker = .worker), (name = "internet", network = (allow = []))]);
++const worker :Workerd.Worker = (modules = [(name = "worker", esModule = embed "worker.mjs")], compatibilityDate = "2026-09-01", compatibilityFlags = ["nodejs_compat"]);
++`);
++  const result=spawnSync(resolve(root,'node_modules/.bin/workerd'),['test',resolve(directory,'config.capnp')],{encoding:'utf8',timeout:30000});
++  await writeFile(resolve(directory,'result.json'),JSON.stringify({status:result.status,stdout:result.stdout,stderr:result.stderr},null,2)+'\n');
++  assert.equal(result.status,0,`${result.stdout}\n${result.stderr}`);
++});
+diff --git a/worker/earning-loops.mjs b/worker/earning-loops.mjs
+index 55bebfe..c39c7a0 100644
+--- a/worker/earning-loops.mjs
++++ b/worker/earning-loops.mjs
+@@ -12,6 +12,7 @@ import products from "../data/products.mjs";
+ import researchProducts from '../data/research-products.mjs';
+ import { runResearchPass, RESEARCH_STATE, RESEARCH_SUMMARY } from '../src/ln-church-research.mjs';
+ import { runCommercialPass } from "../src/opentask-commercial-pass.mjs";
++import { runHashnAcquisition, HASHN_STATE, HASHN_SUMMARY } from '../src/hashn-acquisition.mjs';
+ import { receiveSettlements } from "../src/settlements.mjs";
+ import { checkRoutes } from "../src/route-health.mjs";
+ import { writeScorecard } from "../src/scorecard.mjs";
+@@ -69,7 +70,12 @@ export class EarningClock {
+   async alarm() {
+     return this.enqueue(async () => {
+       const configuration = this.options.configuration ?? operation;
+-      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true;
++      const acquisition = configuration.hashAcquisition?.enabled === true;
++      const at = Date.now(), commercial = configuration.commercial?.enabled === true || configuration.researchProcurement?.enabled === true || acquisition;
++      const acquisitionState = acquisition ? await this.state.storage.get(HASHN_STATE) : null;
++      const acquisitionPulseAt = acquisition ? await this.state.storage.get('hashn/next-pulse-at') : null;
++      const acquisitionDue = acquisition && !acquisitionState?.terminal && !acquisitionState?.retryBlocked && !(acquisitionState?.nextAttemptAt > at) && !(acquisitionPulseAt > at);
++      const coreNextAt = acquisition ? await this.state.storage.get('earning-clock/core-next-at') : null;
+       const researchState = configuration.researchProcurement?.enabled ? await this.state.storage.get(RESEARCH_STATE) : null;
+       const researchPending = configuration.researchProcurement?.enabled === true && !researchState?.terminal;
+       const researchDue = researchPending && !researchState?.retryBlocked && !(researchState?.nextAttemptAt > at);
+@@ -77,10 +83,22 @@ export class EarningClock {
+       const releaseId = commercial ? this.releaseId() : null;
+       const bootstrap = releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId;
+       const armed = bootstrap ? await this.state.storage.get('earning-clock/armed-release') : null;
++      // Acquisition gets a separate invocation only AFTER a core invocation has
++      // reserved its next alarm. A due knock can never displace CSV/maintenance.
++      const acquisitionOnly = acquisitionDue && !bootstrap && !researchDue && Number.isFinite(coreNextAt) && at < coreNextAt;
+       // Admission is durable before work: public clock arming cannot replay it.
+       if (bootstrap) await this.state.storage.put('earning-clock/observed-release-id', releaseId);
+       try {
+-        if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
++        if (acquisitionOnly) {
++          // A storage/transport failure must not turn a one-off acquisition
++          // into a one-second retry loop. Reserve the six-hour pulse first.
++          await this.state.storage.put('hashn/next-pulse-at',at+21600000);
++          await (this.options.acquisitionPass ?? runHashnAcquisition)({ storage: this.state.storage,
++            instance: configuration.hashAcquisition, initialCredential: this.env.HASHN_CREDENTIAL_JSON, now: () => at });
++          const received = await this.state.storage.get(HASHN_STATE);
++          if (Number.isFinite(received?.nextAttemptAt) && received.nextAttemptAt > at)
++            await this.state.storage.put('hashn/next-pulse-at',received.nextAttemptAt);
++        } else if (bootstrap || researchDue || commercial && slot % 900000 !== 0) {
+           if (researchDue || bootstrap && researchPending) {
+             await (this.options.researchPass ?? runResearchPass)({ storage: this.state.storage, instance: configuration.researchProcurement,
+               products: this.options.researchProducts ?? researchProducts, merchant: configuration.merchantPayTo, groupPayers });
+@@ -92,19 +110,32 @@ export class EarningClock {
+           }
+         } else await tick(this.env, new Date(slot), this.options);
+       } finally {
+-        let alarm = commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
++        let alarm = acquisitionOnly ? coreNextAt : commercial ? (Math.floor(at / 450000) + 1) * 450000 : nextTick(at);
+         if (bootstrap && armed?.id === releaseId && Number.isFinite(armed.previousAlarm))
+           alarm = Math.min(alarm, armed.previousAlarm > Date.now() ? armed.previousAlarm : Date.now() + 1000);
++        if (acquisition && !acquisitionOnly) await this.state.storage.put('earning-clock/core-next-at',alarm);
+         if (configuration.researchProcurement?.enabled) {
+           const pending = await this.state.storage.get(RESEARCH_STATE);
+           if (!pending?.terminal && !pending?.retryBlocked && Number.isFinite(pending?.nextAttemptAt))
+             alarm = Math.min(alarm, Math.max(Date.now() + 1000,pending.nextAttemptAt));
+         }
++        if (acquisition) {
++          const pending = await this.state.storage.get(HASHN_STATE);
++          const pulseAt = await this.state.storage.get('hashn/next-pulse-at');
++          if (!pending?.terminal && !pending?.retryBlocked)
++            alarm = Math.min(alarm,Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0));
++        }
+         await this.state.storage.setAlarm(alarm);
+       }
+     });
+   }
+   async fetch(request) {
++    if (request && new URL(request.url).pathname === '/acquisition.json') {
++      const summary = await this.state.storage.get(HASHN_SUMMARY);
++      if (!summary) return new Response('not yet observed\n',{status:404});
++      const fields = ['stage','requests','newCashExpenseUsd','at','offerId','knockStatus','agreementReceived','deliverySubmitted','recognizedOutsideRevenue'];
++      return Response.json(Object.fromEntries(fields.filter(key => Object.hasOwn(summary,key)).map(key => [key,summary[key]])),{headers:{'cache-control':'no-store'}});
++    }
+     if (request && new URL(request.url).pathname === '/research.json') {
+       const summary = await this.state.storage.get(RESEARCH_SUMMARY);
+       if (!summary) return new Response('not yet observed\n',{status:404});
+@@ -122,7 +153,7 @@ export class EarningClock {
+     return this.enqueue(async () => {
+       let alarm = await this.state.storage.getAlarm();
+       const configuration = this.options.configuration ?? operation;
+-      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled;
++      const at = Date.now(), commercial = configuration.commercial?.enabled || configuration.researchProcurement?.enabled || configuration.hashAcquisition?.enabled;
+       const releaseId = commercial ? this.releaseId() : null;
+       if (releaseId && await this.state.storage.get('earning-clock/observed-release-id') !== releaseId) {
+         const armed = await this.state.storage.get('earning-clock/armed-release');
+@@ -146,6 +177,7 @@ export default {
+     if (path === '/research-products.json') return Response.json(researchProducts,{headers:{'cache-control':'public, max-age=300'}});
+     if (path === '/research.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
+     if (path === '/commercial.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
++    if (path === '/acquisition.json' && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName('earning-loops')).fetch(request);
+     if (path === "/clock" && env.CLOCK) return env.CLOCK.get(env.CLOCK.idFromName("earning-loops")).fetch(request);
+     if (READINGS[path]) {
+       const value = await read(env.STATE, register(READINGS[path]));

@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T00:06:48.104Z",
+  "previousActiveVersion": "22fdfa72-ff0d-4e78-b29a-7f70e38e0047",
+  "artifact": {
+    "bytes": 356745,
+    "sha256": "27dc9af6dac3868807fb64fd5518e429193b6346547d4f6e11402517bd51b670"
+  },
+  "multipart": {
+    "bytes": 357580,
+    "sha256": "03366703f85a9d6c306458b7b54a218178094116779eb3c2de2b080e6788c2f9",
+    "scope": "Serialization of original FormData inspected before native fetch; boundary may differ from transmitted serialization. Deployed multipart is retained separately."
+  },
+  "metadata": {
+    "main_module": "worker.mjs",
+    "compatibility_date": "2026-09-01",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "bindings": [
+      {
+        "class_name": "EarningClock",
+        "name": "CLOCK",
+        "namespace_id": "c23d67c6148e4110a200911018cbe065",
+        "type": "durable_object_namespace"
+      },
+      {
+        "type": "r2_bucket",
+        "name": "MARKET_SETTLEMENTS",
+        "bucket_name": "market-561-group-settlements"
+      },
+      {
+        "type": "version_metadata",
+        "name": "RELEASE_METADATA"
+      },
+      {
+        "type": "r2_bucket",
+        "name": "STATE",
+        "bucket_name": "561-group-working-state"
+      }
+    ],
+    "keep_bindings": [
+      "secret_text"
+    ]
+  }
+}

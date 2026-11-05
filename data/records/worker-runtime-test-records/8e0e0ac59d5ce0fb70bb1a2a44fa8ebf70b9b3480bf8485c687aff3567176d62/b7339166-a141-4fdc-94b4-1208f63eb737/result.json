@@ -1,0 +1,5 @@
+{
+  "status": 0,
+  "stdout": "",
+  "stderr": "service loop: The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.\nservice market: The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.\nservice main: The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.\nworkerd/server/server/run.rs:481: debug: [ TEST ] main:testPrivateSqliteCache\nworkerd/server/server/run.rs:488: debug: [ PASS ] main:testPrivateSqliteCache (273.503313ms)\n"
+}

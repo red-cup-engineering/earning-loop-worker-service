@@ -1,0 +1,627 @@
+{
+  "specificationDigest": "ni:///sha-256;B5WFovt0aSy3m6BAm1FJnj5tK5lu-OF697yeb96PYUw",
+  "plan": {
+    "type": "ArtifactFabricationRealizationPlan",
+    "version": 1,
+    "artifactId": "issuer-private-settlement-custody",
+    "specificationDigest": "ni:///sha-256;B5WFovt0aSy3m6BAm1FJnj5tK5lu-OF697yeb96PYUw",
+    "projectionIds": [
+      "jsnode-modules"
+    ],
+    "acceptanceObligationIds": [
+      "io-receiving",
+      "pure-receiving"
+    ],
+    "traceability": [
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "admission",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "pure-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "plans",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "no-expansion",
+        "constraintIds": [
+          "cash-record",
+          "client",
+          "composition",
+          "operation",
+          "payment-evidence",
+          "physical",
+          "platform",
+          "receiver",
+          "representation",
+          "server",
+          "source-free",
+          "witness-admission"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      },
+      {
+        "type": "ArtifactFabricationTrace",
+        "version": 1,
+        "requirementId": "pulse-budget",
+        "constraintIds": [
+          "composition",
+          "operation",
+          "platform"
+        ],
+        "projectionIds": [
+          "jsnode-modules"
+        ],
+        "acceptanceObligationIds": [
+          "io-receiving"
+        ]
+      }
+    ]
+  },
+  "fabrication": {
+    "type": "JsnodeModuleDerivationRefusal",
+    "version": 1,
+    "phase": "derivation",
+    "code": "OPEN_QUESTION",
+    "message": "What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.",
+    "cause": {
+      "type": "JsnodeClosureDerivationRefusal",
+      "version": 1,
+      "code": "OPEN_QUESTION",
+      "question": "What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.",
+      "derivations": [
+        {
+          "phase": "clause-assays",
+          "outcome": "refused",
+          "evidence": "open assay question: What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.",
+          "lot": {
+            "workLot": "urn:work-lot:inference:hjzEYAhkB799Lp7jza0Uh2c2m3FG_tym7UksN_9kYVY",
+            "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+            "taskClass": "code-fabrication-assays",
+            "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+            "receipt": "ni:///sha-256;we5yuS3q06qttz_JfqmXVOTU9FCBzaa-nd2Z8VD6YeA",
+            "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+            "model": "default",
+            "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+            "delivery": {
+              "outcome": "candidate-pending-codex-acceptance",
+              "workLot": "urn:work-lot:inference:hjzEYAhkB799Lp7jza0Uh2c2m3FG_tym7UksN_9kYVY",
+              "taskClass": "code-fabrication-assays",
+              "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+              "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+              "model": "default",
+              "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+              "receipt": {
+                "id": "ni:///sha-256;we5yuS3q06qttz_JfqmXVOTU9FCBzaa-nd2Z8VD6YeA"
+              },
+              "candidate": {
+                "id": "exchange-20261024-230713-b72abf",
+                "object": "chat.completion",
+                "model": "default",
+                "choices": [
+                  {
+                    "index": 0,
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"cases\":null,\"question\":\"What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.\"}",
+                      "tool_calls": []
+                    },
+                    "finish_reason": "unknown"
+                  }
+                ],
+                "usage": {
+                  "prompt_tokens": 34455,
+                  "completion_tokens": 157
+                }
+              },
+              "endpointClass": "local-command-inference",
+              "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+              "configuration": {
+                "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                "model": "default",
+                "endpoint": "command:codex-exec",
+                "executionClass": "local-command-inference",
+                "mode": "assistant-turn:codex-exec:json-envelope:v1"
+              },
+              "selectionRule": "direct-endpoint-customer-ordered-pareto-route-after-a2a-market-residue",
+              "consideration": [
+                {
+                  "kind": "credit",
+                  "asset": "urn:union:consideration:provider-invocation",
+                  "unit": "provider-invocation",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "declaredResources": [
+                {
+                  "resource": "provider-attention",
+                  "unit": "bounded-lot",
+                  "amount": {
+                    "numerator": "1",
+                    "denominator": "1"
+                  }
+                }
+              ],
+              "measuredResources": {
+                "scope": {
+                  "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "accountIdentity": null,
+                  "windowIdentity": null,
+                  "measurementCoverage": "completed-exchanges"
+                },
+                "resources": [
+                  {
+                    "resource": "requests",
+                    "unit": "request",
+                    "amount": {
+                      "numerator": "1",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "input-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "34455",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "output-tokens",
+                    "unit": "token",
+                    "amount": {
+                      "numerator": "157",
+                      "denominator": "1"
+                    }
+                  },
+                  {
+                    "resource": "duration",
+                    "unit": "millisecond",
+                    "amount": {
+                      "numerator": "79083",
+                      "denominator": "1"
+                    }
+                  }
+                ],
+                "partialResources": [],
+                "callerObservedResources": [],
+                "uncertainty": [
+                  "total-token-usage-incomplete",
+                  "provider-reported-cost-incomplete",
+                  "account-window-identity-unknown"
+                ]
+              },
+              "settlement": "none-direct-endpoint-lane-carries-no-signed-compact-or-chain-settlement",
+              "durationMs": 79083,
+              "providerEvidence": {
+                "outputs": [
+                  {
+                    "id": "exchange-20261024-230713-b72abf",
+                    "object": "chat.completion",
+                    "model": "default",
+                    "choices": [
+                      {
+                        "index": 0,
+                        "message": {
+                          "role": "assistant",
+                          "content": "{\"cases\":null,\"question\":\"What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.\"}",
+                          "tool_calls": []
+                        },
+                        "finish_reason": "unknown"
+                      }
+                    ],
+                    "usage": {
+                      "prompt_tokens": 34455,
+                      "completion_tokens": 157
+                    }
+                  }
+                ],
+                "toolInvocations": [],
+                "exchanges": [
+                  {
+                    "finishReason": "unknown",
+                    "usage": {
+                      "promptTokens": 34455,
+                      "outputTokens": 157,
+                      "totalTokens": null,
+                      "reportedCost": null
+                    },
+                    "message": {
+                      "role": "assistant",
+                      "content": "{\"cases\":null,\"question\":\"What exact return value or thrown error name must each plan operation produce when enabled is true and resourceAdmission.status is received but a required identity field is invalid? Also, please supply operations and assay schemas for the async interfaces and commercial pulse: the two projected pure plan operations cannot establish pulse-budget or the runtime prohibitions in no-expansion, so cases covering every clause cannot be derived from the current projection.\"}",
+                      "tool_calls": []
+                    }
+                  }
+                ],
+                "tokenUsage": [
+                  {
+                    "promptTokens": 34455,
+                    "outputTokens": 157,
+                    "totalTokens": null,
+                    "reportedCost": null
+                  }
+                ],
+                "measuredResources": {
+                  "scope": {
+                    "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "accountIdentity": null,
+                    "windowIdentity": null,
+                    "measurementCoverage": "completed-exchanges"
+                  },
+                  "resources": [
+                    {
+                      "resource": "requests",
+                      "unit": "request",
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "input-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "34455",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "output-tokens",
+                      "unit": "token",
+                      "amount": {
+                        "numerator": "157",
+                        "denominator": "1"
+                      }
+                    },
+                    {
+                      "resource": "duration",
+                      "unit": "millisecond",
+                      "amount": {
+                        "numerator": "79083",
+                        "denominator": "1"
+                      }
+                    }
+                  ],
+                  "partialResources": [],
+                  "callerObservedResources": [],
+                  "uncertainty": [
+                    "total-token-usage-incomplete",
+                    "provider-reported-cost-incomplete",
+                    "account-window-identity-unknown"
+                  ]
+                },
+                "sharedBudgetRemaining": {}
+              },
+              "customerAssay": "chat-completion-turn-accepted",
+              "providerSchemaEnforcement": {
+                "attempted": false
+              },
+              "directLaneRefusals": [],
+              "integrationAccepted": false,
+              "receiverAcceptanceRequired": true,
+              "nextAct": "Codex may decide its own routine purchase and delivery outcome after an executable assay without Leader approval; only a later effect on another Actor crosses into that Actor's induction boundary.",
+              "contextOptimization": {
+                "mode": "automatic",
+                "estimated": true,
+                "budget": null,
+                "beforeBytes": 34610,
+                "afterBytes": 34610,
+                "retained": [
+                  "objective",
+                  "chat-completion"
+                ],
+                "dropped": [],
+                "rawRecall": []
+              },
+              "timing": {
+                "solicitation": 0,
+                "routeDecision": 7873,
+                "execution": 89398,
+                "assay": 0,
+                "receipt": 0,
+                "total": 128416
+              },
+              "acceptanceScope": "delivery-to-codex-customer-office-only",
+              "placement": {
+                "type": "WorkPlacementEvidenceProjection",
+                "version": 1,
+                "decisionType": "WorkPlacementDecision",
+                "disposition": "selected",
+                "selected": {
+                  "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                  "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                  "executionClass": "local-command-inference",
+                  "mode": "execute",
+                  "reuseReceipt": null,
+                  "plannedResources": [
+                    {
+                      "amount": {
+                        "numerator": "424529",
+                        "denominator": "6"
+                      },
+                      "resource": "duration",
+                      "unit": "millisecond"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "124382",
+                        "denominator": "3"
+                      },
+                      "resource": "input-tokens",
+                      "unit": "token"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "1343",
+                        "denominator": "6"
+                      },
+                      "resource": "output-tokens",
+                      "unit": "token"
+                    },
+                    {
+                      "amount": {
+                        "numerator": "1",
+                        "denominator": "1"
+                      },
+                      "resource": "requests",
+                      "unit": "request"
+                    }
+                  ],
+                  "observationBasis": {
+                    "attempts": 6,
+                    "accepted": 0,
+                    "resourceBasis": "mean-per-attempt-including-refusals",
+                    "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                    "receipts": [
+                      "ni:///sha-256;7SogVZyMuVZmEV-dhmKLUYME7GGARv4s2JN-3839n2s",
+                      "ni:///sha-256;E4JrJzUNUt0QLIrcRBZs2r8koH9aCUuUwlhuk1CKPho",
+                      "ni:///sha-256;FcgksnNDH26SayqDCpa0oGzWH4M8bIOcDltKEkxc2Mo",
+                      "ni:///sha-256;SyMIUCmfrg9Mi5mnthJbN1LYDJ5zr7PC8qruq5QEl60",
+                      "ni:///sha-256;n0fv48n5VyMzKRGOUxQAD66ihdEvq7EiHh8QvAKgJDY",
+                      "ni:///sha-256;vlLTIFdOUC0wBMLDxRzGDDizDhXU9STvaK73whC6H7o"
+                    ],
+                    "qualityPrior": {
+                      "observations": 0,
+                      "accepted": 0,
+                      "sourceReceipts": []
+                    }
+                  }
+                },
+                "attemptPlan": [
+                  {
+                    "rank": 0,
+                    "relation": "single",
+                    "offers": [
+                      {
+                        "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                        "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                        "executionClass": "local-command-inference",
+                        "mode": "execute",
+                        "reuseReceipt": null,
+                        "plannedResources": [
+                          {
+                            "amount": {
+                              "numerator": "424529",
+                              "denominator": "6"
+                            },
+                            "resource": "duration",
+                            "unit": "millisecond"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "124382",
+                              "denominator": "3"
+                            },
+                            "resource": "input-tokens",
+                            "unit": "token"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "1343",
+                              "denominator": "6"
+                            },
+                            "resource": "output-tokens",
+                            "unit": "token"
+                          },
+                          {
+                            "amount": {
+                              "numerator": "1",
+                              "denominator": "1"
+                            },
+                            "resource": "requests",
+                            "unit": "request"
+                          }
+                        ],
+                        "observationBasis": {
+                          "attempts": 6,
+                          "accepted": 0,
+                          "resourceBasis": "mean-per-attempt-including-refusals",
+                          "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                          "receipts": [
+                            "ni:///sha-256;7SogVZyMuVZmEV-dhmKLUYME7GGARv4s2JN-3839n2s",
+                            "ni:///sha-256;E4JrJzUNUt0QLIrcRBZs2r8koH9aCUuUwlhuk1CKPho",
+                            "ni:///sha-256;FcgksnNDH26SayqDCpa0oGzWH4M8bIOcDltKEkxc2Mo",
+                            "ni:///sha-256;SyMIUCmfrg9Mi5mnthJbN1LYDJ5zr7PC8qruq5QEl60",
+                            "ni:///sha-256;n0fv48n5VyMzKRGOUxQAD66ihdEvq7EiHh8QvAKgJDY",
+                            "ni:///sha-256;vlLTIFdOUC0wBMLDxRzGDDizDhXU9STvaK73whC6H7o"
+                          ],
+                          "qualityPrior": {
+                            "observations": 0,
+                            "accepted": 0,
+                            "sourceReceipts": []
+                          }
+                        }
+                      }
+                    ],
+                    "execution": "explicit-sequential-authority-required",
+                    "implicitFallbackPermitted": false,
+                    "speculativeExecutionPermitted": false,
+                    "stopCondition": "customer-assayed-acceptance"
+                  }
+                ],
+                "refusals": [],
+                "rationale": [
+                  "exact-feasibility-first",
+                  "fresh-execution-required",
+                  "customer-ordered-pareto-selection",
+                  "provider-and-model-identities-are-provenance-only"
+                ],
+                "offers": [
+                  {
+                    "type": "NormalizedWorkOffer",
+                    "id": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication-assays",
+                    "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                    "executionClass": "local-command-inference",
+                    "operation": "code-fabrication-assays",
+                    "implementationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+                    "capabilities": [
+                      "chat",
+                      "reasoning",
+                      "long-context",
+                      "json-output",
+                      "json-schema-output",
+                      "code",
+                      "classification",
+                      "extraction",
+                      "summarization",
+                      "inquiry",
+                      "software-engineering",
+                      "code-review",
+                      "text-output",
+                      "tool-calling"
+                    ],
+                    "qualityTiers": [
+                      "frontier-subscription"
+                    ],
+                    "authorityScopes": [
+                      "urn:scope:bounded-inference-candidate"
+                    ],
+                    "effects": [
+                      "read-only"
+                    ],
+                    "idempotence": [
+                      "idempotent"
+                    ],
+                    "dataConstraints": [],
+                    "custodyConstraints": [],
+                    "outputContractIdentities": [
+                      "ni:///sha-256;7IAXjNB0Sjczx3UutNZuD-puIhF9MCOp5lLHPi30PYc"
+                    ],
+                    "availability": "available",
+                    "availableCapacity": 1,
+                    "bounds": {},
+                    "consideration": [
+                      {
+                        "kind": "credit",
+                        "asset": "urn:union:consideration:provider-invocation",
+                        "unit": "provider-invocation",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      },
+                      {
+                        "kind": "currency",
+                        "asset": "urn:currency:usd",
+                        "unit": "cent",
+                        "amount": {
+                          "numerator": "0",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "declaredResources": [
+                      {
+                        "resource": "provider-attention",
+                        "unit": "bounded-lot",
+                        "amount": {
+                          "numerator": "1",
+                          "denominator": "1"
+                        }
+                      }
+                    ],
+                    "semantics": {
+                      "reuse": "none"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "judged": "refused"
+        }
+      ]
+    },
+    "workOrderSpecificationDigest": "ni:///sha-256;B5WFovt0aSy3m6BAm1FJnj5tK5lu-OF697yeb96PYUw",
+    "source": {
+      "type": "ArtifactFabricationSource",
+      "version": 1,
+      "identity": {
+        "type": "ArtifactFabricationSourceIdentity",
+        "id": "issuer-private-settlement-custody"
+      },
+      "provenance": {
+        "type": "ArtifactFabricationSourceProvenance",
+        "locator": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md",
+        "digest": "sha256:992caa6af708ae5e05303dd5c1e74147ea6905cdd9584701b11d5f348dd752f4",
+        "sourceSpan": {
+          "type": "ArtifactFabricationSourceSpan",
+          "startLine": 1,
+          "endLine": 41
+        }
+      }
+    }
+  }
+}

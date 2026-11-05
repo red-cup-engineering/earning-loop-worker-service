@@ -1,0 +1,33 @@
+{
+  "kind": "git.working-copy.integration-plan",
+  "root": "/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service",
+  "repository": "red-cup-engineering/earning-loop-worker-service",
+  "repositoryId": 1431889714,
+  "defaultBranch": "main",
+  "main": "c425608745ace8e864ba8e1df2fcd12058240f72",
+  "sourceCommit": "0ec990d37a8a6f60e4e86d25f64f720bce766865",
+  "base": "c425608745ace8e864ba8e1df2fcd12058240f72",
+  "uniqueCommits": [
+    "0ec990d37a8a6f60e4e86d25f64f720bce766865\tfeat: acquire and deliver one frozen zero-cash research task [skip ci]"
+  ],
+  "tree": "1ee3326a5d8c78adf872450569d5270bdff826cb",
+  "clean": true,
+  "conflicts": [],
+  "messages": [],
+  "changes": " data/research-products.mjs                  |   2 +\n package-lock.json                           |   1 +\n package.json                                |   1 +\n scripts/deploy.mjs                          |  12 ++\n specifications/paid-research-procurement.md |   9 ++\n src/deployment.mjs                          |   5 +\n src/ln-church-research.mjs                  | 228 ++++++++++++++++++++++++++++\n test/commercial-clock.test.mjs              |  20 +++\n test/ln-church-fixture.mjs                  |  47 ++++++\n test/ln-church-research.test.mjs            | 128 ++++++++++++++++\n test/workerd-auth-worker.mjs                |   1 +\n test/workerd-research-worker.mjs            |  11 ++\n worker/earning-loops.mjs                    |  35 ++++-\n 13 files changed, 495 insertions(+), 5 deletions(-)\n",
+  "paths": [
+    "A\tdata/research-products.mjs",
+    "M\tpackage-lock.json",
+    "M\tpackage.json",
+    "M\tscripts/deploy.mjs",
+    "A\tspecifications/paid-research-procurement.md",
+    "M\tsrc/deployment.mjs",
+    "A\tsrc/ln-church-research.mjs",
+    "M\ttest/commercial-clock.test.mjs",
+    "A\ttest/ln-church-fixture.mjs",
+    "A\ttest/ln-church-research.test.mjs",
+    "M\ttest/workerd-auth-worker.mjs",
+    "A\ttest/workerd-research-worker.mjs",
+    "M\tworker/earning-loops.mjs"
+  ]
+}

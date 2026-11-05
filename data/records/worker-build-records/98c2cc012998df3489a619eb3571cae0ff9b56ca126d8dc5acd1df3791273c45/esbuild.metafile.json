@@ -1,0 +1,1378 @@
+{
+  "inputs": {
+    "data/operation.mjs": {
+      "bytes": 5490,
+      "imports": [],
+      "format": "esm"
+    },
+    "data/group-payers.mjs": {
+      "bytes": 321,
+      "imports": [],
+      "format": "esm"
+    },
+    "data/products.mjs": {
+      "bytes": 2609,
+      "imports": [],
+      "format": "esm"
+    },
+    "data/research-products.mjs": {
+      "bytes": 1495,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs": {
+      "bytes": 19693,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+      "bytes": 2158,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/registers.mjs": {
+      "bytes": 646,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/settlements.mjs": {
+      "bytes": 7412,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/ln-church-research.mjs": {
+      "bytes": 18582,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/canonical-json"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/http-services-section/retry-after"
+        },
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "./settlements.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+      "bytes": 4337,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+      "bytes": 2509,
+      "imports": [
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs",
+          "kind": "import-statement",
+          "original": "./hash.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs": {
+      "bytes": 6829,
+      "imports": [
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs": {
+      "bytes": 2768,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/integrity"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs",
+          "kind": "import-statement",
+          "original": "./json-web-token.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/opentask-client.mjs": {
+      "bytes": 11400,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/http-services-section/retry-after"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs",
+          "kind": "dynamic-import",
+          "original": "@red-cup-engineering/oauth-services-section/dpop"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/opentask-commercial-pass.mjs": {
+      "bytes": 20512,
+      "imports": [
+        {
+          "path": "src/opentask-client.mjs",
+          "kind": "import-statement",
+          "original": "./opentask-client.mjs"
+        },
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "./settlements.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/header-value.mjs": {
+      "bytes": 1811,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/content-type.mjs": {
+      "bytes": 1056,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/header-value.mjs",
+          "kind": "import-statement",
+          "original": "./header-value.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/http-services-section/src/body/body.mjs": {
+      "bytes": 6022,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/content-type.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/content-type"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@red-cup-engineering/http-services-section/src/body/web.mjs": {
+      "bytes": 2335,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/body/body.mjs",
+          "kind": "import-statement",
+          "original": "./body.mjs"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/body/body.mjs",
+          "kind": "import-statement",
+          "original": "./body.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/hashn-client.mjs": {
+      "bytes": 4725,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/body/web.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/http-services-section/body/web"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/http-services-section/retry-after"
+        },
+        {
+          "path": "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/canonical-json"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/hashn-acquisition.mjs": {
+      "bytes": 8224,
+      "imports": [
+        {
+          "path": "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/canonical-json"
+        },
+        {
+          "path": "src/hashn-client.mjs",
+          "kind": "import-statement",
+          "original": "./hashn-client.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/route-health.mjs": {
+      "bytes": 6323,
+      "imports": [
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "./settlements.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/scorecard.mjs": {
+      "bytes": 4437,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/border-price.mjs": {
+      "bytes": 1221,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/price-directives.mjs": {
+      "bytes": 5665,
+      "imports": [
+        {
+          "path": "src/scorecard.mjs",
+          "kind": "import-statement",
+          "original": "./scorecard.mjs"
+        },
+        {
+          "path": "src/border-price.mjs",
+          "kind": "import-statement",
+          "original": "./border-price.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/onchain-hook.mjs": {
+      "bytes": 1564,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/clock.mjs": {
+      "bytes": 1138,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js": {
+      "bytes": 2218,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js": {
+      "bytes": 4640,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js": {
+      "bytes": 2977,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js": {
+      "bytes": 10703,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js": {
+      "bytes": 7555,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js": {
+      "bytes": 6358,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js",
+          "kind": "import-statement",
+          "original": "./tag.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js": {
+      "bytes": 31156,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js": {
+      "bytes": 365,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js": {
+      "bytes": 297,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js": {
+      "bytes": 5467,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js",
+          "kind": "import-statement",
+          "original": "./const.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js",
+          "kind": "import-statement",
+          "original": "./errors.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js": {
+      "bytes": 2181,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js",
+          "kind": "import-statement",
+          "original": "./const.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js": {
+      "bytes": 1087,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js",
+          "kind": "import-statement",
+          "original": "./decode.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js": {
+      "bytes": 1645,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js",
+          "kind": "import-statement",
+          "original": "./const.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js",
+          "kind": "import-statement",
+          "original": "./encode.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js": {
+      "bytes": 239,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js",
+          "kind": "import-statement",
+          "original": "./errors.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js",
+          "kind": "import-statement",
+          "original": "./decode.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js",
+          "kind": "import-statement",
+          "original": "./encode.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js",
+          "kind": "import-statement",
+          "original": "./decodeStream.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js",
+          "kind": "import-statement",
+          "original": "./encodeStream.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js": {
+      "bytes": 13231,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js": {
+      "bytes": 42757,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js",
+          "kind": "import-statement",
+          "original": "./typeEncoderMap.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js",
+          "kind": "import-statement",
+          "original": "./sorts.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js",
+          "kind": "import-statement",
+          "original": "./writer.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js",
+          "kind": "import-statement",
+          "original": "./box.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js",
+          "kind": "import-statement",
+          "original": "./float.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js",
+          "kind": "import-statement",
+          "original": "@cto.af/wtf8"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js",
+          "kind": "import-statement",
+          "original": "./utils.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js": {
+      "bytes": 3222,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js",
+          "kind": "import-statement",
+          "original": "./encoder.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js": {
+      "bytes": 23038,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js",
+          "kind": "import-statement",
+          "original": "./utils.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js",
+          "kind": "import-statement",
+          "original": "./simple.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js",
+          "kind": "import-statement",
+          "original": "./float.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js": {
+      "bytes": 1178,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js": {
+      "bytes": 32188,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js",
+          "kind": "import-statement",
+          "original": "./options.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js",
+          "kind": "import-statement",
+          "original": "./sorts.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js",
+          "kind": "import-statement",
+          "original": "./float.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js",
+          "kind": "import-statement",
+          "original": "./box.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js",
+          "kind": "import-statement",
+          "original": "./encoder.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js",
+          "kind": "import-statement",
+          "original": "./utils.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js",
+          "kind": "import-statement",
+          "original": "./decodeStream.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js",
+          "kind": "import-statement",
+          "original": "./simple.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js",
+          "kind": "import-statement",
+          "original": "./tag.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js": {
+      "bytes": 11035,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js",
+          "kind": "import-statement",
+          "original": "./decodeStream.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js",
+          "kind": "import-statement",
+          "original": "./container.js"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js",
+          "kind": "import-statement",
+          "original": "./constants.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs": {
+      "bytes": 3595,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs": {
+      "bytes": 3658,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+      "bytes": 5749,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-sha256"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/json-byte-carrier"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs": {
+      "bytes": 2650,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/src/cbor.mjs": {
+      "bytes": 8363,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js",
+          "kind": "import-statement",
+          "original": "cbor2/encoder"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js",
+          "kind": "import-statement",
+          "original": "cbor2/decoder"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js",
+          "kind": "import-statement",
+          "original": "cbor2/writer"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js",
+          "kind": "import-statement",
+          "original": "cbor2/tag"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/uri-services-section/ni-uri"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-bytes"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+      "bytes": 5749,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-sha256"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/json-byte-carrier"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs": {
+      "bytes": 9144,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/src/cbor.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cbor-services-section"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/uri-services-section/ni-uri"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-sha256"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-bytes"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-bytes"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+      "bytes": 5749,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-sha256"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/json-byte-carrier"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs": {
+      "bytes": 1570,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs": {
+      "bytes": 1271,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs",
+          "kind": "import-statement",
+          "original": "./forms.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs": {
+      "bytes": 250,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs",
+          "kind": "import-statement",
+          "original": "../notation.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs": {
+      "bytes": 29436,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs": {
+      "bytes": 18110,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs",
+          "kind": "import-statement",
+          "original": "./notation/schema.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs",
+          "kind": "import-statement",
+          "original": "./notation/validator.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs",
+          "kind": "import-statement",
+          "original": "./notation/forms.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs",
+          "kind": "import-statement",
+          "original": "./notation/forms.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs",
+          "kind": "import-statement",
+          "original": "../four.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs": {
+      "bytes": 24054,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs",
+          "kind": "import-statement",
+          "original": "./notation.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/src/cbor.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cbor-services-section"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs": {
+      "bytes": 11605,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/computer-content-address-engineering-services-section/semiotic-content-address"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs",
+          "kind": "import-statement",
+          "original": "./notation.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs": {
+      "bytes": 16528,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/computer-content-address-engineering-services-section/semiotic-content-address"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/uri-services-section/ni-uri"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs",
+          "kind": "import-statement",
+          "original": "./json-codec.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs",
+          "kind": "import-statement",
+          "original": "./typing.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/json-byte-carrier"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs": {
+      "bytes": 19693,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs": {
+      "bytes": 1965,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/computer-data-engineering-services-section/semiotic-expression-notation/semantic-content-identity"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/canonical-json"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs": {
+      "bytes": 9376,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs": {
+      "bytes": 1861,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/uri-services-section/ni-uri"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+      "bytes": 7456,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/portable-sha256"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/json-services-section/json-byte-carrier"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs": {
+      "bytes": 22768,
+      "imports": [
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/issuer-research-media-service"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/issuer-research-media-service/revenue-reconciliation"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/computer-content-address-engineering-services-section/content-address"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs",
+          "kind": "import-statement",
+          "original": "@red-cup-engineering/uri-services-section/ni-uri"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/issuer-research.mjs": {
+      "bytes": 2657,
+      "imports": [
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "./registers.mjs"
+        },
+        {
+          "path": "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs",
+          "kind": "dynamic-import",
+          "original": "@red-cup-engineering/issuer-research-media-service/prepared-cohort"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/issuer-sqlite-cache.mjs": {
+      "bytes": 12338,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/issuer-settlement-custody.mjs": {
+      "bytes": 17528,
+      "imports": [],
+      "format": "esm"
+    },
+    "worker/earning-loops.mjs": {
+      "bytes": 16730,
+      "imports": [
+        {
+          "path": "data/operation.mjs",
+          "kind": "import-statement",
+          "original": "../data/operation.mjs"
+        },
+        {
+          "path": "data/group-payers.mjs",
+          "kind": "import-statement",
+          "original": "../data/group-payers.mjs"
+        },
+        {
+          "path": "data/products.mjs",
+          "kind": "import-statement",
+          "original": "../data/products.mjs"
+        },
+        {
+          "path": "data/research-products.mjs",
+          "kind": "import-statement",
+          "original": "../data/research-products.mjs"
+        },
+        {
+          "path": "src/ln-church-research.mjs",
+          "kind": "import-statement",
+          "original": "../src/ln-church-research.mjs"
+        },
+        {
+          "path": "src/opentask-commercial-pass.mjs",
+          "kind": "import-statement",
+          "original": "../src/opentask-commercial-pass.mjs"
+        },
+        {
+          "path": "src/hashn-acquisition.mjs",
+          "kind": "import-statement",
+          "original": "../src/hashn-acquisition.mjs"
+        },
+        {
+          "path": "src/settlements.mjs",
+          "kind": "import-statement",
+          "original": "../src/settlements.mjs"
+        },
+        {
+          "path": "src/route-health.mjs",
+          "kind": "import-statement",
+          "original": "../src/route-health.mjs"
+        },
+        {
+          "path": "src/scorecard.mjs",
+          "kind": "import-statement",
+          "original": "../src/scorecard.mjs"
+        },
+        {
+          "path": "src/price-directives.mjs",
+          "kind": "import-statement",
+          "original": "../src/price-directives.mjs"
+        },
+        {
+          "path": "src/onchain-hook.mjs",
+          "kind": "import-statement",
+          "original": "../src/onchain-hook.mjs"
+        },
+        {
+          "path": "src/registers.mjs",
+          "kind": "import-statement",
+          "original": "../src/registers.mjs"
+        },
+        {
+          "path": "src/clock.mjs",
+          "kind": "import-statement",
+          "original": "../src/clock.mjs"
+        },
+        {
+          "path": "src/issuer-research.mjs",
+          "kind": "import-statement",
+          "original": "../src/issuer-research.mjs"
+        },
+        {
+          "path": "src/issuer-sqlite-cache.mjs",
+          "kind": "import-statement",
+          "original": "../src/issuer-sqlite-cache.mjs"
+        },
+        {
+          "path": "src/issuer-settlement-custody.mjs",
+          "kind": "import-statement",
+          "original": "../src/issuer-settlement-custody.mjs"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "worker.mjs": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:buffer",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [
+        "CRONS",
+        "EarningClock",
+        "default",
+        "run",
+        "tick"
+      ],
+      "entryPoint": "worker/earning-loops.mjs",
+      "inputs": {
+        "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/hash.mjs": {
+          "bytesInOutput": 608
+        },
+        "node_modules/@red-cup-engineering/oauth-services-section/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/integrity.mjs": {
+          "bytesInOutput": 711
+        },
+        "node_modules/@red-cup-engineering/oauth-services-section/src/json-web-token.mjs": {
+          "bytesInOutput": 1693
+        },
+        "node_modules/@red-cup-engineering/oauth-services-section/src/dpop.mjs": {
+          "bytesInOutput": 2138
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js": {
+          "bytesInOutput": 1700
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js": {
+          "bytesInOutput": 2340
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js": {
+          "bytesInOutput": 676
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js": {
+          "bytesInOutput": 4242
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js": {
+          "bytesInOutput": 4365
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js": {
+          "bytesInOutput": 942
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js": {
+          "bytesInOutput": 11934
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js": {
+          "bytesInOutput": 413
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js": {
+          "bytesInOutput": 479
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js": {
+          "bytesInOutput": 450
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js": {
+          "bytesInOutput": 2326
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js": {
+          "bytesInOutput": 444
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js": {
+          "bytesInOutput": 462
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js": {
+          "bytesInOutput": 516
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js": {
+          "bytesInOutput": 3355
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js": {
+          "bytesInOutput": 9089
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js": {
+          "bytesInOutput": 1687
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js": {
+          "bytesInOutput": 9686
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js": {
+          "bytesInOutput": 720
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js": {
+          "bytesInOutput": 13883
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js": {
+          "bytesInOutput": 478
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs": {
+          "bytesInOutput": 3765
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/src/json-byte-carrier.mjs": {
+          "bytesInOutput": 466
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+          "bytesInOutput": 557
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs": {
+          "bytesInOutput": 1218
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-services-section/src/cbor.mjs": {
+          "bytesInOutput": 3297
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+          "bytesInOutput": 1256
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs": {
+          "bytesInOutput": 5110
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+          "bytesInOutput": 1485
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs": {
+          "bytesInOutput": 1358
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs": {
+          "bytesInOutput": 1788
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs": {
+          "bytesInOutput": 530
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs": {
+          "bytesInOutput": 10240
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs": {
+          "bytesInOutput": 10370
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs": {
+          "bytesInOutput": 5509
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs": {
+          "bytesInOutput": 9213
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs": {
+          "bytesInOutput": 6756
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs": {
+          "bytesInOutput": 10228
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs": {
+          "bytesInOutput": 2295
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs": {
+          "bytesInOutput": 6249
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs": {
+          "bytesInOutput": 1503
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-services-section/src/ni-uri.mjs": {
+          "bytesInOutput": 700
+        },
+        "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs": {
+          "bytesInOutput": 18543
+        },
+        "data/operation.mjs": {
+          "bytesInOutput": 5347
+        },
+        "data/group-payers.mjs": {
+          "bytesInOutput": 223
+        },
+        "data/products.mjs": {
+          "bytesInOutput": 2523
+        },
+        "data/research-products.mjs": {
+          "bytesInOutput": 1418
+        },
+        "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs": {
+          "bytesInOutput": 18342
+        },
+        "node_modules/@red-cup-engineering/http-services-section/src/retry-after.mjs": {
+          "bytesInOutput": 2089
+        },
+        "src/registers.mjs": {
+          "bytesInOutput": 394
+        },
+        "src/settlements.mjs": {
+          "bytesInOutput": 6638
+        },
+        "src/ln-church-research.mjs": {
+          "bytesInOutput": 18294
+        },
+        "src/opentask-client.mjs": {
+          "bytesInOutput": 10964
+        },
+        "src/opentask-commercial-pass.mjs": {
+          "bytesInOutput": 19824
+        },
+        "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/header-value.mjs": {
+          "bytesInOutput": 961
+        },
+        "node_modules/@red-cup-engineering/computer-serialized-content-engineering-services-section/services/http-data-services-section/src/content-type.mjs": {
+          "bytesInOutput": 569
+        },
+        "node_modules/@red-cup-engineering/http-services-section/src/body/body.mjs": {
+          "bytesInOutput": 4166
+        },
+        "node_modules/@red-cup-engineering/http-services-section/src/body/web.mjs": {
+          "bytesInOutput": 978
+        },
+        "src/hashn-client.mjs": {
+          "bytesInOutput": 4407
+        },
+        "src/hashn-acquisition.mjs": {
+          "bytesInOutput": 7288
+        },
+        "src/route-health.mjs": {
+          "bytesInOutput": 5576
+        },
+        "src/scorecard.mjs": {
+          "bytesInOutput": 4134
+        },
+        "src/border-price.mjs": {
+          "bytesInOutput": 322
+        },
+        "src/price-directives.mjs": {
+          "bytesInOutput": 4341
+        },
+        "src/onchain-hook.mjs": {
+          "bytesInOutput": 1048
+        },
+        "src/clock.mjs": {
+          "bytesInOutput": 646
+        },
+        "src/issuer-research.mjs": {
+          "bytesInOutput": 2228
+        },
+        "src/issuer-sqlite-cache.mjs": {
+          "bytesInOutput": 7339
+        },
+        "src/issuer-settlement-custody.mjs": {
+          "bytesInOutput": 14734
+        },
+        "worker/earning-loops.mjs": {
+          "bytesInOutput": 14888
+        }
+      },
+      "bytes": 357289
+    }
+  }
+}

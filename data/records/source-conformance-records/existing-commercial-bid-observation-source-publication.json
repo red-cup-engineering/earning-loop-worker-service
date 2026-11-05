@@ -1,0 +1,86 @@
+{
+  "type": "IndependentSourcePublicationReceiving",
+  "version": 1,
+  "at": "2026-10-25T02:23:45.153635+00:00",
+  "ownerRepository": "red-cup-engineering/earning-loop-worker-service",
+  "pullRequest": "https://github.com/red-cup-engineering/earning-loop-worker-service/pull/8",
+  "standing": "Merged source-only publication independently received; no runtime promotion or income acceptance.",
+  "independentReviewer": "Parent agent /root; source-projected review, no native office appointment claimed.",
+  "canonicalMainAtReceiving": "6cd694a48c218b719dd290d9c98ab6645ea82b8c",
+  "reviewedHead": "76b0d8f5ff2f90d8a22907a3e4d5058a15b9dd81",
+  "providerPrState": "closed",
+  "providerPrMerged": true,
+  "canonicalReceiving": {
+    "method": "Original GitHub resource exact file-content read at the observed canonical main; exact equality with reviewed local source. Git OID and SHA-256 rechecked from those matching local bytes.",
+    "allExpectedFilesReceived": true,
+    "files": [
+      {
+        "path": "specifications/existing-commercial-bid-observation.work-order.md",
+        "bytes": 17392,
+        "gitBlob": "807a1fe1b132f6b87fc093626e52ff1e380d6dee",
+        "sha256": "b3409b1339f9f139787693dc6cec5e86cdab34958895ed9bb0e2a9d644ffa156",
+        "mode": "0o644"
+      },
+      {
+        "path": "data/records/source-conformance-records/opentask-existing-bids-api.json",
+        "bytes": 51707,
+        "gitBlob": "f23e2ca1c9b669cd1a39e5c23d69ba6373e682bb",
+        "sha256": "9bb493e00b308550434e14a684988ca598ee238640c56b6540ab68cdd9853403",
+        "mode": "0o644"
+      },
+      {
+        "path": "data/records/source-conformance-records/existing-commercial-bid-observation-readiness.json",
+        "bytes": 15604,
+        "gitBlob": "ee8a0d7cb1acd450beba07d57ede92eb97fd29f1",
+        "sha256": "432d29e79c4400de1a438b7774c009b57e0601d376a5bf4e10832fd5311004e0",
+        "mode": "0o644"
+      },
+      {
+        "path": "data/records/source-conformance-records/market-existing-schema-receiving.json",
+        "bytes": 32572,
+        "gitBlob": "4ee7649db12814a1676f5e25dc104ad500225a5c",
+        "sha256": "19867af8b70cfdbc032e280efeeef87af017f52adef30f3a8d939ce0ceacd896",
+        "mode": "0o644"
+      }
+    ]
+  },
+  "sourceBranch": {
+    "name": "source/commercial-bid-observer-contract-20261025",
+    "afterReceiving": "absent",
+    "terminalRead": "GitHub NOT_FOUND / HTTP 404",
+    "custody": "Explicit parent-authorized retirement after merged PR and exact reviewed ref-head read; original gh API DELETE exit 0, independent original GitHub read returned 404."
+  },
+  "localCommits": [
+    "3d4cd3e47159d606e1f5e69d04d3a769ba851b66",
+    "17c1cda3a692d85a0f0d6b2ba4f8b413f2a538e2"
+  ],
+  "localSourceCustody": {
+    "exactPathCommits": true,
+    "unrelatedIndexPreserved": true,
+    "unrelatedWorkingSourcePreserved": true,
+    "branchAncestryPreserved": true,
+    "localHistoryPushed": false,
+    "checkoutOrResetPerformed": false
+  },
+  "privacy": {
+    "credentialValuesPublished": false,
+    "credentialBearingDownloadUrlsPublished": false,
+    "qaGrantBearerPublished": false,
+    "privateBuyerPayloadPublished": false,
+    "privateBidIdentitiesRetainedAtEconomicOwner": true
+  },
+  "publicationOnly": {
+    "runtimeChanged": false,
+    "catalogChanged": false,
+    "packageChanged": false,
+    "deploymentPerformed": false,
+    "newInferenceOrTestsRun": false,
+    "newPurchaseOrPaymentPerformed": false,
+    "newCashExpense": 0
+  },
+  "limits": [
+    "Source publication does not establish buyer arrival, an order, settlement, recurring revenue or the daily income objective.",
+    "Observer construction, private-storage retention bound, admitted effectful capability/assay carrier, finite Economic configuration and runtime integration/deployment receiving remain unqualified."
+  ],
+  "dailyIncomeObjectiveReceived": false
+}
