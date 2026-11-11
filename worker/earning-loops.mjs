@@ -20,7 +20,7 @@ import { writeScorecard } from "../src/scorecard.mjs";
 import { writeDirectives } from "../src/price-directives.mjs";
 import { runOnchainHook, onchainPublicReading } from "../src/onchain-hook.mjs";
 import { register, read, put } from "../src/registers.mjs";
-import { dueCrons, nextTick } from "../src/clock.mjs";
+import { dueCrons, nextTick, withAlarmRecovery } from "../src/clock.mjs";
 import { observeAgentMarketIndex } from "../src/agent-market-observation.mjs";
 import { refreshIssuerResearch } from "../src/issuer-research.mjs";
 import { withIssuerSqliteStore, issuerSqliteResponse } from "../src/issuer-sqlite-cache.mjs";
@@ -106,7 +106,7 @@ export class EarningClock {
   }
   releaseId() { const id = this.env.RELEASE_METADATA?.id; return typeof id === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(id) ? id : null; }
   async alarm() {
-    return this.enqueue(async () => {
+    return this.enqueue(() => withAlarmRecovery(this.state.storage, async (setAlarm) => {
       const configuration = this.options.configuration ?? operation;
       const acquisition = configuration.hashAcquisition?.enabled === true;
       const financial = configuration.issuerSettlements?.enabled === true && configuration.issuerSettlements.resourceAdmission?.status === 'received';
@@ -179,9 +179,9 @@ export class EarningClock {
             alarm = Math.min(alarm,hashnSchemaReadbackDue(pending,Date.now()) ? Date.now()+1000 :
               Math.max(Date.now()+1000,pending?.nextAttemptAt ?? 0,pulseAt ?? 0,pending?.retryAt ?? 0));
         }
-        await this.state.storage.setAlarm(alarm);
+        await setAlarm(alarm);
       }
-    });
+    }));
   }
   async fetch(request) {
     if (request && new URL(request.url).pathname === '/issuer-settlement-witness')

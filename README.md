@@ -27,6 +27,16 @@ which also holds the runbook.
 - **Clock** (`src/clock.mjs`): Workers cron triggers, or a self-re-arming Durable Object alarm when the account's
   cron allowance is spent.
 
+The alarm recovery boundary covers planning reads as well as work and final
+scheduling. If a turn fails before its selected alarm is confirmed, it attempts
+one read-free fallback at the next quarter-hour maintenance tick. A confirmed
+research/acquisition deadline is left alone, and the original failure is still
+reported. If the fallback write also fails, both failures are retained; the
+clock is not claimed restored. This does not increase account allowances or
+prove that an exhausted allowance has reset. Receive the live alarm and a later
+unattended pass separately after any outage. Local tests inject storage failures;
+they do not simulate Cloudflare's account-wide quota enforcement.
+
 ```
 npm test
 CLOUDFLARE_ACCOUNT_ID=… CLOUDFLARE_API_TOKEN=… node scripts/deploy.mjs --operation <operation.json> --group-payers <addresses.json>
