@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { createOpenTaskClient, defaultCanonical } from '../src/opentask-client.mjs';
-import { signDpopProof } from '@red-cup-engineering/oauth-services-section/dpop';
+import { signDpopProof } from '@red-cup-engineering/oauth-engineering-services-section/dpop';
 export { testNativeResearch } from './workerd-research-worker.mjs';
 
 export const testNativeAuthentication = {

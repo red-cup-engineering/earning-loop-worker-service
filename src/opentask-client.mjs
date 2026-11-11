@@ -2,7 +2,7 @@
 // This client owns HTTP/custody; RFC 9449 proof construction belongs to OAuth.
 import { sign } from "node:crypto";
 import { Buffer } from 'node:buffer';
-import { retryAfterDelayMs } from '@red-cup-engineering/http-services-section/retry-after';
+import { retryAfterDelayMs } from '@red-cup-engineering/http-engineering-services-section/retry-after';
 
 const ORIGIN = "https://opentask.ai";
 const ID = "[A-Za-z0-9_-]{1,200}";
@@ -41,7 +41,7 @@ export function allowedRequest(method, path) {
     (method === "POST" && (BID_CREATE.test(path) || DRAFT.test(path) || EFFECT.test(path) || MESSAGE.test(path))));
 }
 
-const defaultProof = async (options) => (await import("@red-cup-engineering/oauth-services-section/dpop")).signDpopProof(options);
+const defaultProof = async (options) => (await import("@red-cup-engineering/oauth-engineering-services-section/dpop")).signDpopProof(options);
 export const defaultCanonical = (privateJwk, canonical) => sign("sha256", Buffer.from(canonical), {
   key: privateJwk, format: "jwk", dsaEncoding: "ieee-p1363",
 }).toString("base64url");

@@ -6,7 +6,7 @@
 import { register, read, put } from "./registers.mjs";
 import {
   baseUsdcWitnessProblem, matchingBaseUsdcTransfers, corroborateBaseUsdcReceiptPair,
-} from "@red-cup-engineering/x402-services-section/settlement-derivation/base-usdc-receipt";
+} from "@red-cup-engineering/x402-engineering-services-section/settlement-derivation/base-usdc-receipt";
 
 export const BASE_USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 // Ordered by observed availability of receipts (2026-10-24); the pass reads until two answer.
