@@ -127,10 +127,10 @@ var init_dpop = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js
 var TypeEncoderMap;
 var init_typeEncoderMap = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/typeEncoderMap.js"() {
     TypeEncoderMap = class {
       #types = /* @__PURE__ */ new Map();
       /**
@@ -175,10 +175,10 @@ var init_typeEncoderMap = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js
 var MT, TAG, NUMBYTES, SIMPLE, SYMS, DCBOR_INT;
 var init_constants = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/constants.js"() {
     MT = {
       POS_INT: 0,
       NEG_INT: 1,
@@ -255,7 +255,7 @@ var init_constants = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js
 function sortCoreDeterministic(a, b) {
   const [_ka, _va, a8] = a;
   const [_kb, _vb, b8] = b;
@@ -269,14 +269,14 @@ function sortCoreDeterministic(a, b) {
   return 0;
 }
 var init_sorts = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/sorts.js"() {
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js
 var Writer;
 var init_writer = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/writer.js"() {
     Writer = class _Writer {
       static defaultOptions = {
         chunkSize: 4096
@@ -414,10 +414,10 @@ var init_writer = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js
 var Tag;
 var init_tag = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/tag.js"() {
     Tag = class _Tag {
       static #tags = /* @__PURE__ */ new Map();
       tag;
@@ -547,7 +547,7 @@ var init_tag = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js
 function getEncoded(obj) {
   if (obj != null && typeof obj === "object") {
     return obj[SYMS.ENCODED];
@@ -573,13 +573,13 @@ function box(value, orig) {
   return o;
 }
 var init_box = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/box.js"() {
     init_constants();
     init_tag();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js
 function formatNAN(nan, _depth, inspectOptions, inspect) {
   let ret = "nan'";
   if (!nan.quiet) {
@@ -675,7 +675,7 @@ function checkSubnormal(buf) {
 }
 var F16_SIGN, F16_EXPONENT, F16_QUIET, F16_PAYLOAD, F16_SIGNIFICAND, F32_SIGN, F32_EXPONENT, F32_QUIET, F32_PAYLOAD, F32_SIGNIFICAND, F64_SIGN, F64_EXPONENT, F64_QUIET, F64_PAYLOAD, F64_SIGNIFICAND, NOT_F16, NOT_F32, RADIX_PREFIX, NAN_SIZE, NAN;
 var init_float = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/float.js"() {
     F16_SIGN = 1n << 15n;
     F16_EXPONENT = 31n << 10n;
     F16_QUIET = 1n << 9n;
@@ -936,30 +936,30 @@ var init_float = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js
 var init_errors = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/errors.js"() {
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js
 var EMPTY, WTF8;
 var init_const = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/const.js"() {
     EMPTY = new Uint8Array(0);
     WTF8 = "wtf-8";
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js
 var init_decode = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decode.js"() {
     init_const();
     init_errors();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js
 function utf8length(str) {
   let len = 0;
   for (const s of str) {
@@ -978,7 +978,7 @@ function utf8length(str) {
 }
 var Wtf8Encoder;
 var init_encode = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encode.js"() {
     init_const();
     Wtf8Encoder = class {
       encoding = WTF8;
@@ -1036,24 +1036,24 @@ var init_encode = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js
 var init_decodeStream = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/decodeStream.js"() {
     init_decode();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js
 var init_encodeStream = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/encodeStream.js"() {
     init_const();
     init_encode();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js
 var init_lib = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@cto.af/wtf8/lib/index.js"() {
     init_errors();
     init_decode();
     init_encode();
@@ -1062,7 +1062,7 @@ var init_lib = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js
 function setRanges(u8, ranges) {
   Object.defineProperty(u8, CBOR_RANGES, {
     configurable: false,
@@ -1158,7 +1158,7 @@ function stringToHex(str) {
 }
 var CBOR_RANGES, hexToU8, u8toHex, base64ToBytes;
 var init_utils = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/utils.js"() {
     CBOR_RANGES = /* @__PURE__ */ Symbol("CBOR_RANGES");
     hexToU8 = /* c8 ignore next */
     typeof Uint8Array.fromHex === "function" ? (
@@ -1187,7 +1187,7 @@ var init_utils = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js
 function cborAbs(value) {
   const neg = value < 0;
   if (typeof value === "bigint") {
@@ -1434,7 +1434,7 @@ function encode(val, options = {}) {
 }
 var ENCODED, HALF, FLOAT, DOUBLE, TRUE, FALSE, UNDEFINED, NULL, TE, WE, defaultEncodeOptions, cdeEncodeOptions, dcborEncodeOptions, TYPES;
 var init_encoder = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/encoder.js"() {
     init_typeEncoderMap();
     init_constants();
     init_sorts();
@@ -1500,10 +1500,10 @@ var init_encoder = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js
 var Simple;
 var init_simple = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/simple.js"() {
     init_constants();
     init_encoder();
     Simple = class _Simple {
@@ -1550,10 +1550,10 @@ var init_simple = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js
 var TD, DecodeStream;
 var init_decodeStream2 = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decodeStream.js"() {
     init_constants();
     init_utils();
     init_simple();
@@ -1825,10 +1825,10 @@ var init_decodeStream2 = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js
 var DiagnosticSizes;
 var init_options = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/options.js"() {
     (function(DiagnosticSizes2) {
       DiagnosticSizes2[DiagnosticSizes2["NEVER"] = -1] = "NEVER";
       DiagnosticSizes2[DiagnosticSizes2["PREFERRED"] = 0] = "PREFERRED";
@@ -1837,13 +1837,13 @@ var init_options = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js
 function createObject(kve, opts) {
   return !opts.boxed && !opts.preferMap && kve.every(([k]) => typeof k === "string") ? Object.fromEntries(kve) : new Map(kve);
 }
 var LENGTH_FOR_AI, EMPTY_BUF, CBORcontainer;
 var init_container = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/container.js"() {
     init_constants();
     init_options();
     init_sorts();
@@ -2223,16 +2223,16 @@ var init_container = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js
 var init_decoder = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/cbor2/lib/decoder.js"() {
     init_decodeStream2();
     init_container();
     init_constants();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs
 function rotr(x, n) {
   return x >>> n | x << 32 - n;
 }
@@ -2290,7 +2290,7 @@ function portableSha256Bytes(bytes3) {
 }
 var K, H0, nativeCrypto;
 var init_portable_sha256 = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-sha256.mjs"() {
     K = new Uint32Array([
       1116352408,
       1899447441,
@@ -2371,21 +2371,21 @@ var init_portable_sha256 = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/src/json-byte-carrier.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/src/json-byte-carrier.mjs
 var init_json_byte_carrier = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/src/json-byte-carrier.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/src/json-byte-carrier.mjs"() {
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
 var init_ni_uri = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
     init_portable_sha256();
     init_json_byte_carrier();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs
 function bytesEqual(left, right) {
   if (left.length !== right.length) return false;
   for (let index = 0; index < left.length; index += 1) if (left[index] !== right[index]) return false;
@@ -2398,13 +2398,13 @@ function bytesCompare(left, right) {
 }
 var HEX, ownedBytes;
 var init_portable_bytes = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cryptographic-computer-data-engineering-services-section/src/portable-bytes.mjs"() {
     HEX = Array.from({ length: 256 }, (_, byte) => byte.toString(16).padStart(2, "0"));
     ownedBytes = (bytes3) => globalThis.Buffer ? globalThis.Buffer.from(bytes3) : Uint8Array.from(bytes3);
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/src/cbor.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/src/cbor.mjs
 function fail2(code, message) {
   const error2 = new Error(message);
   error2.code = code;
@@ -2463,7 +2463,7 @@ function encodeCanonical(value) {
 }
 var OPTIONS;
 var init_cbor = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/src/cbor.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/cbor-engineering-services-section/src/cbor.mjs"() {
     init_encoder();
     init_decoder();
     init_writer();
@@ -2474,7 +2474,7 @@ var init_cbor = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
 function base64url(bytes3) {
   let text2 = "";
   for (const byte of bytes3) text2 += String.fromCharCode(byte);
@@ -2496,14 +2496,14 @@ function makeNiUri2(bytes3) {
 }
 var NI_PREFIX;
 var init_ni_uri2 = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
     init_portable_sha256();
     init_json_byte_carrier();
     NI_PREFIX = "ni:///sha-256;";
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs
 function canonicalizeSemioticJson(value) {
   return copyCarrier(value, true);
 }
@@ -2608,7 +2608,7 @@ function coincides(left, right) {
 }
 var canonicalSnapshots, retainedSnapshots, copyBytes, frozenBytes, isScalar;
 var init_semiotic_content_address = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/semiotic-content-address.mjs"() {
     init_cbor();
     init_ni_uri2();
     init_portable_sha256();
@@ -2622,7 +2622,7 @@ var init_semiotic_content_address = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
 function base64url2(bytes3) {
   let text2 = "";
   for (const byte of bytes3) text2 += String.fromCharCode(byte);
@@ -2643,7 +2643,7 @@ function isNiUri(value) {
 }
 var NI_PREFIX2, NI_URI_PATTERN;
 var init_ni_uri3 = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
     init_portable_sha256();
     init_json_byte_carrier();
     NI_PREFIX2 = "ni:///sha-256;";
@@ -2651,10 +2651,10 @@ var init_ni_uri3 = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs
 var SEN_FORMS, SEN_TYPE_FORMS;
 var init_forms = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/forms.mjs"() {
     SEN_FORMS = Object.freeze({
       var: { atoms: { 1: "natural" } },
       star: {},
@@ -2685,7 +2685,7 @@ var init_forms = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs
 function tuple(tag, form, references) {
   const width = 1 + Object.keys(form.atoms ?? {}).length + (form.terms?.length ?? 0) + (form.types?.length ?? 0);
   const items = Array.from({ length: width }, () => ({}));
@@ -2706,7 +2706,7 @@ function tuple(tag, form, references) {
 }
 var atomSchemas, TySchema, TmSchema;
 var init_schema = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/schema.mjs"() {
     init_forms();
     atomSchemas = {
       natural: { type: "integer", minimum: 0 },
@@ -2729,14 +2729,14 @@ var init_schema = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs
 var init_validator = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation/validator.mjs"() {
     init_notation();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs
 function familyOf(name) {
   const family = familyByName.get(name);
   if (family === void 0) throw new TypeError(`four: unknown reading ${String(name)}`);
@@ -2797,7 +2797,7 @@ function four(positiveEvidence, negativeEvidence) {
 }
 var readingFamilies, familyByName, samePoint, isReading, onReadings, knowledgeJoinReading, knowledgeMeetReading, knowledgeLeqReading, truthJoinReading, truthMeetReading, truthLeqReading, knowledgeImplyReading, truthImplyReading, symmetricEvidenceDifferenceReading, negateReading, conflateReading, two, viaTwo, fusionReading, residuumReading, linearUnit, knowledgeBottom, knowledgeTop, truthTop, truthBottom, tally, record2, recordJoinK, recordMeetK, recordJoinT, recordMeetT, recordAdd, recordLeqK, recordLeqT, readingOfRecord, topMass, attestationRecord, gaugeElementNames, points, wireOfReading, FOUR, obsmetrologiaRealization;
 var init_four = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/four.mjs"() {
     readingFamilies = Object.freeze({
       /** Relational: the knowledge order's reading, by what has been told. */
       knowledge: Object.freeze(["absurd", "potential", "active", "stable"]),
@@ -2900,7 +2900,7 @@ var init_four = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs
 function readingCase(subject, branch) {
   function go(remaining) {
     const [name, ...rest] = remaining;
@@ -2976,7 +2976,7 @@ function validateSenTerm(term) {
 }
 var readingNames, isReadingName, onReadings2, tm;
 var init_notation = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/notation.mjs"() {
     init_schema();
     init_validator();
     init_forms();
@@ -3100,7 +3100,7 @@ var init_notation = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs
 function canonicalBytes(value) {
   return JSON.stringify(value);
 }
@@ -3209,7 +3209,7 @@ function traverseJson(value, visitor, ancestors = /* @__PURE__ */ new Set(), pat
 }
 var arrayTag, objectTag, nullTag, booleanTag, stringTag, numberTag, nullDescriptor, booleanDescriptor, numberDescriptor, stringDescriptor;
 var init_json_codec = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/json-codec.mjs"() {
     init_notation();
     init_cbor();
     arrayTag = "sen.json.array";
@@ -3225,7 +3225,7 @@ var init_json_codec = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs
 function tyEqual(left, right) {
   const pending2 = [[left, right]];
   while (pending2.length) {
@@ -3448,13 +3448,13 @@ function checkTerm(source, expectedSource, context = []) {
   return judgeSen(context.map(validateType), validateTerm(source), validateType(expectedSource)) || illTyped("term does not have expected SEN type");
 }
 var init_typing = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/typing.mjs"() {
     init_semiotic_content_address();
     init_notation();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs
 function semanticContentRefusal(code, message) {
   const error2 = new TypeError(message);
   error2.code = code;
@@ -3575,7 +3575,7 @@ function semanticIdOf(objectKind) {
 }
 var SEN_NORMALIZATION_PROFILE, IDENTITY_SETTLEMENT_PROFILE, SEMANTIC_ENVELOPE_KIND, SEMANTIC_ENVELOPE_VERSION, V2_KIND, ENVELOPE_VERSION, V2_KEYS, V2_SORTED_KEYS, EMPTY_WITNESS_ROOT;
 var init_semantic_content_identity = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-data-engineering-services-section/src/semiotic-expression-notation/semantic-content-identity.mjs"() {
     init_semiotic_content_address();
     init_ni_uri3();
     init_json_codec();
@@ -3602,7 +3602,7 @@ var init_semantic_content_identity = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs
 function byteLength2(value) {
   return utf8Encoder2.encode(value).byteLength;
 }
@@ -3819,7 +3819,7 @@ function canonicalJson2(value, envelope2 = UNBOUNDED_JSON_ENVELOPE2) {
 }
 var UNBOUNDED_JSON_ENVELOPE2, JSON_RESOURCE_ENVELOPE2, utf8Encoder2;
 var init_canonical_json = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs"() {
     UNBOUNDED_JSON_ENVELOPE2 = Object.freeze({
       maxSourceBytes: Infinity,
       maxCanonicalBytes: Infinity,
@@ -3850,7 +3850,7 @@ var init_canonical_json = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs
 function validateIssuerEvidenceRequest({ ticker, issuer, asOf, sources, claims, events = [], license = "single-customer-analysis" } = {}) {
   if (typeof ticker !== "string" || ticker.trim() === "" || typeof issuer !== "string" || issuer.trim() === "") throw new TypeError("ticker-and-issuer-required");
   if (!Number.isFinite(Date.parse(asOf)) || !Array.isArray(sources) || sources.length === 0 || sources.some((s) => !s.uri || !s.observedAt || !s.digest)) throw new TypeError("dated-content-addressed-sources-required");
@@ -3879,7 +3879,7 @@ function formIssuerEvidencePacket(input) {
 }
 var semanticId2, id2;
 var init_evidence_packet = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/evidence-packet.mjs"() {
     init_semantic_content_identity();
     init_canonical_json();
     semanticId2 = semanticIdOf("brokerage.issuer-research-media.record");
@@ -3887,7 +3887,7 @@ var init_evidence_packet = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs
 function calendarDay(value) {
   if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
   const milliseconds = Date.parse(value + "T00:00:00.000Z");
@@ -3995,7 +3995,7 @@ function reconcileIssuerRevenueFacts(input) {
 }
 var CONCEPTS, DAY3, record3, lexical;
 var init_issuer_revenue_reconciliation = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/issuer-revenue-reconciliation.mjs"() {
     CONCEPTS = Object.freeze(["Revenues", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax"]);
     DAY3 = 864e5;
     record3 = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -4003,7 +4003,7 @@ var init_issuer_revenue_reconciliation = __esm({
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs
 function bytesOf(value) {
   if (value instanceof Uint8Array) return value;
   if (value instanceof ArrayBuffer) return new Uint8Array(value);
@@ -4034,25 +4034,25 @@ function addressContent(bytes3, {
   return Object.freeze(record5);
 }
 var init_content_address = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/computer-content-address-engineering-services-section/src/content-address.mjs"() {
     init_ni_uri2();
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs
 function isNiUri3(value) {
   return typeof value === "string" && NI_URI_PATTERN2.test(value);
 }
 var NI_URI_PATTERN2;
 var init_ni_uri4 = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/uri-engineering-services-section/src/ni-uri.mjs"() {
     init_portable_sha256();
     init_json_byte_carrier();
     NI_URI_PATTERN2 = /^ni:\/\/\/sha-256;[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$/u;
   }
 });
 
-// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs
+// ../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs
 var prepared_cohort_exports = {};
 __export(prepared_cohort_exports, {
   planIssuerRevenueAcquisition: () => planIssuerRevenueAcquisition,
@@ -4394,7 +4394,7 @@ async function readPreparedIssuerRevenueComparison(body, env, configuration2) {
 }
 var KINDS, DAY4, record4, text, positive, urlFor;
 var init_prepared_cohort = __esm({
-  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs"() {
+  "../../../../../../../computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-engineering-services-section/services/javascript-node-code-fabrication-engineering-services-section/services/jsnode-package-engineering-services-section/data/state/registry-package-installations/issuer-research-0.1.5/node_modules/@red-cup-engineering/issuer-research-media-service/src/prepared-cohort.mjs"() {
     init_evidence_packet();
     init_issuer_revenue_reconciliation();
     init_content_address();
