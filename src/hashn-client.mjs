@@ -1,7 +1,7 @@
 // Hashn 0.61.2 control API: fixed origin, no redirects or automatic replay.
 import { readTextBody } from '@red-cup-engineering/http-engineering-services-section/body/web';
 import { retryAfterDelayMs } from '@red-cup-engineering/http-engineering-services-section/retry-after';
-import { admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-services-section/canonical-json';
+import { admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-engineering-services-section/canonical-json';
 
 export const HASHN_ORIGIN = 'https://api.hashn.com';
 export const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;

@@ -3,7 +3,7 @@
   "selectedSourceBytes": 229755,
   "reports": [
     {
-      "name": "@red-cup-engineering/json-services-section/canonical-json",
+      "name": "@red-cup-engineering/json-engineering-services-section/canonical-json",
       "modules": 1,
       "bytes": 19693,
       "builtins": []

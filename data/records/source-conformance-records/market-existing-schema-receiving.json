@@ -125,7 +125,7 @@
       "description": "Compile/meta-validate JSON Schema drafts 4, 6, 7, 2019-09 or 2020-12 with native Hyperjump. Resolve only the supplied reference corpus; no HTTP/file fetching. Return evaluated=false plus native diagnostics for invalid schemas or incomplete graphs. Up to 65536 JSON bytes, 8192 nodes, depth 64, 16 reference documents and 64 reported errors with explicit truncation. Format is annotation unless assertFormats=true. Diagnostics are paid results.",
       "sourceRightsVerification": "not-declared",
       "compute": {
-        "package": "@red-cup-engineering/json-schema-services-section",
+        "package": "@red-cup-engineering/json-schema-engineering-services-section",
         "export": "checkSchema"
       },
       "output": {
@@ -314,7 +314,7 @@
       "description": "Judge JSON values against native JSON Schema drafts 4, 6, 7, 2019-09 or 2020-12, including dynamic references and unevaluated values. Retain BASIC validity and instance/keyword locations. evaluated=false means compilation/graph failure, not invalid data. Explicit corpus only; no HTTP/file retrieval. Format annotation by default; assertion opt-in. Up to 65536 JSON bytes, 8192 nodes, depth 64, 16 references and 64 errors. Invalid data and schema diagnostics are paid results.",
       "sourceRightsVerification": "not-declared",
       "compute": {
-        "package": "@red-cup-engineering/json-schema-services-section",
+        "package": "@red-cup-engineering/json-schema-engineering-services-section",
         "export": "evaluateSchemaInstance"
       },
       "output": {
@@ -433,7 +433,7 @@
       "description": "Validate one JSON value against one JSON Schema document (2020-12), with an optional corpus of referenced schemas; reports every violation, not just the first.",
       "sourceRightsVerification": "not-declared",
       "compute": {
-        "package": "@red-cup-engineering/json-schema-services-section",
+        "package": "@red-cup-engineering/json-schema-engineering-services-section",
         "export": "validateJson"
       },
       "output": {
@@ -979,7 +979,7 @@
     }
   },
   "installedSchemaSupplier": {
-    "package": "@red-cup-engineering/json-schema-services-section",
+    "package": "@red-cup-engineering/json-schema-engineering-services-section",
     "version": "0.5.0",
     "subpath": "./schema-evaluation",
     "module": "./src/schema-evaluation.mjs",

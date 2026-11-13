@@ -53,7 +53,7 @@
       "sha256": "629ebb98a416ad708e6357c8ce2b1b8573c5e074a76355b8a1859462112c9340"
     },
     {
-      "path": "node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs",
+      "path": "node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs",
       "bytes": 19693,
       "sha256": "8f78095b4c22f9a171823b789c7918910f4a47eb28b388cae1de0eea1fce90cf"
     },

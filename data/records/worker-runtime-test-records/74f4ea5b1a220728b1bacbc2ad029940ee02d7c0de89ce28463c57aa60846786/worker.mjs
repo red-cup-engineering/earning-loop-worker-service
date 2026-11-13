@@ -418,7 +418,7 @@ init_dpop();
 // test/workerd-research-worker.mjs
 import assert from "node:assert/strict";
 
-// node_modules/@red-cup-engineering/json-services-section/scripts/canonical-json.mjs
+// node_modules/@red-cup-engineering/json-engineering-services-section/scripts/canonical-json.mjs
 var UNBOUNDED_JSON_ENVELOPE = Object.freeze({
   maxSourceBytes: Infinity,
   maxCanonicalBytes: Infinity,

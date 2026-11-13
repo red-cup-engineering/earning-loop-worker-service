@@ -13,7 +13,7 @@ const profilePath="/home/emsenn/info/lib/emsenn/services/561-group/services/561-
 if(createHash('sha256').update(profileBytes).digest('hex')!=='60372c8d77e5a64ced331c7058286fddfa91e6ef1d7eb5197f1863065663f22f')throw Error('host profile changed');
 const executor=createIsolatedModuleAssayExecutor(JSON.parse(profileBytes));
 const [{deriveJsnodeModules},{remoteInferenceMarket,DISPATCH_TOOL,OUTCOME_TOOL},{inferenceDispatchPort},{loadDirectEndpointProviderDescriptors}]=await Promise.all([
-import(require.resolve('@red-cup-engineering/jsnode-package-services-section/derive-jsnode-package-from-closure')),
+import(require.resolve('@red-cup-engineering/jsnode-package-engineering-services-section/derive-jsnode-package-from-closure')),
 import(require.resolve('@red-cup-engineering/computer-inference-engine/dispatch/remote-inference-market')),
 import(require.resolve('@red-cup-engineering/computer-inference-engine/dispatch/inference-dispatch-port')),
 import(require.resolve('@red-cup-engineering/computer-inference-engine/dispatch/direct-endpoint-provider'))]);

@@ -1,4 +1,4 @@
-import { canonicalJson } from '@red-cup-engineering/json-services-section/canonical-json';
+import { canonicalJson } from '@red-cup-engineering/json-engineering-services-section/canonical-json';
 import { RESEARCH_STATE } from '../src/ln-church-research.mjs';
 export const merchant = '0x'+'12'.repeat(20);
 export const payer = '0x'+'34'.repeat(20);
