@@ -42,12 +42,12 @@
       "sha256": "80e3179057969bf7fb0dbb3a5a8484590cc83d1b8f050bfeb5ca92b2658a97e0"
     },
     {
-      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/src/plan-jsnode-modules.mjs",
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-engineering-services-section/src/plan-jsnode-modules.mjs",
       "bytes": 8448,
       "sha256": "fafef59e101c538649e3002adaec980ca338c151c3291df285fe01226f04422c"
     },
     {
-      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/data/records/schema/jsnode-module-specification.schema.json",
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-engineering-services-section/data/records/schema/jsnode-module-specification.schema.json",
       "bytes": 2036,
       "sha256": "dea4097cba57915b974c1bbeb509631c01730ae22d18fb7273853c51415a4182"
     },
@@ -91,7 +91,7 @@
   ],
   "nativeMakerBoundary": {
     "status": "not-qualified-for-effectful-batch",
-    "moduleMaker": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-services-section/src/plan-jsnode-modules.mjs",
+    "moduleMaker": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-code-engineering-services-section/services/javascript-engineering-services-section/services/javascript-code-fabrication-services-section/services/javascript-node-code-fabrication-services-section/services/jsnode-package-engineering-services-section/src/plan-jsnode-modules.mjs",
     "evidenceLines": {
       "closedProjection": [
         21,
