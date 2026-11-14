@@ -1,6 +1,6 @@
 // One qualified paid research unit. Provider wire contract: endpoint_choice_reason.v2/2.3.0.
 // Claim recovery and canonical report replay follow the original ln-church-agent client.
-import { canonicalJson, admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-engineering-services-section/canonical-json';
+import { canonicalJson, admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-engine/canonical-json';
 import { retryAfterDelayMs } from '@red-cup-engineering/http-engineering-services-section/retry-after';
 import { BASE_USDC, BASE_PROVIDERS, corroborate } from './settlements.mjs';
 

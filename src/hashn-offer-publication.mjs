@@ -1,4 +1,4 @@
-import { canonicalJson } from '@red-cup-engineering/json-engineering-services-section/canonical-json';
+import { canonicalJson } from '@red-cup-engineering/json-engine/canonical-json';
 import { hashnCredential, hashnRequest, UUID } from './hashn-client.mjs';
 
 const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',

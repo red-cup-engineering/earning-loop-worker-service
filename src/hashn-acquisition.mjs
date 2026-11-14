@@ -1,4 +1,4 @@
-import { canonicalJson } from '@red-cup-engineering/json-engineering-services-section/canonical-json';
+import { canonicalJson } from '@red-cup-engineering/json-engine/canonical-json';
 import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
 
 export const HASHN_STATE = 'hashn/acquisition';
