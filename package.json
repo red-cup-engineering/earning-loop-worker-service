@@ -16,8 +16,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@red-cup-engineering/computer-systems-logging-engine": "0.1.0",
-    "@red-cup-engineering/eavt-engineering-services-section": "^0.14.2",
-    "@red-cup-engineering/http-engineering-services-section": "^0.6.5-dev.2",
+    "@red-cup-engineering/eavt-engineering-services-section": "^0.15.1",
+    "@red-cup-engineering/http-engineering-services-section": "^0.6.6",
     "@red-cup-engineering/issuer-research-media-service": "0.1.5",
     "@red-cup-engineering/json-engine": "0.5.0",
     "@red-cup-engineering/oauth-engineering-services-section": "^0.2.6",
