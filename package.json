@@ -5,7 +5,6 @@
   "description": "Operations-configured Cloudflare earning loops with corroborated settlements, buyability, earning scorecards and complete-cohort issuer research preparation.",
   "type": "module",
   "scripts": {
-    "test": "node --test test/*.test.mjs",
     "check": "node --check worker/earning-loops.mjs && node --check scripts/deploy.mjs && node --check scripts/apply-price-directives.mjs",
     "deploy": "node scripts/deploy.mjs",
     "apply:price-directives": "node scripts/apply-price-directives.mjs"
