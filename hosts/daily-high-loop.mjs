@@ -26,6 +26,10 @@ const nbmOnly = operation.science.mode === "nbm-only";
 if (operation.science.mode !== undefined && !nbmOnly) {
   throw new Error(`Unexpected daily-high forecast mode: ${operation.science.mode}`);
 }
+// Keep historical calibrated edge logs intact. The first day without NAM MOS was November 4.
+if (nbmOnly && date < "2026-11-04") {
+  throw new Error("NBM-only edge logging starts after NAM MOS retirement on 2026-11-03");
+}
 const forecastPrefix = nbmOnly ? "baseline-forecasts" : "forecasts";
 const KALSHI = "https://external-api.kalshi.com/trade-api/v2"; // as @red-cup-engineering/kalshi-public-market-data-service
 const IEM = "https://mesonet.agron.iastate.edu";
