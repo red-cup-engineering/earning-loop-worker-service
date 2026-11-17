@@ -22,6 +22,11 @@ const arg = (name, fallback) => { const i = process.argv.indexOf(`--${name}`); r
 const operation = JSON.parse(readFileSync(arg("operation"), "utf8"));
 const date = arg("date", new Date().toISOString().slice(0, 10));
 const dryRun = process.argv.includes("--dry-run");
+const nbmOnly = operation.science.mode === "nbm-only";
+if (operation.science.mode !== undefined && !nbmOnly) {
+  throw new Error(`Unexpected daily-high forecast mode: ${operation.science.mode}`);
+}
+const forecastPrefix = nbmOnly ? "baseline-forecasts" : "forecasts";
 const KALSHI = "https://external-api.kalshi.com/trade-api/v2"; // as @red-cup-engineering/kalshi-public-market-data-service
 const IEM = "https://mesonet.agron.iastate.edu";
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -69,9 +74,14 @@ const summary = { date, issuedAt: new Date().toISOString(), science: operation.s
 for (const { series, station } of operation.stations) {
   const entry = { series, station };
   try {
-    const { stdout } = await run(process.execPath, [join(operation.science.checkout, "scripts/forecast-daily-high.mjs"), "--station", station, "--date", date], { timeout: 240_000 });
+    const args = [join(operation.science.checkout, "scripts/forecast-daily-high.mjs"), "--station", station, "--date", date];
+    if (nbmOnly) args.push("--nbm-only");
+    const { stdout } = await run(process.execPath, args, { timeout: 240_000 });
     const forecast = JSON.parse(stdout);
-    await put(`forecasts/${date}/${station}.json`, forecast);
+    if (nbmOnly && (forecast.model?.name !== "nbm-own-spread" || forecast.model.trainingWindowDays !== 0)) {
+      throw new Error("NBM-only issuance returned an unexpected model");
+    }
+    await put(`${forecastPrefix}/${date}/${station}.json`, forecast);
     entry.forecast = { mean: forecast.distribution.mean, sd: forecast.distribution.sd, model: forecast.model.name };
 
     const cli = new Map(parseCliJson(await (await fetch(`${IEM}/json/cli.py?station=${station}&year=${day(date, -1).slice(0, 4)}`)).text()));
@@ -100,3 +110,4 @@ for (const { series, station } of operation.stations) {
 }
 await put(`edge-log/${date}/summary.json`, summary);
 console.log(JSON.stringify(summary, null, 2));
+if (summary.series.some(({ error }) => error)) process.exitCode = 1;
