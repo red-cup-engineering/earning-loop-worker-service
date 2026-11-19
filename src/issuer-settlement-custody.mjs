@@ -32,7 +32,7 @@ const pendingKey = k => typeof k === 'string' && k.startsWith(PENDING) && TX.tes
  * @param {*} configuration Original Public declaration plus received merchant/Group projection.
  * @returns {object|null} Fixed normalized custody plan, or null before admission.
  */
-export function issuerSettlementCustodyPlan(configuration) {
+export function issuerSettlementStoragePlan(configuration) {
  const c = configuration;
  if (!c || c.enabled !== true || c.resourceAdmission?.status !== 'received') return null;
  const text = k => typeof c[k] === 'string' && c[k].length > 0 && bytes(c[k]) <= 512 && !/[\r\n]/.test(c[k]);
@@ -56,7 +56,7 @@ function witness(text,tx,p) {
 }
 function validateMeta(m) {
  if (!exactKeys(m,['version','identity','recordCount','chargedBytes','cursor']) || m.version !== 1 || !exactKeys(m.identity,FIELDS) || !Number.isSafeInteger(m.recordCount) || m.recordCount < 1 || m.recordCount > 50000 || !Number.isSafeInteger(m.chargedBytes) || m.chargedBytes < 4096 || m.chargedBytes > 268435456 || (m.cursor !== null && !pendingKey(m.cursor)) || charge(META,m) > 4096) fail();
- const ip = issuerSettlementCustodyPlan({...m.identity,enabled:true,resourceAdmission:{status:'received'}});
+ const ip = issuerSettlementStoragePlan({...m.identity,enabled:true,resourceAdmission:{status:'received'}});
  if (!same(m.identity,identity(ip))) fail();
  if (m.recordCount === 1 && m.chargedBytes !== 4096) fail();
  return m;
@@ -106,7 +106,7 @@ async function readText(body,limit) {
 export async function issuerSettlementResponse(request,storage,configuration) {
  const url = new URL(request.url);
  if (url.pathname !== PATH) return null;
- const p = issuerSettlementCustodyPlan(configuration);
+ const p = issuerSettlementStoragePlan(configuration);
  if (!p) return response(404);
  if (request.method !== 'GET' && request.method !== 'POST') return new Response('',{status:405,headers:{Allow:'GET, POST','Content-Type':'application/json','Content-Length':'0','Cache-Control':'no-store'}});
  const entries = [...url.searchParams];
@@ -194,7 +194,7 @@ async function terminal(storage,p,key,raw,record) {
  * @returns {Promise<object>} Not-configured, configuration hold, or committed per-pulse observation counters; corrupt/source/clock failures reject without inventing receiving.
  */
 export async function receiveIssuerSettlements(storage,configuration,adapters) {
- const p=issuerSettlementCustodyPlan(configuration);
+ const p=issuerSettlementStoragePlan(configuration);
  if(!p) return {status:'not-configured'};
  const a=adaptersFor(adapters);
  instant(a);

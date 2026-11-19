@@ -1,5 +1,5 @@
 import { hashnInstanceProblem } from './hashn-acquisition.mjs';
-import { issuerSettlementCustodyPlan } from './issuer-settlement-custody.mjs';
+import { issuerSettlementStoragePlan } from './issuer-settlement-custody.mjs';
 
 export function projectOperation(record, { excludeIssuerResearch = false } = {}) {
   if (typeof excludeIssuerResearch !== 'boolean') throw new TypeError('issuer release selection must be boolean');
@@ -19,8 +19,8 @@ export function projectOperation(record, { excludeIssuerResearch = false } = {})
     operation.issuerResearch = record.issuerResearch;
   }
   if (record.issuerSettlements?.enabled === true && record.issuerSettlements.resourceAdmission?.status === 'received') {
-    const custody = issuerSettlementCustodyPlan(record.issuerSettlements);
-    if (operation.clock !== 'durable-object-alarm' || custody.payTo !== record.merchantPayTo.toLowerCase())
+    const storage = issuerSettlementStoragePlan(record.issuerSettlements);
+    if (operation.clock !== 'durable-object-alarm' || storage.payTo !== record.merchantPayTo.toLowerCase())
       throw new TypeError('issuer financial custody requires the original private clock and merchant recipient');
     operation.issuerSettlements = record.issuerSettlements;
   }

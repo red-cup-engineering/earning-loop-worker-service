@@ -30,8 +30,8 @@ export function hashnInstanceProblem(instance) {
  * one frozen knock and observe its disposition. A response is never an agreement
  * or delivery instruction. Token, note, replies and workspace ids stay private. */
 export async function runHashnAcquisition({ storage, instance, initialCredential, fetchImpl = fetch, now = () => Date.now() } = {}) {
-  const refusal = hashnInstanceProblem(instance);
-  if (refusal) return { stage: refusal, requests: 0, newCashExpenseUsd: 0 };
+  const rejection = hashnInstanceProblem(instance);
+  if (rejection) return { stage: rejection, requests: 0, newCashExpenseUsd: 0 };
   let state = await storage.get(HASHN_STATE) ?? {};
   let calls = 0;
   const finish = async (stage, terminal = false, delay = SIX_HOURS) => {
