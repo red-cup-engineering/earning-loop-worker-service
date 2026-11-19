@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "description": "Operations-configured Cloudflare earning loops with corroborated settlements, buyability, earning scorecards and complete-cohort issuer research preparation.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/earning-loop-worker-service.git"
+  },
   "type": "module",
   "scripts": {
     "check": "node --check worker/earning-loops.mjs && node --check scripts/deploy.mjs && node --check scripts/apply-price-directives.mjs",
