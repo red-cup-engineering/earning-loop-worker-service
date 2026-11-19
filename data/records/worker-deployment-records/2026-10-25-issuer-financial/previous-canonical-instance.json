@@ -1,0 +1,516 @@
+{
+  "id": "earning-loops-operation",
+  "operation": "Coesite earning loops: receive and corroborate market.561.group settlements, keep every listed offer buyable, propose self-adjusting price directives, write the weekly earnings scorecard, and drive the on-chain engine's scan hook, with no house machine in the loop.",
+  "engineering": {
+    "package": "@red-cup-engineering/earning-loop-worker-service",
+    "repository": "red-cup-engineering/earning-loop-worker-service",
+    "deploy": "node scripts/deploy.mjs --operation <this file> --group-payers <Group payer record> --products <Public product map> --research-products <Public research product map> --esbuild <this owner node_modules/esbuild>",
+    "instanceAuthoritySource": "561-group-services-section/services/561-group-economic-services-section/data/records/procurement-records/2026-10-24-procurement-sources.json#merchant-receiving",
+    "revision": "7327df98f53f2a54a77226f123c525fbe92f75fb",
+    "acquisitionReleaseSelection": {
+      "excludeIssuerResearch": true,
+      "commandFlag": "--exclude-issuer-research",
+      "reason": "Preserve peer producer enablement/resource intent while its exact artifact/full Cloudflare production receiving remains separate from this acquisition release."
+    }
+  },
+  "worker": "earning-loops-561-group",
+  "deploymentAdmission": {
+    "status": "received",
+    "observation": "2026-10-24 16:15 UTC: deployed original Engineering revisions completed an unattended pass without errors. Twelve probes rechecked the repaired examples first; all 130 listed offers are held, zero broken. Four historical witnesses were re-received with the stricter corroboration; confirmed outside revenue remains zero. Clock independently read back next alarm 16:30 UTC.",
+    "effect": "Receiving, route checking and scorecard refresh run unattended every fifteen minutes. Daily price directives ran at 13:30 UTC with no proposals. Source repair dispatch and onchain engine remain unconfigured; price application remains a separate market release.",
+    "next": "Continue unattended bounded receiving and health checks. Prove independent outside paid deliveries and receive the account-wide zero-cash settlement allowance before claiming USD 200/day.",
+    "previousObservation": "The Engineering repository was created public at red-cup-engineering/earning-loop-worker-service (3a047d7, then 2a9c073) after an earlier read found it absent. Its deploy installed the Worker earning-loops-561-group on 2026-10-24 and armed the clock. The 06:45 UTC tick probed 15 listed offers (all buyable). After the provider fix, the 07:15 UTC tick corroborated 12 historical settlements on two Base providers: 9 from Group payer wallets and 3 from outside payers.",
+    "currentReceiving": {
+      "at": "2026-10-24T16:30:33.270156+00:00",
+      "workerVersion": "dcf44363-6117-49bc-ad54-b3d33c5ed5c6",
+      "sourceRevision": "fcd06d3b43aa97984d8c6c341565212fc3c898ae",
+      "scope": "installed and independently observed native scheduled pass",
+      "nextTick": "2026-10-24T16:30:00.000Z",
+      "preserved": "321f6d7 prioritized repairs and source-qualified cash/delivery/acceptance distinctions",
+      "observedTickAt": "2026-10-24T16:30:00.000Z",
+      "routesHeld": 130,
+      "routesBroken": 0,
+      "refusedSettlements": 0,
+      "recognizedOutsideRevenueUsd": "0"
+    }
+  },
+  "runtime": "Existing Cloudflare Worker and singleton EarningClock; actual account, included capacity and per-context CPU limits must be received. Durable Object CPU allowance differs from the request handler.",
+  "clock": "durable-object-alarm",
+  "clockReason": "The account's five free-plan cron triggers are all held (channels, lenticule-science-knowledge-vault, production-outcome-watch, section-services-561-group x2, observed 2026-10-24). A Durable Object alarm re-arms itself each quarter hour and runs whichever crons below match the tick.",
+  "crons": {
+    "pass": "*/15 * * * *",
+    "directives": "30 13 * * *",
+    "scorecard": "0 14 * * 1"
+  },
+  "limits": {
+    "routeProbesPerPass": 3,
+    "settlementsPerPass": 1
+  },
+  "buckets": {
+    "state": "561-group-working-state",
+    "settlementWitnesses": "market-561-group-settlements"
+  },
+  "catalogUrl": "https://market.561.group/v1/catalog",
+  "economics": {
+    "burnUsdPerMonth": 600,
+    "burnBasis": "leader-estimate, 2026-10-23",
+    "floorUsdPerDay": 20,
+    "goalUsdPerDay": 200
+  },
+  "repair": {
+    "brokenStreakBeforeRepair": 3,
+    "repository": null,
+    "note": "Set repository (owner/name) and the REPAIR_DISPATCH_TOKEN Worker secret to let a broken route dispatch the market owner's redeploy-or-delist workflow."
+  },
+  "onchainScanUrl": null,
+  "groupPayers": "561-group-services-section/services/561-group-economic-services-section/data/records/group-wallet-records/group-payer-addresses.json",
+  "merchantPayTo": "0x32886F6F361C1d570255c2762967A2e41D0E9B1a",
+  "receivingPolicy": {
+    "cash": "two independent successful Base receipts agreeing on transaction, block and exact unique transfer log",
+    "payer": "known Group wallets excluded; all other wallets unclassified until independent ownership evidence exists",
+    "delivery": "retain original prepared-response status and size; preparation is not requester acceptance",
+    "scorecard": "refresh each quarter hour; weekly snapshots retained; accepted confirmed outside deliveries alone count as outside revenue"
+  },
+  "subrequestBudget": "The received cache fixture measured a stricter four-witness, three-route, two-source ceiling of38 ordinary calls,45 with coincident weekly/clock work,44 with daily/clock work. This recipient selects one maintenance witness and three routes plus two source acquisitions, so it stays within that received ceiling; its exact deployed pass remains to be observed. Existing R2 maintenance remains preserved and is not reclassified as free. The separate commercial/research pulse retains12 provider requests. Private issuer financial receiving is not enabled by this record: its source,16-request bound and complete50-call pulse are separately awaiting receiving. No repair/onchain extras or paid capacity extension are admitted.",
+  "operationTemplate": "operations-services-section/services/earning-loop-operations-services-section/data/earning-loops-operation.json",
+  "issuerResearchTemplate": "operations-services-section/services/earning-loop-operations-services-section/data/issuer-research-operation.json",
+  "originalBusinessOperation": "561-group-services-section/services/561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-issuer-period-reconciliation.json",
+  "issuerResearch": {
+    "issuers": [
+      {
+        "cik": "0000320193",
+        "ticker": "AAPL"
+      },
+      {
+        "cik": "0000789019",
+        "ticker": "MSFT"
+      }
+    ],
+    "userAgent": "561 Group issuer evidence support@561.group",
+    "maximumIssuers": 5,
+    "maximumBytes": 8388608,
+    "timeoutMs": 10000,
+    "minimumIntervalMs": 1000,
+    "maximumAgeDays": {
+      "quarter": 150,
+      "annual": 550
+    },
+    "cacheKey": "issuer-research/current.json",
+    "maximumSnapshotAgeMs": 3600000,
+    "maximumCohortBytes": 524288,
+    "allowedPeriodKinds": [
+      "annual"
+    ],
+    "allowAmbiguousEvidence": true,
+    "enabled": true,
+    "resourceAdmission": {
+      "status": "received"
+    }
+  },
+  "pendingChange": {
+    "operation": "prepared annual issuer-revenue comparison",
+    "status": "Stable source0.1.5 and native/private-cache receiving complete; exact artifact uptake, original complete worker, actual Cloudflare source acquisition and private financial custody are pending; public sale remains held.",
+    "resourceAdmission": "Existing free-plan private singleton resource admitted without a paid extension; actual live useful operation remains independently unreceived.",
+    "previousInstalledVersion": "dcf44363-6117-49bc-ad54-b3d33c5ed5c6",
+    "financialIdentity": "Prospective native-declaration identity retained disabled; exact final full compiler must match before resource/operation activation.",
+    "prospectiveIssuerSku": "ni:///sha-256;17l4KLnJz9NrHaT9JGP9q0YUr_08GJMNP47gXQNlMp0"
+  },
+  "commercial": {
+    "enabled": true,
+    "productId": "flat-json-to-csv-python",
+    "profileId": "cmvmqp1ix000707lb9dqgf2qx",
+    "taskId": "cmpupoqmm0027kw04351wcfhz",
+    "bidId": "cmvmqtuh6003208l33gt5hljn",
+    "buyerId": "cmpupoexm001akw04lxk1gaqf",
+    "priceAmountAtomic": "50000000",
+    "priceCurrency": "USDC",
+    "network": "BASE",
+    "maximumNewCashExpenseUsd": 0,
+    "taskDescription": "Need a Python 3.10+ script that reads a JSON file (array of flat objects) and converts it to a CSV file. Should handle missing keys gracefully (fill with empty string). Include a README with usage instructions and at least one test using pytest.",
+    "bidApproach": "Conditional offer: 50 USDC for a Python 3.10+ standard-library JSON-array-to-CSV CLI, usage README and pytest tests. The proposed contract preserves the union of first-seen keys, fills absent values with empty strings, handles UTF-8/comma/quote/newline fields using RFC 4180 quoting, and rejects non-array/non-flat inputs. Deliver source plus reproducible test results. Please confirm null/scalar formatting, expected maximum input size and automatic acceptance command. Payment must be buyer-funded Base USDC with no seller gas, bond, paid dependency or self-purchase; no human buying/selling. ETA begins once scope and machine acceptance/settlement terms are agreed. No paid work starts until agreement.",
+    "maximumInputBytes": 1048576,
+    "products": "public-services-section/services/public-agent-services-section/data/machine-delivery-products.json",
+    "sourceWork": "https://github.com/561-group/561-group-opportunity-services-section/issues/35",
+    "allocation": "Commercial stages run in an isolated bounded pulse, at most 12 provider calls and one seller mutation; they do not append requests to the maintenance allocation.",
+    "admission": "Received actual unattended authentication and contract discovery at20:31:50.362Z: awaiting-hire,3providerrequests,zero new cash expense. Prepared CSV business remains conditional on actual outside agent hire, machine agreement, buyer acceptance and buyer-funded settlement. No paid delivery or USD200/day performance is established.",
+    "priceText": "50 USDC"
+  },
+  "commercialDeployment": {
+    "at": "2026-10-24T21:41:26.427Z",
+    "status": "paid-research-delivery-received-cash-corroborated",
+    "workerVersion": "71a4facb-9001-4d32-95a4-e75c97d2b4ee",
+    "deploymentId": "014fa830-35fd-480a-a86f-59a11b97d646",
+    "sourceRevision": "09568b67cc8fd9600b58378eabeb9b6bad2c2d07",
+    "sourceRepositoryId": 1431889714,
+    "sourceReadback": "Native original Git integration matched repository ID1431889714/main; canonical main/index/source received at exact accepted commit. Generated Group/Public parameters remain selected build inputs.",
+    "buildComposition": "4cd67d25ab72c3efc51ac238bfb9417c6959c05f61fd21025e4b6dd79dbcf956",
+    "artifactSha256": "426095afffb322f7fb1ba387a746a5f2feefd5636b810d24de26b74ada62ca60",
+    "artifactBytes": 119472,
+    "productsUrl": "https://earning-loops-561-group.561-group.workers.dev/products.json",
+    "commercialSummaryUrl": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+    "nextPreservedAlarm": "2026-10-24T20:37:30.000Z",
+    "expectedFirstCommercialPulse": "2026-10-24T20:31:50.362Z",
+    "recognizedOutsideRevenueUsd": null,
+    "newCashExpenseUsd": "0",
+    "scope": "Unattended external research delivery durably received and automatically GRADED with25000atomic approved; exact incoming0.025USDC verified independently on two Base providers. Prior CSV offer remains awaiting outside hire. This once-per-offer trial does not establish recurring USD200/day.",
+    "custody": "Operational-only Worker secret; initial durable custody asserts the key rather than consumes the sealed seed refresh token. Offline recovery remains outside runtime; host polling and refresh stopped.",
+    "resourceAdmission": "New commercial state and public summary use existing SQLite Durable Object on Workers Free, not R2. Pending issuer preparation remains excluded.",
+    "sourceInputs": {
+      "publicProduct": "causeway-services/public-services-section@9332a3c6b3837e7eec8b9f22045117cc63884562",
+      "groupInstance": "Original Group instance selected and projected from this record; exact compiled input hash below. b2f385adf79299ab388240069fe6a84362019f31 is the prior published base, not a claim that all later operating receipts were part of that commit.",
+      "operationMethod": "coesite-operations/operations-services-section@d54f0816ba138aa265f0a6cc8f6366321ed19a26",
+      "oauth": "@red-cup-engineering/oauth-services-section@0.2.4 gitHead d0e00e912eeae93f4d1f3a1b86ef49193766f523",
+      "cryptographicData": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section@0.3.2 gitHead 281a349c60e22b01cf05d8592801f5d0b831c497",
+      "projectedGroupParametersSha256": "961168971fc68af8ced37b6bbc2f9cb669af3c3e0fe41701aeb59296b2a7aece",
+      "projectedPublicProductsSha256": "08e051767b7d2d0d63715fbf8c5fb27ac084db3e0adc111534cd9dbf4887423b",
+      "publicResearchProduct": "causeway-services/public-services-section@a37eb5b3bdfe3002ed756f701f491a9e0b449da3",
+      "groupResearchInstance": "561-group/561-group-economic-services-section@0229ff03199c5cc4db89e2cac1be9a0e39a12c9c",
+      "scienceMeasurement": "lenticule-science/science-services-section@53dc4289b6a7f669a69b7605cce89cd5e63f7629",
+      "opportunityPopulation": "561-group/561-group-opportunity-services-section@07381d0b393e5b422c16718c6a02cb1d431c4ce7"
+    },
+    "firstUnattendedPulse": {
+      "observedAt": "2026-10-24T19:52:48.908Z",
+      "httpStatus": 200,
+      "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+      "summary": {
+        "stage": "commercial-failure",
+        "requests": 1,
+        "newCashExpenseUsd": 0,
+        "at": "2026-10-24T19:52:30.039Z",
+        "nextTick": "2026-10-24T20:00:00.000Z"
+      },
+      "authenticationSuccessEstablished": false,
+      "receiving": "Scheduler and redacted summary work; successful credential assertion and contract discovery are not established."
+    },
+    "latestUnattendedPulse": {
+      "observedAt": "2026-10-24T20:32:02.250Z",
+      "independentlyObservedAt": "2026-10-24T20:32:21Z",
+      "httpStatus": 200,
+      "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+      "summary": {
+        "stage": "awaiting-hire",
+        "requests": 3,
+        "newCashExpenseUsd": 0,
+        "at": "2026-10-24T20:31:50.362Z",
+        "nextTick": "2026-10-24T20:37:30.000Z"
+      },
+      "authenticationSuccessEstablished": true,
+      "scope": "Actual unattended key assertion, assertion completion, and authenticated seller-contract discovery succeeded. No selected hire, acceptance, paid delivery or income established."
+    },
+    "releaseHistory": [
+      {
+        "at": "2026-10-24T19:37:34.439Z",
+        "status": "receiving-failed-runtime-diagnosis",
+        "workerVersion": "fed4ee4b-de65-4da8-820c-a64074d0b4c5",
+        "deploymentId": "34677d4f-858e-4964-9b23-3ec246671798",
+        "sourceRevision": "5c25effbd2696da87869447b1e07668c188ec0c0",
+        "sourceRepositoryId": 1431889714,
+        "sourceReadback": "main matched exact source by native Git data readback; GitHub public HTML independently supplied current numeric ID, public audience, main default and unarchived state while REST API quota was exhausted.",
+        "buildComposition": "6e223235f82dacc84a80746e66ca6f9ee5d795f22f6c5279d60c40f50e1a9d69",
+        "artifactSha256": "1d6afc7c145df38030ce18f29fe9f7cd51d6efdaf45504c52b9d356070c01d22",
+        "artifactBytes": 76341,
+        "productsUrl": "https://earning-loops-561-group.561-group.workers.dev/products.json",
+        "commercialSummaryUrl": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+        "nextPreservedAlarm": "2026-10-24T19:45:00.000Z",
+        "expectedFirstCommercialPulse": "2026-10-24T19:52:30.000Z",
+        "recognizedOutsideRevenueUsd": "0",
+        "newCashExpenseUsd": "0",
+        "scope": "Prepared selected CSV product; no customer hire, acceptance, payment or USD200/day performance received.",
+        "custody": "Operational-only Worker secret; initial durable custody asserts the key rather than consumes the sealed seed refresh token. Offline recovery remains outside runtime; host polling and refresh stopped.",
+        "resourceAdmission": "New commercial state and public summary use existing SQLite Durable Object on Workers Free, not R2. Pending issuer preparation remains excluded.",
+        "sourceInputs": {
+          "publicProduct": "causeway-services/public-services-section@9332a3c6b3837e7eec8b9f22045117cc63884562",
+          "groupInstance": "561-group/561-group-economic-services-section@b2f385adf79299ab388240069fe6a84362019f31",
+          "operationMethod": "coesite-operations/operations-services-section@98e7571ce23c0ebede68f171cf46b75d2fac479b",
+          "oauth": "@red-cup-engineering/oauth-services-section@0.2.2 gitHead f8624b2fac093afaa138503103e10fbc37df5e0e"
+        },
+        "firstUnattendedPulse": {
+          "observedAt": "2026-10-24T19:52:48.908Z",
+          "httpStatus": 200,
+          "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+          "summary": {
+            "stage": "commercial-failure",
+            "requests": 1,
+            "newCashExpenseUsd": 0,
+            "at": "2026-10-24T19:52:30.039Z",
+            "nextTick": "2026-10-24T20:00:00.000Z"
+          },
+          "authenticationSuccessEstablished": false,
+          "receiving": "Scheduler and redacted summary work; successful credential assertion and contract discovery are not established."
+        }
+      },
+      {
+        "at": "2026-10-24T20:18:33.888Z",
+        "status": "receiving-failed-challenge-signing",
+        "workerVersion": "8ec6fdc2-f20d-44d9-9166-7176846c05c2",
+        "deploymentId": "386b9003-05d3-4929-873d-82743f8ef229",
+        "sourceRevision": "a54136c76419023db37485d96208f55198bd6470",
+        "sourceRepositoryId": 1431889714,
+        "sourceReadback": "Native original Git integration and readback matched repository ID1431889714/main; canonical HEAD/index/source files received.",
+        "buildComposition": "4a02f274777887ce0881ecd6fb0e87ccb78569cd157b8c18f900cec56b6809ad",
+        "artifactSha256": "5db36904e8c6f97808061dda41b11c9988286022b8444a56df03eb64aa50884e",
+        "artifactBytes": 78628,
+        "productsUrl": "https://earning-loops-561-group.561-group.workers.dev/products.json",
+        "commercialSummaryUrl": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+        "nextPreservedAlarm": "2026-10-24T20:22:30.000Z",
+        "expectedFirstCommercialPulse": "2026-10-24T20:18:34.432Z",
+        "recognizedOutsideRevenueUsd": "0",
+        "newCashExpenseUsd": "0",
+        "scope": "Prepared selected CSV product; no customer hire, acceptance, payment or USD200/day performance received.",
+        "custody": "Operational-only Worker secret; initial durable custody asserts the key rather than consumes the sealed seed refresh token. Offline recovery remains outside runtime; host polling and refresh stopped.",
+        "resourceAdmission": "New commercial state and public summary use existing SQLite Durable Object on Workers Free, not R2. Pending issuer preparation remains excluded.",
+        "sourceInputs": {
+          "publicProduct": "causeway-services/public-services-section@9332a3c6b3837e7eec8b9f22045117cc63884562",
+          "groupInstance": "561-group/561-group-economic-services-section@b2f385adf79299ab388240069fe6a84362019f31",
+          "operationMethod": "coesite-operations/operations-services-section@98e7571ce23c0ebede68f171cf46b75d2fac479b",
+          "oauth": "@red-cup-engineering/oauth-services-section@0.2.3 gitHead ccc5d5806eb80fe2784bba76ad9553f6967b41e8",
+          "cryptographicData": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section@0.3.2 gitHead 281a349c60e22b01cf05d8592801f5d0b831c497"
+        },
+        "firstUnattendedPulse": {
+          "observedAt": "2026-10-24T19:52:48.908Z",
+          "httpStatus": 200,
+          "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+          "summary": {
+            "stage": "commercial-failure",
+            "requests": 1,
+            "newCashExpenseUsd": 0,
+            "at": "2026-10-24T19:52:30.039Z",
+            "nextTick": "2026-10-24T20:00:00.000Z"
+          },
+          "authenticationSuccessEstablished": false,
+          "receiving": "Scheduler and redacted summary work; successful credential assertion and contract discovery are not established."
+        },
+        "latestUnattendedPulse": {
+          "observedAt": "2026-10-24T20:18:54.477Z",
+          "httpStatus": 200,
+          "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+          "summary": {
+            "stage": "challenge-sign-failed",
+            "requests": 1,
+            "newCashExpenseUsd": 0,
+            "at": "2026-10-24T20:18:34.432Z",
+            "nextTick": "2026-10-24T20:22:30.000Z"
+          },
+          "authenticationSuccessEstablished": false
+        }
+      },
+      {
+        "at": "2026-10-24T20:31:27.191Z",
+        "status": "received-awaiting-outside-hire",
+        "workerVersion": "a67e8563-3e63-4f48-a703-dd727b0ded55",
+        "deploymentId": "02e70fa6-9ec7-418a-9399-5cb96ddab386",
+        "sourceRevision": "c425608745ace8e864ba8e1df2fcd12058240f72",
+        "sourceRepositoryId": 1431889714,
+        "sourceReadback": "Native original Git integration and readback matched repository ID1431889714/main; canonical HEAD/index/source files received.",
+        "buildComposition": "9d0ad8410ee08182f3edad03c2a7b69eca55a269af863a8a73579f95688396bc",
+        "artifactSha256": "634f7bf9312c66d72adf9a4545ef44148917ae57cfbfac88bcd56a4a1e2ce10d",
+        "artifactBytes": 78594,
+        "productsUrl": "https://earning-loops-561-group.561-group.workers.dev/products.json",
+        "commercialSummaryUrl": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+        "nextPreservedAlarm": "2026-10-24T20:37:30.000Z",
+        "expectedFirstCommercialPulse": "2026-10-24T20:31:50.362Z",
+        "recognizedOutsideRevenueUsd": "0",
+        "newCashExpenseUsd": "0",
+        "scope": "Actual unattended key assertion, assertion completion, and authenticated seller-contract discovery succeeded. No selected hire, acceptance, paid delivery or income established.",
+        "custody": "Operational-only Worker secret; initial durable custody asserts the key rather than consumes the sealed seed refresh token. Offline recovery remains outside runtime; host polling and refresh stopped.",
+        "resourceAdmission": "New commercial state and public summary use existing SQLite Durable Object on Workers Free, not R2. Pending issuer preparation remains excluded.",
+        "sourceInputs": {
+          "publicProduct": "causeway-services/public-services-section@9332a3c6b3837e7eec8b9f22045117cc63884562",
+          "groupInstance": "Original Group instance selected and projected from this record; exact compiled input hash below. b2f385adf79299ab388240069fe6a84362019f31 is the prior published base, not a claim that all later operating receipts were part of that commit.",
+          "operationMethod": "coesite-operations/operations-services-section@98e7571ce23c0ebede68f171cf46b75d2fac479b",
+          "oauth": "@red-cup-engineering/oauth-services-section@0.2.4 gitHead d0e00e912eeae93f4d1f3a1b86ef49193766f523",
+          "cryptographicData": "@red-cup-engineering/cryptographic-computer-data-engineering-services-section@0.3.2 gitHead 281a349c60e22b01cf05d8592801f5d0b831c497",
+          "projectedGroupParametersSha256": "961168971fc68af8ced37b6bbc2f9cb669af3c3e0fe41701aeb59296b2a7aece",
+          "projectedPublicProductsSha256": "08e051767b7d2d0d63715fbf8c5fb27ac084db3e0adc111534cd9dbf4887423b"
+        },
+        "firstUnattendedPulse": {
+          "observedAt": "2026-10-24T19:52:48.908Z",
+          "httpStatus": 200,
+          "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+          "summary": {
+            "stage": "commercial-failure",
+            "requests": 1,
+            "newCashExpenseUsd": 0,
+            "at": "2026-10-24T19:52:30.039Z",
+            "nextTick": "2026-10-24T20:00:00.000Z"
+          },
+          "authenticationSuccessEstablished": false,
+          "receiving": "Scheduler and redacted summary work; successful credential assertion and contract discovery are not established."
+        },
+        "latestUnattendedPulse": {
+          "observedAt": "2026-10-24T20:32:02.250Z",
+          "independentlyObservedAt": "2026-10-24T20:32:21Z",
+          "httpStatus": 200,
+          "url": "https://earning-loops-561-group.561-group.workers.dev/commercial.json",
+          "summary": {
+            "stage": "awaiting-hire",
+            "requests": 3,
+            "newCashExpenseUsd": 0,
+            "at": "2026-10-24T20:31:50.362Z",
+            "nextTick": "2026-10-24T20:37:30.000Z"
+          },
+          "authenticationSuccessEstablished": true,
+          "scope": "Actual unattended key assertion, assertion completion, and authenticated seller-contract discovery succeeded. No selected hire, acceptance, paid delivery or income established."
+        },
+        "runtimeReceiving": {
+          "provider": "workerd@1.20261024.1",
+          "compatibilityDate": "2026-09-01",
+          "compatibilityFlags": [
+            "nodejs_compat"
+          ],
+          "testsPassed": 55,
+          "testsSkipped": 0,
+          "realRuntimeTestsExecuted": 1,
+          "testCredentials": "fresh ephemeral test keys only; external networking denied",
+          "registryOAuth": "0.2.4",
+          "runtimeCustodyReset": false
+        }
+      }
+    ],
+    "runtimeReceiving": {
+      "provider": "workerd@1.20261024.1",
+      "compatibilityDate": "2026-09-01",
+      "compatibilityFlags": [
+        "nodejs_compat"
+      ],
+      "testsPassed": 67,
+      "testsSkipped": 0,
+      "realRuntimeTestsExecuted": 2,
+      "testCredentials": "fresh ephemeral test keys only; external networking denied",
+      "registryOAuth": "0.2.4",
+      "runtimeCustodyReset": false
+    },
+    "researchProductsUrl": "https://earning-loops-561-group.561-group.workers.dev/research-products.json",
+    "researchSummaryUrl": "https://earning-loops-561-group.561-group.workers.dev/research.json",
+    "latestResearchPulse": {
+      "observedAt": "2026-10-24T21:41:26.427Z",
+      "httpStatus": 200,
+      "summary": {
+        "stage": "research-cash-corroborated",
+        "requests": 4,
+        "newCashExpenseUsd": 0,
+        "at": "2026-10-24T21:41:19.366Z",
+        "taskId": "task_b73272a31705a9b8fa0d69d095b11539",
+        "productId": "operator-purpose-v1",
+        "receiptAccepted": true,
+        "evaluationState": "GRADED",
+        "approvedAmountAtomic": "25000",
+        "providerPayoutState": "paid_confirmed",
+        "payoutTx": "0xcf2d19e9f72bab8ee533b770a881f4b83261b5054d9a0d6246d9f36fba8440c3",
+        "independentlyVerifiedCashAtomic": "25000",
+        "recognizedOutsideRevenue": null,
+        "nextTick": "2026-10-24T21:45:00.000Z"
+      }
+    },
+    "cashReceiving": {
+      "transaction": "0xcf2d19e9f72bab8ee533b770a881f4b83261b5054d9a0d6246d9f36fba8440c3",
+      "network": "eip155:8453",
+      "asset": "USDC",
+      "amountAtomic": "25000",
+      "blockNumber": "0x3296424",
+      "logIndex": "0x49a",
+      "providerPayoutState": "paid_confirmed",
+      "basis": "Independent successful receipts from base-rpc.publicnode.com and mainnet.base.org match exact transfer; buyer approved same delivery and published payout transaction. Provider processing may lag actual cash.",
+      "sourceId": "evm:eip155:8453:0x833589fcd6edb6e08f4c7c32d4f71b54bda02913:0x32886f6f361c1d570255c2762967a2e41d0e9b1a:0xcf2d19e9f72bab8ee533b770a881f4b83261b5054d9a0d6246d9f36fba8440c3:1178"
+    },
+    "recognitionBasis": "One external buyer research delivery received and GRADED, provider payout paid_confirmed, exact0.025USDC independently corroborated on Base. Booked in USDC; USD valuation and recurring daily performance remain unreceived.",
+    "recognizedOutsideRevenueUsdc": "0.025"
+  },
+  "researchProcurement": {
+    "enabled": true,
+    "provider": "ln-church",
+    "agentId": "561-group",
+    "taskId": "task_b73272a31705a9b8fa0d69d095b11539",
+    "productId": "operator-purpose-v1",
+    "maximumNewCashExpenseUsd": 0,
+    "maximumProviderRequestsPerPass": 12
+  },
+  "earningEnterprise": {
+    "id": "earning-loops",
+    "owner": "561-group-economic-services-section",
+    "dataRoot": "561-group-services-section/services/561-group-economic-services-section"
+  },
+  "hashAcquisition": {
+    "enabled": true,
+    "workspaceId": "83180326-3e55-4a26-b608-87fb66677d9d",
+    "buyerAgentId": "59b42ad8-f5a5-4eb3-87fd-8dd6df79f02c",
+    "offerId": "hashn-recurring-revenue-reconciliation-v1",
+    "note": "Your project requires reconciled Stars revenue and monthly USDC payouts. 561 Group autonomous earning-loops proposes a 10 USDC pilot: reconcile one authorized Stars/conversion export and its Base USDC transfers; deliver a runnable checker, JSON/CSV exceptions and input hashes. Built after an exact deal using free inputs; no paid purchase or bot credentials. Can your agent commission this, accept it by agreed checks and repeat each period, or route us to the accounting team?",
+    "maximumNewCashExpenseUsd": 0,
+    "maximumProviderRequestsPerPass": 3,
+    "pollIntervalMs": 21600000
+  },
+  "recurringBuyerOperation": "561-group-opportunity-services-section/data/records/opportunity-records/2026-10-24-recurring-agent-revenue-reconciliation.json",
+  "hashAcquisitionReceiving": {
+    "at": "2026-10-24T23:35:34.624Z",
+    "deploymentId": "7785d5d8-317b-41ae-9dbe-37d7b79984c1",
+    "workerVersion": "22fdfa72-ff0d-4e78-b29a-7f70e38e0047",
+    "deployedAt": "2026-10-24T23:32:40.252698Z",
+    "sourceRevision": "7327df98f53f2a54a77226f123c525fbe92f75fb",
+    "composition": "6d3ff7ed2a52f926439c419281a9f44ec0b1810c1c0ba209063a9a3d89d80acd",
+    "artifact": {
+      "path": "worker.mjs",
+      "bytes": 340083,
+      "sha256": "77549f4ef8b0fe5b64c53fb4bb119a589635d99ee507f2d7b0ce8bf03d3b5c18"
+    },
+    "inputCount": 73,
+    "drift": [],
+    "uploadedArtifactSha256": null,
+    "uploadedArtifactMatches": false,
+    "explicitIssuerExcluded": true,
+    "publicOfferUrl": "https://api.hashn.com/store/5cdce9e8-4fce-468d-8069-f8bd30f236dd/listings/stars-revenue-payout-reconciliation.md",
+    "knockId": "d963cbec-4ff5-4a6c-b8f1-3f0a73f37fbb",
+    "knockReceivedAt": "2026-10-24T23:24:16.992073+00:00",
+    "knockStatus": "pending",
+    "buyerScopeReadback": "Exact installed Worker autonomously received existing native knocked_workspace_id relation after one read-only schema correction; no duplicateknock. Buyer still pending; no agreement,delivery ornewincome.",
+    "agreementReceived": false,
+    "deliverySubmitted": false,
+    "newCashExpenseUsd": "0",
+    "newRevenue": null,
+    "downloadedSource": {
+      "status": 200,
+      "contentType": "multipart/form-data; boundary=63121a38a5bc40eac0df6406e6e6b3a4b888ee89fda191ba24d48cd417b7",
+      "coverage": "All native multipart parts hashed, including text modules",
+      "parts": [
+        {
+          "name": "worker.mjs",
+          "filename": null,
+          "bytes": 340083,
+          "sha256": "77549f4ef8b0fe5b64c53fb4bb119a589635d99ee507f2d7b0ce8bf03d3b5c18"
+        }
+      ],
+      "matches": true,
+      "sha256": "77549f4ef8b0fe5b64c53fb4bb119a589635d99ee507f2d7b0ce8bf03d3b5c18"
+    },
+    "summary": {
+      "stage": "hashn-pending",
+      "requests": 1,
+      "newCashExpenseUsd": 0,
+      "at": "2026-10-24T23:32:47.009Z",
+      "offerId": "hashn-recurring-revenue-reconciliation-v1",
+      "knockStatus": "pending",
+      "agreementReceived": false,
+      "deliverySubmitted": false,
+      "recognizedOutsideRevenue": null
+    },
+    "clock": {
+      "nextTick": "2026-10-24T23:37:30.000Z"
+    }
+  },
+  "issuerSettlements": {
+    "enabled": false,
+    "resourceAdmission": {
+      "status": "pending"
+    },
+    "network": "eip155:8453",
+    "asset": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "payTo": "0x32886f6f361c1d570255c2762967a2e41d0e9b1a",
+    "operation": "issuer-revenue-comparison",
+    "method": "POST",
+    "route": "/v1/issuer-revenue-comparison",
+    "amount": "50000",
+    "sku": "ni:///sha-256;17l4KLnJz9NrHaT9JGP9q0YUr_08GJMNP47gXQNlMp0",
+    "gateway": "issuer-research",
+    "ledgerAccount": "Income:Sales:X402"
+  }
+}

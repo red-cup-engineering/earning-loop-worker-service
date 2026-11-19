@@ -1,0 +1,5 @@
+{
+  "passed": false,
+  "code": "ASSAY_TEST_FAILED",
+  "failure": "not ok 30 - scoped store refuses arbitrary keys before touching OpenTask or control storage\n  ---\n  duration_ms: 13.341643\n  type: 'test'\n  location: '/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/561-group-services-section/services/561-group-operations-services-section/services/bare-cedar-fog-services-section/data/state/fabrication-host/bare-cedar-fog/isolated-module-assay-npcjtF/workspace/test/issuer-cache-independent.test.mjs:47:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + [\n    +"
+}

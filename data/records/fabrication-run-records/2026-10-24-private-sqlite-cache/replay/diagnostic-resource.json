@@ -1,0 +1,22 @@
+{
+  "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agent.slice/agent-work.slice": {
+    "memory.current": "2120138752\n",
+    "memory.high": "1992294400\n",
+    "memory.max": "2657091584\n",
+    "memory.events": "low 0\nhigh 14529106\nmax 247\noom 34707\noom_kill 1\noom_group_kill 0\n",
+    "memory.pressure": "some avg10=93.56 avg60=93.08 avg300=92.69 total=13398833146\nfull avg10=92.68 avg60=92.16 avg300=91.70 total=13265283397\n",
+    "cgroup.events": "populated 1\nfrozen 0\n"
+  },
+  "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/agent.slice/agent-work.slice/run-rd570f7ad5bc94afa96d3aecbea513127.scope": {
+    "memory.current": null,
+    "memory.high": null,
+    "memory.max": null,
+    "memory.events": null,
+    "memory.pressure": null,
+    "cgroup.events": null
+  },
+  "knownPidExists": {
+    "439875": false,
+    "439907": false
+  }
+}

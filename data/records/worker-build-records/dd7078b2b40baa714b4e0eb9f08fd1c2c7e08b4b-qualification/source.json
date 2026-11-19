@@ -1,0 +1,25 @@
+{
+  "kind": "WorkerBuildSourceProjection",
+  "version": 1,
+  "repository": "red-cup-engineering/earning-loop-worker-service",
+  "commit": "dd7078b2b40baa714b4e0eb9f08fd1c2c7e08b4b",
+  "base": "902b4d5c3be0b206db25569f7e4184da04af6fb4",
+  "projection": "native git archive",
+  "purpose": "qualify exact owned source while concurrent commercial working-tree edits remain preserved",
+  "retention": "reproducible source projection until canonical working-tree ownership and selected build are received; immutable source commits remain in Git",
+  "deploymentAdmitted": false,
+  "previousQualifications": [
+    {
+      "commit": "050062d9c3c7d6863f4e7231dbbd456aeb6eea88",
+      "passed": 23,
+      "failed": 1,
+      "reason": "concurrent issuer activation assertions entered test blob before matching source gate was selected"
+    },
+    {
+      "commit": "d3aba88b8898a78d33fb4dee2eef412716ec1afd",
+      "passed": 24,
+      "failed": 0,
+      "sourceFinding": "unreceived inert commercial projection captured in deployment module; removed from current selection after independent parent inspection"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "priorHead": "964663a7e337c9d530f4eed97f381b9c3b9426e5",
+  "target": "0c741bcc8d1c4a91740e65bb6d4a2f4987b283ef",
+  "incoming": [
+    {
+      "path": "content/text/documents/articles/specifications/2026-10-24-earning-portfolio.md",
+      "head": "a7b94c3c4934b84b6f3de96712e5c56646abcb00",
+      "target": "41a76256c95982a00fcf4714e1172f4ba743feeb",
+      "working": "886ddc74cea259aefb978e9828527fc512d11e33",
+      "index": "a7b94c3c4934b84b6f3de96712e5c56646abcb00",
+      "workingMatchesIncoming": false,
+      "uniqueStaged": false,
+      "finalWorking": "886ddc74cea259aefb978e9828527fc512d11e33"
+    },
+    {
+      "path": "data/logs/earning-attempt-logs/2026-10-24-earning-attempts.jsonl",
+      "head": "ff4f01353a7ab5b25b60d5502ef532c46abfe9ad",
+      "target": "14fc6c7e52afbb36d12b3118e08acfb69fa260be",
+      "working": "3996222d7d93d03ab47c36fbc1b38cbfa96bd372",
+      "index": "ff4f01353a7ab5b25b60d5502ef532c46abfe9ad",
+      "workingMatchesIncoming": false,
+      "uniqueStaged": false,
+      "finalWorking": "3996222d7d93d03ab47c36fbc1b38cbfa96bd372"
+    },
+    {
+      "path": "data/records/earning-operation-records/earning-loops.json",
+      "head": "729935eea32faa9b3e46af3628a962880b40a593",
+      "target": "3063a93bf56e5171faf5e5204f0abea46b2ef6c6",
+      "working": "3063a93bf56e5171faf5e5204f0abea46b2ef6c6",
+      "index": "729935eea32faa9b3e46af3628a962880b40a593",
+      "workingMatchesIncoming": true,
+      "uniqueStaged": false,
+      "finalWorking": "3063a93bf56e5171faf5e5204f0abea46b2ef6c6"
+    },
+    {
+      "path": "data/records/procurement-records/2026-10-24-procurement-sources.json",
+      "head": "1e1f00ed5fc6999da587ce998614d0946584e264",
+      "target": "65eb00f948c037876a1ebf1d3cca713270a3682d",
+      "working": "65eb00f948c037876a1ebf1d3cca713270a3682d",
+      "index": "1e1f00ed5fc6999da587ce998614d0946584e264",
+      "workingMatchesIncoming": true,
+      "uniqueStaged": false,
+      "finalWorking": "65eb00f948c037876a1ebf1d3cca713270a3682d"
+    }
+  ],
+  "unreceived": [
+    {
+      "path": "content/text/documents/articles/specifications/2026-10-24-earning-portfolio.md",
+      "head": "a7b94c3c4934b84b6f3de96712e5c56646abcb00",
+      "target": "41a76256c95982a00fcf4714e1172f4ba743feeb",
+      "working": "886ddc74cea259aefb978e9828527fc512d11e33",
+      "index": "a7b94c3c4934b84b6f3de96712e5c56646abcb00",
+      "workingMatchesIncoming": false,
+      "uniqueStaged": false
+    },
+    {
+      "path": "data/logs/earning-attempt-logs/2026-10-24-earning-attempts.jsonl",
+      "head": "ff4f01353a7ab5b25b60d5502ef532c46abfe9ad",
+      "target": "14fc6c7e52afbb36d12b3118e08acfb69fa260be",
+      "working": "3996222d7d93d03ab47c36fbc1b38cbfa96bd372",
+      "index": "ff4f01353a7ab5b25b60d5502ef532c46abfe9ad",
+      "workingMatchesIncoming": false,
+      "uniqueStaged": false
+    }
+  ],
+  "completedAt": "2026-10-25T00:33:23.327542+00:00",
+  "currentHead": "964663a7e337c9d530f4eed97f381b9c3b9426e5",
+  "currentOriginMain": "f6c10176e653821b320c9c12e29eb94503d910d7",
+  "nativeFetchExit": 75,
+  "nativeFetchRan": false,
+  "verdict": "Not fast-forwarded: two overlapping working files retained untouched. Canonical operation already matches accepted source.",
+  "workingFilesUnchangedDuringReceiving": true
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-25T00:14:11.587507+00:00",
+  "sourceMain": "0c741bcc8d1c4a91740e65bb6d4a2f4987b283ef",
+  "canonicalPath": "/home/emsenn/info/lib/emsenn/services/561-group/services/561-group-services-section/services/561-group-economic-services-section/data/records/earning-operation-records/earning-loops.json",
+  "acceptedGitBlob": "3063a93bf56e5171faf5e5204f0abea46b2ef6c6",
+  "exactMergedBytes": true,
+  "preservedPrevious": "previous-canonical-instance.json",
+  "uniqueLocalFieldsJudgment": "Only root-owned earlier disabled/pending issuerSettlements and prospective pendingChange fields differed from remote base; superseded by independently accepted merged activation. No foreign unique field required merging.",
+  "foreignFieldsPreserved": true
+}

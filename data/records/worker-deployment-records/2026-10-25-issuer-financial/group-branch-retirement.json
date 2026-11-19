@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-25T00:32:26.949179+00:00",
+  "pullRequest": 11,
+  "pullRequestState": "closed",
+  "merged": true,
+  "head": "c0903215147c31813bc556eab1a5debeb0710380",
+  "mergeCommit": "0c741bcc8d1c4a91740e65bb6d4a2f4987b283ef",
+  "branch": "receive/issuer-financial-activation-20261025",
+  "observedRemoteBranchHead": "c0903215147c31813bc556eab1a5debeb0710380",
+  "openPullRequestsReusingBranch": 0,
+  "nativeDeletionLease": "refs/heads/receive/issuer-financial-activation-20261025:c0903215147c31813bc556eab1a5debeb0710380",
+  "state": "not-run-host-serialization-unavailable",
+  "gate": "group-branch-retirement.gate.json",
+  "sourceIndexRetirement": "group-source-index-retirement.json",
+  "nativeExit": 75,
+  "waitSeconds": 110,
+  "remoteBranchDeleted": false,
+  "reason": "Native guard waited110s for the heavy-command slot held by another job; deletion command did not run. No lock override or unleased fallback used."
+}

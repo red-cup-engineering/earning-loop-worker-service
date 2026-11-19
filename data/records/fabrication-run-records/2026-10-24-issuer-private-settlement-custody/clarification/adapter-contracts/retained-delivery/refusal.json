@@ -1,0 +1,53 @@
+{
+  "type": "JsnodeModuleDerivationRefusal",
+  "code": "DERIVATION_UNDELIVERED",
+  "message": "[object Object]",
+  "cause": {
+    "outcome": "market-residue",
+    "workLot": "urn:work-lot:inference:staLsZrSiMhqu5tFJ-xES1Gh85xNYd6UHaPKA-Bhmjo",
+    "taskClass": "code-fabrication",
+    "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+    "provider": null,
+    "selectedOffer": null,
+    "receipt": null,
+    "disposition": "no-admissible-provider-offer",
+    "selectionRule": null,
+    "expectedResolutionPrice": null,
+    "rankedFeasibleOffers": [],
+    "refusedOffers": [],
+    "admittedOffers": [],
+    "settlementResidues": [],
+    "marketRound": null,
+    "marketWitnesses": [],
+    "providerSettlementAttempts": 0,
+    "frontierInferenceCalls": 0,
+    "integrationAccepted": false,
+    "contextOptimization": {
+      "mode": "automatic",
+      "estimated": true,
+      "budget": null,
+      "beforeBytes": 37225,
+      "afterBytes": 37225,
+      "retained": [
+        "objective",
+        "chat-completion"
+      ],
+      "dropped": [],
+      "rawRecall": []
+    },
+    "timing": {
+      "solicitation": 0,
+      "routeDecision": 18,
+      "execution": 0,
+      "assay": 0,
+      "receipt": 0,
+      "total": 39736
+    },
+    "directLaneRefusals": [
+      {
+        "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+        "reason": "included-subscription-not-admitted:observer-unreaped"
+      }
+    ]
+  }
+}

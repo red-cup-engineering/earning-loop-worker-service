@@ -1,0 +1,66 @@
+{
+  "type": "OrdinaryIssuerCacheConsumerSuiteReceiving",
+  "version": 1,
+  "status": "passed",
+  "observedCommand": "/usr/bin/time -f 'rssKiB=%M elapsedSeconds=%e' timeout --kill-after=10s 70s /gnu/store/kba00zrnc1d1cg9bkx0krpvc2sp7wzrh-node-24.18.0/bin/node --max-old-space-size=128 --test-concurrency=1 --test 'test/issuer-sqlite-storage-plan-examples.test.mjs' 'test/issuer-sqlite-cache.test.mjs' 'test/issuer-research.test.mjs' 'test/workerd-issuer.test.mjs' 'test/commercial-clock.test.mjs' 'test/earning-loops.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-store.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-read-plan-examples.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/runtime-catalog-selection.test.mjs'",
+  "hostGate": {
+    "classification": {
+      "action": "serialize",
+      "heavy": [
+        "node tests"
+      ],
+      "locked": false
+    },
+    "decision": {
+      "hookEventName": "PreToolUse",
+      "updatedInput": {
+        "command": "_ah_c='echo >\"$_AH_RAN\"; if ! declare -F timeout >/dev/null; then timeout() { command timeout --kill-after=10s \"$@\"; }; export -f timeout; fi; /usr/bin/time -f '\\''rssKiB=%M elapsedSeconds=%e'\\'' timeout --kill-after=10s 70s /gnu/store/kba00zrnc1d1cg9bkx0krpvc2sp7wzrh-node-24.18.0/bin/node --max-old-space-size=128 --test-concurrency=1 --test '\\''test/issuer-sqlite-storage-plan-examples.test.mjs'\\'' '\\''test/issuer-sqlite-cache.test.mjs'\\'' '\\''test/issuer-research.test.mjs'\\'' '\\''test/workerd-issuer.test.mjs'\\'' '\\''test/commercial-clock.test.mjs'\\'' '\\''test/earning-loops.test.mjs'\\'' '\\''/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-store.test.mjs'\\'' '\\''/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-read-plan-examples.test.mjs'\\'' '\\''/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/runtime-catalog-selection.test.mjs'\\'''; _ah_io=; ionice -c3 true 2>/dev/null && _ah_io='ionice -c3'; _ah_readable=; for _ah_l in '/run/user/1000/agent-heavy.lock'; do [ ! -r \"$_ah_l\" ] || _ah_readable=1; done; if [ -z \"$_ah_readable\" ]; then printf '%s\\n' 'agent-heavy: no readable admission lock; this command did not run' >&2; (exit 75); else _AH_RAN=$(mktemp '/run/user/1000'/agent-ran.XXXXXX) && { export _AH_RAN; _ah_rc=75; for _ah_l in '/run/user/1000/agent-heavy.lock'; do [ -r \"$_ah_l\" ] || continue; AGENT_HEAVY_LOCK_HELD=1 nice -n 10 $_ah_io flock -n -E 75 \"$_ah_l\" bash -c \"$_ah_c\"; _ah_rc=$?; { [ \"$_ah_rc\" -eq 75 ] && ! [ -s \"$_AH_RAN\" ]; } || break; done; if [ \"$_ah_rc\" -eq 75 ] && ! [ -s \"$_AH_RAN\" ]; then if [ -r '/run/user/1000/agent-heavy.lock' ]; then AGENT_HEAVY_LOCK_HELD=1 nice -n 10 $_ah_io flock -w 110 -E 75 '/run/user/1000/agent-heavy.lock' bash -c \"$_ah_c\"; _ah_rc=$?; fi; fi; [ \"$_ah_rc\" -ne 75 ] || [ -s \"$_AH_RAN\" ] || printf '%s\\n' 'agent-heavy: waited 110s for one of the host'\\''s 1 heavy-command slot (/run/user/1000/agent-heavy.lock); other agents'\\'' clones, fetches, builds or tree scans hold it, so this command did not run. Retry shortly, or narrow it.' >&2; unlink -- \"$_AH_RAN\"; (exit \"$_ah_rc\"); }; fi"
+      },
+      "permissionDecision": "allow",
+      "permissionDecisionReason": "host-resource guard: node tests runs in one of the host's heavy-command slots"
+    },
+    "command": "/usr/bin/time -f 'rssKiB=%M elapsedSeconds=%e' timeout --kill-after=10s 70s /gnu/store/kba00zrnc1d1cg9bkx0krpvc2sp7wzrh-node-24.18.0/bin/node --max-old-space-size=128 --test-concurrency=1 --test 'test/issuer-sqlite-storage-plan-examples.test.mjs' 'test/issuer-sqlite-cache.test.mjs' 'test/issuer-research.test.mjs' 'test/workerd-issuer.test.mjs' 'test/commercial-clock.test.mjs' 'test/earning-loops.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-store.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/issuer-evidence-read-plan-examples.test.mjs' '/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/apps/market.561.group/test/runtime-catalog-selection.test.mjs'"
+  },
+  "execution": {
+    "gatewaySession": 36654,
+    "gatewayCompletionChunk": "3f1a50",
+    "exitCode": 0,
+    "tests": 71,
+    "pass": 71,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "reportedDurationMs": 15711.409457,
+    "elapsedSeconds": 14.33,
+    "maximumRssKiB": 127608,
+    "rawStdoutComplete": false,
+    "scope": "Gateway-observed completion/counters. Full Node reporter output remains in the gateway transcript; not presented as a complete raw stdout capture."
+  },
+  "coverage": [
+    "Original issuer caller and long RetryAfter",
+    "Native two-key SQLite cohort/status adapter",
+    "Actual private cross-script SQLite workerd fixture",
+    "Compiled source-identity selector and market cache adapter",
+    "Original commercial/research clock and earning loops"
+  ],
+  "productionModuleSha256": {
+    "server": "127f7a13f996f128b49473686790798c9edd2e4ca9ef055c718a1adfee7fb787",
+    "client": "7e43e37b1a927b15704f22904207581d735b1098f98321f995d9a0ee03e24630"
+  },
+  "actualMeasuredExternalCalls": {
+    "ordinary": 38,
+    "coincidentWeeklyWithClock": 45,
+    "coincidentDailyWithClock": 44
+  },
+  "independentReviews": [
+    "/root full corrected native source and wiring received",
+    "/root/issuer_operation_engineering full corrected native source and wiring received"
+  ],
+  "notClaimed": [
+    "Full paid producer and merchant composition",
+    "Deployment/live writes",
+    "Cash receipt/customer acceptance",
+    "Zero incremental operating-cost admission"
+  ]
+}

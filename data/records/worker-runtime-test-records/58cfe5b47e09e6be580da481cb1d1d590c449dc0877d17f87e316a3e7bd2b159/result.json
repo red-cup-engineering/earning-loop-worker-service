@@ -1,0 +1,5 @@
+{
+  "status": 1,
+  "stdout": "",
+  "stderr": "service main: The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.\nworkerd/server/server/run.rs:481: debug: [ TEST ] main:testNativeAuthentication\nworkerd/io/worker.c++:2823: info: uncaught exception; source = Uncaught (in promise); stack = Error: proof-generation-failed\n    at wire (worker:253:15)\n    at async Object.request (worker:403:16)\n    at async Object.test (worker:452:22)\nworkerd/io/io-context.c++:611: info: uncaught exception; exception = workerd/jsg/value.h:1511: failed: jsg.Error: proof-generation-failed\nworkerd/server/server/run.rs:488: debug: [ FAIL ] main:testNativeAuthentication (8.296148ms)\nTests failed!\n"
+}
