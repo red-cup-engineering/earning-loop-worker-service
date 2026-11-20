@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /**
  * issuer-private-sqlite-cache — selected module src/issuer-sqlite-cache.mjs.
  * Source: earning-loop-worker-service/specifications/issuer-private-sqlite-cache.work-order.md
@@ -67,7 +68,7 @@ const STATUS_LIMIT = 524288;
 const TRANSACTION_LIMIT = 1900000;
 const bytes = text => encoder.encode(text).byteLength;
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
-const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+
 
 /**
  * Admit host configuration and return the exact bounded SQLite coordinates.
@@ -105,7 +106,7 @@ function instant(value) {
 }
 
 function validateStatus(value, cacheKey) {
-  if (!object(value) || value.cacheKey !== cacheKey)
+  if (!isRecord(value) || value.cacheKey !== cacheKey)
     throw new TypeError('Invalid issuer status');
   const expected = sentinel(cacheKey);
   const keys = Object.keys(expected);
@@ -135,7 +136,7 @@ function recordSize(key, record) {
 
 function readRecord(record, key, plan) {
   if (record === undefined || record === null) return null;
-  if (!object(record) || Object.keys(record).length !== 2 ||
+  if (!isRecord(record) || Object.keys(record).length !== 2 ||
       !own(record, 'cacheKey') || !own(record, 'body') ||
       typeof record.cacheKey !== 'string' || typeof record.body !== 'string')
     throw new TypeError('Invalid issuer physical record');

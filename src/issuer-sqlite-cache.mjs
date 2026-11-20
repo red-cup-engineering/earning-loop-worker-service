@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /*
  * issuer-private-sqlite-cache / src/issuer-sqlite-cache.mjs
  * ArtifactFabricationSpecification v2; projection jsnode-modules.
@@ -26,7 +27,7 @@ const TRANSACTION_LIMIT = 1900000;
 const encoder = new TextEncoder();
 const bytes = value => encoder.encode(value).byteLength;
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
-const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+
 function invalid() { return new TypeError('Invalid issuer cache record'); }
 
 /**
@@ -49,7 +50,7 @@ function sentinel(cacheKey) {
   return { status: 'unavailable', cacheKey, retryBlocked: true, reason: 'status-overflow', nextAttemptAt: null };
 }
 function validateStatus(value, cacheKey) {
-  if (!object(value) || value.cacheKey !== cacheKey) throw invalid();
+  if (!isRecord(value) || value.cacheKey !== cacheKey) throw invalid();
   const special = sentinel(cacheKey);
   if (Object.keys(value).length === Object.keys(special).length && Object.keys(special).every(key => own(value, key) && value[key] === special[key])) return;
   if (!instant(value.at)) throw invalid();
@@ -64,7 +65,7 @@ function validateStatus(value, cacheKey) {
 function physicalSize(key, record) { return bytes(key) + bytes(JSON.stringify(record)); }
 function readRecord(record, key, plan) {
   if (record === undefined) return null;
-  if (!object(record) || Object.keys(record).length !== 2 || !own(record, 'cacheKey') || !own(record, 'body') || typeof record.cacheKey !== 'string' || typeof record.body !== 'string') throw invalid();
+  if (!isRecord(record) || Object.keys(record).length !== 2 || !own(record, 'cacheKey') || !own(record, 'body') || typeof record.cacheKey !== 'string' || typeof record.body !== 'string') throw invalid();
   const limit = key === COHORT ? plan.maximumCohortBytes : STATUS_LIMIT;
   if (bytes(record.body) > limit || physicalSize(key, record) > TRANSACTION_LIMIT) throw invalid();
   const parsed = JSON.parse(record.body);

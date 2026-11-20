@@ -1,3 +1,4 @@
+import { isRecord } from "@red-cup-engineering/signcell/values";
 /* issuer-private-settlement-custody; specification ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE.
  * Source: earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md, lines 1–42, sha256:87851b65650e3326e34ce6fd7acb5ea27055f4467d282f0e03dbf913e5ae90d8.
  * Receiving obligations remain external: pure-receiving qualifies only admission and plan metadata; io-receiving requires independent native I/O, SQLite workerd, composed-pulse, original-owner integration, resource and customer/payment receiving before promotion.
@@ -20,9 +21,9 @@ const PATH = '/issuer-settlement-witness';
 const FIELDS = ['network','asset','payTo','operation','method','route','amount','sku','gateway','ledgerAccount'];
 const PROVIDERS = ['https://base-rpc.publicnode.com','https://base.drpc.org','https://base-mainnet.public.blastapi.io','https://mainnet.base.org'];
 const bytes = s => E.encode(s).byteLength;
-const object = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+
 const fail = () => { throw new Error('issuer-settlement-unavailable'); };
-const exactKeys = (v, keys) => object(v) && Object.keys(v).length === keys.length && keys.every(k => Object.hasOwn(v,k));
+const exactKeys = (v, keys) => isRecord(v) && Object.keys(v).length === keys.length && keys.every(k => Object.hasOwn(v,k));
 const charge = (k,v) => bytes(k) + bytes(JSON.stringify(v));
 const identity = p => Object.fromEntries(FIELDS.map(k => [k,p[k]]));
 const same = (a,b) => exactKeys(a,FIELDS) && FIELDS.every(k => a[k] === b[k]);
@@ -47,7 +48,7 @@ function parseKey(key) {
 function witness(text,tx,p) {
  if (typeof text !== 'string' || bytes(text) > 32768) fail();
  const w = JSON.parse(text);
- if (!object(w) || w.transaction !== tx || w.network !== p.network || typeof w.payer !== 'string' || !ADDRESS.test(w.payer)) fail();
+ if (!isRecord(w) || w.transaction !== tx || w.network !== p.network || typeof w.payer !== 'string' || !ADDRESS.test(w.payer)) fail();
  for (const k of FIELDS) {
   if (k === 'asset' || k === 'payTo') { if (typeof w[k] !== 'string' || w[k].toLowerCase() !== p[k]) fail(); }
   else if (w[k] !== p[k]) fail();
@@ -70,7 +71,7 @@ async function metadata(s,p) {
 }
 function pending(v,tx) { if (!exactKeys(v,['transaction']) || v.transaction !== tx) fail(); }
 function boundedRecord(v) {
- if (!object(v)) fail();
+ if (!isRecord(v)) fail();
  const text = JSON.stringify(v);
  if (typeof text !== 'string' || bytes(text) > 65536) fail();
  const parsed = JSON.parse(text);
@@ -137,7 +138,7 @@ export async function issuerSettlementResponse(request,storage,configuration) {
  } catch { return response(503); }
 }
 function adaptersFor(a) {
- if (!object(a) || !['witnessProblem','corroborate','usdc'].every(k=>typeof a[k]==='function') || !Array.isArray(a.BASE_PROVIDERS) || a.BASE_PROVIDERS.length!==4 || !PROVIDERS.every((v,i)=>a.BASE_PROVIDERS[i]===v) || !(a.groupPayers instanceof Set)) throw new TypeError('Invalid issuer settlement adapters');
+ if (!isRecord(a) || !['witnessProblem','corroborate','usdc'].every(k=>typeof a[k]==='function') || !Array.isArray(a.BASE_PROVIDERS) || a.BASE_PROVIDERS.length!==4 || !PROVIDERS.every((v,i)=>a.BASE_PROVIDERS[i]===v) || !(a.groupPayers instanceof Set)) throw new TypeError('Invalid issuer settlement adapters');
  for(const payer of a.groupPayers) if(typeof payer!=='string' || !/^0x[0-9a-f]{40}$/.test(payer)) throw new TypeError('Invalid issuer settlement adapters');
  const fetch=a.fetch===undefined?globalThis.fetch:a.fetch;
  const now=a.now===undefined?Date.now:a.now;
@@ -154,7 +155,7 @@ async function rpc(a,url,tx) {
    res=await a.fetch(url,{method:'POST',redirect:'manual',signal:controller.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getTransactionReceipt',params:[tx]})});
    if(res.status!==200) { try {await res.body?.cancel();} catch {} return null; }
    const parsed=JSON.parse(await readText(res.body,262144));
-   return object(parsed) && !parsed.error && object(parsed.result) ? parsed.result : null;
+   return isRecord(parsed) && !parsed.error && isRecord(parsed.result) ? parsed.result : null;
   } catch { return null; }
  })();
  try {return await Promise.race([task,timeout]);} catch { controller.abort(); try {const cancellation=res?.body?.cancel(); cancellation?.catch(()=>{});} catch {} return null;} finally {clearTimeout(timer);}
@@ -234,7 +235,7 @@ export async function receiveIssuerSettlements(storage,configuration,adapters) {
    }
    checked=a.corroborate(w,receipts);
   }
-  if(!object(checked) || (checked.ok!==true && checked.ok!==false)) fail();
+  if(!isRecord(checked) || (checked.ok!==true && checked.ok!==false)) fail();
   const at=instant(a);
   if(checked.ok===false && checked.retry===true) {
    result.retryPending++; await advance(storage,p,key); continue;
