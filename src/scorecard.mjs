@@ -7,8 +7,8 @@ import { onchainPublicReading } from './onchain-hook.mjs';
 export const BURN_USD_PER_MONTH = 600, FLOOR_USD_PER_DAY = 20, GOAL_USD_PER_DAY = 200;
 const DAY = 86_400_000;
 
-export function mode(ratio, keptSurplus = 0) {
-  if (ratio >= 1) return keptSurplus > 0 ? "building-runway" : "self-funding";
+export function mode(ratio, retainedSurplus = 0) {
+  if (ratio >= 1) return retainedSurplus > 0 ? "building-runway" : "self-funding";
   return ratio >= 0.1 ? "climbing" : "starving";
 }
 

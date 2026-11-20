@@ -31,13 +31,13 @@ export async function refreshIssuerResearch(store, configuration, { now = new Da
   } catch (error) {
     // Delta-seconds starts when the refusal was observed, after acquisition,
     // rather than at the beginning of this possibly slow pass.
-    const rejectedAt = new Date(Math.max(now.getTime(), clock().getTime()));
-    const delay = Math.max(900_000, retryDelayMs(error.retryAfter, rejectedAt));
-    reading = { status: 'unavailable', at: rejectedAt.toISOString(), cacheKey: configuration.cacheKey,
+    const refusedAt = new Date(Math.max(now.getTime(), clock().getTime()));
+    const delay = Math.max(900_000, retryDelayMs(error.retryAfter, refusedAt));
+    reading = { status: 'unavailable', at: refusedAt.toISOString(), cacheKey: configuration.cacheKey,
       error: error.message, code: error.code ?? null, reason: error.reason ?? null,
       retryable: error.retryable ?? true, retryAfter: typeof error.retryAfter === 'string' ? error.retryAfter : null,
       retryBlocked: !Number.isFinite(delay),
-      nextAttemptAt: Number.isFinite(delay) ? new Date(rejectedAt.getTime() + delay).toISOString() : null };
+      nextAttemptAt: Number.isFinite(delay) ? new Date(refusedAt.getTime() + delay).toISOString() : null };
   }
   await put(store, key, reading);
   return reading;

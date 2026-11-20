@@ -44,8 +44,8 @@ async function matchesTerms(value, product) {
 
 export async function runResearchPass({ storage, instance, products, merchant, groupPayers = new Set(), fetchImpl = fetch, now = () => Date.now() } = {}) {
   const product = products?.[instance?.productId];
-  const rejection = researchProductProblem(instance, product, merchant);
-  if (rejection) return { stage: rejection, requests: 0, newCashExpenseUsd: 0 };
+  const refusal = researchProductProblem(instance, product, merchant);
+  if (refusal) return { stage: refusal, requests: 0, newCashExpenseUsd: 0 };
   let state = await storage.get(RESEARCH_STATE) ?? { stage: 'unclaimed', completionPosts: 0 };
   let calls = 0;
   const base = `/api/agent/tasks/${instance.taskId}`;

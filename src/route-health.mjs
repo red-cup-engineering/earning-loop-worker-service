@@ -49,16 +49,16 @@ export async function checkRoutes(env, { now = new Date(), limit = 15, catalogUr
     || (state.routes[id(a)].observedAt ?? "").localeCompare(state.routes[id(b)].observedAt ?? "")).slice(0, limit);
   for (const offer of due) {
     const [url, init] = probeRequest(offer);
-    let result;
+    let verdict;
     try {
       const response = await fetchImpl(url, { ...init, redirect: "manual", signal: AbortSignal.timeout(15000) });
-      result = judge(offer, response.status, response.headers.get("payment-required"), { payTo, resourceUrl: url });
+      verdict = judge(offer, response.status, response.headers.get("payment-required"), { payTo, resourceUrl: url });
       await response.body?.cancel();
-    } catch (error) { result = { held: false, finding: `request failed: ${error.message}` }; }
+    } catch (error) { verdict = { held: false, finding: `request failed: ${error.message}` }; }
     const entry = state.routes[id(offer)];
-    Object.assign(entry, result, { observedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, delistedAt: undefined });
-    entry.heldSince = result.held ? entry.heldSince ?? at : null;
-    entry.brokenStreak = result.held ? 0 : entry.brokenStreak + 1;
+    Object.assign(entry, verdict, { observedAt: at, price: offer.price, amountAtomic: offer.amountAtomic ?? null, delistedAt: undefined });
+    entry.heldSince = verdict.held ? entry.heldSince ?? at : null;
+    entry.brokenStreak = verdict.held ? 0 : entry.brokenStreak + 1;
   }
   const routes = Object.entries(state.routes).filter(([, r]) => !r.delistedAt);
   state.at = at;

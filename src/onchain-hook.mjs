@@ -70,8 +70,8 @@ export async function runOnchainHook(env, { now = new Date(), cron = null, oncha
     const bytes = new TextEncoder().encode(JSON.stringify(reading));
     const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte => byte.toString(16).padStart(2, '0')).join('');
     const reference = record('onchain', `${encodeURIComponent(reading.at ?? 'undated')}-${digest}`);
-    const kept = await read(env.STATE, reference); await checkpoint();
-    if (kept === null) { await put(env.STATE, reference, reading); await checkpoint(); }
+    const retained = await read(env.STATE, reference); await checkpoint();
+    if (retained === null) { await put(env.STATE, reference, reading); await checkpoint(); }
     if (JSON.stringify(await read(env.STATE, reference)) !== JSON.stringify(reading)) throw new TypeError('Original dated onchain reading was not received');
     await checkpoint(); return reference;
   };

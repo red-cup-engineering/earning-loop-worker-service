@@ -106,8 +106,8 @@ async function runPreparedCommercialPass({ storage, initialCredential, instance,
   now = new Date(), clientFactory = createOpenTaskClient, fetchImpl = fetch, clock = () => Date.now() } = {}) {
   const STATE = stateKey;
   const product = products?.[instance?.productId];
-  const rejection = qualifiedInstance({ ...instance, bidId: instance?.bidId ?? '_pending' }, product, merchant);
-  if (rejection) return publicResult(rejection);
+  const refusal = qualifiedInstance({ ...instance, bidId: instance?.bidId ?? '_pending' }, product, merchant);
+  if (refusal) return publicResult(refusal);
   const client = clientFactory({ storage, initialCredential, fetchImpl, budget: 12, now: clock });
   let state = await storage.get(STATE) ?? { stage: "discover", revisions: 0, observations: {} };
   const finish = async (stage) => {
