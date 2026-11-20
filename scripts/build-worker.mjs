@@ -1,3 +1,4 @@
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { readFileSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -5,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { appendServiceLog } from '@red-cup-engineering/computer-systems-logging-engine/append-service-log';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const digest = bytes => createHash('sha256').update(bytes).digest('hex');
+
 
 // The caller selects the existing native build provider explicitly. No install,
 // implicit download, private source copy or post-build bundle replacement occurs.
@@ -19,14 +20,14 @@ export async function buildWorker({ esbuildRoot, sourceRoot = root, at = new Dat
     target: 'es2022', external: ['node:*'], alias: { url: 'node:url' }, metafile: true, write: false });
   const inputs = Object.keys(result.metafile.inputs).sort().map(path => {
     const bytes = readFileSync(resolve(sourceRoot, path));
-    return { path, bytes: bytes.length, sha256: digest(bytes) };
+    return { path, bytes: bytes.length, sha256: sha256Hex(bytes) };
   });
   const bytes = result.outputFiles.find(file => file.path.endsWith('/worker.mjs')).contents;
-  const identity = digest(JSON.stringify({ provider: { name: provider.name, version: provider.version },
+  const identity = sha256Hex(JSON.stringify({ provider: { name: provider.name, version: provider.version },
     options: { target: 'es2022', platform: 'browser', format: 'esm', conditions: ['workerd', 'worker'], external: ['node:*'], alias: { url: 'node:url' } }, inputs }));
   const record = { kind: 'WorkerBuildRecord', version: 1, compositionSha256: identity,
     provider: { name: provider.name, version: provider.version }, sourceInputs: inputs,
-    artifact: { path: 'worker.mjs', bytes: bytes.length, sha256: digest(bytes) },
+    artifact: { path: 'worker.mjs', bytes: bytes.length, sha256: sha256Hex(bytes) },
     externalModules: [...new Set(result.metafile.outputs['worker.mjs'].imports.filter(value => value.external).map(value => value.path))].sort() };
   appendServiceLog({ root: sourceRoot, hirer: 'earning-loop-worker', service: 'worker-build', at,
     entry: { subject: 'earning-loop-worker', entity: identity, attribute: 'worker-built', value: record, time: at } });
