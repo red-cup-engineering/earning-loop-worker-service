@@ -1,6 +1,6 @@
 // Earning loops as one Cloudflare Worker: crons no house machine has to keep alive. The operating parameters
 // (crons, limits, catalog, economics, repair target) come from the Operations record the deploy compiles into
-// data/operation.mjs; the committed default mirrors Coesite's earning-loops operation.
+// data/state/build-state/parameters/operation.mjs; the committed data/operation.mjs mirrors Coesite's earning-loops operation.
 //   pass        receive and corroborate seller settlements, check that listed offers are buyable, and run the
 //               on-chain engine's scan hook;
 //   directives  propose price directives from what buyers revealed (the self-adjusting loop);
