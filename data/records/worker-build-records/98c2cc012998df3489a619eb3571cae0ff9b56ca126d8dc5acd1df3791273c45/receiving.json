@@ -1,0 +1,20 @@
+{
+  "kind": "WorkerBuildReceivingRecord",
+  "version": 1,
+  "buildRecord": "build.json",
+  "sourceInputReceiving": {
+    "count": 74,
+    "bytes": 614672,
+    "allCurrentHashesMatch": true,
+    "temporaryInputs": [],
+    "changedFromProducer": [
+      "data/operation.mjs"
+    ]
+  },
+  "artifact": {
+    "path": "worker.mjs",
+    "bytes": 357289,
+    "sha256": "06553abd54d1ff56cc4394f7cb7a73ed4789ff3785243c17f59a8af3ae8e2843"
+  },
+  "deploymentReceivingRecord": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/worker-deployment-records/2026-10-25-issuer-financial/receiving.json"
+}

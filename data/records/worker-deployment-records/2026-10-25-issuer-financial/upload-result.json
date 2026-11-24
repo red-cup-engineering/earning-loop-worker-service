@@ -1,0 +1,59 @@
+{
+  "result": {
+    "created_on": "2026-10-24T06:22:33.798547Z",
+    "modified_on": "2026-10-25T00:15:51.312815Z",
+    "id": "earning-loops-561-group",
+    "tag": "d16369a01d374a8e899b2567b9517d64",
+    "entry_point": "worker.mjs",
+    "tags": null,
+    "deployment_id": "465eda3aa2f34072a2b2130c7f781e17",
+    "tail_consumers": null,
+    "logpush": false,
+    "has_assets": false,
+    "has_modules": true,
+    "etag": "b810b2c065fbe25b9dd56f9b1cb5353b9bcf062797e4ad0e678ab9822612dea7",
+    "handlers": [
+      "scheduled",
+      "fetch"
+    ],
+    "named_handlers": [
+      {
+        "name": "CRONS",
+        "handlers": [
+          "pass",
+          "directives",
+          "scorecard"
+        ]
+      },
+      {
+        "name": "EarningClock",
+        "handlers": [
+          "class"
+        ]
+      },
+      {
+        "name": "run",
+        "handlers": [
+          "class"
+        ]
+      },
+      {
+        "name": "tick",
+        "handlers": [
+          "class"
+        ]
+      }
+    ],
+    "last_deployed_from": "api",
+    "migration_tag": "v1",
+    "compatibility_date": "2026-09-01",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "usage_model": "standard",
+    "startup_time_ms": 6
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

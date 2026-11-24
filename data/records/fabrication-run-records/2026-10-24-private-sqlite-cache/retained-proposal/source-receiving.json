@@ -1,0 +1,28 @@
+{
+  "nativeOutcome": "JsnodeModuleDerivationRefusal",
+  "nativeCode": "DERIVATION_REJECTED",
+  "sources": [
+    {
+      "module": "src/issuer-sqlite-cache.mjs",
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/issuer-sqlite-cache.mjs",
+      "bytes": 14078,
+      "sha256": "3595c86154cebe6be39b25fc199f4f0d00f2b711a3147eeae9db0cd52339d9eb",
+      "workLot": "urn:work-lot:inference:nr9r9zlquzlQg6Q-0312-aCPO6fsM3rHDYe6y7irILo",
+      "outcome": "composition-refused",
+      "nativeCompositionEvidence": "isolated host did not provide a complete bounded execution outcome",
+      "question": null
+    },
+    {
+      "module": "src/issuer-evidence-store.mjs",
+      "path": "/home/emsenn/info/lib/emsenn/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-systems-engineering-services-section/services/computer-economic-systems-engineering-services-section/services/computer-business-systems-engineering-services-section/services/earning-loop-worker-service/data/records/fabrication-run-records/2026-10-24-private-sqlite-cache/retained-proposal/issuer-evidence-store.mjs",
+      "bytes": 7768,
+      "sha256": "9b55411f0609b49e814fd10aaced32462ab9848fbe34df39543d82d32ef73e39",
+      "workLot": "urn:work-lot:inference:JDJ3PmU8Cccr95uP03l-3fLwej2pmpbWwY25f1kWew4",
+      "outcome": "composition-refused",
+      "nativeCompositionEvidence": "isolated host did not provide a complete bounded execution outcome",
+      "question": null
+    }
+  ],
+  "activeSourceProjected": false,
+  "independentBehavioralReceiving": "pending"
+}

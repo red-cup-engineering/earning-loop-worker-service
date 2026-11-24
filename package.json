@@ -1,0 +1,36 @@
+{
+  "name": "@red-cup-engineering/earning-loop-worker-service",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Operations-configured Cloudflare earning loops with corroborated settlements, buyability, earning scorecards and complete-cohort issuer research preparation.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/earning-loop-worker-service.git"
+  },
+  "type": "module",
+  "scripts": {
+    "check": "node --check worker/earning-loops.mjs && node --check scripts/deploy.mjs && node --check scripts/apply-price-directives.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "apply:price-directives": "node scripts/apply-price-directives.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@red-cup-engineering/computer-systems-logging-engine": "^0.2.2",
+    "@red-cup-engineering/eavt-engineering-services-section": "^0.15.1",
+    "@red-cup-engineering/http-engineering-services-section": "^0.6.6",
+    "@red-cup-engineering/issuer-research-media-service": "^0.2.0",
+    "@red-cup-engineering/json-engine": "^0.5.0",
+    "@red-cup-engineering/oauth-engineering-services-section": "^0.2.6",
+    "@red-cup-engineering/x402-engineering-services-section": "^0.14.1",
+    "@red-cup-engineering/signcell": "^0.18.0 || 0.18.1-dev.0",
+    "@red-cup-engineering/semiotic-content-address-system": "^0.1.7 || 0.1.8-dev.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1",
+    "workerd": "1.20261024.1"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

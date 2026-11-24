@@ -1,0 +1,388 @@
+{
+  "cases": [
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "admitted-fixed-storage-coordinates",
+      "clauses": [
+        "admission",
+        "coordinates",
+        "no-authority-expansion"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "issuer-research/current.json",
+        "maximumCohortBytes": 524288
+      },
+      "output": {
+        "cohortKey": "issuer-evidence/cohort",
+        "statusKey": "issuer-evidence/status",
+        "logicalStatusKey": "registers/earning-loops/issuer-research.json",
+        "cacheKey": "issuer-research/current.json",
+        "maximumCohortBytes": 524288,
+        "maximumStatusBytes": 524288,
+        "maximumTransactionBytes": 1900000
+      },
+      "throws": null
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "trusted-metadata-does-not-change-singleton-or-route",
+      "clauses": [
+        "admission",
+        "coordinates",
+        "no-authority-expansion"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received",
+          "authority": "metadata"
+        },
+        "cacheKey": "cache/\u00e9.json",
+        "maximumCohortBytes": 1,
+        "objectName": "other",
+        "path": "/refresh",
+        "maximumStatusBytes": 1,
+        "maximumTransactionBytes": 1
+      },
+      "output": {
+        "objectName": "earning-loops",
+        "path": "/issuer-evidence",
+        "cacheKey": "cache/\u00e9.json",
+        "maximumCohortBytes": 1
+      },
+      "throws": null
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "absent-configuration",
+      "clauses": [
+        "admission"
+      ],
+      "input": null,
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "missing-enabled",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "resourceAdmission": {
+          "status": "received"
+        }
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "truthy-enabled-is-not-true",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": "true",
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "",
+        "maximumCohortBytes": 0
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "disabled-bypasses-invalid-cache-fields",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": false,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "",
+        "maximumCohortBytes": 0
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "missing-resource-admission",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "cacheKey": "cache",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "unreceived-bypasses-invalid-cache-fields",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "unreceived"
+        },
+        "cacheKey": "",
+        "maximumCohortBytes": 0
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "admission-status-is-exact",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "Received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": null
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "empty-cache-key",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "nonstring-cache-key",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": 17,
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "logical-status-key-cannot-be-cohort-key",
+      "clauses": [
+        "admission",
+        "no-authority-expansion"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "registers/earning-loops/issuer-research.json",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "logical-status-key-rejected-by-read-plan",
+      "clauses": [
+        "admission",
+        "no-authority-expansion"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "registers/earning-loops/issuer-research.json",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "zero-cohort-limit",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": 0
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "negative-cohort-limit",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": -1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "fractional-cohort-limit",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": 1.5
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "string-cohort-limit",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": "1"
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "cohort-limit-above-ceiling",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": 524289
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "unsafe-integer-cohort-limit",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache",
+        "maximumCohortBytes": 9007199254740992
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-sqlite-storage-plan",
+      "name": "missing-cache-key-after-admission",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "missing-cohort-limit-after-admission",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "cache"
+      },
+      "output": null,
+      "throws": "TypeError"
+    },
+    {
+      "operation": "issuer-evidence-read-plan",
+      "name": "utf8-key-exceeds-byte-limit-despite-short-character-count",
+      "clauses": [
+        "admission"
+      ],
+      "input": {
+        "enabled": true,
+        "resourceAdmission": {
+          "status": "received"
+        },
+        "cacheKey": "\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c\u754c",
+        "maximumCohortBytes": 1
+      },
+      "output": null,
+      "throws": "TypeError"
+    }
+  ],
+  "question": null
+}

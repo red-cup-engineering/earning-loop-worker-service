@@ -1,0 +1,471 @@
+{
+  "text": "{\"source\":\"/**\\n * issuer-private-settlement-custody, specification v2.\\n * Source: earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md\\n * SHA256: 87851b65650e3326e34ce6fd7acb5ea27055f4467d282f0e03dbf913e5ae90d8; lines 1–42.\\n * Specification digest: ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE.\\n * Requirements admission/plans/pulse-budget and prohibition no-expansion apply.\\n * client/witness-admission: Red Cup Engineering, unchanged native edge journal\\n * provider/original journal identity, work-order lines 16/18 and\\n * market.561.group/src/edge-settlement.mjs. This provider preserves the original\\n * journal's conditional contract, original text, and duplicate ownership.\\n * representation: IETF RFC9110, https://www.rfc-editor.org/rfc/rfc9110;\\n * explicit status/media/length and no followed redirects (line 10).\\n * operation/composition: 561 Group root received direction 2026-10-24 and\\n * Red Cup Engineering approved existing EarningClock wiring, work-order lines\\n * 12/21. Caller selects this provider only for the source-owned issuer offer,\\n * prunes the raw namespace before compute, and preserves other providers.\\n * platform: Cloudflare SQLite limits received 2026-10-24,\\n * https://developers.cloudflare.com/durable-objects/platform/limits/ (line 13).\\n * Physical quota, first writer, atomic accounting and receiving belong to the\\n * custody owner; this transport neither reserves capacity nor bypasses refusal.\\n * payment-evidence/cash-record/original-adapter-contracts: original settlements.mjs\\n * receiver and inspected interface 2026-10-24, ../src/settlements.mjs, lines 9/20/22.\\n * This client does not corroborate, settle, classify revenue or infer acceptance.\\n * physical/server/receiver: Red Cup Engineering approved private custody\\n * direction/private binding consumer/original corroboration kernel, work-order\\n * lines 15/17/19, remain server obligations, including immutable originals,\\n * capacity identity guards, pending-only receiving and atomic terminal writes.\\n * source-free: Red Cup Engineering native deriveJsnodeModules,\\n * computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs, line 14.\\n * Trace: admission -> pure-receiving; plans/no-expansion -> io-receiving;\\n * pulse-budget -> composition/operation/platform -> io-receiving. Projection:\\n * jsnode-modules. Pure examples establish admission/metadata only. Independent\\n * native I/O, SQLite workerd and composed-pulse receiving, whole source-owned\\n * build, independent review, resource admission and actual customer/payment\\n * receiving remain mandatory before promotion (lines 33–35). The 50-request\\n * ceiling is the root business allocation, not observed runtime/vendor capacity;\\n * 16 RPC plus bounded 12 commercial plus actual clock calls require separate\\n * whole-pulse receiving. No USD200/day, reserved-free-capacity or income claim.\\n * No R2, env.STATE, credentials, arbitrary keys/objects, new alarms/schedules,\\n * public routes, raw deletion, payment signing/purchase or deployment.\\n */\\n\\nconst ASSET = '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913';\\nconst ADDRESS = /^0x[0-9a-fA-F]{40}$/;\\nconst KEY = /^settlements\\\\/eip155:8453\\\\/(0x[0-9a-f]{64})\\\\.json$/;\\nconst encoder = new TextEncoder();\\nconst unavailable = () => new Error('issuer-settlement-unavailable');\\nconst isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);\\nconst byteLength = value => encoder.encode(value).byteLength;\\n\\n/**\\n * Admit trusted source-owned issuer configuration and return fixed transport\\n * coordinates and immutable ceilings. No effects or runtime budget are granted.\\n * @param {*} configuration Original trusted configuration, unchanged in shape.\\n * @returns {object|null} Normalized plan, or null before admission.\\n */\\nexport function issuerSettlementStorePlan(configuration) {\\n  if (!configuration || configuration.enabled !== true || configuration.resourceAdmission?.status !== 'received') return null;\\n  const c = configuration;\\n  const shortText = value => typeof value === 'string' && value.length > 0 && !/[\\\\r\\\\n]/.test(value) && byteLength(value) <= 512;\\n  if (c.network !== 'eip155:8453' || typeof c.asset !== 'string' || c.asset.toLowerCase() !== ASSET ||\\n      typeof c.payTo !== 'string' || !ADDRESS.test(c.payTo) || c.operation !== 'issuer-revenue-comparison' ||\\n      c.method !== 'POST' || c.route !== '/v1/issuer-revenue-comparison' || c.amount !== '50000' ||\\n      !shortText(c.sku) || !shortText(c.gateway) || !shortText(c.ledgerAccount)) {\\n    throw new TypeError('Invalid issuer settlement configuration');\\n  }\\n  return Object.freeze({\\n    prefix: 'issuer-settlements/', metadataKey: 'issuer-settlements/capacity',\\n    witnessPrefix: 'issuer-settlements/witness/', pendingPrefix: 'issuer-settlements/pending/',\\n    receiptPrefix: 'issuer-settlements/receipt/', objectName: 'earning-loops',\\n    path: '/issuer-settlement-witness', maximumRecords: 50000, maximumCustodyBytes: 268435456,\\n    maximumRawWitnessBytes: 32768, maximumTransactionBytes: 1900000,\\n    maximumWitnessesPerPulse: 4, maximumProviderAttemptsPerWitness: 4, maximumRpcBytes: 262144,\\n    network: c.network, asset: c.asset.toLowerCase(), payTo: c.payTo.toLowerCase(),\\n    operation: c.operation, method: c.method, route: c.route, sku: c.sku, gateway: c.gateway,\\n    ledgerAccount: c.ledgerAccount, amount: c.amount, maximumWorkerCallsPerPulse: 50\\n  });\\n}\\n\\nfunction transactionFor(key) {\\n  if (typeof key !== 'string') throw unavailable();\\n  const match = KEY.exec(key);\\n  if (!match) throw unavailable();\\n  return match[1];\\n}\\n\\nfunction witnessFrom(text, transaction, plan) {\\n  if (typeof text !== 'string' || byteLength(text) > plan.maximumRawWitnessBytes) throw unavailable();\\n  const witness = JSON.parse(text);\\n  if (!isObject(witness) || witness.network !== plan.network || witness.transaction !== transaction ||\\n      typeof witness.payer !== 'string' || !ADDRESS.test(witness.payer) ||\\n      typeof witness.payTo !== 'string' || witness.payTo.toLowerCase() !== plan.payTo ||\\n      typeof witness.asset !== 'string' || witness.asset.toLowerCase() !== plan.asset) throw unavailable();\\n  for (const field of ['operation', 'method', 'route', 'sku', 'gateway', 'ledgerAccount', 'amount']) {\\n    if (witness[field] !== plan[field]) throw unavailable();\\n  }\\n  return witness;\\n}\\n\\nfunction exactKeys(value, keys) {\\n  if (!isObject(value)) return false;\\n  const actual = Reflect.ownKeys(value);\\n  return actual.length === keys.length && keys.every(key => Object.hasOwn(value, key));\\n}\\n\\nfunction validOptions(options) {\\n  return exactKeys(options, ['onlyIf', 'httpMetadata']) &&\\n    exactKeys(options.onlyIf, ['etagDoesNotMatch']) && options.onlyIf.etagDoesNotMatch === '*' &&\\n    exactKeys(options.httpMetadata, ['contentType']) && options.httpMetadata.contentType === 'application/json';\\n}\\n\\nasync function cancelBody(response) {\\n  if (response?.body) await response.body.cancel();\\n}\\n\\nasync function readWitness(response, transaction, plan) {\\n  let reader;\\n  let finished = false;\\n  try {\\n    const lengthText = response.headers.get('Content-Length');\\n    if (typeof lengthText !== 'string' || !/^(0|[1-9][0-9]*)$/.test(lengthText)) throw unavailable();\\n    const expected = Number(lengthText);\\n    if (!Number.isSafeInteger(expected) || expected > plan.maximumRawWitnessBytes) throw unavailable();\\n    const media = response.headers.get('Content-Type');\\n    if (typeof media !== 'string' || media.split(';', 1)[0].trim().toLowerCase() !== 'application/json') throw unavailable();\\n    if (!response.body || typeof response.body.getReader !== 'function') throw unavailable();\\n    reader = response.body.getReader();\\n    const chunks = [];\\n    let total = 0;\\n    while (true) {\\n      const part = await reader.read();\\n      if (part.done) { finished = true; break; }\\n      if (!(part.value instanceof Uint8Array)) throw unavailable();\\n      total += part.value.byteLength;\\n      if (total > plan.maximumRawWitnessBytes || total > expected) throw unavailable();\\n      chunks.push(part.value.slice());\\n    }\\n    if (total !== expected) throw unavailable();\\n    const bytes = new Uint8Array(total);\\n    let offset = 0;\\n    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }\\n    // Preserve a BOM as text rather than silently stripping witness bytes.\\n    const text = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);\\n    return witnessFrom(text, transaction, plan);\\n  } finally {\\n    if (reader) {\\n      try { if (!finished) await reader.cancel(); } finally { reader.releaseLock(); }\\n    } else {\\n      await cancelBody(response);\\n    }\\n  }\\n}\\n\\n/**\\n * Construct the scoped original-journal conditional provider. No namespace\\n * method is called before admission or before each operation's input validation.\\n * Custody failure never undoes settlement or establishes received custody.\\n * @param {object} namespace Existing trusted EarningClock namespace binding.\\n * @param {*} configuration Original trusted source-owned issuer configuration.\\n * @returns {{get:function,put:function}|undefined} Only async get/put, or undefined.\\n */\\nexport function createIssuerSettlementStore(namespace, configuration) {\\n  const plan = issuerSettlementStorePlan(configuration);\\n  if (plan === null) return undefined;\\n  if (!namespace || typeof namespace.idFromName !== 'function' || typeof namespace.get !== 'function') {\\n    throw new TypeError('Invalid issuer settlement namespace');\\n  }\\n\\n  async function request(key, method, text) {\\n    const id = namespace.idFromName(plan.objectName);\\n    const stub = namespace.get(id);\\n    if (!stub || typeof stub.fetch !== 'function') throw unavailable();\\n    const url = new URL(plan.path, 'https://issuer-settlement.internal');\\n    url.searchParams.set('key', key);\\n    const init = { method, redirect: 'manual' };\\n    if (method === 'POST') {\\n      init.headers = { 'If-None-Match': '*', 'Content-Type': 'application/json' };\\n      init.body = text;\\n    }\\n    return await stub.fetch(url.toString(), init);\\n  }\\n\\n  return Object.freeze({\\n    async get(key) {\\n      let response;\\n      let handled = false;\\n      try {\\n        const transaction = transactionFor(key);\\n        response = await request(key, 'GET');\\n        if (response.status === 404) {\\n          handled = true;\\n          await cancelBody(response);\\n          return null;\\n        }\\n        if (response.status !== 200) throw unavailable();\\n        handled = true;\\n        const witness = await readWitness(response, transaction, plan);\\n        return { json: async () => witness };\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response && !handled) { try { await cancelBody(response); } catch {} }\\n      }\\n    },\\n    async put(key, text, options) {\\n      let response;\\n      try {\\n        const transaction = transactionFor(key);\\n        if (!validOptions(options)) throw unavailable();\\n        // Validation never reserializes or replaces the original witness text.\\n        witnessFrom(text, transaction, plan);\\n        response = await request(key, 'POST', text);\\n        const status = response.status;\\n        await cancelBody(response);\\n        response = undefined;\\n        if (status === 201) return { stored: true };\\n        if (status === 412) return null;\\n        throw unavailable();\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response) { try { await cancelBody(response); } catch {} }\\n      }\\n    }\\n  });\\n}\\n\",\"question\":null}",
+  "lot": {
+    "workLot": "urn:work-lot:inference:staLsZrSiMhqu5tFJ-xES1Gh85xNYd6UHaPKA-Bhmjo",
+    "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+    "taskClass": "code-fabrication",
+    "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+    "receipt": "ni:///sha-256;fx6TSRjKH87f6Z-Luv4UFtCm15dOtOG86IdAscqzZRo",
+    "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+    "model": "default",
+    "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+    "delivery": {
+      "outcome": "candidate-pending-codex-acceptance",
+      "workLot": "urn:work-lot:inference:staLsZrSiMhqu5tFJ-xES1Gh85xNYd6UHaPKA-Bhmjo",
+      "taskClass": "code-fabrication",
+      "receiver": "actor:WWOM5azg-fTrn1Id0YVbz5AhppbnFny_W5Xl-rKgSs4",
+      "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+      "model": "default",
+      "selectedOffer": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+      "receipt": {
+        "id": "ni:///sha-256;fx6TSRjKH87f6Z-Luv4UFtCm15dOtOG86IdAscqzZRo"
+      },
+      "candidate": {
+        "id": "exchange-20261024-233350-35ff79",
+        "object": "chat.completion",
+        "model": "default",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\"source\":\"/**\\n * issuer-private-settlement-custody, specification v2.\\n * Source: earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md\\n * SHA256: 87851b65650e3326e34ce6fd7acb5ea27055f4467d282f0e03dbf913e5ae90d8; lines 1–42.\\n * Specification digest: ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE.\\n * Requirements admission/plans/pulse-budget and prohibition no-expansion apply.\\n * client/witness-admission: Red Cup Engineering, unchanged native edge journal\\n * provider/original journal identity, work-order lines 16/18 and\\n * market.561.group/src/edge-settlement.mjs. This provider preserves the original\\n * journal's conditional contract, original text, and duplicate ownership.\\n * representation: IETF RFC9110, https://www.rfc-editor.org/rfc/rfc9110;\\n * explicit status/media/length and no followed redirects (line 10).\\n * operation/composition: 561 Group root received direction 2026-10-24 and\\n * Red Cup Engineering approved existing EarningClock wiring, work-order lines\\n * 12/21. Caller selects this provider only for the source-owned issuer offer,\\n * prunes the raw namespace before compute, and preserves other providers.\\n * platform: Cloudflare SQLite limits received 2026-10-24,\\n * https://developers.cloudflare.com/durable-objects/platform/limits/ (line 13).\\n * Physical quota, first writer, atomic accounting and receiving belong to the\\n * custody owner; this transport neither reserves capacity nor bypasses refusal.\\n * payment-evidence/cash-record/original-adapter-contracts: original settlements.mjs\\n * receiver and inspected interface 2026-10-24, ../src/settlements.mjs, lines 9/20/22.\\n * This client does not corroborate, settle, classify revenue or infer acceptance.\\n * physical/server/receiver: Red Cup Engineering approved private custody\\n * direction/private binding consumer/original corroboration kernel, work-order\\n * lines 15/17/19, remain server obligations, including immutable originals,\\n * capacity identity guards, pending-only receiving and atomic terminal writes.\\n * source-free: Red Cup Engineering native deriveJsnodeModules,\\n * computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs, line 14.\\n * Trace: admission -> pure-receiving; plans/no-expansion -> io-receiving;\\n * pulse-budget -> composition/operation/platform -> io-receiving. Projection:\\n * jsnode-modules. Pure examples establish admission/metadata only. Independent\\n * native I/O, SQLite workerd and composed-pulse receiving, whole source-owned\\n * build, independent review, resource admission and actual customer/payment\\n * receiving remain mandatory before promotion (lines 33–35). The 50-request\\n * ceiling is the root business allocation, not observed runtime/vendor capacity;\\n * 16 RPC plus bounded 12 commercial plus actual clock calls require separate\\n * whole-pulse receiving. No USD200/day, reserved-free-capacity or income claim.\\n * No R2, env.STATE, credentials, arbitrary keys/objects, new alarms/schedules,\\n * public routes, raw deletion, payment signing/purchase or deployment.\\n */\\n\\nconst ASSET = '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913';\\nconst ADDRESS = /^0x[0-9a-fA-F]{40}$/;\\nconst KEY = /^settlements\\\\/eip155:8453\\\\/(0x[0-9a-f]{64})\\\\.json$/;\\nconst encoder = new TextEncoder();\\nconst unavailable = () => new Error('issuer-settlement-unavailable');\\nconst isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);\\nconst byteLength = value => encoder.encode(value).byteLength;\\n\\n/**\\n * Admit trusted source-owned issuer configuration and return fixed transport\\n * coordinates and immutable ceilings. No effects or runtime budget are granted.\\n * @param {*} configuration Original trusted configuration, unchanged in shape.\\n * @returns {object|null} Normalized plan, or null before admission.\\n */\\nexport function issuerSettlementStorePlan(configuration) {\\n  if (!configuration || configuration.enabled !== true || configuration.resourceAdmission?.status !== 'received') return null;\\n  const c = configuration;\\n  const shortText = value => typeof value === 'string' && value.length > 0 && !/[\\\\r\\\\n]/.test(value) && byteLength(value) <= 512;\\n  if (c.network !== 'eip155:8453' || typeof c.asset !== 'string' || c.asset.toLowerCase() !== ASSET ||\\n      typeof c.payTo !== 'string' || !ADDRESS.test(c.payTo) || c.operation !== 'issuer-revenue-comparison' ||\\n      c.method !== 'POST' || c.route !== '/v1/issuer-revenue-comparison' || c.amount !== '50000' ||\\n      !shortText(c.sku) || !shortText(c.gateway) || !shortText(c.ledgerAccount)) {\\n    throw new TypeError('Invalid issuer settlement configuration');\\n  }\\n  return Object.freeze({\\n    prefix: 'issuer-settlements/', metadataKey: 'issuer-settlements/capacity',\\n    witnessPrefix: 'issuer-settlements/witness/', pendingPrefix: 'issuer-settlements/pending/',\\n    receiptPrefix: 'issuer-settlements/receipt/', objectName: 'earning-loops',\\n    path: '/issuer-settlement-witness', maximumRecords: 50000, maximumCustodyBytes: 268435456,\\n    maximumRawWitnessBytes: 32768, maximumTransactionBytes: 1900000,\\n    maximumWitnessesPerPulse: 4, maximumProviderAttemptsPerWitness: 4, maximumRpcBytes: 262144,\\n    network: c.network, asset: c.asset.toLowerCase(), payTo: c.payTo.toLowerCase(),\\n    operation: c.operation, method: c.method, route: c.route, sku: c.sku, gateway: c.gateway,\\n    ledgerAccount: c.ledgerAccount, amount: c.amount, maximumWorkerCallsPerPulse: 50\\n  });\\n}\\n\\nfunction transactionFor(key) {\\n  if (typeof key !== 'string') throw unavailable();\\n  const match = KEY.exec(key);\\n  if (!match) throw unavailable();\\n  return match[1];\\n}\\n\\nfunction witnessFrom(text, transaction, plan) {\\n  if (typeof text !== 'string' || byteLength(text) > plan.maximumRawWitnessBytes) throw unavailable();\\n  const witness = JSON.parse(text);\\n  if (!isObject(witness) || witness.network !== plan.network || witness.transaction !== transaction ||\\n      typeof witness.payer !== 'string' || !ADDRESS.test(witness.payer) ||\\n      typeof witness.payTo !== 'string' || witness.payTo.toLowerCase() !== plan.payTo ||\\n      typeof witness.asset !== 'string' || witness.asset.toLowerCase() !== plan.asset) throw unavailable();\\n  for (const field of ['operation', 'method', 'route', 'sku', 'gateway', 'ledgerAccount', 'amount']) {\\n    if (witness[field] !== plan[field]) throw unavailable();\\n  }\\n  return witness;\\n}\\n\\nfunction exactKeys(value, keys) {\\n  if (!isObject(value)) return false;\\n  const actual = Reflect.ownKeys(value);\\n  return actual.length === keys.length && keys.every(key => Object.hasOwn(value, key));\\n}\\n\\nfunction validOptions(options) {\\n  return exactKeys(options, ['onlyIf', 'httpMetadata']) &&\\n    exactKeys(options.onlyIf, ['etagDoesNotMatch']) && options.onlyIf.etagDoesNotMatch === '*' &&\\n    exactKeys(options.httpMetadata, ['contentType']) && options.httpMetadata.contentType === 'application/json';\\n}\\n\\nasync function cancelBody(response) {\\n  if (response?.body) await response.body.cancel();\\n}\\n\\nasync function readWitness(response, transaction, plan) {\\n  let reader;\\n  let finished = false;\\n  try {\\n    const lengthText = response.headers.get('Content-Length');\\n    if (typeof lengthText !== 'string' || !/^(0|[1-9][0-9]*)$/.test(lengthText)) throw unavailable();\\n    const expected = Number(lengthText);\\n    if (!Number.isSafeInteger(expected) || expected > plan.maximumRawWitnessBytes) throw unavailable();\\n    const media = response.headers.get('Content-Type');\\n    if (typeof media !== 'string' || media.split(';', 1)[0].trim().toLowerCase() !== 'application/json') throw unavailable();\\n    if (!response.body || typeof response.body.getReader !== 'function') throw unavailable();\\n    reader = response.body.getReader();\\n    const chunks = [];\\n    let total = 0;\\n    while (true) {\\n      const part = await reader.read();\\n      if (part.done) { finished = true; break; }\\n      if (!(part.value instanceof Uint8Array)) throw unavailable();\\n      total += part.value.byteLength;\\n      if (total > plan.maximumRawWitnessBytes || total > expected) throw unavailable();\\n      chunks.push(part.value.slice());\\n    }\\n    if (total !== expected) throw unavailable();\\n    const bytes = new Uint8Array(total);\\n    let offset = 0;\\n    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }\\n    // Preserve a BOM as text rather than silently stripping witness bytes.\\n    const text = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);\\n    return witnessFrom(text, transaction, plan);\\n  } finally {\\n    if (reader) {\\n      try { if (!finished) await reader.cancel(); } finally { reader.releaseLock(); }\\n    } else {\\n      await cancelBody(response);\\n    }\\n  }\\n}\\n\\n/**\\n * Construct the scoped original-journal conditional provider. No namespace\\n * method is called before admission or before each operation's input validation.\\n * Custody failure never undoes settlement or establishes received custody.\\n * @param {object} namespace Existing trusted EarningClock namespace binding.\\n * @param {*} configuration Original trusted source-owned issuer configuration.\\n * @returns {{get:function,put:function}|undefined} Only async get/put, or undefined.\\n */\\nexport function createIssuerSettlementStore(namespace, configuration) {\\n  const plan = issuerSettlementStorePlan(configuration);\\n  if (plan === null) return undefined;\\n  if (!namespace || typeof namespace.idFromName !== 'function' || typeof namespace.get !== 'function') {\\n    throw new TypeError('Invalid issuer settlement namespace');\\n  }\\n\\n  async function request(key, method, text) {\\n    const id = namespace.idFromName(plan.objectName);\\n    const stub = namespace.get(id);\\n    if (!stub || typeof stub.fetch !== 'function') throw unavailable();\\n    const url = new URL(plan.path, 'https://issuer-settlement.internal');\\n    url.searchParams.set('key', key);\\n    const init = { method, redirect: 'manual' };\\n    if (method === 'POST') {\\n      init.headers = { 'If-None-Match': '*', 'Content-Type': 'application/json' };\\n      init.body = text;\\n    }\\n    return await stub.fetch(url.toString(), init);\\n  }\\n\\n  return Object.freeze({\\n    async get(key) {\\n      let response;\\n      let handled = false;\\n      try {\\n        const transaction = transactionFor(key);\\n        response = await request(key, 'GET');\\n        if (response.status === 404) {\\n          handled = true;\\n          await cancelBody(response);\\n          return null;\\n        }\\n        if (response.status !== 200) throw unavailable();\\n        handled = true;\\n        const witness = await readWitness(response, transaction, plan);\\n        return { json: async () => witness };\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response && !handled) { try { await cancelBody(response); } catch {} }\\n      }\\n    },\\n    async put(key, text, options) {\\n      let response;\\n      try {\\n        const transaction = transactionFor(key);\\n        if (!validOptions(options)) throw unavailable();\\n        // Validation never reserializes or replaces the original witness text.\\n        witnessFrom(text, transaction, plan);\\n        response = await request(key, 'POST', text);\\n        const status = response.status;\\n        await cancelBody(response);\\n        response = undefined;\\n        if (status === 201) return { stored: true };\\n        if (status === 412) return null;\\n        throw unavailable();\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response) { try { await cancelBody(response); } catch {} }\\n      }\\n    }\\n  });\\n}\\n\",\"question\":null}",
+              "tool_calls": []
+            },
+            "finish_reason": "unknown"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 35345,
+          "completion_tokens": 3179
+        }
+      },
+      "endpointClass": "local-command-inference",
+      "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+      "configuration": {
+        "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+        "model": "default",
+        "endpoint": "command:codex-exec",
+        "executionClass": "local-command-inference",
+        "mode": "assistant-turn:codex-exec:json-envelope:v1"
+      },
+      "selectionRule": "direct-endpoint-customer-ordered-pareto-route-after-a2a-market-residue",
+      "consideration": [
+        {
+          "kind": "credit",
+          "asset": "urn:union:consideration:provider-invocation",
+          "unit": "provider-invocation",
+          "amount": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        }
+      ],
+      "declaredResources": [
+        {
+          "resource": "provider-attention",
+          "unit": "bounded-lot",
+          "amount": {
+            "numerator": "1",
+            "denominator": "1"
+          }
+        }
+      ],
+      "measuredResources": {
+        "scope": {
+          "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+          "accountIdentity": null,
+          "windowIdentity": null,
+          "measurementCoverage": "completed-exchanges"
+        },
+        "resources": [
+          {
+            "resource": "requests",
+            "unit": "request",
+            "amount": {
+              "numerator": "1",
+              "denominator": "1"
+            }
+          },
+          {
+            "resource": "input-tokens",
+            "unit": "token",
+            "amount": {
+              "numerator": "35345",
+              "denominator": "1"
+            }
+          },
+          {
+            "resource": "output-tokens",
+            "unit": "token",
+            "amount": {
+              "numerator": "3179",
+              "denominator": "1"
+            }
+          },
+          {
+            "resource": "duration",
+            "unit": "millisecond",
+            "amount": {
+              "numerator": "90960",
+              "denominator": "1"
+            }
+          }
+        ],
+        "partialResources": [],
+        "callerObservedResources": [],
+        "uncertainty": [
+          "total-token-usage-incomplete",
+          "provider-reported-cost-incomplete",
+          "account-window-identity-unknown"
+        ]
+      },
+      "settlement": "none-direct-endpoint-lane-carries-no-signed-compact-or-chain-settlement",
+      "durationMs": 90960,
+      "providerEvidence": {
+        "outputs": [
+          {
+            "id": "exchange-20261024-233350-35ff79",
+            "object": "chat.completion",
+            "model": "default",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"source\":\"/**\\n * issuer-private-settlement-custody, specification v2.\\n * Source: earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md\\n * SHA256: 87851b65650e3326e34ce6fd7acb5ea27055f4467d282f0e03dbf913e5ae90d8; lines 1–42.\\n * Specification digest: ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE.\\n * Requirements admission/plans/pulse-budget and prohibition no-expansion apply.\\n * client/witness-admission: Red Cup Engineering, unchanged native edge journal\\n * provider/original journal identity, work-order lines 16/18 and\\n * market.561.group/src/edge-settlement.mjs. This provider preserves the original\\n * journal's conditional contract, original text, and duplicate ownership.\\n * representation: IETF RFC9110, https://www.rfc-editor.org/rfc/rfc9110;\\n * explicit status/media/length and no followed redirects (line 10).\\n * operation/composition: 561 Group root received direction 2026-10-24 and\\n * Red Cup Engineering approved existing EarningClock wiring, work-order lines\\n * 12/21. Caller selects this provider only for the source-owned issuer offer,\\n * prunes the raw namespace before compute, and preserves other providers.\\n * platform: Cloudflare SQLite limits received 2026-10-24,\\n * https://developers.cloudflare.com/durable-objects/platform/limits/ (line 13).\\n * Physical quota, first writer, atomic accounting and receiving belong to the\\n * custody owner; this transport neither reserves capacity nor bypasses refusal.\\n * payment-evidence/cash-record/original-adapter-contracts: original settlements.mjs\\n * receiver and inspected interface 2026-10-24, ../src/settlements.mjs, lines 9/20/22.\\n * This client does not corroborate, settle, classify revenue or infer acceptance.\\n * physical/server/receiver: Red Cup Engineering approved private custody\\n * direction/private binding consumer/original corroboration kernel, work-order\\n * lines 15/17/19, remain server obligations, including immutable originals,\\n * capacity identity guards, pending-only receiving and atomic terminal writes.\\n * source-free: Red Cup Engineering native deriveJsnodeModules,\\n * computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs, line 14.\\n * Trace: admission -> pure-receiving; plans/no-expansion -> io-receiving;\\n * pulse-budget -> composition/operation/platform -> io-receiving. Projection:\\n * jsnode-modules. Pure examples establish admission/metadata only. Independent\\n * native I/O, SQLite workerd and composed-pulse receiving, whole source-owned\\n * build, independent review, resource admission and actual customer/payment\\n * receiving remain mandatory before promotion (lines 33–35). The 50-request\\n * ceiling is the root business allocation, not observed runtime/vendor capacity;\\n * 16 RPC plus bounded 12 commercial plus actual clock calls require separate\\n * whole-pulse receiving. No USD200/day, reserved-free-capacity or income claim.\\n * No R2, env.STATE, credentials, arbitrary keys/objects, new alarms/schedules,\\n * public routes, raw deletion, payment signing/purchase or deployment.\\n */\\n\\nconst ASSET = '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913';\\nconst ADDRESS = /^0x[0-9a-fA-F]{40}$/;\\nconst KEY = /^settlements\\\\/eip155:8453\\\\/(0x[0-9a-f]{64})\\\\.json$/;\\nconst encoder = new TextEncoder();\\nconst unavailable = () => new Error('issuer-settlement-unavailable');\\nconst isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);\\nconst byteLength = value => encoder.encode(value).byteLength;\\n\\n/**\\n * Admit trusted source-owned issuer configuration and return fixed transport\\n * coordinates and immutable ceilings. No effects or runtime budget are granted.\\n * @param {*} configuration Original trusted configuration, unchanged in shape.\\n * @returns {object|null} Normalized plan, or null before admission.\\n */\\nexport function issuerSettlementStorePlan(configuration) {\\n  if (!configuration || configuration.enabled !== true || configuration.resourceAdmission?.status !== 'received') return null;\\n  const c = configuration;\\n  const shortText = value => typeof value === 'string' && value.length > 0 && !/[\\\\r\\\\n]/.test(value) && byteLength(value) <= 512;\\n  if (c.network !== 'eip155:8453' || typeof c.asset !== 'string' || c.asset.toLowerCase() !== ASSET ||\\n      typeof c.payTo !== 'string' || !ADDRESS.test(c.payTo) || c.operation !== 'issuer-revenue-comparison' ||\\n      c.method !== 'POST' || c.route !== '/v1/issuer-revenue-comparison' || c.amount !== '50000' ||\\n      !shortText(c.sku) || !shortText(c.gateway) || !shortText(c.ledgerAccount)) {\\n    throw new TypeError('Invalid issuer settlement configuration');\\n  }\\n  return Object.freeze({\\n    prefix: 'issuer-settlements/', metadataKey: 'issuer-settlements/capacity',\\n    witnessPrefix: 'issuer-settlements/witness/', pendingPrefix: 'issuer-settlements/pending/',\\n    receiptPrefix: 'issuer-settlements/receipt/', objectName: 'earning-loops',\\n    path: '/issuer-settlement-witness', maximumRecords: 50000, maximumCustodyBytes: 268435456,\\n    maximumRawWitnessBytes: 32768, maximumTransactionBytes: 1900000,\\n    maximumWitnessesPerPulse: 4, maximumProviderAttemptsPerWitness: 4, maximumRpcBytes: 262144,\\n    network: c.network, asset: c.asset.toLowerCase(), payTo: c.payTo.toLowerCase(),\\n    operation: c.operation, method: c.method, route: c.route, sku: c.sku, gateway: c.gateway,\\n    ledgerAccount: c.ledgerAccount, amount: c.amount, maximumWorkerCallsPerPulse: 50\\n  });\\n}\\n\\nfunction transactionFor(key) {\\n  if (typeof key !== 'string') throw unavailable();\\n  const match = KEY.exec(key);\\n  if (!match) throw unavailable();\\n  return match[1];\\n}\\n\\nfunction witnessFrom(text, transaction, plan) {\\n  if (typeof text !== 'string' || byteLength(text) > plan.maximumRawWitnessBytes) throw unavailable();\\n  const witness = JSON.parse(text);\\n  if (!isObject(witness) || witness.network !== plan.network || witness.transaction !== transaction ||\\n      typeof witness.payer !== 'string' || !ADDRESS.test(witness.payer) ||\\n      typeof witness.payTo !== 'string' || witness.payTo.toLowerCase() !== plan.payTo ||\\n      typeof witness.asset !== 'string' || witness.asset.toLowerCase() !== plan.asset) throw unavailable();\\n  for (const field of ['operation', 'method', 'route', 'sku', 'gateway', 'ledgerAccount', 'amount']) {\\n    if (witness[field] !== plan[field]) throw unavailable();\\n  }\\n  return witness;\\n}\\n\\nfunction exactKeys(value, keys) {\\n  if (!isObject(value)) return false;\\n  const actual = Reflect.ownKeys(value);\\n  return actual.length === keys.length && keys.every(key => Object.hasOwn(value, key));\\n}\\n\\nfunction validOptions(options) {\\n  return exactKeys(options, ['onlyIf', 'httpMetadata']) &&\\n    exactKeys(options.onlyIf, ['etagDoesNotMatch']) && options.onlyIf.etagDoesNotMatch === '*' &&\\n    exactKeys(options.httpMetadata, ['contentType']) && options.httpMetadata.contentType === 'application/json';\\n}\\n\\nasync function cancelBody(response) {\\n  if (response?.body) await response.body.cancel();\\n}\\n\\nasync function readWitness(response, transaction, plan) {\\n  let reader;\\n  let finished = false;\\n  try {\\n    const lengthText = response.headers.get('Content-Length');\\n    if (typeof lengthText !== 'string' || !/^(0|[1-9][0-9]*)$/.test(lengthText)) throw unavailable();\\n    const expected = Number(lengthText);\\n    if (!Number.isSafeInteger(expected) || expected > plan.maximumRawWitnessBytes) throw unavailable();\\n    const media = response.headers.get('Content-Type');\\n    if (typeof media !== 'string' || media.split(';', 1)[0].trim().toLowerCase() !== 'application/json') throw unavailable();\\n    if (!response.body || typeof response.body.getReader !== 'function') throw unavailable();\\n    reader = response.body.getReader();\\n    const chunks = [];\\n    let total = 0;\\n    while (true) {\\n      const part = await reader.read();\\n      if (part.done) { finished = true; break; }\\n      if (!(part.value instanceof Uint8Array)) throw unavailable();\\n      total += part.value.byteLength;\\n      if (total > plan.maximumRawWitnessBytes || total > expected) throw unavailable();\\n      chunks.push(part.value.slice());\\n    }\\n    if (total !== expected) throw unavailable();\\n    const bytes = new Uint8Array(total);\\n    let offset = 0;\\n    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }\\n    // Preserve a BOM as text rather than silently stripping witness bytes.\\n    const text = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);\\n    return witnessFrom(text, transaction, plan);\\n  } finally {\\n    if (reader) {\\n      try { if (!finished) await reader.cancel(); } finally { reader.releaseLock(); }\\n    } else {\\n      await cancelBody(response);\\n    }\\n  }\\n}\\n\\n/**\\n * Construct the scoped original-journal conditional provider. No namespace\\n * method is called before admission or before each operation's input validation.\\n * Custody failure never undoes settlement or establishes received custody.\\n * @param {object} namespace Existing trusted EarningClock namespace binding.\\n * @param {*} configuration Original trusted source-owned issuer configuration.\\n * @returns {{get:function,put:function}|undefined} Only async get/put, or undefined.\\n */\\nexport function createIssuerSettlementStore(namespace, configuration) {\\n  const plan = issuerSettlementStorePlan(configuration);\\n  if (plan === null) return undefined;\\n  if (!namespace || typeof namespace.idFromName !== 'function' || typeof namespace.get !== 'function') {\\n    throw new TypeError('Invalid issuer settlement namespace');\\n  }\\n\\n  async function request(key, method, text) {\\n    const id = namespace.idFromName(plan.objectName);\\n    const stub = namespace.get(id);\\n    if (!stub || typeof stub.fetch !== 'function') throw unavailable();\\n    const url = new URL(plan.path, 'https://issuer-settlement.internal');\\n    url.searchParams.set('key', key);\\n    const init = { method, redirect: 'manual' };\\n    if (method === 'POST') {\\n      init.headers = { 'If-None-Match': '*', 'Content-Type': 'application/json' };\\n      init.body = text;\\n    }\\n    return await stub.fetch(url.toString(), init);\\n  }\\n\\n  return Object.freeze({\\n    async get(key) {\\n      let response;\\n      let handled = false;\\n      try {\\n        const transaction = transactionFor(key);\\n        response = await request(key, 'GET');\\n        if (response.status === 404) {\\n          handled = true;\\n          await cancelBody(response);\\n          return null;\\n        }\\n        if (response.status !== 200) throw unavailable();\\n        handled = true;\\n        const witness = await readWitness(response, transaction, plan);\\n        return { json: async () => witness };\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response && !handled) { try { await cancelBody(response); } catch {} }\\n      }\\n    },\\n    async put(key, text, options) {\\n      let response;\\n      try {\\n        const transaction = transactionFor(key);\\n        if (!validOptions(options)) throw unavailable();\\n        // Validation never reserializes or replaces the original witness text.\\n        witnessFrom(text, transaction, plan);\\n        response = await request(key, 'POST', text);\\n        const status = response.status;\\n        await cancelBody(response);\\n        response = undefined;\\n        if (status === 201) return { stored: true };\\n        if (status === 412) return null;\\n        throw unavailable();\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response) { try { await cancelBody(response); } catch {} }\\n      }\\n    }\\n  });\\n}\\n\",\"question\":null}",
+                  "tool_calls": []
+                },
+                "finish_reason": "unknown"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 35345,
+              "completion_tokens": 3179
+            }
+          }
+        ],
+        "toolInvocations": [],
+        "exchanges": [
+          {
+            "finishReason": "unknown",
+            "usage": {
+              "promptTokens": 35345,
+              "outputTokens": 3179,
+              "totalTokens": null,
+              "reportedCost": null
+            },
+            "message": {
+              "role": "assistant",
+              "content": "{\"source\":\"/**\\n * issuer-private-settlement-custody, specification v2.\\n * Source: earning-loop-worker-service/specifications/issuer-private-settlement-custody.work-order.md\\n * SHA256: 87851b65650e3326e34ce6fd7acb5ea27055f4467d282f0e03dbf913e5ae90d8; lines 1–42.\\n * Specification digest: ni:///sha-256;NfoPd76YNGyNO9CtP5HGaF5Ue3QZSYhQQKKFdR6LtFE.\\n * Requirements admission/plans/pulse-budget and prohibition no-expansion apply.\\n * client/witness-admission: Red Cup Engineering, unchanged native edge journal\\n * provider/original journal identity, work-order lines 16/18 and\\n * market.561.group/src/edge-settlement.mjs. This provider preserves the original\\n * journal's conditional contract, original text, and duplicate ownership.\\n * representation: IETF RFC9110, https://www.rfc-editor.org/rfc/rfc9110;\\n * explicit status/media/length and no followed redirects (line 10).\\n * operation/composition: 561 Group root received direction 2026-10-24 and\\n * Red Cup Engineering approved existing EarningClock wiring, work-order lines\\n * 12/21. Caller selects this provider only for the source-owned issuer offer,\\n * prunes the raw namespace before compute, and preserves other providers.\\n * platform: Cloudflare SQLite limits received 2026-10-24,\\n * https://developers.cloudflare.com/durable-objects/platform/limits/ (line 13).\\n * Physical quota, first writer, atomic accounting and receiving belong to the\\n * custody owner; this transport neither reserves capacity nor bypasses refusal.\\n * payment-evidence/cash-record/original-adapter-contracts: original settlements.mjs\\n * receiver and inspected interface 2026-10-24, ../src/settlements.mjs, lines 9/20/22.\\n * This client does not corroborate, settle, classify revenue or infer acceptance.\\n * physical/server/receiver: Red Cup Engineering approved private custody\\n * direction/private binding consumer/original corroboration kernel, work-order\\n * lines 15/17/19, remain server obligations, including immutable originals,\\n * capacity identity guards, pending-only receiving and atomic terminal writes.\\n * source-free: Red Cup Engineering native deriveJsnodeModules,\\n * computer-code-development-engine/scripts/fabricate-jsnode-closure.mjs, line 14.\\n * Trace: admission -> pure-receiving; plans/no-expansion -> io-receiving;\\n * pulse-budget -> composition/operation/platform -> io-receiving. Projection:\\n * jsnode-modules. Pure examples establish admission/metadata only. Independent\\n * native I/O, SQLite workerd and composed-pulse receiving, whole source-owned\\n * build, independent review, resource admission and actual customer/payment\\n * receiving remain mandatory before promotion (lines 33–35). The 50-request\\n * ceiling is the root business allocation, not observed runtime/vendor capacity;\\n * 16 RPC plus bounded 12 commercial plus actual clock calls require separate\\n * whole-pulse receiving. No USD200/day, reserved-free-capacity or income claim.\\n * No R2, env.STATE, credentials, arbitrary keys/objects, new alarms/schedules,\\n * public routes, raw deletion, payment signing/purchase or deployment.\\n */\\n\\nconst ASSET = '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913';\\nconst ADDRESS = /^0x[0-9a-fA-F]{40}$/;\\nconst KEY = /^settlements\\\\/eip155:8453\\\\/(0x[0-9a-f]{64})\\\\.json$/;\\nconst encoder = new TextEncoder();\\nconst unavailable = () => new Error('issuer-settlement-unavailable');\\nconst isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);\\nconst byteLength = value => encoder.encode(value).byteLength;\\n\\n/**\\n * Admit trusted source-owned issuer configuration and return fixed transport\\n * coordinates and immutable ceilings. No effects or runtime budget are granted.\\n * @param {*} configuration Original trusted configuration, unchanged in shape.\\n * @returns {object|null} Normalized plan, or null before admission.\\n */\\nexport function issuerSettlementStorePlan(configuration) {\\n  if (!configuration || configuration.enabled !== true || configuration.resourceAdmission?.status !== 'received') return null;\\n  const c = configuration;\\n  const shortText = value => typeof value === 'string' && value.length > 0 && !/[\\\\r\\\\n]/.test(value) && byteLength(value) <= 512;\\n  if (c.network !== 'eip155:8453' || typeof c.asset !== 'string' || c.asset.toLowerCase() !== ASSET ||\\n      typeof c.payTo !== 'string' || !ADDRESS.test(c.payTo) || c.operation !== 'issuer-revenue-comparison' ||\\n      c.method !== 'POST' || c.route !== '/v1/issuer-revenue-comparison' || c.amount !== '50000' ||\\n      !shortText(c.sku) || !shortText(c.gateway) || !shortText(c.ledgerAccount)) {\\n    throw new TypeError('Invalid issuer settlement configuration');\\n  }\\n  return Object.freeze({\\n    prefix: 'issuer-settlements/', metadataKey: 'issuer-settlements/capacity',\\n    witnessPrefix: 'issuer-settlements/witness/', pendingPrefix: 'issuer-settlements/pending/',\\n    receiptPrefix: 'issuer-settlements/receipt/', objectName: 'earning-loops',\\n    path: '/issuer-settlement-witness', maximumRecords: 50000, maximumCustodyBytes: 268435456,\\n    maximumRawWitnessBytes: 32768, maximumTransactionBytes: 1900000,\\n    maximumWitnessesPerPulse: 4, maximumProviderAttemptsPerWitness: 4, maximumRpcBytes: 262144,\\n    network: c.network, asset: c.asset.toLowerCase(), payTo: c.payTo.toLowerCase(),\\n    operation: c.operation, method: c.method, route: c.route, sku: c.sku, gateway: c.gateway,\\n    ledgerAccount: c.ledgerAccount, amount: c.amount, maximumWorkerCallsPerPulse: 50\\n  });\\n}\\n\\nfunction transactionFor(key) {\\n  if (typeof key !== 'string') throw unavailable();\\n  const match = KEY.exec(key);\\n  if (!match) throw unavailable();\\n  return match[1];\\n}\\n\\nfunction witnessFrom(text, transaction, plan) {\\n  if (typeof text !== 'string' || byteLength(text) > plan.maximumRawWitnessBytes) throw unavailable();\\n  const witness = JSON.parse(text);\\n  if (!isObject(witness) || witness.network !== plan.network || witness.transaction !== transaction ||\\n      typeof witness.payer !== 'string' || !ADDRESS.test(witness.payer) ||\\n      typeof witness.payTo !== 'string' || witness.payTo.toLowerCase() !== plan.payTo ||\\n      typeof witness.asset !== 'string' || witness.asset.toLowerCase() !== plan.asset) throw unavailable();\\n  for (const field of ['operation', 'method', 'route', 'sku', 'gateway', 'ledgerAccount', 'amount']) {\\n    if (witness[field] !== plan[field]) throw unavailable();\\n  }\\n  return witness;\\n}\\n\\nfunction exactKeys(value, keys) {\\n  if (!isObject(value)) return false;\\n  const actual = Reflect.ownKeys(value);\\n  return actual.length === keys.length && keys.every(key => Object.hasOwn(value, key));\\n}\\n\\nfunction validOptions(options) {\\n  return exactKeys(options, ['onlyIf', 'httpMetadata']) &&\\n    exactKeys(options.onlyIf, ['etagDoesNotMatch']) && options.onlyIf.etagDoesNotMatch === '*' &&\\n    exactKeys(options.httpMetadata, ['contentType']) && options.httpMetadata.contentType === 'application/json';\\n}\\n\\nasync function cancelBody(response) {\\n  if (response?.body) await response.body.cancel();\\n}\\n\\nasync function readWitness(response, transaction, plan) {\\n  let reader;\\n  let finished = false;\\n  try {\\n    const lengthText = response.headers.get('Content-Length');\\n    if (typeof lengthText !== 'string' || !/^(0|[1-9][0-9]*)$/.test(lengthText)) throw unavailable();\\n    const expected = Number(lengthText);\\n    if (!Number.isSafeInteger(expected) || expected > plan.maximumRawWitnessBytes) throw unavailable();\\n    const media = response.headers.get('Content-Type');\\n    if (typeof media !== 'string' || media.split(';', 1)[0].trim().toLowerCase() !== 'application/json') throw unavailable();\\n    if (!response.body || typeof response.body.getReader !== 'function') throw unavailable();\\n    reader = response.body.getReader();\\n    const chunks = [];\\n    let total = 0;\\n    while (true) {\\n      const part = await reader.read();\\n      if (part.done) { finished = true; break; }\\n      if (!(part.value instanceof Uint8Array)) throw unavailable();\\n      total += part.value.byteLength;\\n      if (total > plan.maximumRawWitnessBytes || total > expected) throw unavailable();\\n      chunks.push(part.value.slice());\\n    }\\n    if (total !== expected) throw unavailable();\\n    const bytes = new Uint8Array(total);\\n    let offset = 0;\\n    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }\\n    // Preserve a BOM as text rather than silently stripping witness bytes.\\n    const text = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);\\n    return witnessFrom(text, transaction, plan);\\n  } finally {\\n    if (reader) {\\n      try { if (!finished) await reader.cancel(); } finally { reader.releaseLock(); }\\n    } else {\\n      await cancelBody(response);\\n    }\\n  }\\n}\\n\\n/**\\n * Construct the scoped original-journal conditional provider. No namespace\\n * method is called before admission or before each operation's input validation.\\n * Custody failure never undoes settlement or establishes received custody.\\n * @param {object} namespace Existing trusted EarningClock namespace binding.\\n * @param {*} configuration Original trusted source-owned issuer configuration.\\n * @returns {{get:function,put:function}|undefined} Only async get/put, or undefined.\\n */\\nexport function createIssuerSettlementStore(namespace, configuration) {\\n  const plan = issuerSettlementStorePlan(configuration);\\n  if (plan === null) return undefined;\\n  if (!namespace || typeof namespace.idFromName !== 'function' || typeof namespace.get !== 'function') {\\n    throw new TypeError('Invalid issuer settlement namespace');\\n  }\\n\\n  async function request(key, method, text) {\\n    const id = namespace.idFromName(plan.objectName);\\n    const stub = namespace.get(id);\\n    if (!stub || typeof stub.fetch !== 'function') throw unavailable();\\n    const url = new URL(plan.path, 'https://issuer-settlement.internal');\\n    url.searchParams.set('key', key);\\n    const init = { method, redirect: 'manual' };\\n    if (method === 'POST') {\\n      init.headers = { 'If-None-Match': '*', 'Content-Type': 'application/json' };\\n      init.body = text;\\n    }\\n    return await stub.fetch(url.toString(), init);\\n  }\\n\\n  return Object.freeze({\\n    async get(key) {\\n      let response;\\n      let handled = false;\\n      try {\\n        const transaction = transactionFor(key);\\n        response = await request(key, 'GET');\\n        if (response.status === 404) {\\n          handled = true;\\n          await cancelBody(response);\\n          return null;\\n        }\\n        if (response.status !== 200) throw unavailable();\\n        handled = true;\\n        const witness = await readWitness(response, transaction, plan);\\n        return { json: async () => witness };\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response && !handled) { try { await cancelBody(response); } catch {} }\\n      }\\n    },\\n    async put(key, text, options) {\\n      let response;\\n      try {\\n        const transaction = transactionFor(key);\\n        if (!validOptions(options)) throw unavailable();\\n        // Validation never reserializes or replaces the original witness text.\\n        witnessFrom(text, transaction, plan);\\n        response = await request(key, 'POST', text);\\n        const status = response.status;\\n        await cancelBody(response);\\n        response = undefined;\\n        if (status === 201) return { stored: true };\\n        if (status === 412) return null;\\n        throw unavailable();\\n      } catch {\\n        throw unavailable();\\n      } finally {\\n        if (response) { try { await cancelBody(response); } catch {} }\\n      }\\n    }\\n  });\\n}\\n\",\"question\":null}",
+              "tool_calls": []
+            }
+          }
+        ],
+        "tokenUsage": [
+          {
+            "promptTokens": 35345,
+            "outputTokens": 3179,
+            "totalTokens": null,
+            "reportedCost": null
+          }
+        ],
+        "measuredResources": {
+          "scope": {
+            "providerIdentity": "urn:ame:bare-cedar-fog-codex-inference-team",
+            "accountIdentity": null,
+            "windowIdentity": null,
+            "measurementCoverage": "completed-exchanges"
+          },
+          "resources": [
+            {
+              "resource": "requests",
+              "unit": "request",
+              "amount": {
+                "numerator": "1",
+                "denominator": "1"
+              }
+            },
+            {
+              "resource": "input-tokens",
+              "unit": "token",
+              "amount": {
+                "numerator": "35345",
+                "denominator": "1"
+              }
+            },
+            {
+              "resource": "output-tokens",
+              "unit": "token",
+              "amount": {
+                "numerator": "3179",
+                "denominator": "1"
+              }
+            },
+            {
+              "resource": "duration",
+              "unit": "millisecond",
+              "amount": {
+                "numerator": "90960",
+                "denominator": "1"
+              }
+            }
+          ],
+          "partialResources": [],
+          "callerObservedResources": [],
+          "uncertainty": [
+            "total-token-usage-incomplete",
+            "provider-reported-cost-incomplete",
+            "account-window-identity-unknown"
+          ]
+        },
+        "sharedBudgetRemaining": {}
+      },
+      "customerAssay": "chat-completion-turn-accepted",
+      "providerSchemaEnforcement": {
+        "attempted": false
+      },
+      "directLaneRefusals": [],
+      "integrationAccepted": false,
+      "receiverAcceptanceRequired": true,
+      "nextAct": "Codex may decide its own routine purchase and delivery outcome after an executable assay without Leader approval; only a later effect on another Actor crosses into that Actor's induction boundary.",
+      "contextOptimization": {
+        "mode": "automatic",
+        "estimated": true,
+        "budget": null,
+        "beforeBytes": 37225,
+        "afterBytes": 37225,
+        "retained": [
+          "objective",
+          "chat-completion"
+        ],
+        "dropped": [],
+        "rawRecall": []
+      },
+      "timing": {
+        "solicitation": 0,
+        "routeDecision": 6047,
+        "execution": 96799,
+        "assay": 0,
+        "receipt": 0,
+        "total": 124168
+      },
+      "acceptanceScope": "delivery-to-codex-customer-office-only",
+      "placement": {
+        "type": "WorkPlacementEvidenceProjection",
+        "version": 1,
+        "decisionType": "WorkPlacementDecision",
+        "disposition": "selected",
+        "selected": {
+          "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+          "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+          "executionClass": "local-command-inference",
+          "mode": "execute",
+          "reuseReceipt": null,
+          "plannedResources": [
+            {
+              "amount": {
+                "numerator": "30849",
+                "denominator": "1"
+              },
+              "resource": "duration",
+              "unit": "millisecond"
+            },
+            {
+              "amount": {
+                "numerator": "34279",
+                "denominator": "1"
+              },
+              "resource": "input-tokens",
+              "unit": "token"
+            },
+            {
+              "amount": {
+                "numerator": "178",
+                "denominator": "1"
+              },
+              "resource": "output-tokens",
+              "unit": "token"
+            },
+            {
+              "amount": {
+                "numerator": "1",
+                "denominator": "1"
+              },
+              "resource": "requests",
+              "unit": "request"
+            }
+          ],
+          "observationBasis": {
+            "attempts": 1,
+            "accepted": 0,
+            "resourceBasis": "mean-per-attempt-including-refusals",
+            "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+            "receipts": [
+              "ni:///sha-256;zGJBiwM9ahtECc54WiKAOXm_t7-Y9j0w39xDMjgFG88"
+            ],
+            "qualityPrior": {
+              "observations": 0,
+              "accepted": 0,
+              "sourceReceipts": []
+            }
+          }
+        },
+        "attemptPlan": [
+          {
+            "rank": 0,
+            "relation": "single",
+            "offers": [
+              {
+                "offerId": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+                "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+                "executionClass": "local-command-inference",
+                "mode": "execute",
+                "reuseReceipt": null,
+                "plannedResources": [
+                  {
+                    "amount": {
+                      "numerator": "30849",
+                      "denominator": "1"
+                    },
+                    "resource": "duration",
+                    "unit": "millisecond"
+                  },
+                  {
+                    "amount": {
+                      "numerator": "34279",
+                      "denominator": "1"
+                    },
+                    "resource": "input-tokens",
+                    "unit": "token"
+                  },
+                  {
+                    "amount": {
+                      "numerator": "178",
+                      "denominator": "1"
+                    },
+                    "resource": "output-tokens",
+                    "unit": "token"
+                  },
+                  {
+                    "amount": {
+                      "numerator": "1",
+                      "denominator": "1"
+                    },
+                    "resource": "requests",
+                    "unit": "request"
+                  }
+                ],
+                "observationBasis": {
+                  "attempts": 1,
+                  "accepted": 0,
+                  "resourceBasis": "mean-per-attempt-including-refusals",
+                  "acceptedServiceEnergyIntensity": "unknown-no-source-admitted-meter-and-independent-service-denominator",
+                  "receipts": [
+                    "ni:///sha-256;zGJBiwM9ahtECc54WiKAOXm_t7-Y9j0w39xDMjgFG88"
+                  ],
+                  "qualityPrior": {
+                    "observations": 0,
+                    "accepted": 0,
+                    "sourceReceipts": []
+                  }
+                }
+              }
+            ],
+            "execution": "explicit-sequential-authority-required",
+            "implicitFallbackPermitted": false,
+            "speculativeExecutionPermitted": false,
+            "stopCondition": "customer-assayed-acceptance"
+          }
+        ],
+        "refusals": [],
+        "rationale": [
+          "exact-feasibility-first",
+          "fresh-execution-required",
+          "customer-ordered-pareto-selection",
+          "provider-and-model-identities-are-provenance-only"
+        ],
+        "offers": [
+          {
+            "type": "NormalizedWorkOffer",
+            "id": "urn:offer:direct-endpoint:urn:ame:bare-cedar-fog-codex-inference-team:l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk:code-fabrication",
+            "provider": "urn:ame:bare-cedar-fog-codex-inference-team",
+            "executionClass": "local-command-inference",
+            "operation": "code-fabrication",
+            "implementationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+            "configurationIdentity": "ni:///sha-256;l3k78btuNzmvmueURzT7MdqkmwlytwQnwHyX9Emsbxk",
+            "capabilities": [
+              "chat",
+              "reasoning",
+              "long-context",
+              "json-output",
+              "json-schema-output",
+              "code",
+              "classification",
+              "extraction",
+              "summarization",
+              "inquiry",
+              "software-engineering",
+              "code-review",
+              "text-output",
+              "tool-calling"
+            ],
+            "qualityTiers": [
+              "frontier-subscription"
+            ],
+            "authorityScopes": [
+              "urn:scope:bounded-inference-candidate"
+            ],
+            "effects": [
+              "read-only"
+            ],
+            "idempotence": [
+              "idempotent"
+            ],
+            "dataConstraints": [],
+            "custodyConstraints": [],
+            "outputContractIdentities": [
+              "ni:///sha-256;7IAXjNB0Sjczx3UutNZuD-puIhF9MCOp5lLHPi30PYc"
+            ],
+            "availability": "available",
+            "availableCapacity": 1,
+            "bounds": {},
+            "consideration": [
+              {
+                "kind": "credit",
+                "asset": "urn:union:consideration:provider-invocation",
+                "unit": "provider-invocation",
+                "amount": {
+                  "numerator": "1",
+                  "denominator": "1"
+                }
+              },
+              {
+                "kind": "currency",
+                "asset": "urn:currency:usd",
+                "unit": "cent",
+                "amount": {
+                  "numerator": "0",
+                  "denominator": "1"
+                }
+              }
+            ],
+            "declaredResources": [
+              {
+                "resource": "provider-attention",
+                "unit": "bounded-lot",
+                "amount": {
+                  "numerator": "1",
+                  "denominator": "1"
+                }
+              }
+            ],
+            "semantics": {
+              "reuse": "none"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
