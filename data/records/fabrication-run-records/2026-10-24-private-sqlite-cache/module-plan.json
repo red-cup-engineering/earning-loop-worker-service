@@ -96,7 +96,7 @@
     "data/records/schema/issuer-evidence-read-plan.input.schema.json",
     "data/records/schema/issuer-evidence-read-plan.output.schema.json",
     "data/records/schema/issuer-sqlite-storage-plan.input.schema.json",
-    "data/records/schema/issuer-sqlite-storage-plan.output.schema.json",
+    "data/records/schemas/issuer-sqlite-storage-plan.output.schema.json",
     "src/issuer-evidence-store.mjs",
     "src/issuer-sqlite-cache.mjs",
     "test/issuer-evidence-read-plan-examples.test.mjs",

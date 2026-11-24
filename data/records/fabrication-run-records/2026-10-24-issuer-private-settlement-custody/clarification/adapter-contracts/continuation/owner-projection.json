@@ -11,7 +11,7 @@
     },
     {
       "owner": "loop",
-      "path": "data/records/schema/issuer-settlement-custody-plan.output.schema.json",
+      "path": "data/records/schemas/issuer-settlement-custody-plan.output.schema.json",
       "bytes": 90,
       "sha256": "02b4f6543e12fa7aca4a352d3c89d0ddf11db32cd90015217c497bff66ab4eae"
     },

@@ -7,7 +7,7 @@
       "text": "{}\n"
     },
     {
-      "path": "data/records/schema/issuer-settlement-custody-plan.output.schema.json",
+      "path": "data/records/schemas/issuer-settlement-custody-plan.output.schema.json",
       "text": "{\n  \"anyOf\": [\n    {\n      \"type\": \"null\"\n    },\n    {\n      \"type\": \"object\"\n    }\n  ]\n}\n"
     },
     {

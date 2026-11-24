@@ -687,7 +687,7 @@
       "match": true
     },
     {
-      "path": "data/records/schema/issuer-settlement-custody-plan.output.schema.json",
+      "path": "data/records/schemas/issuer-settlement-custody-plan.output.schema.json",
       "expected": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
       "actual": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
       "match": true
@@ -699,7 +699,7 @@
       "match": true
     },
     {
-      "path": "data/records/schema/issuer-sqlite-storage-plan.output.schema.json",
+      "path": "data/records/schemas/issuer-sqlite-storage-plan.output.schema.json",
       "expected": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
       "actual": "58ca9421e10fbeedb4f5d5348a3698322f4d5f44",
       "match": true

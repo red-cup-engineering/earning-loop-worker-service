@@ -702,7 +702,7 @@
     {
       "type": "TextFileCreationProjection",
       "version": 1,
-      "path": "data/records/schema/issuer-sqlite-storage-plan.output.schema.json",
+      "path": "data/records/schemas/issuer-sqlite-storage-plan.output.schema.json",
       "text": "{\n  \"anyOf\": [\n    {\n      \"type\": \"null\"\n    },\n    {\n      \"type\": \"object\"\n    }\n  ]\n}\n",
       "mode": 420
     },
