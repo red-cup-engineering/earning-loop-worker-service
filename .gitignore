@@ -1,3 +1,4 @@
 node_modules/
 data/logs/
 data/state/
+data/records/worker-build-records/*/worker.mjs
