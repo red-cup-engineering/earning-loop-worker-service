@@ -1,4 +1,5 @@
 /** R2 keeps the reading; original CSE custody owns distributed pending effects. */
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { register, record, read, put } from './registers.mjs';
 
 export const FINANCIAL_RESOURCE_PROVIDER = 'financial-arena';
@@ -68,7 +69,7 @@ export async function runOnchainHook(env, { now = new Date(), cron = null, oncha
     if (!reading) return undefined;
     await checkpoint();
     const bytes = new TextEncoder().encode(JSON.stringify(reading));
-    const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte => byte.toString(16).padStart(2, '0')).join('');
+    const digest = sha256Hex(bytes);
     const reference = record('onchain', `${encodeURIComponent(reading.at ?? 'undated')}-${digest}`);
     const retained = await read(env.STATE, reference); await checkpoint();
     if (retained === null) { await put(env.STATE, reference, reading); await checkpoint(); }

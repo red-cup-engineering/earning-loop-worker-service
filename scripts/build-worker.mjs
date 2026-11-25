@@ -2,7 +2,6 @@ import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system"
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
 import { execGitSync } from '@red-cup-engineering/git-engine/git-process';
 import { appendServiceLog } from '@red-cup-engineering/computer-systems-logging-engine/append-service-log';
 

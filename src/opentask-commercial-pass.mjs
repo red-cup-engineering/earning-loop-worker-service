@@ -1,3 +1,4 @@
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { createOpenTaskClient } from "./opentask-client.mjs";
 import { commercialOffers, commercialStateKey, acquirePreparedBid } from "./opentask-bid-acquisition.mjs";
 import { BASE_USDC } from './settlements.mjs';
@@ -5,9 +6,9 @@ import { BASE_USDC } from './settlements.mjs';
 const STATE = "opentask/commercial";
 const stable = (value) => value && typeof value === "object" ? Array.isArray(value) ? value.map(stable)
   : Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])])) : value;
-export async function fingerprint(value) {
+async function fingerprint(value) {
   const bytes = new TextEncoder().encode(JSON.stringify(stable(value)));
-  return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), (n) => n.toString(16).padStart(2, "0")).join("");
+  return sha256Hex(bytes);
 }
 const publicResult = (stage, calls = 0) => ({ stage, requests: calls, newCashExpenseUsd: 0 });
 const address = (v) => typeof v === "string" && /^0x[0-9a-f]{40}$/i.test(v);

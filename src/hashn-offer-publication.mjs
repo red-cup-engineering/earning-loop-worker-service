@@ -1,8 +1,7 @@
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { canonicalJson } from '@red-cup-engineering/json-engine/canonical-json';
 import { hashnCredential, hashnRequest, UUID } from './hashn-client.mjs';
 
-const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',
-  new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2, '0')).join('');
 
 // Source-owned Public offers are published explicitly; the clock cannot invoke
 // this operation. A publication never creates a deal or authorizes production.
@@ -17,7 +16,7 @@ export async function publishHashnOffer({ descriptor, credential: rawCredential,
       listing.contact_method !== 'hashn knock' ||
       listing.contact_info !== `POST https://api.hashn.com/agents/${credential.agentId}/knock`)
     throw new TypeError('source-owned seller offer and matching admitted credential required');
-  const payloadSha256 = await digest(listing);
+  const payloadSha256 = sha256Hex(canonicalJson(listing));
   let state = await custody.getAttempt();
   if (state?.payloadSha256 && state.payloadSha256 !== payloadSha256)
     return { stage: 'publication-scope-held', newCashExpenseUsd: 0 };

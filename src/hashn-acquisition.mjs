@@ -1,3 +1,4 @@
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { canonicalJson } from '@red-cup-engineering/json-engine/canonical-json';
 import { hashnCredential, hashnError, hashnRequest, UUID } from './hashn-client.mjs';
 
@@ -7,7 +8,6 @@ const AUTH = 'hashn/auth';
 const SIX_HOURS = 6 * 60 * 60 * 1000;
 const WEEK = 7 * 24 * 60 * 60 * 1000;
 const KNOCKS_SCHEMA_REVISION = 2;
-const hash = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonicalJson(value)))), n => n.toString(16).padStart(2,'0')).join('');
 
 /** One read-only receiving attempt for an existing knock held by the old
  * workspace-field assumption. Provider backoff still owns the earliest read. */
@@ -57,7 +57,7 @@ export async function runHashnAcquisition({ storage, instance, initialCredential
     if (!credential) return finish('hashn-credential-held');
     const bound = { agentId: credential.agentId, workspaceId: instance.workspaceId,
       buyerAgentId: instance.buyerAgentId, offerId: instance.offerId, note: instance.note };
-    const binding = await hash(bound);
+    const binding = sha256Hex(canonicalJson(bound));
     if (state.binding && state.binding !== binding) return finish('hashn-binding-drift',true);
     const priorAuth = await storage.get(AUTH);
     if (priorAuth && (priorAuth.agentId !== credential.agentId || priorAuth.apiToken !== credential.apiToken)) return finish('hashn-credential-drift',true);
@@ -105,7 +105,7 @@ export async function runHashnAcquisition({ storage, instance, initialCredential
     }
     if (state.intent) return finish('hashn-knock-readback-pending'); // absolutely no POST replay after uncertainty/absence
     state.intent = { method: 'POST', path: `/workspaces/${instance.workspaceId}/knock`, body: { note: instance.note },
-      payloadSha256: await hash({ note: instance.note }), at: new Date(now()).toISOString() };
+      payloadSha256: sha256Hex(canonicalJson({ note: instance.note })), at: new Date(now()).toISOString() };
     state.monitoringUntil = now() + WEEK + SIX_HOURS;
     await storage.put(HASHN_STATE,state); // before the only permissible mutation
     const result = await wire(state.intent.path,{method:'POST',body:state.intent.body,credential});

@@ -1,5 +1,6 @@
 // One qualified paid research unit. Provider wire contract: endpoint_choice_reason.v2/2.3.0.
 // Claim recovery and canonical report replay follow the original ln-church-agent client.
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { canonicalJson, admitCanonicalJson, JSON_RESOURCE_ENVELOPE } from '@red-cup-engineering/json-engine/canonical-json';
 import { retryAfterDelayMs } from '@red-cup-engineering/http-engineering-services-section/retry-after';
 import { BASE_USDC, BASE_PROVIDERS, corroborate } from './settlements.mjs';
@@ -15,7 +16,6 @@ const LIMIT = 131072;
 const TERMS = ['task_type','task_definition_version','task_definition_digest','question','candidates','reveal_correct_set_after_answer','evaluation_profile_id','reward','plan_id','registration_amount_atomic','capacity_total','economic_policy_id','capacity_profile_id','evaluation_profile_digest','economic_terms_revision','creator_amount_atomic'];
 const ENVELOPE = { ...JSON_RESOURCE_ENVELOPE, maxSourceBytes: LIMIT, maxCanonicalBytes: LIMIT, maxDepth: 24, maxNodes: 12000 };
 const equal = (a,b) => canonicalJson(a) === canonicalJson(b);
-const hash = async text => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))), n => n.toString(16).padStart(2,'0')).join('');
 const error = (code, status = 0) => Object.assign(new Error(code), { code, status });
 const finiteDate = value => typeof value === 'string' && Number.isFinite(Date.parse(value));
 
@@ -38,7 +38,7 @@ export function researchProductProblem(instance, product, merchant) {
 async function matchesTerms(value, product) {
   return value?.task_type === product.taskType && value.task_definition_version === product.taskDefinitionVersion &&
     value.task_definition_digest === product.taskDefinitionDigest && typeof value.question === 'string' &&
-    await hash(value.question) === product.questionSha256 && equal(value.reward, product.reward) &&
+    sha256Hex(value.question) === product.questionSha256 && equal(value.reward, product.reward) &&
     Array.isArray(value.candidates) && value.candidates.some(c => c.candidate_id === product.selectedCandidateId);
 }
 
@@ -49,7 +49,7 @@ export async function runResearchPass({ storage, instance, products, merchant, g
   let state = await storage.get(RESEARCH_STATE) ?? { stage: 'unclaimed', completionPosts: 0 };
   let calls = 0;
   const base = `/api/agent/tasks/${instance.taskId}`;
-  const binding = await hash(canonicalJson({ instance, product, merchant: merchant.toLowerCase() }));
+  const binding = sha256Hex(canonicalJson({ instance, product, merchant: merchant.toLowerCase() }));
   async function finish(stage, { terminal = false, delay = 30000 } = {}) {
     if (!terminal && Number.isFinite(state.monitoringUntil) && now() >= state.monitoringUntil) {
       state.reconciliationPending = true; stage = 'research-monitoring-held'; terminal = true;
@@ -197,7 +197,7 @@ export async function runResearchPass({ storage, instance, products, merchant, g
         terms_digest:product.termsDigest,execution_id:claim.execution_id,submission_id:state.submissionId,
         selected_candidate_id:product.selectedCandidateId,answer_reason:product.answerReason});
       if (new TextEncoder().encode(state.completionBody).length > 16384) throw error('research-report-too-large');
-      state.reportSha256 = await hash(state.completionBody); await save();
+      state.reportSha256 = sha256Hex(state.completionBody); await save();
     }
     if (state.receipt || state.completionPosts > 0) {
       try { return await receiveStatus(await statusRead()); }
