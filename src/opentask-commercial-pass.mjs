@@ -6,7 +6,7 @@ import { BASE_USDC } from './settlements.mjs';
 const STATE = "opentask/commercial";
 const stable = (value) => value && typeof value === "object" ? Array.isArray(value) ? value.map(stable)
   : Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])])) : value;
-async function fingerprint(value) {
+async function openTaskCommercialDigest(value) {
   const bytes = new TextEncoder().encode(JSON.stringify(stable(value)));
   return sha256Hex(bytes);
 }
@@ -139,9 +139,9 @@ async function runPreparedCommercialPass({ storage, initialCredential, instance,
     const context = await client.request(base), contract = context.contract;
     if (!contractMatches(contract, instance)) return finish("contract-mismatch");
     if (!contract.termsSnapshot || typeof contract.termsSnapshot !== 'object' || Array.isArray(contract.termsSnapshot)) return finish('terms-shape-held');
-    const termsDigest = await fingerprint(contract.termsSnapshot);
+    const termsDigest = await openTaskCommercialDigest(contract.termsSnapshot);
     state.observations.hire = { contractId: contract.id, termsSnapshotSha256: termsDigest, source: "bid", status: contract.status };
-    const productDigest = await fingerprint(product);
+    const productDigest = await openTaskCommercialDigest(product);
     if (state.productDigest && state.productDigest !== productDigest) return finish("product-drift-held");
     if (state.termsDigest && state.termsDigest !== termsDigest) return finish("terms-drift-held");
     state.productDigest = productDigest; state.termsDigest = termsDigest;
@@ -165,11 +165,11 @@ async function runPreparedCommercialPass({ storage, initialCredential, instance,
       state.messageCursor = page.nextCursor ?? null;
       if (state.messageCursor) return finish("agreement-history-pending");
       const body = { body: `Please confirm the conditional CSV offer by replying with this exact JSON object (maximumInputBytes may be reduced). Your agent must execute the acceptance command, review the delivery criteria and fund Base USDC settlement; seller spends zero. This confirmation permits only the prepared source/artifact below; no arbitrary commands or new work are accepted.\n${JSON.stringify(expected)}` };
-      const key = `csv-agreement:${await fingerprint(expected)}`;
+      const key = `csv-agreement:${await openTaskCommercialDigest(expected)}`;
       if (state.agreementRequest?.key === key && state.agreementRequest.received) return finish("agreement-pending");
       if (state.pending && state.pending.kind !== "agreement") return finish("uncertain-effect-held");
       state.pending = { kind: "agreement", path: `${base}/messages`, method: "POST", body, key };
-      const basis = await fingerprint(permissionBasis);
+      const basis = await openTaskCommercialDigest(permissionBasis);
       if (state.deniedEffect?.key === key && state.deniedEffect.basis === basis) return finish('provider-write-refused');
       state.effectBasis = basis;
       await storage.put(STATE, state);
@@ -251,8 +251,8 @@ async function runPreparedCommercialPass({ storage, initialCredential, instance,
     return await effect("submit", `${base}/deliveries/${pkg.id}/submit`, "POST", { expectedVersion: pkg.version, confirmed: true });
 
     async function effect(kind, path, method, body) {
-      const pending = { kind, path, method, body, key: `csv:${await fingerprint({ contractId: contract.id, kind, path, body })}` };
-      const basis = await fingerprint({ ...permissionBasis, packageId: pkg?.id ?? null, packageVersion: pkg?.version ?? null });
+      const pending = { kind, path, method, body, key: `csv:${await openTaskCommercialDigest({ contractId: contract.id, kind, path, body })}` };
+      const basis = await openTaskCommercialDigest({ ...permissionBasis, packageId: pkg?.id ?? null, packageVersion: pkg?.version ?? null });
       if (state.deniedEffect?.key === pending.key && state.deniedEffect.basis === basis) return finish('provider-write-refused');
       if (state.deniedEffect && state.deniedEffect.key === state.pending?.key && state.deniedEffect.basis !== basis) { state.pending = null; state.deniedEffect = null; }
       if (state.pending && !same(state.pending, pending)) return finish("uncertain-effect-held");
