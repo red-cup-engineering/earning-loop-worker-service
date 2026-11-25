@@ -1,4 +1,4 @@
-import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
+import { sha256Hex, semanticHex } from "@red-cup-engineering/semiotic-content-address-system";
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -44,8 +44,8 @@ export async function buildWorker({ esbuildRoot, sourceRoot = root, parameterRoo
     return { path, bytes: bytes.length, sha256: sha256Hex(bytes) };
   });
   const bytes = result.outputFiles.find(file => file.path.endsWith('/worker.mjs')).contents;
-  const identity = sha256Hex(JSON.stringify({ provider: { name: provider.name, version: provider.version },
-    options: { target: 'es2022', platform: 'browser', format: 'esm', conditions: ['workerd', 'worker'], external: ['node:*'], alias: { url: 'node:url' } }, inputs }));
+  const identity = semanticHex({ provider: { name: provider.name, version: provider.version },
+    options: { target: 'es2022', platform: 'browser', format: 'esm', conditions: ['workerd', 'worker'], external: ['node:*'], alias: { url: 'node:url' } }, inputs });
   const git = (...args) => execGitSync(args, { cwd: sourceRoot, encoding: 'utf8' }).trim();
   const record = { kind: 'WorkerBuildRecord', version: 1, compositionSha256: identity,
     source: { commit: git('rev-parse', 'HEAD'), worktreeClean: git('status', '--porcelain') === '' },
